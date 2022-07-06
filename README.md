@@ -1,1 +1,0 @@
-# locale-json-manager
