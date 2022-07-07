@@ -1,6 +1,6 @@
 import { InputHTMLAttributes } from 'react';
 import { Size } from '@defines/css';
-import useCss from '@hooks/useCss';
+import useCss from '@hooks/common/useCss';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     width?: Size;

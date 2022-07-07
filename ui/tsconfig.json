@@ -28,6 +28,9 @@
       "@pages/*": [
         "./pages/*"
       ],
+      "@stores/*": [
+        "./stores/*"
+      ],
       "@public/*": [
         "../public/*"
       ]
