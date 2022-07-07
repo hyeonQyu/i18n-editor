@@ -12,7 +12,7 @@ export interface IUseAlert {
     width: number;
     height: number;
     left: number;
-    bottom: number;
+    top: number;
     iconPadding: number;
     backgroundColor: string;
 }
@@ -37,15 +37,15 @@ export default function useAlertInner(params: IUseAlertInnerParams): IUseAlert {
 
     const { width, height } = alertConfig;
 
-    const getBottom = useCallback((index: number, height: number) => 160 + (alerts.length - index - 1) * (height + 14), [alerts]);
+    const getTop = useCallback((index: number, height: number) => 160 - (alerts.length - index - 1) * (height + 14), [alerts]);
     const getLeft = useCallback((windowWidth: number) => (windowWidth - width) / 2, [width]);
 
-    const { isShow, index, type, duration = 3000, id } = params;
+    const { isShow, index, type, duration, id } = params;
 
     const alertRef = useRef<HTMLDivElement>(null);
 
     const [left, setLeft] = useState(getLeft(window.innerWidth));
-    const [bottom, setBottom] = useState(getBottom(index, height));
+    const [top, setTop] = useState(getTop(index, height));
     const { mounted } = useAnimationMount({ display: isShow, disappearAnimationDuration });
 
     useEffect(() => {
@@ -53,8 +53,8 @@ export default function useAlertInner(params: IUseAlertInnerParams): IUseAlert {
     }, [window.innerWidth, getLeft]);
 
     useEffect(() => {
-        setBottom(getBottom(index, height));
-    }, [height, index, alerts, getBottom]);
+        setTop(getTop(index, height));
+    }, [height, index, alerts, getTop]);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -83,7 +83,7 @@ export default function useAlertInner(params: IUseAlertInnerParams): IUseAlert {
         width,
         height,
         left,
-        bottom,
+        top,
         iconPadding: 16,
         backgroundColor: backgroundColorMap[type as AlertType],
     };

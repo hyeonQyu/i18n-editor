@@ -15,7 +15,7 @@ export interface AlertProps {
 
 function Alert(props: AlertProps) {
     const { isShow, message, type } = props;
-    const { alertRef, width, height, left, bottom, iconPadding, backgroundColor } = useAlertInner(props);
+    const { alertRef, width, height, left, top, iconPadding, backgroundColor } = useAlertInner(props);
 
     return (
         <>
@@ -38,8 +38,8 @@ function Alert(props: AlertProps) {
                     align-items: center;
                     width: ${width}px;
                     height: ${height}px;
-                    bottom: ${bottom}px;
-                    transition: opacity 0.2s ease, bottom 0.2s ease;
+                    top: ${top}px;
+                    transition: opacity 0.2s ease, top 0.2s ease;
                     animation: appear 0.4s ease;
                     background-color: ${backgroundColor};
                     border-radius: ${height}px;
@@ -50,7 +50,7 @@ function Alert(props: AlertProps) {
 
                 .alert.close {
                     opacity: 0;
-                    bottom: ${bottom + 20}px;
+                    top: ${top - 20}px;
                 }
 
                 .icon {
