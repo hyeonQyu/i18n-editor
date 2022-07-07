@@ -1,6 +1,6 @@
 import useInput, { IUseInput } from '@hooks/common/useInput';
 import { KeyboardEventHandler, useState } from 'react';
-import { LocaleJsonInfo } from '@defines/locale-json-info';
+import { LocaleJson, LocaleJsonInfo } from '@defines/locale-json-info';
 import useForm, { IUseForm } from '@hooks/common/useForm';
 
 export interface IUseHomeParams {}
@@ -19,6 +19,8 @@ export interface IUseHomeValues {
 
 export interface IUseHomeHandlers {
     handleMessageInputKeyPress: KeyboardEventHandler<HTMLInputElement>;
+    handleChangeLocaleJsonName: (name: string) => void;
+    handleChangeLocaleJson: (data: LocaleJson) => void;
 }
 
 export default function useHome(params: IUseHomeParams): IUseHome {
@@ -47,6 +49,39 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         }
     };
 
+    const handleChangeLocaleJsonName = (name: string) => {
+        setLocaleJsonInfo((prev) => {
+            if (!prev) {
+                return {
+                    name,
+                    messageSet: new Set(),
+                };
+            }
+            return {
+                ...prev,
+                name,
+            };
+        });
+    };
+
+    const handleChangeLocaleJson = (data: LocaleJson) => {
+        setLocaleJsonInfo((prev) => {
+            const messages = Object.keys(data).map((key) => key);
+            const set = new Set(messages);
+
+            if (!prev) {
+                return {
+                    name: '',
+                    messageSet: set,
+                };
+            }
+            return {
+                ...prev,
+                messageSet: set,
+            };
+        });
+    };
+
     return {
         values: {
             formProps,
@@ -56,6 +91,8 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         },
         handlers: {
             handleMessageInputKeyPress,
+            handleChangeLocaleJsonName,
+            handleChangeLocaleJson,
         },
     };
 }

@@ -11,7 +11,7 @@ function Index(props: IndexProps) {
     const {} = props;
     const {
         values: { formProps, inputLocaleDirectoryPath, localeJsonInfo, inputMessage },
-        handlers: { handleMessageInputKeyPress },
+        handlers: { handleMessageInputKeyPress, handleChangeLocaleJsonName, handleChangeLocaleJson },
     } = useHome({});
 
     return (
@@ -27,9 +27,17 @@ function Index(props: IndexProps) {
                             <Input {...inputLocaleDirectoryPath} placeholder={'locale 폴더 경로를 입력하세요'} />
                         </TableRow>
                         <TableRow title={'다국어 json 파일'}>
-                            <InputFile label={localeJsonInfo?.name ?? '파일을 여기로 끌어오기'} acceptableExtensionList={['.json']} />
+                            <InputFile
+                                label={localeJsonInfo?.name}
+                                acceptableExtensionList={['.json']}
+                                onChangeFileName={handleChangeLocaleJsonName}
+                                onChangeFileContent={handleChangeLocaleJson}
+                                isFileJson
+                            />
                         </TableRow>
-                        <Input {...inputMessage} onKeyPress={handleMessageInputKeyPress} />
+                        <TableRow>
+                            <Input {...inputMessage} onKeyPress={handleMessageInputKeyPress} />
+                        </TableRow>
                     </form>
 
                     <div className={'preview-wrapper'}>

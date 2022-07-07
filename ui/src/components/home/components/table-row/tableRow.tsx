@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export interface TableRowProps {
-    title: string;
+    title?: string;
     children: ReactNode;
 }
 
@@ -11,7 +11,7 @@ function TableRow(props: TableRowProps) {
     return (
         <>
             <div className={'row'}>
-                <div className={'title'}>{title}</div>
+                {title && <div className={'title'}>{title}</div>}
                 <div className={'content'}>{children}</div>
             </div>
 
@@ -20,7 +20,8 @@ function TableRow(props: TableRowProps) {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    height: 60px;
+                    height: fit-content;
+                    padding: 10px 0;
                 }
 
                 .title {
@@ -28,7 +29,7 @@ function TableRow(props: TableRowProps) {
                 }
 
                 .content {
-                    width: 70%;
+                    width: ${title ? '70%' : '100%'};
                 }
             `}</style>
         </>
