@@ -1,6 +1,6 @@
 {
   "name": "locale-json-manager",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "",
   "main": "src/lib/app.ts",
   "bin": {
@@ -10,7 +10,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "SET \"NODE_ENV=development\" && nodemon --watch \"src/lib/**/*.ts\" --exec \"ts-node\" src/bin/ljm.ts",
     "build": "tsc -p .",
-    "build-publish": "npm run build && node setupPackage.js && cd dist && npm publish"
+    "build-ui": "cd ../ui && npm run build",
+    "build-all": "npm run build-ui && npm run build && node setupPackage.js && cd dist",
+    "build-publish": "npm run build-ui && npm run build && node setupPackage.js && cd dist && npm publish"
   },
   "author": "hyeonQyu",
   "licenses": [

@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-}
+    reactStrictMode: true,
+    exportPathMap: () => ({
+        '/': { page: '/' },
+    }),
+    images: {
+        loader: 'akamai',
+        path: '/',
+    },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
