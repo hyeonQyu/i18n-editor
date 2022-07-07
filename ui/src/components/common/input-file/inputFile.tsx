@@ -33,7 +33,7 @@ function InputFile<T>(props: InputFileProps<T>) {
                 </div>
                 <div className={'content'}>
                     <div className={'label'} onMouseEnter={onMouseEnterText} onMouseLeave={onMouseLeaveText}>
-                        {label ?? '파일을 여기로 끌어오기'}
+                        {label || '파일을 여기로 끌어오기'}
                     </div>
                 </div>
                 <input id={'input-file'} type={'file'} ref={inputRef} accept={acceptableExtensionList.join()} />

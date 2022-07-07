@@ -41,7 +41,7 @@ function Index(props: IndexProps) {
                     </form>
 
                     <div className={'preview-wrapper'}>
-                        <JsonPreview localeJsonInfo={localeJsonInfo} />
+                        <JsonPreview localeJsonInfo={localeJsonInfo} isKorean />
                     </div>
                 </div>
             </div>
@@ -54,8 +54,11 @@ function Index(props: IndexProps) {
                     height: 100%;
                 }
 
-                form {
+                .wrapper > div {
                     width: 600px;
+                }
+
+                form {
                 }
 
                 .preview-wrapper {

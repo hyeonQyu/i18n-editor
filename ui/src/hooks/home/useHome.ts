@@ -13,7 +13,7 @@ export interface IUseHome {
 export interface IUseHomeValues {
     formProps: IUseForm;
     inputLocaleDirectoryPath: IUseInput;
-    localeJsonInfo: LocaleJsonInfo | undefined;
+    localeJsonInfo: LocaleJsonInfo;
     inputMessage: IUseInput;
 }
 
@@ -30,16 +30,12 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         onSubmit: () => {},
     });
     const inputLocaleDirectoryPath = useInput({});
-    const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>();
+    const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', messageSet: new Set() });
     const inputMessage = useInput({});
 
     const handleMessageInputKeyPress: KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (e.key === 'Enter') {
             setLocaleJsonInfo((prev) => {
-                if (!prev) {
-                    return undefined;
-                }
-
                 return {
                     ...prev,
                     messageSet: new Set<string>([...Array.from(prev.messageSet), inputMessage.value]),
@@ -51,12 +47,6 @@ export default function useHome(params: IUseHomeParams): IUseHome {
 
     const handleChangeLocaleJsonName = (name: string) => {
         setLocaleJsonInfo((prev) => {
-            if (!prev) {
-                return {
-                    name,
-                    messageSet: new Set(),
-                };
-            }
             return {
                 ...prev,
                 name,
@@ -68,13 +58,6 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         setLocaleJsonInfo((prev) => {
             const messages = Object.keys(data).map((key) => key);
             const set = new Set(messages);
-
-            if (!prev) {
-                return {
-                    name: '',
-                    messageSet: set,
-                };
-            }
             return {
                 ...prev,
                 messageSet: set,
