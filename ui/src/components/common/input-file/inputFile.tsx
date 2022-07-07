@@ -8,11 +8,11 @@ export interface InputFileProps<T> {
     onChangeFileContent?: (fileContent: T) => void;
     onMouseEnterText?: () => void;
     onMouseLeaveText?: () => void;
-    text?: string;
+    label?: string;
 }
 
 function InputFile<T>(props: InputFileProps<T>) {
-    const { acceptableExtensionList, text, onMouseEnterText = () => {}, onMouseLeaveText = () => {} } = props;
+    const { acceptableExtensionList, label, onMouseEnterText = () => {}, onMouseLeaveText = () => {} } = props;
 
     const { inputRef } = useInputFile<T>({
         ...props,
@@ -23,13 +23,13 @@ function InputFile<T>(props: InputFileProps<T>) {
             <div>
                 <label htmlFor={'input-file'}>파일 선택</label>
                 <span onMouseEnter={onMouseEnterText} onMouseLeave={onMouseLeaveText}>
-                    {text}
+                    {label}
                 </span>
                 <input id={'input-file'} type={'file'} ref={inputRef} accept={acceptableExtensionList.join()} />
             </div>
 
             <style jsx>{`
-                button {
+                label {
                     background-color: white;
                     border: 1px solid #a1a1a1;
                     border-radius: 20px;
@@ -39,7 +39,7 @@ function InputFile<T>(props: InputFileProps<T>) {
                     transition: 0.3s;
                 }
 
-                button:hover {
+                label:hover {
                     background-color: #f3f7f8;
                     border: 1px solid #cecece;
                 }

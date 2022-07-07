@@ -4,10 +4,12 @@ import useCss from '@hooks/common/useCss';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     width?: Size;
+    changeValue?: (value: string) => void;
+    onClear?: () => void;
 }
 
 function Input(props: InputProps) {
-    const { width = '100%', ...rest } = props;
+    const { width = '100%', changeValue, onClear, ...rest } = props;
     const { getSizeCss, getFontCss } = useCss({});
 
     return (
