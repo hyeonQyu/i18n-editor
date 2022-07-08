@@ -14,7 +14,7 @@ function Index() {
     return (
         <>
             <Head>
-                <title>locale json 만들기</title>
+                <title>locale JSON 만들기</title>
             </Head>
 
             <div className={'wrapper'}>
@@ -23,7 +23,7 @@ function Index() {
                         <TableRow title={'locale 폴더'}>
                             <Input {...inputLocaleDirectoryPath} placeholder={'locale 폴더 경로를 입력하세요'} />
                         </TableRow>
-                        <TableRow title={'다국어 json 파일'}>
+                        <TableRow title={'다국어 JSON 파일'}>
                             <InputFile
                                 label={localeJsonInfo?.name}
                                 acceptableExtensionList={['.json']}
@@ -33,7 +33,7 @@ function Index() {
                             />
                         </TableRow>
                         <TableRow>
-                            <Input {...inputText} onKeyPress={handleTextInputKeyPress} />
+                            <Input {...inputText} onKeyPress={handleTextInputKeyPress} placeholder={'추가할 문구를 입력하세요'} />
                         </TableRow>
                     </form>
 

@@ -2,6 +2,7 @@ import useInput, { IUseInput } from '@hooks/common/useInput';
 import { KeyboardEventHandler, useState } from 'react';
 import { LocaleJson, LocaleJsonInfo } from '@defines/locale-json-info';
 import useForm, { IUseForm } from '@hooks/common/useForm';
+import useAlert from '@hooks/common/useAlert';
 
 export interface IUseHomeParams {}
 
@@ -34,8 +35,14 @@ export default function useHome(params: IUseHomeParams): IUseHome {
     const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', textSet: new Set() });
     const inputText = useInput({});
 
+    const { showAlert } = useAlert();
+
     const handleTextInputKeyPress: KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (e.key === 'Enter') {
+            if (!localeJsonInfo.name) {
+                showAlert('다국어 JSON 파일을 먼저 추가하세요', 'warning');
+                return;
+            }
             setLocaleJsonInfo((prev) => {
                 return {
                     ...prev,

@@ -1,6 +1,7 @@
 import { LocaleJsonInfo } from '@defines/locale-json-info';
 import useJsonPreview from '@components/home/components/json-preview/useJsonPreview';
 import Scrollbars from 'react-custom-scrollbars';
+import useCss from '@hooks/common/useCss';
 
 export interface JsonPreviewProps {
     localeJsonInfo: LocaleJsonInfo;
@@ -9,29 +10,34 @@ export interface JsonPreviewProps {
 }
 
 function JsonPreview(props: JsonPreviewProps) {
-    const { textInfos, setScrollBar } = useJsonPreview(props);
+    const { textInfos, setScrollBar, attachedFile } = useJsonPreview(props);
+    const { getFontCss } = useCss({});
 
     return (
         <>
             <div className={'wrapper'}>
-                <Scrollbars
-                    ref={(c) => {
-                        setScrollBar(c);
-                    }}
-                    renderTrackHorizontal={() => <div />}
-                    renderThumbHorizontal={() => <div />}
-                    hideTracksWhenNotNeeded
-                    autoHide
-                >
-                    {textInfos.map(({ keyValue: { key, value }, handleDelete }) => (
-                        <div className={'text'} key={key}>
-                            <span>
-                                {key}: {value}
-                            </span>
-                            <button className={'delete'} onClick={handleDelete} />
-                        </div>
-                    ))}
-                </Scrollbars>
+                {attachedFile ? (
+                    <Scrollbars
+                        ref={(c) => {
+                            setScrollBar(c);
+                        }}
+                        renderTrackHorizontal={() => <div />}
+                        renderThumbHorizontal={() => <div />}
+                        hideTracksWhenNotNeeded
+                        autoHide
+                    >
+                        {textInfos.map(({ keyValue: { key, value }, handleDelete }) => (
+                            <div className={'text'} key={key}>
+                                <span>
+                                    {key}: {value}
+                                </span>
+                                <button className={'delete'} onClick={handleDelete} />
+                            </div>
+                        ))}
+                    </Scrollbars>
+                ) : (
+                    <p className={'empty'}>다국어 JSON 파일을 선택하세요</p>
+                )}
             </div>
 
             <style jsx>{`
@@ -86,6 +92,11 @@ function JsonPreview(props: JsonPreviewProps) {
 
                 .delete:after {
                     transform: rotate(-45deg);
+                }
+
+                .empty {
+                    text-align: center;
+                    ${getFontCss(600, 18, 40, '#727272')};
                 }
             `}</style>
         </>

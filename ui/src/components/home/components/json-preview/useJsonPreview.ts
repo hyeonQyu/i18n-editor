@@ -8,6 +8,7 @@ export interface IUseJsonPreviewParams extends JsonPreviewProps {}
 export interface IUseJsonPreview {
     textInfos: JsonPreviewTextInfo[];
     setScrollBar: Dispatch<SetStateAction<Scrollbars | null>>;
+    attachedFile: boolean;
 }
 
 export default function useJsonPreview(params: IUseJsonPreviewParams): IUseJsonPreview {
@@ -22,7 +23,7 @@ export default function useJsonPreview(params: IUseJsonPreviewParams): IUseJsonP
 
         const { size } = localeJsonInfo.textSet;
 
-        if (prevTextCount < size) {
+        if (prevTextCount + 1 === size) {
             scrollBar.scrollToBottom();
         }
 
@@ -52,8 +53,11 @@ export default function useJsonPreview(params: IUseJsonPreviewParams): IUseJsonP
 
     const textInfos: JsonPreviewTextInfo[] = getTextInfos();
 
+    const attachedFile = !!localeJsonInfo.name;
+
     return {
         textInfos,
         setScrollBar,
+        attachedFile,
     };
 }
