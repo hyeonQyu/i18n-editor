@@ -5,13 +5,10 @@ import InputFile from '@components/common/input-file/inputFile';
 import useHome from '@hooks/home/useHome';
 import JsonPreview from '@components/home/components/json-preview/jsonPreview';
 
-export interface IndexProps {}
-
-function Index(props: IndexProps) {
-    const {} = props;
+function Index() {
     const {
-        values: { formProps, inputLocaleDirectoryPath, localeJsonInfo, inputMessage },
-        handlers: { handleMessageInputKeyPress, handleChangeLocaleJsonName, handleChangeLocaleJson },
+        values: { formProps, inputLocaleDirectoryPath, localeJsonInfo, inputText },
+        handlers: { handleTextInputKeyPress, handleChangeLocaleJsonName, handleChangeLocaleJson, handleDeleteText },
     } = useHome({});
 
     return (
@@ -36,12 +33,12 @@ function Index(props: IndexProps) {
                             />
                         </TableRow>
                         <TableRow>
-                            <Input {...inputMessage} onKeyPress={handleMessageInputKeyPress} />
+                            <Input {...inputText} onKeyPress={handleTextInputKeyPress} />
                         </TableRow>
                     </form>
 
                     <div className={'preview-wrapper'}>
-                        <JsonPreview localeJsonInfo={localeJsonInfo} isKorean />
+                        <JsonPreview localeJsonInfo={localeJsonInfo} isKorean onDeleteText={handleDeleteText} />
                     </div>
                 </div>
             </div>

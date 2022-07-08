@@ -1,6 +1,6 @@
 export interface LocaleJsonInfo {
     name: string;
-    messageSet: Set<string>;
+    textSet: Set<string>;
 }
 
 export type LocaleJson = {

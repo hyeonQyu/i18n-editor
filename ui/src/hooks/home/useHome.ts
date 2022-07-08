@@ -14,13 +14,14 @@ export interface IUseHomeValues {
     formProps: IUseForm;
     inputLocaleDirectoryPath: IUseInput;
     localeJsonInfo: LocaleJsonInfo;
-    inputMessage: IUseInput;
+    inputText: IUseInput;
 }
 
 export interface IUseHomeHandlers {
-    handleMessageInputKeyPress: KeyboardEventHandler<HTMLInputElement>;
+    handleTextInputKeyPress: KeyboardEventHandler<HTMLInputElement>;
     handleChangeLocaleJsonName: (name: string) => void;
     handleChangeLocaleJson: (data: LocaleJson) => void;
+    handleDeleteText: (text: string) => void;
 }
 
 export default function useHome(params: IUseHomeParams): IUseHome {
@@ -30,18 +31,18 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         onSubmit: () => {},
     });
     const inputLocaleDirectoryPath = useInput({});
-    const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', messageSet: new Set() });
-    const inputMessage = useInput({});
+    const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', textSet: new Set() });
+    const inputText = useInput({});
 
-    const handleMessageInputKeyPress: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    const handleTextInputKeyPress: KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (e.key === 'Enter') {
             setLocaleJsonInfo((prev) => {
                 return {
                     ...prev,
-                    messageSet: new Set<string>([...Array.from(prev.messageSet), inputMessage.value]),
+                    textSet: new Set<string>([...Array.from(prev.textSet), inputText.value]),
                 };
             });
-            inputMessage.changeValue('');
+            inputText.changeValue('');
         }
     };
 
@@ -56,11 +57,22 @@ export default function useHome(params: IUseHomeParams): IUseHome {
 
     const handleChangeLocaleJson = (data: LocaleJson) => {
         setLocaleJsonInfo((prev) => {
-            const messages = Object.keys(data).map((key) => key);
-            const set = new Set(messages);
+            const texts = Object.keys(data).map((key) => key);
+            const set = new Set(texts);
             return {
                 ...prev,
-                messageSet: set,
+                textSet: set,
+            };
+        });
+    };
+
+    const handleDeleteText = (text: string) => {
+        setLocaleJsonInfo((prev) => {
+            prev.textSet.delete(text);
+            const set = new Set(prev.textSet);
+            return {
+                ...prev,
+                textSet: set,
             };
         });
     };
@@ -70,12 +82,13 @@ export default function useHome(params: IUseHomeParams): IUseHome {
             formProps,
             inputLocaleDirectoryPath,
             localeJsonInfo,
-            inputMessage,
+            inputText,
         },
         handlers: {
-            handleMessageInputKeyPress,
+            handleTextInputKeyPress,
             handleChangeLocaleJsonName,
             handleChangeLocaleJson,
+            handleDeleteText,
         },
     };
 }

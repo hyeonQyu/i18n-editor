@@ -1,33 +1,59 @@
 import { JsonPreviewProps } from '@components/home/components/json-preview/jsonPreview';
-import { KeyValuePair } from '@defines/keyValuePair';
+import { JsonPreviewTextInfo } from '@components/home/components/json-preview/defines/jsonPreviewDefines';
+import Scrollbars from 'react-custom-scrollbars';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 export interface IUseJsonPreviewParams extends JsonPreviewProps {}
 
 export interface IUseJsonPreview {
-    keyValues: KeyValuePair<string, string>[];
+    textInfos: JsonPreviewTextInfo[];
+    setScrollBar: Dispatch<SetStateAction<Scrollbars | null>>;
 }
 
 export default function useJsonPreview(params: IUseJsonPreviewParams): IUseJsonPreview {
-    const { localeJsonInfo, isKorean } = params;
+    const { localeJsonInfo, isKorean, onDeleteText } = params;
+    const [scrollBar, setScrollBar] = useState<Scrollbars | null>(null);
+    const [prevTextCount, setPrevTextCount] = useState(localeJsonInfo.textSet.size);
 
-    const getJsonInfo = (): KeyValuePair<string, string>[] => {
-        const messages = Array.from(localeJsonInfo.messageSet);
+    useEffect(() => {
+        if (!scrollBar) {
+            return;
+        }
+
+        const { size } = localeJsonInfo.textSet;
+
+        if (prevTextCount < size) {
+            scrollBar.scrollToBottom();
+        }
+
+        setPrevTextCount(size);
+    }, [localeJsonInfo, scrollBar, prevTextCount]);
+
+    const getTextInfos = (): JsonPreviewTextInfo[] => {
+        const texts = Array.from(localeJsonInfo.textSet);
 
         if (isKorean) {
-            return messages.map((message) => ({
-                key: message,
-                value: message,
+            return texts.map((text) => ({
+                keyValue: {
+                    key: text,
+                    value: text,
+                },
+                handleDelete: () => onDeleteText(text),
             }));
         }
-        return messages.map((message) => ({
-            key: message,
-            value: '',
+        return texts.map((text) => ({
+            keyValue: {
+                key: text,
+                value: '',
+            },
+            handleDelete: () => onDeleteText(text),
         }));
     };
 
-    const keyValues: KeyValuePair<string, string>[] = getJsonInfo();
+    const textInfos: JsonPreviewTextInfo[] = getTextInfos();
 
     return {
-        keyValues,
+        textInfos,
+        setScrollBar,
     };
 }
