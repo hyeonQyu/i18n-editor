@@ -29,7 +29,8 @@ function JsonPreview(props: JsonPreviewProps) {
                         {textInfos.map(({ keyValue: { key, value }, handleDelete }) => (
                             <div className={'text'} key={key}>
                                 <span>
-                                    {key}: {value}
+                                    <strong>{key}</strong>
+                                    <span>: {value}</span>
                                 </span>
                                 <button className={'delete'} onClick={handleDelete} />
                             </div>
@@ -58,6 +59,11 @@ function JsonPreview(props: JsonPreviewProps) {
                     display: flex;
                     align-items: center;
                     transition: 0.3s;
+                }
+
+                .text strong {
+                    font-weight: 600;
+                    color: #1780c4;
                 }
 
                 .delete {
