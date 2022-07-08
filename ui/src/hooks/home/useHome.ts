@@ -43,13 +43,20 @@ export default function useHome(params: IUseHomeParams): IUseHome {
                 showAlert('다국어 JSON 파일을 먼저 추가하세요', 'warning');
                 return;
             }
+
+            const { value, changeValue } = inputText;
+
+            if (!value) {
+                return;
+            }
+
             setLocaleJsonInfo((prev) => {
                 return {
                     ...prev,
-                    textSet: new Set<string>([...Array.from(prev.textSet), inputText.value]),
+                    textSet: new Set<string>([...Array.from(prev.textSet), value]),
                 };
             });
-            inputText.changeValue('');
+            changeValue('');
         }
     };
 
