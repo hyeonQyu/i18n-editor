@@ -1,4 +1,4 @@
-import { CommonRes, SaveReq } from '../defines/models';
+import { CommonRes, SaveReq } from '../defines/common/models';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { ParsedQs } from 'qs';
 import { Service } from './service';

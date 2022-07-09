@@ -31,6 +31,9 @@
       "@stores/*": [
         "./stores/*"
       ],
+      "@apis/*": [
+        "./apis/*"
+      ],
       "@public/*": [
         "../public/*"
       ]

@@ -1,4 +1,4 @@
-import { SaveReq } from '../defines/models';
+import { SaveReq } from '../defines/common/models';
 import { JsonManager } from '../utils/jsonManager';
 
 export namespace Service {

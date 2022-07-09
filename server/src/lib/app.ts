@@ -1,5 +1,5 @@
 import { AppOption } from './defines/appOption';
-import { Default } from './defines/default';
+import { Default } from './defines/common/default';
 import { UiExecutor } from './utils/uiExecutor';
 
 const express = require('express');

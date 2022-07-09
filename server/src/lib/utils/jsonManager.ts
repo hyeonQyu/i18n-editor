@@ -1,4 +1,4 @@
-import { LocaleJson, LocaleJsonInfo } from '../defines/locale-json-info';
+import { LocaleJson, LocaleJsonInfo } from '../defines/common/locale-json-info';
 import { LANGUAGES } from '../defines/translation';
 
 const fs = require('fs');

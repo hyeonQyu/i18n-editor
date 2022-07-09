@@ -1,6 +1,6 @@
 import useInput, { IUseInput } from '@hooks/common/useInput';
 import { KeyboardEventHandler, useState } from 'react';
-import { LocaleJson, LocaleJsonInfo } from '@defines/locale-json-info';
+import { LocaleJson, LocaleJsonInfo } from '@defines/common/locale-json-info';
 import useForm, { IUseForm } from '@hooks/common/useForm';
 import useAlert from '@hooks/common/useAlert';
 
