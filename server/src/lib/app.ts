@@ -31,9 +31,12 @@ module.exports = {
                     console.log(`locale json manager started with port ${port}`);
                 });
 
+                console.log('env', env);
+
                 if (env === 'production') {
                     UiExecutor.runHtmlUi(port);
                 }
-            });
+            })
+            .parse(process.argv);
     },
 };

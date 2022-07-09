@@ -2,7 +2,7 @@
   "name": "locale-json-manager",
   "version": "0.0.14",
   "description": "",
-  "main": "src/lib/app.ts",
+  "main": "src/bin/app.ts",
   "bin": {
     "ljm": "bin/ljm.js"
   },
