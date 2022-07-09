@@ -3,6 +3,8 @@ import { KeyboardEventHandler, useState } from 'react';
 import { LocaleJson, LocaleJsonInfo } from '@defines/common/locale-json-info';
 import useForm, { IUseForm } from '@hooks/common/useForm';
 import useAlert from '@hooks/common/useAlert';
+import useShortcuts from '@hooks/common/useShortcuts';
+import useMutationSave from '@hooks/queries/useMutationSave';
 
 export interface IUseHomeParams {}
 
@@ -32,10 +34,17 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         onSubmit: () => {},
     });
     const inputLocaleDirectoryPath = useInput({});
+    const { value: localeDirectoryPath } = inputLocaleDirectoryPath;
     const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', textSet: new Set() });
     const inputText = useInput({});
 
     const { showAlert } = useAlert();
+
+    const { mutate: save } = useMutationSave({ saveReq: { localeJsonInfo, localeDirectoryPath } });
+
+    useShortcuts({
+        onCtrlS: () => save({ localeDirectoryPath, localeJsonInfo }),
+    });
 
     const handleTextInputKeyPress: KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (e.key === 'Enter') {

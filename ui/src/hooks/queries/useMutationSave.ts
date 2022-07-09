@@ -4,17 +4,13 @@ import { HomeApi } from '@apis/homeApi';
 import useAlert from '@hooks/common/useAlert';
 import { AxiosError } from 'axios';
 
-export interface IUseQuerySaveParams {
-    saveReq: SaveReq;
-}
+export interface IUseMutationSaveParams {}
 
-export interface IUseQuerySave {}
-
-export default function useQuerySave(params: IUseQuerySaveParams): UseMutationResult<void, AxiosError> {
-    const { saveReq } = params;
+export default function useMutationSave(params: IUseMutationSaveParams): UseMutationResult<void, AxiosError, SaveReq> {
+    const {} = params;
     const { showAlert } = useAlert();
 
-    return useMutation(['save'], () => HomeApi.postSave(saveReq), {
+    return useMutation(['save'], HomeApi.postSave, {
         onSuccess: () => {
             showAlert('저장했습니다', 'success');
         },
