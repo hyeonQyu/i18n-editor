@@ -21,7 +21,7 @@ export default function useShortcuts(params: IUseShortcutsParams): IUseShortcuts
 
         document.addEventListener('keydown', handleShortcuts);
         return () => document.removeEventListener('keydown', handleShortcuts);
-    }, []);
+    }, [onCtrlS]);
 
     return {};
 }

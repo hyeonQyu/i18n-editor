@@ -2,6 +2,7 @@ import { AppOption } from './defines/appOption';
 import { Default } from './defines/common/default';
 import { UiExecutor } from './utils/uiExecutor';
 import { Controller } from './apis/controller';
+import { ConfigManager } from './utils/configManager';
 
 const express = require('express');
 const server = express();
@@ -32,6 +33,7 @@ module.exports = {
                     console.log(`locale json manager started with port ${port}`);
                 });
 
+                ConfigManager.init(env);
                 Controller.response(server);
 
                 if (env === 'production') {

@@ -43,7 +43,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
     const { mutate: save } = useMutationSave({ saveReq: { localeJsonInfo, localeDirectoryPath } });
 
     useShortcuts({
-        onCtrlS: () => save({ localeDirectoryPath, localeJsonInfo }),
+        onCtrlS: () => save({ config: { localeDirectoryPath }, localeJsonInfo }),
     });
 
     const handleTextInputKeyPress: KeyboardEventHandler<HTMLInputElement> = (e) => {

@@ -1,4 +1,6 @@
 export interface AppOption {
     port: number;
-    env: 'production' | 'development';
+    env: Env;
 }
+
+export type Env = 'production' | 'development';
