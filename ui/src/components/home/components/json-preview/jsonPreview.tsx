@@ -55,10 +55,14 @@ function JsonPreview(props: JsonPreviewProps) {
                 }
 
                 .text {
-                    height: 30px;
+                    line-height: 1.3;
+                    padding-right: 10px;
                     display: flex;
                     align-items: center;
                     transition: 0.3s;
+                }
+                .text:not(:first-child) {
+                    margin-top: 10px;
                 }
 
                 .text strong {
