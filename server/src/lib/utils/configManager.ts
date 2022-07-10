@@ -7,7 +7,7 @@ const fs = require('fs');
 export namespace ConfigManager {
     let configFilePath: string;
     const defaultConfig: Config = {
-        localeDirectoryPath: `${process.cwd()}/public/locales`,
+        localeDirectoryPath: StringFormatter.getNormalizedPath(`${process.cwd()}/public/locales`),
     };
 
     export function init(env: Env) {
