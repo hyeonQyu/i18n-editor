@@ -21,6 +21,7 @@ function Input(props: InputProps) {
                     ${getSizeCss('width', width)};
                     height: 40px;
                     border-radius: 40px;
+                    border: none;
                     padding: 0 20px;
                     background-color: #e5ecef;
                     transition: 0.3s;
