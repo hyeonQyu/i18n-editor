@@ -1,28 +1,30 @@
-import { LocaleJson, LocaleJsonInfo } from '../defines/common/locale-json-info';
+import { LocaleJson } from '../defines/common/locale-json-info';
 import { LANGUAGES } from '../defines/translation';
 import { Config } from '../defines/common/config';
+import { FileSystemManager } from './fileSystemManager';
+import { LocaleJsonInfoVo } from '../defines/common/models';
 
 const fs = require('fs');
 
 export namespace JsonManager {
-    export function generate(config: Config, localeJsonInfo: LocaleJsonInfo) {
+    export function generate(config: Config, localeJsonInfo: LocaleJsonInfoVo) {
         const { localeDirectoryPath } = config;
-        const { name, textSet } = localeJsonInfo;
+        const { name, texts } = localeJsonInfo;
 
         try {
-            if (!fs.existsSync(localeDirectoryPath)) {
-                fs.mkdirSync(localeDirectoryPath);
-            }
+            FileSystemManager.createDirectoryWhenNotExist(localeDirectoryPath);
 
             LANGUAGES.forEach((language) => {
-                const texts = Array.from(textSet);
-                const languageDirectoryPath = `${localeDirectoryPath}/${language}/${name}`;
-                const json = language === 'ko' ? getKoreanJson(texts) : getNotKoreanJson(texts, languageDirectoryPath);
-
                 console.log('언어: ', language);
-                console.log(json);
 
-                fs.writeFileSync(languageDirectoryPath, json);
+                const languageDirectoryPath = `${localeDirectoryPath}/${language}`;
+                FileSystemManager.createDirectoryWhenNotExist(languageDirectoryPath);
+
+                const filePath = `${languageDirectoryPath}/${name}`;
+                const json = language === 'ko' ? getKoreanJson(texts) : getNotKoreanJson(texts, filePath);
+
+                console.log(json);
+                fs.writeFileSync(filePath, JSON.stringify(json, null, 4));
             });
             console.log('다국어 JSON 파일 생성이 완료되었습니다.');
         } catch (e) {

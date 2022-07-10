@@ -4,10 +4,7 @@ import { HomeApi } from '@apis/homeApi';
 import useAlert from '@hooks/common/useAlert';
 import { AxiosError } from 'axios';
 
-export interface IUseMutationSaveParams {}
-
-export default function useMutationSave(params: IUseMutationSaveParams): UseMutationResult<void, AxiosError, SaveReq> {
-    const {} = params;
+export default function useMutationSave(): UseMutationResult<void, AxiosError, SaveReq> {
     const { showAlert } = useAlert();
 
     return useMutation(['save'], HomeApi.postSave, {

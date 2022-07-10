@@ -1,4 +1,3 @@
-import { LocaleJsonInfo } from './locale-json-info';
 import { Config } from './config';
 
 export interface CommonRes {
@@ -7,7 +6,12 @@ export interface CommonRes {
 
 export interface SaveReq {
     config: Config;
-    localeJsonInfo: LocaleJsonInfo;
+    localeJsonInfo: LocaleJsonInfoVo;
+}
+
+export interface LocaleJsonInfoVo {
+    name: string;
+    texts: string[];
 }
 
 export interface ConfigRes extends CommonRes {

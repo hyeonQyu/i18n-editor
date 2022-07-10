@@ -1,10 +1,11 @@
 import useInput, { IUseInput } from '@hooks/common/useInput';
-import { KeyboardEventHandler, useState } from 'react';
+import { KeyboardEventHandler, useEffect, useState } from 'react';
 import { LocaleJson, LocaleJsonInfo } from '@defines/common/locale-json-info';
 import useForm, { IUseForm } from '@hooks/common/useForm';
 import useAlert from '@hooks/common/useAlert';
 import useShortcuts from '@hooks/common/useShortcuts';
 import useMutationSave from '@hooks/queries/useMutationSave';
+import useQueryGetConfig from '@hooks/queries/useQueryGetConfig';
 
 export interface IUseHomeParams {}
 
@@ -34,17 +35,31 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         onSubmit: () => {},
     });
     const inputLocaleDirectoryPath = useInput({});
-    const { value: localeDirectoryPath } = inputLocaleDirectoryPath;
+    const { value: localeDirectoryPath, changeValue: setInputLocaleDirectory } = inputLocaleDirectoryPath;
     const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', textSet: new Set() });
     const inputText = useInput({});
 
     const { showAlert } = useAlert();
 
-    const { mutate: save } = useMutationSave({ saveReq: { localeJsonInfo, localeDirectoryPath } });
+    const { data: configData } = useQueryGetConfig();
+    const { mutate: save } = useMutationSave();
 
     useShortcuts({
-        onCtrlS: () => save({ config: { localeDirectoryPath }, localeJsonInfo }),
+        onCtrlS: () => {
+            const { name, textSet } = localeJsonInfo;
+            save({
+                config: { localeDirectoryPath },
+                localeJsonInfo: {
+                    name,
+                    texts: Array.from(textSet),
+                },
+            });
+        },
     });
+
+    useEffect(() => {
+        setInputLocaleDirectory(configData?.config?.localeDirectoryPath || '');
+    }, [configData]);
 
     const handleTextInputKeyPress: KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (e.key === 'Enter') {
