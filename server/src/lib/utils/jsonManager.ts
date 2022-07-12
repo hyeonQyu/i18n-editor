@@ -1,5 +1,4 @@
 import { LocaleJson } from '../defines/common/locale-json-info';
-import { LANGUAGES } from '../defines/translation';
 import { Config } from '../defines/common/config';
 import { FileSystemManager } from './fileSystemManager';
 import { LocaleJsonInfoVo } from '../defines/common/models';
@@ -8,14 +7,14 @@ const fs = require('fs');
 
 export namespace JsonManager {
     export function generate(config: Config, localeJsonInfo: LocaleJsonInfoVo) {
-        const { localeDirectoryPath } = config;
+        const { localeDirectoryPath, languages } = config;
         const { name, texts } = localeJsonInfo;
         texts.sort();
 
         try {
             FileSystemManager.createDirectoryWhenNotExist(localeDirectoryPath);
 
-            LANGUAGES.forEach((language) => {
+            languages.forEach((language) => {
                 const languageDirectoryPath = `${localeDirectoryPath}/${language}`;
                 FileSystemManager.createDirectoryWhenNotExist(languageDirectoryPath);
 

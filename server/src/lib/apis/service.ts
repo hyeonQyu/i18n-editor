@@ -1,4 +1,4 @@
-import { ConfigRes, SaveReq, SaveRes } from '../defines/common/models';
+import { ConfigReq, ConfigRes, SaveReq, SaveRes } from '../defines/common/models';
 import { JsonManager } from '../utils/jsonManager';
 import { ConfigManager } from '../utils/configManager';
 
@@ -31,6 +31,22 @@ export namespace Service {
             console.error('/config', e);
             return {
                 status: 500,
+            };
+        }
+    }
+
+    export function postConfig(req: ConfigReq): ConfigRes {
+        const { config } = req;
+        try {
+            ConfigManager.save(config);
+            return {
+                status: 200,
+                config,
+            };
+        } catch (e) {
+            return {
+                status: 500,
+                config: ConfigManager.read(),
             };
         }
     }
