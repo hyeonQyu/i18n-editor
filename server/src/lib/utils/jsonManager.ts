@@ -10,6 +10,7 @@ export namespace JsonManager {
     export function generate(config: Config, localeJsonInfo: LocaleJsonInfoVo) {
         const { localeDirectoryPath } = config;
         const { name, texts } = localeJsonInfo;
+        texts.sort();
 
         try {
             FileSystemManager.createDirectoryWhenNotExist(localeDirectoryPath);

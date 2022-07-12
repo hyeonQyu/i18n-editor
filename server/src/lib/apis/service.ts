@@ -1,18 +1,23 @@
-import { ConfigRes, SaveReq } from '../defines/common/models';
+import { ConfigRes, SaveReq, SaveRes } from '../defines/common/models';
 import { JsonManager } from '../utils/jsonManager';
 import { ConfigManager } from '../utils/configManager';
 
 export namespace Service {
-    export function postSave(req: SaveReq): number {
+    export function postSave(req: SaveReq): SaveRes {
         const { config, localeJsonInfo } = req;
 
         try {
             ConfigManager.save(config);
             JsonManager.generate(config, localeJsonInfo);
-            return 200;
+            return {
+                status: 200,
+                localeJsonInfo,
+            };
         } catch (e) {
             console.error('/save', e);
-            return 500;
+            return {
+                status: 500,
+            };
         }
     }
 

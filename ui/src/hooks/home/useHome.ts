@@ -42,7 +42,17 @@ export default function useHome(params: IUseHomeParams): IUseHome {
     const { showAlert } = useAlert();
 
     const { data: configData } = useQueryGetConfig();
-    const { mutate: save } = useMutationSave();
+    const { mutate: save } = useMutationSave({
+        onSuccess: (res) => {
+            const { localeJsonInfo } = res;
+            const { name, texts } = localeJsonInfo;
+            setLocaleJsonInfo({
+                name,
+                textSet: new Set(texts),
+            });
+            showAlert('저장했습니다', 'success');
+        },
+    });
 
     useShortcuts({
         onCtrlS: () => {
