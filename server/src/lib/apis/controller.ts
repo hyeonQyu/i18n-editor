@@ -24,7 +24,7 @@ export namespace Controller {
         /**
          * 설정 저장
          */
-        doCommonResponse<ConfigReq, any, ConfigRes>(app, 'config/countries', 'patch', async (req, res) => {
+        doCommonResponse<ConfigReq, any, ConfigRes>(app, 'config', 'patch', async (req, res) => {
             const configRes = Service.postConfig(req.body);
             res.status(configRes.status).send(configRes);
         });

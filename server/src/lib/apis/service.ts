@@ -28,7 +28,7 @@ export namespace Service {
                 status: 200,
             };
         } catch (e) {
-            console.error('/config', e);
+            console.error('/config [GET]', e);
             return {
                 status: 500,
             };
@@ -44,6 +44,7 @@ export namespace Service {
                 config,
             };
         } catch (e) {
+            console.error('/config [POST]', e);
             return {
                 status: 500,
                 config: ConfigManager.read(),
