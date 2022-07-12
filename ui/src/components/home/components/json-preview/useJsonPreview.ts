@@ -12,7 +12,7 @@ export interface IUseJsonPreview {
 }
 
 export default function useJsonPreview(params: IUseJsonPreviewParams): IUseJsonPreview {
-    const { localeJsonInfo, isKorean, onDeleteText } = params;
+    const { filterKeyword, localeJsonInfo, isKorean, onDeleteText } = params;
     const [scrollBar, setScrollBar] = useState<Scrollbars | null>(null);
     const [prevTextCount, setPrevTextCount] = useState(localeJsonInfo.textSet.size);
 
@@ -31,7 +31,7 @@ export default function useJsonPreview(params: IUseJsonPreviewParams): IUseJsonP
     }, [localeJsonInfo, scrollBar, prevTextCount]);
 
     const getTextInfos = (): JsonPreviewTextInfo[] => {
-        const texts = Array.from(localeJsonInfo.textSet);
+        const texts = Array.from(localeJsonInfo.textSet).filter((text) => text.includes(filterKeyword));
 
         if (isKorean) {
             return texts.map((text) => ({

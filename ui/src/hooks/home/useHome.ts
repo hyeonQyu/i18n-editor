@@ -19,6 +19,7 @@ export interface IUseHomeValues {
     inputLocaleDirectoryPath: IUseInput;
     localeJsonInfo: LocaleJsonInfo;
     inputText: IUseInput;
+    inputFilterKeyword: IUseInput;
 }
 
 export interface IUseHomeHandlers {
@@ -38,6 +39,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
     const { value: localeDirectoryPath, changeValue: setInputLocaleDirectory } = inputLocaleDirectoryPath;
     const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', textSet: new Set() });
     const inputText = useInput({});
+    const inputFilterKeyword = useInput({});
 
     const { showAlert } = useAlert();
 
@@ -131,6 +133,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
             inputLocaleDirectoryPath,
             localeJsonInfo,
             inputText,
+            inputFilterKeyword,
         },
         handlers: {
             handleTextInputKeyPress,
