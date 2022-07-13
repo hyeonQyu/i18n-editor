@@ -1,4 +1,4 @@
-import { CommonRes, ConfigRes, SaveReq } from '../defines/common/models';
+import { CommonRes, ConfigReq, ConfigRes, SaveReq, SaveRes } from '../defines/common/models';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { ParsedQs } from 'qs';
 import { Service } from './service';
@@ -8,9 +8,9 @@ export namespace Controller {
         /**
          * 저장
          */
-        doCommonResponse<SaveReq, any, void>(app, 'save', 'post', async (req, res) => {
-            const status = Service.postSave(req.body);
-            res.status(status).send();
+        doCommonResponse<SaveReq, any, SaveRes>(app, 'save', 'post', async (req, res) => {
+            const saveRes = Service.postSave(req.body);
+            res.status(saveRes.status).send(saveRes);
         });
 
         /**
@@ -20,12 +20,20 @@ export namespace Controller {
             const configRes = Service.getConfig();
             res.status(configRes.status).send(configRes);
         });
+
+        /**
+         * 설정 저장
+         */
+        doCommonResponse<ConfigReq, any, ConfigRes>(app, 'config', 'patch', async (req, res) => {
+            const configRes = Service.postConfig(req.body);
+            res.status(configRes.status).send(configRes);
+        });
     }
 
     function doCommonResponse<ReqBody, ReqQs extends ParsedQs, Res extends CommonRes | void>(
         app: any,
         path: string,
-        method: 'get' | 'post',
+        method: 'get' | 'post' | 'put' | 'patch' | 'delete',
         callback: (req: Request<ParamsDictionary, any, ReqBody, ReqQs>, res: Response<Omit<Res, 'status'>>) => void,
     ) {
         app[method](`/api/${path}`, async (req: Request<ParamsDictionary, any, ReqBody, ReqQs>, res: Response<Omit<Res, 'status'>>) => {
