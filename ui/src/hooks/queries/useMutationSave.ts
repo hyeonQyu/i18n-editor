@@ -1,16 +1,19 @@
 import { useMutation, UseMutationResult } from 'react-query';
-import { SaveReq } from '@defines/common/models';
+import { SaveReq, SaveRes } from '@defines/common/models';
 import { HomeApi } from '@apis/homeApi';
 import useAlert from '@hooks/common/useAlert';
 import { AxiosError } from 'axios';
 
-export default function useMutationSave(): UseMutationResult<void, AxiosError, SaveReq> {
+export interface IUseMutationSaveParam {
+    onSuccess: (res: SaveRes) => void;
+}
+
+export default function useMutationSave(param: IUseMutationSaveParam): UseMutationResult<SaveRes, AxiosError, SaveReq> {
+    const { onSuccess } = param;
     const { showAlert } = useAlert();
 
     return useMutation(['save'], HomeApi.postSave, {
-        onSuccess: () => {
-            showAlert('저장했습니다', 'success');
-        },
+        onSuccess,
         onError: (error: AxiosError) => {
             switch (error.response?.status) {
                 case 500:

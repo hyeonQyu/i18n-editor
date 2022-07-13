@@ -4,6 +4,7 @@ import Scrollbars from 'react-custom-scrollbars';
 import useCss from '@hooks/common/useCss';
 
 export interface JsonPreviewProps {
+    filterKeyword: string;
     localeJsonInfo: LocaleJsonInfo;
     isKorean: boolean;
     onDeleteText: (text: string) => void;

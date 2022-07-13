@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { ConfigRes, SaveReq } from '@defines/common/models';
+import { ConfigRes, SaveReq, SaveRes } from '@defines/common/models';
 
 export namespace HomeApi {
     let client: AxiosInstance;
@@ -12,7 +12,7 @@ export namespace HomeApi {
      * 저장 (다국어 JSON 파일 생성)
      * @param req
      */
-    export async function postSave(req: SaveReq): Promise<void> {
+    export async function postSave(req: SaveReq): Promise<SaveRes> {
         return (await client.post('/save', req)).data;
     }
 
