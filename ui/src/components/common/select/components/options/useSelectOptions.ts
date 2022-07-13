@@ -13,7 +13,7 @@ export interface IUseSelectOptionsParams<T extends number | string>
     setKeyword: (keyword: string) => void;
 }
 
-export interface IUseSelectBoxOptions<T extends number | string> {
+export interface IUseSelectOptions<T extends number | string> {
     searchBarRef: MutableRefObject<HTMLInputElement | null>;
     mounted: boolean;
     filteredOptions: SelectBoxOption<T>[];
@@ -23,7 +23,7 @@ export interface IUseSelectBoxOptions<T extends number | string> {
     disappearAnimationDuration: number;
 }
 
-export default function useSelectOptions<T extends number | string>(params: IUseSelectOptionsParams<T>): IUseSelectBoxOptions<T> {
+export default function useSelectOptions<T extends number | string>(params: IUseSelectOptionsParams<T>): IUseSelectOptions<T> {
     const { keyword, setKeyword, isOpened, options = [], optionSize = 20, placeholder, height } = params;
     const searchBarRef = useRef<HTMLInputElement>(null);
     const [filteredOptions, setFilteredOptions] = useState(options);
@@ -47,7 +47,7 @@ export default function useSelectOptions<T extends number | string>(params: IUse
             setFilteredOptions(options);
             return;
         }
-        setFilteredOptions(options.filter(({ name }) => name.toLowerCase().indexOf(keyword.toLowerCase()) > -1));
+        setFilteredOptions(options.filter(({ label }) => label.toLowerCase().indexOf(keyword.toLowerCase()) > -1));
     }, [keyword, options]);
 
     // 필터링 검색바 focus

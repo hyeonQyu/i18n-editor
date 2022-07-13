@@ -3,7 +3,7 @@ import { useSelectContext } from '@components/common/select/context/selectContex
 import Shortening from '@components/common/shortening/shortening';
 import ArrowIcon from '@icons/arrowIcon';
 
-function SelectHead<T extends number | string>() {
+function SelectHead() {
     const { props, useHook } = useSelectContext();
     const { message, isOpened, toggleOpen } = useHook;
     const { disabled } = props;

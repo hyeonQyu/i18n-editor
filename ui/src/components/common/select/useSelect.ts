@@ -1,27 +1,31 @@
 import { SelectProps } from '@components/common/select/select';
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { SelectBoxOption, SelectValue } from '@components/common/select/defines/selectBoxOption';
 
-export interface IUseSelectParams<T extends number | string>
-    extends Pick<SelectProps<T>, 'options' | 'value' | 'boxTitle' | 'disabled' | 'onChange'> {}
+export interface IUseSelectParams extends Pick<SelectProps, 'children' | 'value' | 'boxTitle' | 'disabled' | 'onChange'> {}
 
-export interface IUseSelect<T extends number | string> {
+export interface IUseSelect {
+    options: SelectBoxOption[];
     message: string;
     isMultiSelect: boolean;
-    selectedValueSet: Set<T>;
+    selectedValueSet: Set<SelectValue>;
     isOpened: boolean;
     ref: MutableRefObject<HTMLDivElement | null> | null;
     toggleOpen(): void;
-    select(value: T, index: number): void;
+    select(value: SelectValue, index: number): void;
 }
 
-export default function useSelect<T extends number | string>(params: IUseSelectParams<T>): IUseSelect<T> {
-    const { options = [], value, boxTitle = '옵션을 선택하세요.', disabled, onChange = () => {} } = params;
+export default function useSelect(params: IUseSelectParams): IUseSelect {
+    const { children, value, boxTitle = '옵션을 선택하세요.', disabled, onChange = () => {} } = params;
     const ref = useRef<HTMLDivElement | null>(null);
     const [message, setMessage] = useState<string>(boxTitle);
-    const [nameByValue, setNameByValue] = useState(new Map<T, string>());
-    const [selectedValueSet, setSelectedValueSet] = useState(new Set<T>());
+    const [nameByValue, setNameByValue] = useState(new Map<SelectValue, string>());
+    const [selectedValueSet, setSelectedValueSet] = useState(new Set<SelectValue>());
     const [isOpened, setIsOpened] = useState(false);
     const isMultiSelect = Array.isArray(value);
+    const options: SelectBoxOption[] = React.Children.map(children, ({ props }) => {
+        return { ...props, label: props.children };
+    });
 
     // options 를 Map 형태로 변경
     useEffect(() => {
@@ -30,9 +34,9 @@ export default function useSelect<T extends number | string>(params: IUseSelectP
             return prev;
         });
 
-        options.forEach(({ value, name }) => {
+        options.forEach(({ value, label }) => {
             setNameByValue((prev) => {
-                prev.set(value, name);
+                prev.set(value, label);
                 return new Map(prev);
             });
         });
@@ -108,7 +112,7 @@ export default function useSelect<T extends number | string>(params: IUseSelectP
         setIsOpened((prev) => !prev);
     };
 
-    const select = (value: T, index: number) => {
+    const select = (value: SelectValue, index: number) => {
         if (disabled) {
             return;
         }
@@ -120,6 +124,7 @@ export default function useSelect<T extends number | string>(params: IUseSelectP
     };
 
     return {
+        options,
         message,
         isMultiSelect,
         selectedValueSet,

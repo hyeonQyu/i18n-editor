@@ -1,10 +1,9 @@
 import { IUseSelect } from '@components/common/select/useSelect';
-import { SelectOptionProps } from '@components/common/select/components/options/components/option/SelectOption';
+import { SelectOptionProps } from '@components/common/select/components/options/components/option/selectOption';
+import { SelectValue } from '@components/common/select/defines/selectBoxOption';
 
-export interface IUseSelectOptionParams<T extends number | string>
-    extends Pick<IUseSelect<T>, 'select' | 'selectedValueSet'>,
-        Pick<SelectOptionProps<T>, 'index'> {
-    value: T;
+export interface IUseSelectOptionParams extends Pick<IUseSelect, 'select' | 'selectedValueSet'>, Pick<SelectOptionProps, 'index'> {
+    value: SelectValue;
     disabled: boolean;
 }
 
@@ -13,7 +12,7 @@ export interface IUseSelectOption {
     handleSelect(): void;
 }
 
-export default function useSelectBoxOption<T extends number | string>(params: IUseSelectOptionParams<T>): IUseSelectOption {
+export default function useSelectOption(params: IUseSelectOptionParams): IUseSelectOption {
     const { select, value, selectedValueSet, index, disabled } = params;
 
     const handleSelect = () => {

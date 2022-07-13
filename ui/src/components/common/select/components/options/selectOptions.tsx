@@ -1,6 +1,6 @@
 import { useSelectContext } from '@components/common/select/context/selectContext';
-import SelectOption from '@components/common/select/components/options/components/option/SelectOption';
-import SelectSearchBar from '@components/common/select/components/options/components/search-bar/SelectSearchBar';
+import SelectOption from '@components/common/select/components/options/components/option/selectOption';
+import SelectSearchBar from '@components/common/select/components/options/components/search-bar/selectSearchBar';
 import useInput from '@hooks/common/useInput';
 import useSelectOptions from '@components/common/select/components/options/useSelectOptions';
 import Scrollbars from 'react-custom-scrollbars';
@@ -8,8 +8,8 @@ import classNames from 'classnames';
 
 function SelectOptions() {
     const {
-        props: { options = [], placeholder, optionSize },
-        useHook: { isOpened },
+        props: { placeholder, optionSize },
+        useHook: { options = [], isOpened },
         height,
     } = useSelectContext();
     const { value: keyword, changeValue: setKeyword, onChange } = useInput({});
@@ -40,13 +40,13 @@ function SelectOptions() {
             <div className={classNames('options', !isOpened && 'closed')}>
                 {placeholder && <SelectSearchBar keyword={keyword} onChange={onChange} searchBarRef={searchBarRef} />}
 
-                <div className={classNames('select-box__options-wrapper')}>
+                <ul className={classNames('select-box__options-wrapper')}>
                     <Scrollbars renderTrackHorizontal={() => <div />} renderThumbHorizontal={() => <div />} hideTracksWhenNotNeeded>
                         {filteredOptions.map((option, i) => (
                             <SelectOption key={option.value} option={option} index={i} />
                         ))}
                     </Scrollbars>
-                </div>
+                </ul>
             </div>
 
             <style jsx global>{`
