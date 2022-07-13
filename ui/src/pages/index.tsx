@@ -10,7 +10,7 @@ import { LanguageNameByCode, LANGUAGES } from '@defines/common/translation';
 
 function Index() {
     const {
-        values: { formProps, inputLocaleDirectoryPath, localeJsonInfo, inputText, inputFilterKeyword },
+        values: { formProps, inputLocaleDirectoryPath, localeJsonInfo, inputText, inputFilterKeyword, checkedLanguages },
         handlers: {
             handleTextInputKeyPress,
             handleChangeLocaleJsonName,
@@ -49,7 +49,7 @@ function Index() {
                         <div className={'preview-menu'}>
                             <Select
                                 width={'55%'}
-                                value={[]}
+                                value={checkedLanguages}
                                 boxTitle={'지원하는 언어를 선택하세요'}
                                 optionSize={5}
                                 onChange={handleSelectSupportedLanguage}

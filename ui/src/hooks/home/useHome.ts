@@ -1,13 +1,14 @@
 import useInput, { IUseInput } from '@hooks/common/useInput';
-import { KeyboardEventHandler, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEventHandler, useCallback, useEffect, useState } from 'react';
 import { LocaleJson, LocaleJsonInfo } from '@defines/common/locale-json-info';
 import useForm, { IUseForm } from '@hooks/common/useForm';
 import useAlert from '@hooks/common/useAlert';
 import useShortcuts from '@hooks/common/useShortcuts';
 import useMutationSave from '@hooks/queries/useMutationSave';
 import useQueryGetConfig from '@hooks/queries/useQueryGetConfig';
-import { Language } from '@defines/common/translation';
+import { Language, LanguageNameByCode, LANGUAGES } from '@defines/common/translation';
 import { SelectValue } from '@components/common/select/defines/selectBoxOption';
+import useCheckable from '@hooks/common/useCheckable';
 
 export interface IUseHomeParams {}
 
@@ -22,6 +23,7 @@ export interface IUseHomeValues {
     localeJsonInfo: LocaleJsonInfo;
     inputText: IUseInput;
     inputFilterKeyword: IUseInput;
+    checkedLanguages: Language[];
 }
 
 export interface IUseHomeHandlers {
@@ -43,7 +45,15 @@ export default function useHome(params: IUseHomeParams): IUseHome {
     const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', textSet: new Set() });
     const inputText = useInput({});
     const inputFilterKeyword = useInput({});
-    const [supportedLanguages, setSupportedLanguages] = useState<Language[]>([]);
+    const { checkedItemTypes: checkedLanguages, handleCheck: checkLanguage } = useCheckable<Language>({
+        checkableItems: LANGUAGES.map((language) => {
+            return {
+                type: language,
+                checked: false,
+                label: LanguageNameByCode[language],
+            };
+        }),
+    });
 
     const { showAlert } = useAlert();
 
@@ -64,7 +74,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         onCtrlS: () => {
             const { name, textSet } = localeJsonInfo;
             save({
-                config: { localeDirectoryPath, languages: supportedLanguages },
+                config: { localeDirectoryPath, languages: checkedLanguages },
                 localeJsonInfo: {
                     name,
                     texts: Array.from(textSet),
@@ -132,9 +142,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
     };
 
     const handleSelectSupportedLanguage = useCallback((value: SelectValue, selected?: boolean, _?: number) => {
-        setSupportedLanguages((prev) => {
-            return selected ? [...prev, value as Language] : prev.filter((language) => language !== value);
-        });
+        checkLanguage({ target: { value } } as ChangeEvent<HTMLInputElement>);
     }, []);
 
     return {
@@ -144,6 +152,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
             localeJsonInfo,
             inputText,
             inputFilterKeyword,
+            checkedLanguages,
         },
         handlers: {
             handleTextInputKeyPress,
