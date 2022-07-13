@@ -5,6 +5,8 @@ import InputFile from '@components/common/input-file/inputFile';
 import useHome from '@hooks/home/useHome';
 import JsonPreview from '@components/home/components/json-preview/jsonPreview';
 import SearchInput from '@components/common/input/searchInput';
+import Select, { Option } from '@components/common/select/select';
+import { LanguageNameByCode, LANGUAGES } from '@defines/common/translation';
 
 function Index() {
     const {
@@ -39,7 +41,13 @@ function Index() {
                         <Input {...inputText} onKeyPress={handleTextInputKeyPress} placeholder={'추가할 문구를 입력하세요'} />
 
                         <div className={'preview-menu'}>
-                            <div />
+                            <Select width={'55%'} value={[]} boxTitle={'지원하는 언어를 선택하세요'} optionSize={5}>
+                                {LANGUAGES.map((language) => (
+                                    <Option value={language} key={language}>
+                                        {LanguageNameByCode[language]}
+                                    </Option>
+                                ))}
+                            </Select>
                             <SearchInput {...inputFilterKeyword} placeholder={'문구 찾기'} width={'40%'} />
                         </div>
 

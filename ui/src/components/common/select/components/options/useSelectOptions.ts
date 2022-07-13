@@ -5,10 +5,11 @@ import { SelectBoxOption } from '@components/common/select/defines/selectBoxOpti
 import { ISelectContext } from '@components/common/select/context/selectContext';
 import useAnimationMount from '@hooks/common/useAnimationMount';
 
-export interface IUseSelectOptionsParams<T extends number | string>
-    extends Pick<IUseSelect<T>, 'isOpened'>,
-        Pick<SelectProps<T>, 'options' | 'optionSize' | 'placeholder'>,
-        Pick<ISelectContext<T>, 'height'> {
+export interface IUseSelectOptionsParams
+    extends Pick<IUseSelect, 'isOpened'>,
+        Pick<SelectProps, 'optionSize' | 'placeholder'>,
+        Pick<ISelectContext, 'height'> {
+    options: SelectBoxOption[];
     keyword: string;
     setKeyword: (keyword: string) => void;
 }
@@ -16,15 +17,15 @@ export interface IUseSelectOptionsParams<T extends number | string>
 export interface IUseSelectOptions<T extends number | string> {
     searchBarRef: MutableRefObject<HTMLInputElement | null>;
     mounted: boolean;
-    filteredOptions: SelectBoxOption<T>[];
+    filteredOptions: SelectBoxOption[];
     dropdownHeight: string;
     optionsWrapperHeight: string;
     appearAnimationDuration: number;
     disappearAnimationDuration: number;
 }
 
-export default function useSelectOptions<T extends number | string>(params: IUseSelectOptionsParams<T>): IUseSelectOptions<T> {
-    const { keyword, setKeyword, isOpened, options = [], optionSize = 20, placeholder, height } = params;
+export default function useSelectOptions<T extends number | string>(params: IUseSelectOptionsParams): IUseSelectOptions<T> {
+    const { keyword, setKeyword, isOpened, options, optionSize = 20, placeholder, height } = params;
     const searchBarRef = useRef<HTMLInputElement>(null);
     const [filteredOptions, setFilteredOptions] = useState(options);
     const [dropdownHeight, setDropdownHeight] = useState('100%');

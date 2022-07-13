@@ -1,7 +1,7 @@
 import { InputHTMLAttributes, MutableRefObject } from 'react';
-import SearchIcon from '../../../../../../ts-apigen/ui/src/icons/search/searchIcon';
 import useSearchBar from './useSearchBar';
 import classNames from 'classnames';
+import SearchIcon from '@icons/searchIcon';
 
 export interface SearchBarProps extends InputHTMLAttributes<HTMLInputElement> {
     inputRef?: MutableRefObject<HTMLInputElement | null>;

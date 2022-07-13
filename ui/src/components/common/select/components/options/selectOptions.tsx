@@ -25,10 +25,10 @@ function SelectOptions() {
         keyword,
         setKeyword,
         isOpened,
-        options,
         optionSize,
         placeholder,
         height,
+        options,
     });
 
     if (!mounted || options.length === 0) {

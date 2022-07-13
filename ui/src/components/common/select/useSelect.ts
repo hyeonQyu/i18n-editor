@@ -23,9 +23,15 @@ export default function useSelect(params: IUseSelectParams): IUseSelect {
     const [selectedValueSet, setSelectedValueSet] = useState(new Set<SelectValue>());
     const [isOpened, setIsOpened] = useState(false);
     const isMultiSelect = Array.isArray(value);
-    const options: SelectBoxOption[] = React.Children.map(children, ({ props }) => {
-        return { ...props, label: props.children };
-    });
+    const [options, setOptions] = useState<SelectBoxOption[]>([]);
+
+    useEffect(() => {
+        setOptions(
+            React.Children.map(children, ({ props }) => {
+                return { ...props, label: props.children };
+            }),
+        );
+    }, [children]);
 
     // options 를 Map 형태로 변경
     useEffect(() => {
