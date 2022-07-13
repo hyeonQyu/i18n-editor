@@ -30,7 +30,7 @@ function SelectHead() {
                     justify-content: space-between;
                     padding: 0 20px;
                     transition: 0.3s;
-                    color: #585858;
+                    color: #727272;
                 }
 
                 .head.opened {

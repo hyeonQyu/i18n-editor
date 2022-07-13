@@ -1,11 +1,13 @@
 import useInput, { IUseInput } from '@hooks/common/useInput';
-import { KeyboardEventHandler, useEffect, useState } from 'react';
+import { KeyboardEventHandler, useCallback, useEffect, useState } from 'react';
 import { LocaleJson, LocaleJsonInfo } from '@defines/common/locale-json-info';
 import useForm, { IUseForm } from '@hooks/common/useForm';
 import useAlert from '@hooks/common/useAlert';
 import useShortcuts from '@hooks/common/useShortcuts';
 import useMutationSave from '@hooks/queries/useMutationSave';
 import useQueryGetConfig from '@hooks/queries/useQueryGetConfig';
+import { Language } from '@defines/common/translation';
+import { SelectValue } from '@components/common/select/defines/selectBoxOption';
 
 export interface IUseHomeParams {}
 
@@ -27,6 +29,7 @@ export interface IUseHomeHandlers {
     handleChangeLocaleJsonName: (name: string) => void;
     handleChangeLocaleJson: (data: LocaleJson) => void;
     handleDeleteText: (text: string) => void;
+    handleSelectSupportedLanguage: (value: SelectValue, selected?: boolean, index?: number) => void;
 }
 
 export default function useHome(params: IUseHomeParams): IUseHome {
@@ -40,6 +43,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
     const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', textSet: new Set() });
     const inputText = useInput({});
     const inputFilterKeyword = useInput({});
+    const [supportedLanguages, setSupportedLanguages] = useState<Language[]>([]);
 
     const { showAlert } = useAlert();
 
@@ -60,7 +64,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         onCtrlS: () => {
             const { name, textSet } = localeJsonInfo;
             save({
-                config: { localeDirectoryPath },
+                config: { localeDirectoryPath, languages: supportedLanguages },
                 localeJsonInfo: {
                     name,
                     texts: Array.from(textSet),
@@ -127,6 +131,12 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         });
     };
 
+    const handleSelectSupportedLanguage = useCallback((value: SelectValue, selected?: boolean, _?: number) => {
+        setSupportedLanguages((prev) => {
+            return selected ? [...prev, value as Language] : prev.filter((language) => language !== value);
+        });
+    }, []);
+
     return {
         values: {
             formProps,
@@ -140,6 +150,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
             handleChangeLocaleJsonName,
             handleChangeLocaleJson,
             handleDeleteText,
+            handleSelectSupportedLanguage,
         },
     };
 }

@@ -10,7 +10,7 @@ export interface SaveReq {
 }
 
 export interface SaveRes extends CommonRes {
-    localeJsonInfo?: LocaleJsonInfoVo;
+    localeJsonInfo: LocaleJsonInfoVo;
 }
 
 export interface LocaleJsonInfoVo {
@@ -23,5 +23,5 @@ export interface ConfigReq {
 }
 
 export interface ConfigRes extends CommonRes {
-    config?: Config;
+    config: Config;
 }
