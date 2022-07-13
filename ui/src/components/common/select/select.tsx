@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { SelectContext } from './context/selectContext';
 import SelectHead from '@components/common/select/components/head/selectHead';
-import { SelectBoxOption } from '@components/common/select/defines/selectBoxOption';
+import { SelectBoxOption, SelectValue } from '@components/common/select/defines/selectBoxOption';
 import useSelect from '@components/common/select/useSelect';
-import SelectOptions from '@components/common/select/components/options/SelectOptions';
+import SelectOptions from '@components/common/select/components/options/selectOptions';
 import useCss from '@hooks/common/useCss';
 import { Size } from '@defines/css';
 
-export interface SelectProps<T extends number | string> {
+export interface OptionProps extends Omit<SelectBoxOption, 'label'> {
+    children: string;
+}
+
+export function Option(props: OptionProps) {
+    return <></>;
+}
+
+export interface SelectProps {
     /** 선택할 수 있는 항목 목록 */
-    options?: SelectBoxOption<T>[];
+    children: ReactElement<OptionProps> | ReactElement<OptionProps>[];
 
     /** 선택된 값으로 배열인 경우 다중 선택, number 혹은 string 인 경우 단일 선택 */
-    value?: T | T[];
+    value?: SelectValue | SelectValue[];
 
     /** 너비 */
     width?: Size;
@@ -27,15 +35,15 @@ export interface SelectProps<T extends number | string> {
     disabled?: boolean;
 
     /** 특정 옵션 선택 시 실행되는 콜백 */
-    onChange?: (value: T, selected?: boolean, index?: number) => void;
+    onChange?: (value: SelectValue, selected?: boolean, index?: number) => void;
 
     /** 한번에 보이는 option 최대 갯수 */
     optionSize?: number;
 }
 
-function Select<T extends string | number>(props: SelectProps<T>) {
+function Select(props: SelectProps) {
     const { width = '100%' } = props;
-    const select = useSelect<T>({ ...props });
+    const select = useSelect({ ...props });
     const { ref } = select;
 
     const { getSizeCss } = useCss({});

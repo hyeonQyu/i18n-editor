@@ -1,11 +1,14 @@
 import useInput, { IUseInput } from '@hooks/common/useInput';
-import { KeyboardEventHandler, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEventHandler, useCallback, useEffect, useState } from 'react';
 import { LocaleJson, LocaleJsonInfo } from '@defines/common/locale-json-info';
 import useForm, { IUseForm } from '@hooks/common/useForm';
 import useAlert from '@hooks/common/useAlert';
 import useShortcuts from '@hooks/common/useShortcuts';
 import useMutationSave from '@hooks/queries/useMutationSave';
 import useQueryGetConfig from '@hooks/queries/useQueryGetConfig';
+import { Language, LanguageNameByCode, LANGUAGES } from '@defines/common/translation';
+import { SelectValue } from '@components/common/select/defines/selectBoxOption';
+import useCheckable from '@hooks/common/useCheckable';
 
 export interface IUseHomeParams {}
 
@@ -20,6 +23,7 @@ export interface IUseHomeValues {
     localeJsonInfo: LocaleJsonInfo;
     inputText: IUseInput;
     inputFilterKeyword: IUseInput;
+    checkedLanguages: Language[];
 }
 
 export interface IUseHomeHandlers {
@@ -27,6 +31,7 @@ export interface IUseHomeHandlers {
     handleChangeLocaleJsonName: (name: string) => void;
     handleChangeLocaleJson: (data: LocaleJson) => void;
     handleDeleteText: (text: string) => void;
+    handleSelectSupportedLanguage: (value: SelectValue, selected?: boolean, index?: number) => void;
 }
 
 export default function useHome(params: IUseHomeParams): IUseHome {
@@ -40,6 +45,15 @@ export default function useHome(params: IUseHomeParams): IUseHome {
     const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', textSet: new Set() });
     const inputText = useInput({});
     const inputFilterKeyword = useInput({});
+    const { checkedItemTypes: checkedLanguages, handleCheck: checkLanguage } = useCheckable<Language>({
+        checkableItems: LANGUAGES.map((language) => {
+            return {
+                type: language,
+                checked: false,
+                label: LanguageNameByCode[language],
+            };
+        }),
+    });
 
     const { showAlert } = useAlert();
 
@@ -60,7 +74,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         onCtrlS: () => {
             const { name, textSet } = localeJsonInfo;
             save({
-                config: { localeDirectoryPath },
+                config: { localeDirectoryPath, languages: checkedLanguages },
                 localeJsonInfo: {
                     name,
                     texts: Array.from(textSet),
@@ -127,6 +141,10 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         });
     };
 
+    const handleSelectSupportedLanguage = useCallback((value: SelectValue, selected?: boolean, _?: number) => {
+        checkLanguage({ target: { value } } as ChangeEvent<HTMLInputElement>);
+    }, []);
+
     return {
         values: {
             formProps,
@@ -134,12 +152,14 @@ export default function useHome(params: IUseHomeParams): IUseHome {
             localeJsonInfo,
             inputText,
             inputFilterKeyword,
+            checkedLanguages,
         },
         handlers: {
             handleTextInputKeyPress,
             handleChangeLocaleJsonName,
             handleChangeLocaleJson,
             handleDeleteText,
+            handleSelectSupportedLanguage,
         },
     };
 }

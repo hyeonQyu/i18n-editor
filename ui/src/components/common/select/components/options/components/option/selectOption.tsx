@@ -1,38 +1,38 @@
 import { SelectBoxOption } from '@components/common/select/defines/selectBoxOption';
 import { useSelectContext } from '@components/common/select/context/selectContext';
 import Checkbox from '@components/common/checkbox/checkbox';
-import useSelectBoxOption from '@components/common/select/components/options/components/option/useSelectBoxOption';
+import useSelectOption from '@components/common/select/components/options/components/option/useSelectOption';
 import classNames from 'classnames';
 import Shortening from '@components/common/shortening/shortening';
 
-export interface SelectOptionProps<T extends number | string> {
-    option: SelectBoxOption<T>;
+export interface SelectOptionProps {
+    option: SelectBoxOption;
     index: number;
 }
 
-function SelectOption<T extends number | string>(props: SelectOptionProps<T>) {
+function SelectOption<T extends number | string>(props: SelectOptionProps) {
     const { option, index } = props;
-    const { value, name, disabled = false } = option;
+    const { value, label, disabled = false } = option;
     const { useHook, height } = useSelectContext();
     const { selectedValueSet, isMultiSelect, select } = useHook;
-    const { selected, handleSelect } = useSelectBoxOption<T>({ select, value, selectedValueSet, index, disabled });
+    const { selected, handleSelect } = useSelectOption({ select, value, selectedValueSet, index, disabled });
 
     return (
         <>
-            <div className={'option'}>
+            <li className={'option'}>
                 <div
                     className={classNames('option-inner', !isMultiSelect && selected && 'selected', disabled && 'disabled')}
                     onClick={handleSelect}
                 >
                     {isMultiSelect ? (
                         <Checkbox checked={selected}>
-                            <Shortening lineHeight={2}>{name}</Shortening>
+                            <Shortening lineHeight={2}>{label}</Shortening>
                         </Checkbox>
                     ) : (
-                        <Shortening lineHeight={2}>{name}</Shortening>
+                        <Shortening lineHeight={2}>{label}</Shortening>
                     )}
                 </div>
-            </div>
+            </li>
 
             <style jsx>{`
                 .option {

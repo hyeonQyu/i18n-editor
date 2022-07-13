@@ -3,7 +3,7 @@ import { useSelectContext } from '@components/common/select/context/selectContex
 import Shortening from '@components/common/shortening/shortening';
 import ArrowIcon from '@icons/arrowIcon';
 
-function SelectHead<T extends number | string>() {
+function SelectHead() {
     const { props, useHook } = useSelectContext();
     const { message, isOpened, toggleOpen } = useHook;
     const { disabled } = props;
@@ -30,7 +30,7 @@ function SelectHead<T extends number | string>() {
                     justify-content: space-between;
                     padding: 0 20px;
                     transition: 0.3s;
-                    color: #585858;
+                    color: #727272;
                 }
 
                 .head.opened {

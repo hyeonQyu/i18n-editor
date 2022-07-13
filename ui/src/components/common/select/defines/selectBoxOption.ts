@@ -1,5 +1,7 @@
-export interface SelectBoxOption<T extends number | string> {
-    value: T;
-    name: string;
+export type SelectValue = number | string;
+
+export interface SelectBoxOption {
+    value: SelectValue;
+    label: string;
     disabled?: boolean;
 }
