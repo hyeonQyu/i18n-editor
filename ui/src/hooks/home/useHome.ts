@@ -91,7 +91,6 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         setInputLocaleDirectory(configData?.config?.localeDirectoryPath || '');
         setCheckableLanguageItems((prev) => {
             return prev.map(({ type, label }) => {
-                console.log(type, configData?.config?.languages, configData?.config?.languages?.includes(type) ?? false);
                 return {
                     type,
                     label,
