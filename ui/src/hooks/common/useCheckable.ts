@@ -36,6 +36,10 @@ export default function useCheckable<T extends string>(params: IUseCheckablePara
     const [checkedCount, setCheckedCount] = useState(0);
 
     useEffect(() => {
+        setItems(checkableItems);
+    }, [checkableItems]);
+
+    useEffect(() => {
         setIsAllChecked(items.every(({ checked }) => checked));
         setIsRequiredItemNotChecked(items.some(({ checked, required }) => required && !checked));
         setCheckedCount(items.filter(({ checked }) => checked).length);
