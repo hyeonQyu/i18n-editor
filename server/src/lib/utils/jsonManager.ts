@@ -19,9 +19,13 @@ export namespace JsonManager {
                 FileSystemManager.createDirectoryWhenNotExist(languageDirectoryPath);
 
                 const filePath = `${languageDirectoryPath}/${name}`;
-                const json = JSON.parse(language === 'ko' ? getKoreanJson(texts) : getNotKoreanJson(texts, filePath));
+                const json = JSON.stringify(
+                    JSON.parse(language === 'ko' ? getKoreanJson(texts) : getNotKoreanJson(texts, filePath)),
+                    null,
+                    4,
+                );
 
-                fs.writeFileSync(filePath, JSON.stringify(json, null, 4));
+                fs.writeFileSync(filePath, json.replace(/\\\\/g, '\\'));
                 console.log(`${language}/${name}`, '생성 완료');
             });
             console.log('다국어 JSON 파일 생성이 완료되었습니다.');
