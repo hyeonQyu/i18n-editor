@@ -44,8 +44,6 @@ function Index() {
                     </form>
 
                     <div className={'preview'}>
-                        <Input {...inputText} onKeyPress={handleTextInputKeyPress} placeholder={'추가할 문구를 입력하세요'} />
-
                         <div className={'preview-menu'}>
                             <Select
                                 width={'55%'}
@@ -71,6 +69,10 @@ function Index() {
                                 onDeleteText={handleDeleteText}
                             />
                         </div>
+
+                        <div className={'add-text'}>
+                            <Input {...inputText} onKeyPress={handleTextInputKeyPress} placeholder={'추가할 문구를 입력하세요'} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,7 +96,7 @@ function Index() {
                     margin-top: 20px;
                 }
 
-                .preview > *:not(:first-child) {
+                .preview > :global(*:not(:first-child)) {
                     margin-top: 10px;
                 }
 
