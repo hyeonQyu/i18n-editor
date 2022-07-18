@@ -7,10 +7,12 @@ import JsonPreview from '@components/home/components/json-preview/jsonPreview';
 import SearchInput from '@components/common/input/searchInput';
 import Select, { Option } from '@components/common/select/select';
 import { LanguageNameByCode, LANGUAGES } from '@defines/common/translation';
+import Lottie from 'lottie-react';
+import { assetLottie } from '@public/assets/lotties';
 
 function Index() {
     const {
-        values: { formProps, inputLocaleDirectoryPath, localeJsonInfo, inputText, inputFilterKeyword, checkedLanguages },
+        values: { formProps, inputLocaleDirectoryPath, localeJsonInfo, inputText, inputFilterKeyword, checkedLanguages, loadingGetConfig },
         handlers: {
             handleTextInputKeyPress,
             handleChangeLocaleJsonName,
@@ -27,54 +29,58 @@ function Index() {
             </Head>
 
             <div className={'wrapper'}>
-                <div>
-                    <form {...formProps}>
-                        <TableRow title={'locale 폴더'}>
-                            <Input {...inputLocaleDirectoryPath} placeholder={'locale 폴더 경로를 입력하세요'} />
-                        </TableRow>
-                        <TableRow title={'다국어 JSON 파일'}>
-                            <InputFile
-                                label={localeJsonInfo?.name}
-                                acceptableExtensionList={['.json']}
-                                onChangeFileName={handleChangeLocaleJsonName}
-                                onChangeFileContent={handleChangeLocaleJson}
-                                isFileJson
-                            />
-                        </TableRow>
-                    </form>
+                {loadingGetConfig ? (
+                    <Lottie animationData={assetLottie.getConfig} />
+                ) : (
+                    <div>
+                        <form {...formProps}>
+                            <TableRow title={'locale 폴더'}>
+                                <Input {...inputLocaleDirectoryPath} placeholder={'locale 폴더 경로를 입력하세요'} />
+                            </TableRow>
+                            <TableRow title={'다국어 JSON 파일'}>
+                                <InputFile
+                                    label={localeJsonInfo?.name}
+                                    acceptableExtensionList={['.json']}
+                                    onChangeFileName={handleChangeLocaleJsonName}
+                                    onChangeFileContent={handleChangeLocaleJson}
+                                    isFileJson
+                                />
+                            </TableRow>
+                        </form>
 
-                    <div className={'preview'}>
-                        <div className={'preview-menu'}>
-                            <Select
-                                width={'55%'}
-                                value={checkedLanguages}
-                                boxTitle={'지원하는 언어를 선택하세요'}
-                                optionSize={5}
-                                onChange={handleSelectSupportedLanguage}
-                            >
-                                {LANGUAGES.map((language) => (
-                                    <Option value={language} key={language}>
-                                        {LanguageNameByCode[language]}
-                                    </Option>
-                                ))}
-                            </Select>
-                            <SearchInput {...inputFilterKeyword} placeholder={'문구 찾기'} width={'40%'} />
-                        </div>
+                        <div className={'preview'}>
+                            <div className={'preview-menu'}>
+                                <Select
+                                    width={'55%'}
+                                    value={checkedLanguages}
+                                    boxTitle={'지원하는 언어를 선택하세요'}
+                                    optionSize={5}
+                                    onChange={handleSelectSupportedLanguage}
+                                >
+                                    {LANGUAGES.map((language) => (
+                                        <Option value={language} key={language}>
+                                            {LanguageNameByCode[language]}
+                                        </Option>
+                                    ))}
+                                </Select>
+                                <SearchInput {...inputFilterKeyword} placeholder={'문구 찾기'} width={'40%'} />
+                            </div>
 
-                        <div className={'preview-wrapper'}>
-                            <JsonPreview
-                                filterKeyword={inputFilterKeyword.value}
-                                localeJsonInfo={localeJsonInfo}
-                                isKorean
-                                onDeleteText={handleDeleteText}
-                            />
-                        </div>
+                            <div className={'preview-wrapper'}>
+                                <JsonPreview
+                                    filterKeyword={inputFilterKeyword.value}
+                                    localeJsonInfo={localeJsonInfo}
+                                    isKorean
+                                    onDeleteText={handleDeleteText}
+                                />
+                            </div>
 
-                        <div className={'add-text'}>
-                            <Input {...inputText} onKeyPress={handleTextInputKeyPress} placeholder={'추가할 문구를 입력하세요'} />
+                            <div className={'add-text'}>
+                                <Input {...inputText} onKeyPress={handleTextInputKeyPress} placeholder={'추가할 문구를 입력하세요'} />
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
 
             <style jsx>{`

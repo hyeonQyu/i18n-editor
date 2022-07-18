@@ -25,6 +25,8 @@ export interface IUseHomeValues {
     inputText: IUseInput;
     inputFilterKeyword: IUseInput;
     checkedLanguages: Language[];
+    loadingGetConfig: boolean;
+    loadingSave: boolean;
 }
 
 export interface IUseHomeHandlers {
@@ -61,8 +63,8 @@ export default function useHome(params: IUseHomeParams): IUseHome {
 
     const { showAlert } = useAlert();
 
-    const { data: configData } = useQueryGetConfig();
-    const { mutate: save } = useMutationSave({
+    const { data: configData, isLoading: loadingGetConfig } = useQueryGetConfig();
+    const { mutate: save, isLoading: loadingSave } = useMutationSave({
         onSuccess: (res) => {
             const { localeJsonInfo } = res;
             const { name, texts } = localeJsonInfo;
@@ -166,6 +168,8 @@ export default function useHome(params: IUseHomeParams): IUseHome {
             inputText,
             inputFilterKeyword,
             checkedLanguages,
+            loadingGetConfig,
+            loadingSave,
         },
         handlers: {
             handleTextInputKeyPress,
