@@ -22,6 +22,7 @@ export interface IUseHomeValues {
     formProps: IUseForm;
     inputLocaleDirectoryPath: IUseInput;
     localeJsonInfo: LocaleJsonInfo;
+    defaultLanguage: Language;
     inputText: IUseInput;
     inputFilterKeyword: IUseInput;
     checkedLanguages: Language[];
@@ -34,7 +35,8 @@ export interface IUseHomeHandlers {
     handleChangeLocaleJsonName: (name: string) => void;
     handleChangeLocaleJson: (data: LocaleJson) => void;
     handleDeleteText: (text: string) => void;
-    handleSelectSupportedLanguage: (value: SelectValue, selected?: boolean, index?: number) => void;
+    handleSelectDefaultLanguage: (value: SelectValue) => void;
+    handleSelectSupportedLanguage: (value: SelectValue) => void;
 }
 
 export default function useHome(params: IUseHomeParams): IUseHome {
@@ -46,6 +48,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
     const inputLocaleDirectoryPath = useInput({});
     const { value: localeDirectoryPath, changeValue: setInputLocaleDirectory } = inputLocaleDirectoryPath;
     const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', textSet: new Set() });
+    const [defaultLanguage, setDefaultLanguage] = useState<Language>('ko');
     const inputText = useInput({});
     const inputFilterKeyword = useInput({});
     const [checkableLanguageItems, setCheckableLanguageItems] = useState<Checkable<Language>[]>(
@@ -80,7 +83,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         onCtrlS: () => {
             const { name, textSet } = localeJsonInfo;
             save({
-                config: { localeDirectoryPath, languages: checkedLanguages },
+                config: { localeDirectoryPath, languages: checkedLanguages, defaultLanguage },
                 localeJsonInfo: {
                     name,
                     texts: Array.from(textSet),
@@ -100,6 +103,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
                 };
             });
         });
+        setDefaultLanguage(configData?.config?.defaultLanguage || 'ko');
     }, [configData]);
 
     const handleTextInputKeyPress: KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -156,7 +160,11 @@ export default function useHome(params: IUseHomeParams): IUseHome {
         });
     };
 
-    const handleSelectSupportedLanguage = useCallback((value: SelectValue, selected?: boolean, _?: number) => {
+    const handleSelectDefaultLanguage = useCallback((value: SelectValue) => {
+        setDefaultLanguage(value as Language);
+    }, []);
+
+    const handleSelectSupportedLanguage = useCallback((value: SelectValue) => {
         checkLanguage({ target: { value } } as ChangeEvent<HTMLInputElement>);
     }, []);
 
@@ -165,6 +173,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
             formProps,
             inputLocaleDirectoryPath,
             localeJsonInfo,
+            defaultLanguage,
             inputText,
             inputFilterKeyword,
             checkedLanguages,
@@ -176,6 +185,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
             handleChangeLocaleJsonName,
             handleChangeLocaleJson,
             handleDeleteText,
+            handleSelectDefaultLanguage,
             handleSelectSupportedLanguage,
         },
     };

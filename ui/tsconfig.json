@@ -37,6 +37,9 @@
       "@icons/*": [
         "./icons/*"
       ],
+      "@utils/*": [
+        "./utils/*"
+      ],
       "@public/*": [
         "../public/*"
       ]

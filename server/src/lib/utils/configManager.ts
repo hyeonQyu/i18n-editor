@@ -9,6 +9,7 @@ export namespace ConfigManager {
     const defaultConfig: Config = {
         localeDirectoryPath: StringFormatter.getNormalizedPath(`${process.cwd()}/public/locales`),
         languages: ['ko'],
+        defaultLanguage: 'ko',
     };
 
     export function init(env: Env) {

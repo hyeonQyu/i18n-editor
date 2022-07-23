@@ -31,7 +31,7 @@ export default function useJsonPreview(params: IUseJsonPreviewParams): IUseJsonP
     }, [localeJsonInfo, scrollBar, prevTextCount]);
 
     const getTextInfos = (): JsonPreviewTextInfo[] => {
-        const texts = Array.from(localeJsonInfo.textSet).filter((text) => text.includes(filterKeyword));
+        const texts = Array.from(localeJsonInfo.textSet).filter((text) => text.toLowerCase().includes(filterKeyword.toLowerCase()));
 
         if (isKorean) {
             return texts.map((text) => ({

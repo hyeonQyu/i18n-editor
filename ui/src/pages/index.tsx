@@ -12,12 +12,22 @@ import { assetLottie } from '@public/assets/lotties';
 
 function Index() {
     const {
-        values: { formProps, inputLocaleDirectoryPath, localeJsonInfo, inputText, inputFilterKeyword, checkedLanguages, loadingGetConfig },
+        values: {
+            formProps,
+            inputLocaleDirectoryPath,
+            localeJsonInfo,
+            defaultLanguage,
+            inputText,
+            inputFilterKeyword,
+            checkedLanguages,
+            loadingGetConfig,
+        },
         handlers: {
             handleTextInputKeyPress,
             handleChangeLocaleJsonName,
             handleChangeLocaleJson,
             handleDeleteText,
+            handleSelectDefaultLanguage,
             handleSelectSupportedLanguage,
         },
     } = useHome({});
@@ -46,15 +56,19 @@ function Index() {
                                     isFileJson
                                 />
                             </TableRow>
-                        </form>
-
-                        <div className={'preview'}>
-                            <div className={'preview-menu'}>
+                            <TableRow title={'기본 언어 설정'}>
+                                <Select value={defaultLanguage} boxTitle={'기본 언어를 선택하세요'} onChange={handleSelectDefaultLanguage}>
+                                    {LANGUAGES.map((language) => (
+                                        <Option value={language} key={language}>
+                                            {LanguageNameByCode[language]}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </TableRow>
+                            <TableRow title={'지원 언어 설정'}>
                                 <Select
-                                    width={'55%'}
                                     value={checkedLanguages}
                                     boxTitle={'지원하는 언어를 선택하세요'}
-                                    optionSize={5}
                                     onChange={handleSelectSupportedLanguage}
                                 >
                                     {LANGUAGES.map((language) => (
@@ -63,6 +77,18 @@ function Index() {
                                         </Option>
                                     ))}
                                 </Select>
+                            </TableRow>
+                        </form>
+
+                        <div className={'preview'}>
+                            <div className={'preview-menu'}>
+                                <Input
+                                    width={'58%'}
+                                    {...inputText}
+                                    onKeyPress={handleTextInputKeyPress}
+                                    placeholder={'추가할 문구를 입력하세요'}
+                                />
+
                                 <SearchInput {...inputFilterKeyword} placeholder={'문구 찾기'} width={'40%'} />
                             </div>
 
@@ -74,10 +100,6 @@ function Index() {
                                     onDeleteText={handleDeleteText}
                                 />
                             </div>
-
-                            <div className={'add-text'}>
-                                <Input {...inputText} onKeyPress={handleTextInputKeyPress} placeholder={'추가할 문구를 입력하세요'} />
-                            </div>
                         </div>
                     </div>
                 )}
@@ -88,11 +110,12 @@ function Index() {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    height: 100%;
+                    min-height: 100%;
                 }
 
                 .wrapper > div {
                     width: 600px;
+                    padding: 40px 0;
                 }
 
                 form {

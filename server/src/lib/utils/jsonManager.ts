@@ -7,7 +7,7 @@ const fs = require('fs');
 
 export namespace JsonManager {
     export function generate(config: Config, localeJsonInfo: LocaleJsonInfoVo) {
-        const { localeDirectoryPath, languages } = config;
+        const { localeDirectoryPath, languages, defaultLanguage } = config;
         const { name, texts } = localeJsonInfo;
         texts.sort();
 
@@ -19,11 +19,7 @@ export namespace JsonManager {
                 FileSystemManager.createDirectoryWhenNotExist(languageDirectoryPath);
 
                 const filePath = `${languageDirectoryPath}/${name}`;
-                const json = JSON.stringify(
-                    JSON.parse(language === 'ko' ? getKoreanJson(texts) : getNotKoreanJson(texts, filePath)),
-                    null,
-                    4,
-                );
+                const json = JSON.stringify(JSON.parse(getJson(texts, filePath, language === defaultLanguage)), null, 4);
 
                 fs.writeFileSync(filePath, json.replace(/\\\\/g, '\\'));
                 console.log(`${language}/${name}`, '생성 완료');
@@ -34,26 +30,14 @@ export namespace JsonManager {
         }
     }
 
-    function getKoreanJson(texts: string[]) {
-        return getPrettyJson(
-            texts.reduce(
-                (acc, text) => ({
-                    ...acc,
-                    [text]: text,
-                }),
-                {},
-            ),
-        );
-    }
-
-    function getNotKoreanJson(texts: string[], languageDirectoryPath: string) {
+    function getJson(texts: string[], languageDirectoryPath: string, isDefaultLanguage: boolean) {
         const textMap: LocaleJson = getTextMap(languageDirectoryPath);
 
         return getPrettyJson(
             texts.reduce(
                 (acc, text) => ({
                     ...acc,
-                    [text]: textMap[text] ?? '',
+                    [text]: textMap[text] || (isDefaultLanguage ? text : ''),
                 }),
                 {},
             ),

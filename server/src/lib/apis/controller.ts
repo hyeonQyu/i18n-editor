@@ -4,7 +4,7 @@ import { ParsedQs } from 'qs';
 import { Service } from './service';
 
 export namespace Controller {
-    export async function response(app: any) {
+    export function response(app: any) {
         /**
          * 저장
          */
