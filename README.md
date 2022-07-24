@@ -55,13 +55,14 @@ JSON 파일에서 key값으로 입력할 기본 언어를 설정합니다.
 #### 지원 언어 설정
 지원하는 언어만큼 locales 폴더 하위에 JSON 파일이 생성됩니다.
 `영어`, `한국어`, `일본어`를 선택하고 `common.json`파일을 편집한 경우 아래와 같이 저장됩니다.
-📂locales
-&nbsp;&nbsp;&nbsp;&nbsp;📂ko
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🗒️common.json
-&nbsp;&nbsp;&nbsp;&nbsp;📂en
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🗒️common.json
-&nbsp;&nbsp;&nbsp;&nbsp;📂ja
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🗒️common.json
+
+📂locales  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📂ko  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🗒️common.json  
+&nbsp;&nbsp;&nbsp;&nbsp;📂en  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🗒️common.json  
+&nbsp;&nbsp;&nbsp;&nbsp;📂ja  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🗒️common.json  
 
 #### 문구 추가
 `추가할 문구를 입력하세요`라고 적혀있는 input field에 문구를 입력하고 엔터키를 누르면 문구가 추가됩니다.
