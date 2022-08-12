@@ -6,8 +6,12 @@ const { exec } = require('child_process');
 export namespace UiExecutor {
     export function runHtmlUi(port: number) {
         const htmlPath = `${process.cwd()}/node_modules/locale-json-manager/release-ui/index.html`;
-        addPortToHtml(htmlPath, port);
-        exec(`${getCommandLine()} ${htmlPath}`);
+        try {
+            addPortToHtml(htmlPath, port);
+            exec(`${getCommandLine()} ${htmlPath}`);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     /**
