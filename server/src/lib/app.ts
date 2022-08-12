@@ -1,5 +1,4 @@
 import { AppOption } from './defines/appOption';
-import { Default } from './defines/common/default';
 import { UiExecutor } from './utils/uiExecutor';
 import { Controller } from './apis/controller';
 import { ConfigManager } from './utils/configManager';
@@ -29,7 +28,7 @@ module.exports = {
                     }),
                 );
 
-                server.listen(Default.PORT, () => {
+                server.listen(port, () => {
                     console.log(`locale json manager started with port ${port}`);
                 });
 
