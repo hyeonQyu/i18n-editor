@@ -49,7 +49,7 @@ export namespace JsonManager {
             return {};
         }
         const jsonFile = fs.readFileSync(languageDirectoryPath, 'utf-8');
-        return JSON.parse(jsonFile);
+        return JSON.parse(jsonFile || '{}');
     }
 
     function getPrettyJson(obj: object) {

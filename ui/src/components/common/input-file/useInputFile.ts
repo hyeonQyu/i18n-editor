@@ -31,7 +31,7 @@ export default function useInputFile<T>(params: IUseInputFileParams<T>): IUseInp
 
         const content = await files[0].text();
         onChangeFileName(name);
-        onChangeFileContent(isFileJson ? JSON.parse(content) : content);
+        onChangeFileContent(isFileJson ? JSON.parse(content || '{}') : content);
     };
 
     useEffect(() => {
