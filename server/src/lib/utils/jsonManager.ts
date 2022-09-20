@@ -8,8 +8,8 @@ const fs = require('fs');
 export namespace JsonManager {
     export function generate(config: Config, localeJsonInfo: LocaleJsonInfoVo) {
         const { localeDirectoryPath, languages, defaultLanguage } = config;
-        const { name, texts } = localeJsonInfo;
-        texts.sort();
+        const { name, keyValues } = localeJsonInfo;
+        const texts = keyValues.map(({ key }) => key).sort();
 
         try {
             FileSystemManager.createDirectoryWhenNotExist(localeDirectoryPath);

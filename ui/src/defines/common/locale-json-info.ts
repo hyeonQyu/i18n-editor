@@ -1,6 +1,8 @@
+import KeyValueSet from '@utils/keyValueSet';
+
 export interface LocaleJsonInfo {
     name: string;
-    textSet: Set<string>;
+    keyValueSet: KeyValueSet<string, string>;
 }
 
 export type LocaleJson = {

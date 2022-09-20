@@ -2,12 +2,12 @@ import { LocaleJsonInfo } from '@defines/common/locale-json-info';
 import useJsonPreview from '@components/home/components/json-preview/useJsonPreview';
 import Scrollbars from 'react-custom-scrollbars';
 import useCss from '@hooks/common/useCss';
+import { KeyValuePair } from '@defines/common/keyValuePair';
 
 export interface JsonPreviewProps {
     filterKeyword: string;
     localeJsonInfo: LocaleJsonInfo;
-    isKorean: boolean;
-    onDeleteText: (text: string) => void;
+    onDeleteText: (keyValue: KeyValuePair<string, string>) => void;
 }
 
 function JsonPreview(props: JsonPreviewProps) {

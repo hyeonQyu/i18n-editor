@@ -12,16 +12,16 @@ export interface IUseJsonPreview {
 }
 
 export default function useJsonPreview(params: IUseJsonPreviewParams): IUseJsonPreview {
-    const { filterKeyword, localeJsonInfo, isKorean, onDeleteText } = params;
+    const { filterKeyword, localeJsonInfo, onDeleteText } = params;
     const [scrollBar, setScrollBar] = useState<Scrollbars | null>(null);
-    const [prevTextCount, setPrevTextCount] = useState(localeJsonInfo.textSet.size);
+    const [prevTextCount, setPrevTextCount] = useState(localeJsonInfo.keyValueSet.size);
 
     useEffect(() => {
         if (!scrollBar) {
             return;
         }
 
-        const { size } = localeJsonInfo.textSet;
+        const { size } = localeJsonInfo.keyValueSet;
 
         if (prevTextCount + 1 === size) {
             scrollBar.scrollToBottom();
@@ -31,23 +31,13 @@ export default function useJsonPreview(params: IUseJsonPreviewParams): IUseJsonP
     }, [localeJsonInfo, scrollBar, prevTextCount]);
 
     const getTextInfos = (): JsonPreviewTextInfo[] => {
-        const texts = Array.from(localeJsonInfo.textSet).filter((text) => text.toLowerCase().includes(filterKeyword.toLowerCase()));
+        const keyValues = Array.from(localeJsonInfo.keyValueSet).filter(({ key }) =>
+            key.toLowerCase().includes(filterKeyword.toLowerCase()),
+        );
 
-        if (isKorean) {
-            return texts.map((text) => ({
-                keyValue: {
-                    key: text,
-                    value: text,
-                },
-                handleDelete: () => onDeleteText(text),
-            }));
-        }
-        return texts.map((text) => ({
-            keyValue: {
-                key: text,
-                value: '',
-            },
-            handleDelete: () => onDeleteText(text),
+        return keyValues.map((element) => ({
+            keyValue: element,
+            handleDelete: () => onDeleteText(element),
         }));
     };
 

@@ -10,6 +10,8 @@ import { Language, LanguageNameByCode, LANGUAGES } from '@defines/common/transla
 import { SelectValue } from '@components/common/select/defines/selectBoxOption';
 import useCheckable from '@hooks/common/useCheckable';
 import { Checkable } from '@defines/checkable';
+import KeyValueSet from '@utils/keyValueSet';
+import { KeyValuePair } from '@defines/common/keyValuePair';
 
 export interface IUseHomeParams {}
 
@@ -34,7 +36,7 @@ export interface IUseHomeHandlers {
     handleTextInputKeyPress: KeyboardEventHandler<HTMLInputElement>;
     handleChangeLocaleJsonName: (name: string) => void;
     handleChangeLocaleJson: (data: LocaleJson) => void;
-    handleDeleteText: (text: string) => void;
+    handleDeleteText: (keyValue: KeyValuePair<string, string>) => void;
     handleSelectDefaultLanguage: (value: SelectValue) => void;
     handleSelectSupportedLanguage: (value: SelectValue) => void;
 }
@@ -47,7 +49,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
     });
     const inputLocaleDirectoryPath = useInput({});
     const { value: localeDirectoryPath, changeValue: setInputLocaleDirectory } = inputLocaleDirectoryPath;
-    const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', textSet: new Set() });
+    const [localeJsonInfo, setLocaleJsonInfo] = useState<LocaleJsonInfo>({ name: '', keyValueSet: new KeyValueSet() });
     const [defaultLanguage, setDefaultLanguage] = useState<Language>('ko');
     const inputText = useInput({});
     const inputFilterKeyword = useInput({});
@@ -70,10 +72,10 @@ export default function useHome(params: IUseHomeParams): IUseHome {
     const { mutate: save, isLoading: loadingSave } = useMutationSave({
         onSuccess: (res) => {
             const { localeJsonInfo } = res;
-            const { name, texts } = localeJsonInfo;
+            const { name, keyValues } = localeJsonInfo;
             setLocaleJsonInfo({
                 name,
-                textSet: new Set(texts),
+                keyValueSet: new KeyValueSet(keyValues),
             });
             showAlert('저장했습니다', 'success');
         },
@@ -81,12 +83,12 @@ export default function useHome(params: IUseHomeParams): IUseHome {
 
     useShortcuts({
         onCtrlS: () => {
-            const { name, textSet } = localeJsonInfo;
+            const { name, keyValueSet } = localeJsonInfo;
             save({
                 config: { localeDirectoryPath, languages: checkedLanguages, defaultLanguage },
                 localeJsonInfo: {
                     name,
-                    texts: Array.from(textSet),
+                    keyValues: Array.from(keyValueSet),
                 },
             });
         },
@@ -122,7 +124,7 @@ export default function useHome(params: IUseHomeParams): IUseHome {
             setLocaleJsonInfo((prev) => {
                 return {
                     ...prev,
-                    textSet: new Set<string>([...Array.from(prev.textSet), value]),
+                    keyValueSet: new KeyValueSet([...Array.from(prev.keyValueSet), { key: value, value }]),
                 };
             });
             changeValue('');
@@ -140,22 +142,25 @@ export default function useHome(params: IUseHomeParams): IUseHome {
 
     const handleChangeLocaleJson = (data: LocaleJson) => {
         setLocaleJsonInfo((prev) => {
-            const texts = Object.keys(data).map((key) => key);
-            const set = new Set(texts);
+            const keyValues = Object.entries(data).map(([key, value]) => ({
+                key,
+                value,
+            }));
+            const set = new KeyValueSet(keyValues);
             return {
                 ...prev,
-                textSet: set,
+                keyValueSet: set,
             };
         });
     };
 
-    const handleDeleteText = (text: string) => {
+    const handleDeleteText = (keyValue: KeyValuePair<string, string>) => {
         setLocaleJsonInfo((prev) => {
-            prev.textSet.delete(text);
-            const set = new Set(prev.textSet);
+            prev.keyValueSet.delete(keyValue);
+            const set = new KeyValueSet(Array.from(prev.keyValueSet));
             return {
                 ...prev,
-                textSet: set,
+                keyValueSet: set,
             };
         });
     };

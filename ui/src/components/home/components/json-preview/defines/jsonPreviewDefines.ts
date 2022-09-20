@@ -1,4 +1,4 @@
-import { KeyValuePair } from '@defines/keyValuePair';
+import { KeyValuePair } from '@defines/common/keyValuePair';
 import { MouseEventHandler } from 'react';
 
 export interface JsonPreviewTextInfo {

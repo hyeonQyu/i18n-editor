@@ -1,4 +1,5 @@
 import { Config } from './config';
+import { KeyValuePair } from './keyValuePair';
 
 export interface CommonRes {
     status: number;
@@ -15,7 +16,7 @@ export interface SaveRes extends CommonRes {
 
 export interface LocaleJsonInfoVo {
     name: string;
-    texts: string[];
+    keyValues: KeyValuePair<string, string>[];
 }
 
 export interface ConfigReq {
