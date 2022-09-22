@@ -96,7 +96,6 @@ function Index() {
                                 <JsonPreview
                                     filterKeyword={inputFilterKeyword.value}
                                     localeJsonInfo={localeJsonInfo}
-                                    isKorean
                                     onDeleteText={handleDeleteText}
                                 />
                             </div>
