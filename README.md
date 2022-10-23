@@ -5,6 +5,7 @@
 ## 사용 방법
 ### 설치
 https://www.npmjs.com/package/locale-json-manager
+
 devDependency에 추가
 ```
 npm
