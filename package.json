@@ -1,0 +1,47 @@
+{
+  "name": "locale-json-manager",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "dev:client": "yarn --cwd apps/client run dev",
+    "dev:server": "yarn --cwd apps/server run dev",
+
+    "build:common": "yarn --cwd packages/app-common run build",
+    "build:client": "yarn --cwd apps/client run build",
+    "build:server": "yarn --cwd apps/server run build",
+
+    "build": "yarn build:common && yarn build:client && yarn build:server && node setupPackage.js",
+    "publish": "yarn --cwd apps/",
+    "build-publish": "yarn build && yarn publish"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "app-common": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17",
+    "prettier": "^2.8.1",
+    "typescript": "^4.9.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyeonQyu/locale-json-manager"
+  },
+  "author": "hyeonQyu",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://www.opensource.org/licenses/MIT"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/hyeonQyu/locale-json-manager/issues"
+  },
+  "homepage": "https://github.com/hyeonQyu/locale-json-manager"
+}

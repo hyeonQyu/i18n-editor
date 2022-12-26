@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "app-common",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "build": "yarn clean && tsc"
+  },
+  "license": "MIT"
+}
