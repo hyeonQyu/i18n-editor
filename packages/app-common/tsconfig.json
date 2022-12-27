@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es2016" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "target": "es5" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "allowJs": true,
     "incremental": true,
     "noEmit": false,
     "emitDeclarationOnly": false,
     "jsx": "react" /* Specify what JSX code is generated. */,
-    "module": "esnext" /* Specify what module code is generated. */,
     "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
     "resolveJsonModule": true,
     "outDir": "./lib" /* Specify an output folder for all emitted files. */,
