@@ -1,4 +1,4 @@
-# locale-json-manager
+# i18n-editor
 ## 개발 동기
 [React.js, Next.js에서 편리하게 다국어 json 파일 관리하기](https://velog.io/@hyeonq/React.js-Next.js%EC%97%90%EC%84%9C-%ED%8E%B8%EB%A6%AC%ED%95%98%EA%B2%8C-%EB%8B%A4%EA%B5%AD%EC%96%B4-json-%ED%8C%8C%EC%9D%BC-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0)
 
