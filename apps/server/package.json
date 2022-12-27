@@ -1,13 +1,13 @@
 {
   "private": true,
-  "name": "server",
+  "name": "i18n-editor-server",
   "version": "0.1.0",
   "main": "src/lib/app.ts",
   "bin": {
     "cli-command": "bin/cli.js"
   },
   "scripts": {
-    "dev": "SET \"NODE_ENV=development\" && nodemon --watch \"src/lib/**/*.ts\" --exec \"ts-node\" src/bin/cli.ts",
+    "dev": "SET \"NODE_ENV=development\" && nodemon --watch \"src/lib/**/*.ts\" --exec \"ts-node\" src/bin/ljm.ts",
     "build": "tsc -p ."
   },
   "dependencies": {

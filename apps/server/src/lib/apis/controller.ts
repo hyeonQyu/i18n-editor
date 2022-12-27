@@ -1,5 +1,5 @@
 import { ParsedQs } from 'qs';
-import { CommonRes } from 'app-common';
+import { CommonRes } from 'i18n-editor-common';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 
 export namespace Controller {

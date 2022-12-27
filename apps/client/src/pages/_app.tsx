@@ -5,7 +5,7 @@ import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { HomeApi } from '@apis/homeApi';
-import { DefaultConfig } from 'app-common';
+import { DefaultConfig } from 'i18n-editor-common';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
