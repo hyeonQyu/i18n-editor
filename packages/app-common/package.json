@@ -6,7 +6,11 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "clean": "rm -rf ./lib",
-    "build": "yarn clean && tsc"
+    "build": "yarn clean && tsc",
+    "watch": "tsc-watch --onSuccess 'tsc'"
+  },
+  "devDependencies": {
+    "tsc-watch": "^6.0.0"
   },
   "license": "MIT"
 }

@@ -28,10 +28,9 @@ module.exports = {
         );
 
         server.listen(port, () => {
-          console.log(`locale json manager started with port ${port}`);
+          console.log(`i18n editor started with port ${port}`);
+          Controller.response(server);
         });
-
-        Controller.response(server);
 
         if (env === 'production') {
           UiExecutor.runHtmlUi(port);

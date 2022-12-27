@@ -12,6 +12,8 @@
     "dev:client": "yarn --cwd apps/client run dev",
     "dev:server": "yarn --cwd apps/server run dev",
 
+    "watch:common": "yarn --cwd packages/app-common run watch",
+
     "build:common": "yarn --cwd packages/app-common run build",
     "build:client": "yarn --cwd apps/client run build",
     "build:server": "yarn --cwd apps/server run build",
