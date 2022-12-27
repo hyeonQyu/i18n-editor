@@ -1,3 +1,5 @@
+import { DirectorySelector } from '@components/directorySelector';
+
 export interface IndexProps {}
 
 function Index(props: IndexProps) {
@@ -5,7 +7,9 @@ function Index(props: IndexProps) {
 
   return (
     <>
-      <div></div>
+      <div>
+        <DirectorySelector />
+      </div>
 
       <style jsx>{``}</style>
     </>
