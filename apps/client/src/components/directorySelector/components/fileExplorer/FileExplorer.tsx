@@ -6,8 +6,7 @@ import { BreadCrumb } from 'primereact/breadcrumb';
 import { MenuItem } from 'primereact/menuitem';
 import { PrimeIcons } from 'primereact/api';
 import useFileExplorer from '@components/directorySelector/components/fileExplorer/useFileExplorer';
-import { DirectorySelectorEventHandler } from '@components/directorySelector/defines';
-import { Tree, TreeEventNodeParams } from 'primereact/tree';
+import { Tree } from 'primereact/tree';
 
 export interface FileExplorerProps {}
 
@@ -18,20 +17,36 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
     icon: PrimeIcons.USER,
   };
 
-  const { breadcrumbItems, tree } = useFileExplorer(props);
-
-  const handleTreeExpand: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {
-    if (!e) return;
-  };
+  const { breadcrumbItems, tree, handleTreeExpand, handleTreeCollapse, handleTreeSelect, handleTreeUnselect } = useFileExplorer(props);
 
   return (
     <>
       <OverlayPanel ref={ref}>
         <BreadCrumb home={home} model={breadcrumbItems} />
-        <Tree onExpand={handleTreeExpand} value={tree.children} />
+
+        <div className={'tree-container'}>
+          <Tree
+            className={'tree'}
+            selectionMode={'single'}
+            onExpand={handleTreeExpand}
+            onCollapse={handleTreeCollapse}
+            onSelect={handleTreeSelect}
+            onUnselect={handleTreeUnselect}
+            value={tree.children}
+          />
+        </div>
       </OverlayPanel>
 
-      <style jsx>{``}</style>
+      <style jsx>{`
+        .tree-container {
+          max-height: 500px;
+          overflow: auto;
+        }
+
+        :global(.tree) {
+          border: none;
+        }
+      `}</style>
     </>
   );
 });

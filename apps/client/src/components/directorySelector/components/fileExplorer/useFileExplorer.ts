@@ -2,69 +2,106 @@ import { FileExplorerProps } from '@components/directorySelector/components/file
 import { MenuItem } from 'primereact/menuitem';
 import { DirectorySelectorEventHandler, PathChangeEvent } from '@components/directorySelector/defines';
 import { TreeEventNodeParams } from 'primereact/tree';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import TreeNode from 'primereact/treenode';
 import useQueryGetDirectory from '@hooks/queries/useQueryGetDirectory';
 import { ICON_BY_DIRECTORY_ENTRY_TYPE } from '@components/directorySelector/defines/constants';
+import { TreeUtil } from '@utils/treeUtil';
 
 export interface IUseFileExplorerParams extends FileExplorerProps {}
 
 export interface IUseFileExplorer {
   breadcrumbItems: MenuItem[];
   tree: TreeNode;
+  handleTreeExpand: DirectorySelectorEventHandler<TreeEventNodeParams>;
+  handleTreeCollapse: DirectorySelectorEventHandler<TreeEventNodeParams>;
+  handleTreeSelect: DirectorySelectorEventHandler<TreeEventNodeParams>;
+  handleTreeUnselect: DirectorySelectorEventHandler<TreeEventNodeParams>;
 }
 
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
-  const [tree, setTree] = useState<TreeNode>({});
+  const [tree, setTree] = useState<TreeNode>({ key: '/' });
   const [path, setPath] = useState('');
-  const [flagFetchGetDirectory, setFlagFetchGetDirectory] = useState(false);
+  const [selectedTreeNode, setSelectedTreeNode] = useState<TreeNode>(tree);
+  const rootPathRef = useRef('');
 
   // 좌측 트리
-  const { data: rootData } = useQueryGetDirectory({
-    req: { path: '/' },
+  const { data: treeData } = useQueryGetDirectory({
+    req: { path: selectedTreeNode.key as string },
     queryOption: { refetchOnWindowFocus: false },
   });
-  const { entries: rootEntries } = rootData?.data || { path: '', entries: [] };
+  const { entries: treeEntries } = treeData?.data || { path: '', entries: [] };
 
   // 현재 폴더
   const { data, refetch: refetchGetDirectory } = useQueryGetDirectory({ req: { path } });
   const { path: currentPath, entries } = data?.data || { path: '', entries: [] };
 
   useEffect(() => {
-    if (rootEntries.length === 0) return;
-
-    setTree({
-      children: rootEntries.map(({ name, type }) => {
-        return {
-          key: name,
-          label: name,
-          icon: ICON_BY_DIRECTORY_ENTRY_TYPE[type],
-          children: type === 'directory' ? [{ key: `${name}_temp` }] : undefined,
-        };
-      }),
-    });
-  }, [rootEntries]);
-
-  useEffect(() => {
-    setPath(currentPath);
+    if (!path) {
+      setPath(currentPath);
+      rootPathRef.current = currentPath.split('/')[0];
+    }
   }, [currentPath]);
 
   useEffect(() => {
+    if (treeEntries.length === 0) return;
+
+    setTree((tree) => {
+      return TreeUtil.searchTreeNodeAndChange(tree, selectedTreeNode.key as string, (node) => {
+        const subPath = node.key === '/' ? '' : node.key;
+
+        return {
+          ...node,
+          children: treeEntries.map(({ name, type }) => {
+            return {
+              key: `${subPath}/${name}`,
+              label: name,
+              icon: ICON_BY_DIRECTORY_ENTRY_TYPE[type],
+              children: type === 'directory' ? [{ key: `${name}_temp` }] : undefined,
+            };
+          }),
+        };
+      });
+    });
+  }, [selectedTreeNode.key, treeEntries]);
+
+  useEffect(() => {
     refetchGetDirectory();
-  }, [flagFetchGetDirectory]);
+  }, [path]);
 
   const onPathChange: DirectorySelectorEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
-
-    setFlagFetchGetDirectory((prev) => {
-      setPath(() => e.path);
-      return !prev;
-    });
+    setPath(() => e.path);
   };
 
   const handleTreeExpand: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {
     if (!e) return;
-    const path = e.node.key;
+    const { node } = e;
+    setSelectedTreeNode(node);
+  };
+
+  const handleTreeCollapse: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {};
+
+  const handleTreeSelect: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {
+    if (!e) return;
+    const { node } = e;
+    const path = (node.key as string).replace('/', `${rootPathRef.current}/`);
+
+    // 파일 선택
+    if (!node.children) {
+      const tmp = path.split('/');
+      setPath(tmp.slice(0, tmp.length - 1).join('/'));
+      return;
+    }
+
+    // 폴더 선택
+    setPath(path);
+    setSelectedTreeNode(node);
+  };
+
+  const handleTreeUnselect: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {
+    if (!e) return;
+    const { node } = e;
   };
 
   const breadcrumbItemLabels: string[] = path.split('/');
@@ -82,6 +119,10 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   return {
     breadcrumbItems,
     tree,
+    handleTreeExpand,
+    handleTreeCollapse,
+    handleTreeSelect,
+    handleTreeUnselect,
   };
 }
 
