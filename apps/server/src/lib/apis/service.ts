@@ -8,8 +8,8 @@ export namespace Service {
    */
   export function getDirectory(req: DirectoryReq): DirectoryRes {
     try {
-      const path = StringUtil.getNormalizedPath(req?.path ?? process.cwd());
-      const entries = fs.readdirSync(path, { withFileTypes: true });
+      const path = StringUtil.getNormalizedPath(req?.path || process.cwd());
+      const entries = fs.readdirSync(path);
 
       const data: DirectoryDto = { path, entries };
 
