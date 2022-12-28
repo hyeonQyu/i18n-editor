@@ -6,9 +6,6 @@ import { BreadCrumb } from 'primereact/breadcrumb';
 import { MenuItem } from 'primereact/menuitem';
 import { PrimeIcons } from 'primereact/api';
 import useFileExplorer from '@components/directorySelector/components/fileExplorer/useFileExplorer';
-import { Tree } from 'primereact/tree';
-import { Button } from 'primereact/button';
-import { ICON_BY_DIRECTORY_ENTRY_TYPE } from '@components/directorySelector/defines/constants';
 import { Entry } from '@components/directorySelector/components/fileExplorer/components/entry';
 
 export interface FileExplorerProps {}
@@ -24,7 +21,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
 
   return (
     <>
-      <OverlayPanel ref={ref}>
+      <OverlayPanel ref={ref} className={'file-explorer'}>
         <BreadCrumb home={home} model={breadcrumbItems} />
 
         {/*<div className={'tree-container'}>*/}
@@ -38,20 +35,31 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
         {/*    value={tree.children}*/}
         {/*  />*/}
         {/*</div>*/}
-        {entries.map((entry) => (
-          <Entry key={entry.name} entry={entry} />
-          // <Button key={name} label={name} className={'p-button-text p-button-secondary'} icon={ICON_BY_DIRECTORY_ENTRY_TYPE[type]} />
-        ))}
+        <div className={'entries-container'}>
+          {entries.map((entry) => (
+            <Entry key={entry.name} entry={entry} />
+          ))}
+        </div>
       </OverlayPanel>
 
       <style jsx>{`
-        .tree-container {
-          max-height: 500px;
-          overflow: auto;
+        :global(.file-explorer) {
+          width: 952px;
         }
-
-        :global(.tree) {
-          border: none;
+        //.tree-container {
+        //  max-height: 500px;
+        //  overflow: auto;
+        //}
+        //
+        //:global(.tree) {
+        //  border: none;
+        //}
+        .entries-container {
+          display: flex;
+          flex-wrap: wrap;
+          margin-top: 28px;
+          padding: 28px 0;
+          gap: 16px;
         }
       `}</style>
     </>
