@@ -9,12 +9,12 @@ export interface DirectorySelectorProps {}
 export function DirectorySelector(props: DirectorySelectorProps) {
   const {} = props;
 
-  const { fileExplorerRef, path, handleClick } = useDirectorySelector(props);
+  const { fileExplorerRef, path, handleClick, handlePathChange } = useDirectorySelector(props);
 
   return (
     <>
       <Button label={'Locale 디렉토리 선택'} onClick={handleClick} />
-      <FileExplorer ref={fileExplorerRef} path={path} />
+      <FileExplorer ref={fileExplorerRef} path={path} onPathChange={handlePathChange} />
 
       <style jsx>{``}</style>
     </>

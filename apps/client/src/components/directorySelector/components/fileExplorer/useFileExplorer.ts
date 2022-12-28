@@ -8,11 +8,18 @@ export interface IUseFileExplorer {
 }
 
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
-  const { path = '' } = params;
+  const { path = '', onPathChange } = params;
 
-  const breadcrumbItems: MenuItem[] = path.split('/').map((label, i) => ({
+  const breadcrumbItemLabels: string[] = path.split('/');
+  const breadcrumbItems: MenuItem[] = breadcrumbItemLabels.map((label, i) => ({
     id: i.toString(),
     label,
+    command(e) {
+      const {
+        item: { id },
+      } = e;
+      onPathChange({ path: breadcrumbItemLabels.slice(0, Number(id) + 1).join('/') });
+    },
   }));
 
   return {

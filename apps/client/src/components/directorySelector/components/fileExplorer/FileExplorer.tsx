@@ -6,9 +6,11 @@ import { BreadCrumb } from 'primereact/breadcrumb';
 import { MenuItem } from 'primereact/menuitem';
 import { PrimeIcons } from 'primereact/api';
 import useFileExplorer from '@components/directorySelector/components/fileExplorer/useFileExplorer';
+import { DirectorySelectorEventHandler, PathChangeEvent } from '@components/directorySelector/defines';
 
 export interface FileExplorerProps {
   path?: string;
+  onPathChange: DirectorySelectorEventHandler<PathChangeEvent>;
 }
 
 export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, ref) => {
