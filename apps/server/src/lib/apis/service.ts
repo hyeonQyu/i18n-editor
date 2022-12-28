@@ -1,4 +1,4 @@
-import { DirectoryDto, DirectoryReq, DirectoryRes, StringUtil } from 'i18n-editor-common';
+import { DirectoryDto, DirectoryEntry, DirectoryEntryType, DirectoryReq, DirectoryRes, StringUtil } from 'i18n-editor-common';
 import * as fs from 'fs';
 
 export namespace Service {
@@ -9,7 +9,18 @@ export namespace Service {
   export function getDirectory(req: DirectoryReq): DirectoryRes {
     try {
       const path = StringUtil.getNormalizedPath(req?.path || process.cwd());
-      const entries = fs.readdirSync(path);
+      const entries: DirectoryEntry[] = fs.readdirSync(path, { withFileTypes: true }).map((item) => {
+        const type: DirectoryEntryType = (() => {
+          if (item.isDirectory()) return 'directory';
+          if (item.isFile()) return 'file';
+          return 'unknown';
+        })();
+
+        return {
+          name: item.name,
+          type,
+        };
+      });
 
       const data: DirectoryDto = { path, entries };
 

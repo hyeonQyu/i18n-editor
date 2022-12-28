@@ -15,7 +15,7 @@ function useQueryGetDirectory(params: IUseQueryGetDirectoryParams): IUseQueryGet
 
   return useQuery<DirectoryRes, AxiosError>({
     ...queryOption,
-    queryKey: QUERY_KEY.directory.getDirectory(),
+    queryKey: QUERY_KEY.directory.getDirectory(req.path ?? ''),
     queryFn: () => HomeApi.getDirectory(req),
   });
 }

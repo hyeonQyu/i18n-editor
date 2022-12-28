@@ -1,3 +1,5 @@
+import { DirectoryEntry } from './types';
+
 export interface CommonRes<T = object> {
   status: number;
   errorMessage?: string;
@@ -12,5 +14,5 @@ export interface DirectoryRes extends CommonRes<DirectoryDto> {}
 
 export interface DirectoryDto {
   path: string;
-  entries: string[];
+  entries: DirectoryEntry[];
 }

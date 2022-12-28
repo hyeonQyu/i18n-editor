@@ -18,7 +18,7 @@ export namespace Controller {
     callback: (req: Request<ParamsDictionary, any, ReqBody, ReqQs>, res: Response<Omit<Res, 'status'>>) => void,
   ) {
     app[method](`/api${path}`, async (req: Request<ParamsDictionary, any, ReqBody, ReqQs>, res: Response<Omit<Res, 'status'>>) => {
-      console.log(`\nrequest: /${path}`);
+      console.log(`\nrequest: ${path}`);
       await callback(req, res);
     });
   }

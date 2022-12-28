@@ -12,6 +12,6 @@ export interface UseMutationParams<T, R> {
 export const QUERY_KEY = {
   directory: {
     base: ['directory'] as const,
-    getDirectory: () => [...QUERY_KEY.directory.base, 'get', 'directory'],
+    getDirectory: (path: string) => [...QUERY_KEY.directory.base, 'get', 'directory', path],
   },
 };

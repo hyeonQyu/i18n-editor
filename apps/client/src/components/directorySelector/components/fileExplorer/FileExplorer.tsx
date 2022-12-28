@@ -6,12 +6,10 @@ import { BreadCrumb } from 'primereact/breadcrumb';
 import { MenuItem } from 'primereact/menuitem';
 import { PrimeIcons } from 'primereact/api';
 import useFileExplorer from '@components/directorySelector/components/fileExplorer/useFileExplorer';
-import { DirectorySelectorEventHandler, PathChangeEvent } from '@components/directorySelector/defines';
+import { DirectorySelectorEventHandler } from '@components/directorySelector/defines';
+import { Tree, TreeEventNodeParams } from 'primereact/tree';
 
-export interface FileExplorerProps {
-  path?: string;
-  onPathChange: DirectorySelectorEventHandler<PathChangeEvent>;
-}
+export interface FileExplorerProps {}
 
 export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, ref) => {
   const {} = props;
@@ -20,12 +18,17 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
     icon: PrimeIcons.USER,
   };
 
-  const { breadcrumbItems } = useFileExplorer(props);
+  const { breadcrumbItems, tree } = useFileExplorer(props);
+
+  const handleTreeExpand: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {
+    if (!e) return;
+  };
 
   return (
     <>
       <OverlayPanel ref={ref}>
         <BreadCrumb home={home} model={breadcrumbItems} />
+        <Tree onExpand={handleTreeExpand} value={tree.children} />
       </OverlayPanel>
 
       <style jsx>{``}</style>
