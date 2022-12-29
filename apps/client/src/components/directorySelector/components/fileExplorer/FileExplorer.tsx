@@ -25,7 +25,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
 
   return (
     <>
-      <OverlayPanel ref={ref} className={'file-explorer'}>
+      <OverlayPanel ref={ref} className={'file-explorer'} dismissable={false} showCloseIcon>
         <BreadCrumb home={home} model={breadcrumbItems} />
 
         {/*<div className={'tree-container'}>*/}
