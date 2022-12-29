@@ -7,6 +7,8 @@ import { MenuItem } from 'primereact/menuitem';
 import { PrimeIcons } from 'primereact/api';
 import useFileExplorer from '@components/directorySelector/components/fileExplorer/useFileExplorer';
 import { Entry } from '@components/directorySelector/components/fileExplorer/components/entry';
+import useViewOption from '@components/directorySelector/components/fileExplorer/hooks/useViewOption';
+import { ViewOptionSelector } from '@components/directorySelector/components/fileExplorer/components/viewOptionSelector';
 
 export interface FileExplorerProps {}
 
@@ -18,6 +20,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
   };
 
   const { breadcrumbItems, entries } = useFileExplorer(props);
+  const { viewType, handleViewTypeChange } = useViewOption({});
 
   return (
     <>
@@ -40,6 +43,10 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
             <Entry key={entry.name} entry={entry} />
           ))}
         </div>
+
+        <div className={'view-option-selector-container'}>
+          <ViewOptionSelector value={viewType} onChange={handleViewTypeChange} />
+        </div>
       </OverlayPanel>
 
       <style jsx>{`
@@ -57,9 +64,13 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
         .entries-container {
           display: flex;
           flex-wrap: wrap;
-          margin-top: 28px;
           padding: 28px 0;
           gap: 16px;
+        }
+
+        .view-option-selector-container {
+          display: flex;
+          justify-content: end;
         }
       `}</style>
     </>

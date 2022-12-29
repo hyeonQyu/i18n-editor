@@ -1,5 +1,5 @@
 import { DirectoryEntry } from 'i18n-editor-common';
-import { ICON_BY_DIRECTORY_ENTRY_TYPE } from '@components/directorySelector/defines/constants';
+import { ICON_BY_DIRECTORY_ENTRY_TYPE } from '@components/directorySelector/defines';
 import { Shortening } from '@components/shortening';
 
 export interface EntryProps {

@@ -5,7 +5,6 @@ import { TreeEventNodeParams } from 'primereact/tree';
 import { useEffect, useRef, useState } from 'react';
 import TreeNode from 'primereact/treenode';
 import useQueryGetDirectory from '@hooks/queries/useQueryGetDirectory';
-import { ICON_BY_DIRECTORY_ENTRY_TYPE } from '@components/directorySelector/defines/constants';
 import { TreeUtil } from '@utils/treeUtil';
 import { DirectoryEntry } from 'i18n-editor-common';
 
