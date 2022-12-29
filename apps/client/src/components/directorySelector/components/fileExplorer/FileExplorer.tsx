@@ -9,6 +9,7 @@ import useFileExplorer from '@components/directorySelector/components/fileExplor
 import { Entry } from '@components/directorySelector/components/fileExplorer/components/entry';
 import useViewOption from '@components/directorySelector/components/fileExplorer/hooks/useViewOption';
 import { ViewOptionSelector } from '@components/directorySelector/components/fileExplorer/components/viewOptionSelector';
+import classNames from 'classnames';
 
 export interface FileExplorerProps {}
 
@@ -39,9 +40,11 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
         {/*  />*/}
         {/*</div>*/}
         <div className={'entries-container'}>
-          {entries.map((entry) => (
-            <Entry key={entry.name} entry={entry} />
-          ))}
+          <div className={classNames('entries', viewType)}>
+            {entries.map((entry) => (
+              <Entry key={entry.name} entry={entry} viewType={viewType} />
+            ))}
+          </div>
         </div>
 
         <div className={'view-option-selector-container'}>
@@ -51,7 +54,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
 
       <style jsx>{`
         :global(.file-explorer) {
-          width: 952px;
+          width: 845px;
         }
         //.tree-container {
         //  max-height: 500px;
@@ -62,9 +65,30 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
         //  border: none;
         //}
         .entries-container {
+          height: 332px;
+          overflow-y: scroll;
+          margin: 28px 0;
+        }
+        .entries-container::-webkit-scrollbar {
+          width: 8px;
+        }
+        .entries-container::-webkit-scrollbar-thumb {
+          background-color: var(--surface-400);
+          border-radius: 10px;
+        }
+        .entries-container::-webkit-scrollbar-track {
+          background: none;
+        }
+
+        .entries.list {
+          display: grid;
+          grid-template-columns: 50% 50%;
+          gap: 10px 8px;
+        }
+
+        .entries.table {
           display: flex;
           flex-wrap: wrap;
-          padding: 28px 0;
           gap: 16px;
         }
 

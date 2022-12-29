@@ -1,50 +1,70 @@
 import { DirectoryEntry } from 'i18n-editor-common';
-import { ICON_BY_DIRECTORY_ENTRY_TYPE } from '@components/directorySelector/defines';
+import { ICON_BY_DIRECTORY_ENTRY_TYPE, ViewType } from '@components/directorySelector/defines';
 import { Shortening } from '@components/shortening';
+import classNames from 'classnames';
 
 export interface EntryProps {
   entry: DirectoryEntry;
+  viewType: ViewType;
 }
 
 export function Entry(props: EntryProps) {
   const {
     entry: { name, type },
+    viewType,
   } = props;
 
   return (
     <>
-      <div className={'entry'}>
-        <i className={ICON_BY_DIRECTORY_ENTRY_TYPE[type]} style={{ fontSize: '3em' }} />
+      <div className={classNames('entry', viewType)}>
+        <i className={classNames(ICON_BY_DIRECTORY_ENTRY_TYPE[type], 'icon', viewType)} />
         <Shortening>{name}</Shortening>
       </div>
 
       <style jsx>{`
         .entry {
-          width: 100px;
-          height: 100px;
           display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
           border-radius: 10px;
           cursor: pointer;
           transition: 0.2s;
+        }
+        .entry.list {
+          width: calc(100% - 8px);
+          height: 30px;
+          align-items: center;
+          padding: 0 8px;
+        }
+        .entry.table {
+          width: 100px;
+          height: 100px;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
         .entry:hover {
           background: var(--surface-hover);
           color: var(--primary-color);
         }
 
-        .content-container {
-          display: flex;
+        .icon.list {
+          font-size: 1.5em;
+        }
+        .icon.table {
+          font-size: 3em;
         }
 
         :global(p) {
           font-size: 0.8rem;
+          line-height: 1.4;
+          width: 100%;
+        }
+        .list :global(p) {
+          margin-left: 4px;
+        }
+        .table :global(p) {
           margin-top: 10px;
           line-height: 1.4;
           text-align: center;
-          width: 100%;
         }
       `}</style>
     </>

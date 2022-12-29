@@ -1,4 +1,4 @@
-export type ViewType = 'column1' | 'column2' | 'table';
+export type ViewType = 'list' | 'table';
 
 export type ViewOption = {
   icon: string;

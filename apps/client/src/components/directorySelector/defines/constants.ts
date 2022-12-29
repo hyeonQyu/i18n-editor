@@ -10,7 +10,6 @@ export const ICON_BY_DIRECTORY_ENTRY_TYPE: {
 };
 
 export const VIEW_OPTIONS: ViewOption[] = [
-  { icon: 'pi pi-list', value: 'column1' },
-  { icon: 'pi pi-pause', value: 'column2' },
+  { icon: 'pi pi-list', value: 'list' },
   { icon: 'pi pi-table', value: 'table' },
 ];
