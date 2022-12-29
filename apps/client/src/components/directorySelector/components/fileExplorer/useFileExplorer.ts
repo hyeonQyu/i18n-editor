@@ -1,6 +1,6 @@
 import { FileExplorerProps } from '@components/directorySelector/components/fileExplorer';
 import { MenuItem } from 'primereact/menuitem';
-import { DirectorySelectorEventHandler, PathChangeEvent } from '@components/directorySelector/defines';
+import { DirectorySelectorEventHandler, MoveDirection, PathChangeEvent } from '@components/directorySelector/defines';
 import { TreeEventNodeParams } from 'primereact/tree';
 import { useEffect, useRef, useState } from 'react';
 import TreeNode from 'primereact/treenode';
@@ -8,6 +8,7 @@ import useQueryGetDirectory from '@hooks/queries/useQueryGetDirectory';
 import { TreeUtil } from '@utils/treeUtil';
 import { DirectoryEntry } from 'i18n-editor-common';
 import { useToastContext } from '@contexts/toastContext';
+import { SelectButtonChangeParams } from 'primereact/selectbutton';
 
 export interface IUseFileExplorerParams extends FileExplorerProps {}
 
@@ -120,6 +121,19 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
       onPathChange({ path: breadcrumbItemLabels.slice(0, Number(id) + 1).join('/') });
     },
   }));
+
+  const handleMovePathButtonClick: DirectorySelectorEventHandler<SelectButtonChangeParams> = (e) => {
+    if (!e) return;
+
+    const value = e.value as MoveDirection;
+    switch (value) {
+      case 'forward':
+        break;
+
+      case 'backward':
+        break;
+    }
+  };
 
   const onEntryClick: DirectorySelectorEventHandler<DirectoryEntry> = (entry) => {
     if (!entry) return;

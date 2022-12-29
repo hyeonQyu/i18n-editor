@@ -15,7 +15,7 @@ function useViewOption(params: IUseViewOptionParams): IUseViewOption {
   const [viewType, setViewType] = useState<ViewType>('table');
 
   const handleViewTypeChange: DirectorySelectorEventHandler<SelectButtonChangeParams> = (e) => {
-    if (!e?.value) return;
+    if (!e) return;
     setViewType(e.value);
   };
 

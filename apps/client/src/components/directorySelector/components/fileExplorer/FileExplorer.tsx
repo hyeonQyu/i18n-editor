@@ -10,6 +10,7 @@ import { Entry } from '@components/directorySelector/components/fileExplorer/com
 import useViewOption from '@components/directorySelector/components/fileExplorer/hooks/useViewOption';
 import { ViewOptionSelector } from '@components/directorySelector/components/fileExplorer/components/viewOptionSelector';
 import classNames from 'classnames';
+import { MovePathButton } from '@components/directorySelector/components/fileExplorer/components/movePathButton';
 
 export interface FileExplorerProps {}
 
@@ -26,7 +27,10 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
   return (
     <>
       <OverlayPanel ref={ref} className={'file-explorer'} dismissable={false} showCloseIcon>
-        <BreadCrumb home={home} model={breadcrumbItems} />
+        <div className={'header'}>
+          <MovePathButton onChange={() => {}} />
+          <BreadCrumb home={home} model={breadcrumbItems} />
+        </div>
 
         {/*<div className={'tree-container'}>*/}
         {/*  <Tree*/}
@@ -39,7 +43,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
         {/*    value={tree.children}*/}
         {/*  />*/}
         {/*</div>*/}
-        <div className={'entries-container'}>
+        <div className={'body'}>
           <div className={classNames('entries', viewType)}>
             {entries.map((entry) => (
               <Entry key={entry.name} entry={entry} viewType={viewType} onClick={onEntryClick} />
@@ -47,7 +51,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
           </div>
         </div>
 
-        <div className={'view-option-selector-container'}>
+        <div className={'footer'}>
           <ViewOptionSelector value={viewType} onChange={handleViewTypeChange} />
         </div>
       </OverlayPanel>
@@ -64,19 +68,25 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
         //:global(.tree) {
         //  border: none;
         //}
-        .entries-container {
+        .header {
+          display: grid;
+          grid-template-columns: 115px calc(100% - 125px);
+          justify-content: space-between;
+        }
+
+        .body {
           height: 332px;
           overflow-y: scroll;
           margin: 28px 0;
         }
-        .entries-container::-webkit-scrollbar {
+        .body::-webkit-scrollbar {
           width: 8px;
         }
-        .entries-container::-webkit-scrollbar-thumb {
+        .body::-webkit-scrollbar-thumb {
           background-color: var(--surface-400);
           border-radius: 10px;
         }
-        .entries-container::-webkit-scrollbar-track {
+        .body::-webkit-scrollbar-track {
           background: none;
         }
 
@@ -92,7 +102,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
           gap: 16px;
         }
 
-        .view-option-selector-container {
+        .footer {
           display: flex;
           justify-content: end;
         }
