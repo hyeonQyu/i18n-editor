@@ -7,6 +7,7 @@ import TreeNode from 'primereact/treenode';
 import useQueryGetDirectory from '@hooks/queries/useQueryGetDirectory';
 import { TreeUtil } from '@utils/treeUtil';
 import { DirectoryEntry } from 'i18n-editor-common';
+import { useToastContext } from '@contexts/toastContext';
 
 export interface IUseFileExplorerParams extends FileExplorerProps {}
 
@@ -18,13 +19,16 @@ export interface IUseFileExplorer {
   // handleTreeCollapse: DirectorySelectorEventHandler<TreeEventNodeParams>;
   // handleTreeSelect: DirectorySelectorEventHandler<TreeEventNodeParams>;
   // handleTreeUnselect: DirectorySelectorEventHandler<TreeEventNodeParams>;
+  onEntryClick: DirectorySelectorEventHandler<DirectoryEntry>;
 }
 
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   // const [tree, setTree] = useState<TreeNode>({ key: '/' });
   const [path, setPath] = useState('');
   // const [selectedTreeNode, setSelectedTreeNode] = useState<TreeNode>(tree);
-  const rootPathRef = useRef('');
+  // const rootPathRef = useRef('');
+
+  const { toastRef } = useToastContext();
 
   // 좌측 트리
   // const { data: treeData } = useQueryGetDirectory({
@@ -40,7 +44,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   useEffect(() => {
     if (!path) {
       setPath(currentPath);
-      rootPathRef.current = currentPath.split('/')[0];
+      // rootPathRef.current = currentPath.split('/')[0];
     }
   }, [currentPath]);
 
@@ -72,7 +76,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
 
   const onPathChange: DirectorySelectorEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
-    setPath(() => e.path);
+    setPath(e.path);
   };
 
   // const handleTreeExpand: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {
@@ -117,6 +121,21 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     },
   }));
 
+  const onEntryClick: DirectorySelectorEventHandler<DirectoryEntry> = (entry) => {
+    if (!entry) return;
+    const { name, type } = entry;
+
+    if (type !== 'directory') {
+      return toastRef.current?.show({
+        severity: 'warn',
+        detail: '폴더만 선택할 수 있어요.',
+        life: 3000,
+      });
+    }
+
+    setPath((path) => `${path}/${name}`);
+  };
+
   return {
     breadcrumbItems,
     entries,
@@ -125,6 +144,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     // handleTreeCollapse,
     // handleTreeSelect,
     // handleTreeUnselect,
+    onEntryClick,
   };
 }
 

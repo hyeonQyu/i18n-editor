@@ -1,22 +1,24 @@
 import { DirectoryEntry } from 'i18n-editor-common';
-import { ICON_BY_DIRECTORY_ENTRY_TYPE, ViewType } from '@components/directorySelector/defines';
+import { DirectorySelectorEventHandler, ICON_BY_DIRECTORY_ENTRY_TYPE, ViewType } from '@components/directorySelector/defines';
 import { Shortening } from '@components/shortening';
 import classNames from 'classnames';
+import useEntry from '@components/directorySelector/components/fileExplorer/components/entry/useEntry';
 
 export interface EntryProps {
   entry: DirectoryEntry;
   viewType: ViewType;
+  onClick: DirectorySelectorEventHandler<DirectoryEntry>;
 }
 
 export function Entry(props: EntryProps) {
-  const {
-    entry: { name, type },
-    viewType,
-  } = props;
+  const { entry, viewType } = props;
+  const { name, type } = entry;
+
+  const { handleClick } = useEntry(props);
 
   return (
     <>
-      <div className={classNames('entry', viewType)}>
+      <div className={classNames('entry', viewType)} onClick={handleClick}>
         <i className={classNames(ICON_BY_DIRECTORY_ENTRY_TYPE[type], 'icon', viewType)} />
         <Shortening>{name}</Shortening>
       </div>

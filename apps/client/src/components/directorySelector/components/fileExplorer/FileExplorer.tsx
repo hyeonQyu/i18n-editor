@@ -20,7 +20,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
     icon: PrimeIcons.USER,
   };
 
-  const { breadcrumbItems, entries } = useFileExplorer(props);
+  const { breadcrumbItems, entries, onEntryClick } = useFileExplorer(props);
   const { viewType, handleViewTypeChange } = useViewOption({});
 
   return (
@@ -42,7 +42,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
         <div className={'entries-container'}>
           <div className={classNames('entries', viewType)}>
             {entries.map((entry) => (
-              <Entry key={entry.name} entry={entry} viewType={viewType} />
+              <Entry key={entry.name} entry={entry} viewType={viewType} onClick={onEntryClick} />
             ))}
           </div>
         </div>
