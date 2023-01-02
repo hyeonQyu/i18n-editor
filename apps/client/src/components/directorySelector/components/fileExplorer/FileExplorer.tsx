@@ -99,6 +99,12 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
           background-color: var(--surface-400);
           border-radius: 10px;
         }
+        .body::-webkit-scrollbar-thumb:hover {
+          background-color: var(--surface-500);
+        }
+        .body::-webkit-scrollbar-thumb:active {
+          background-color: var(--surface-600);
+        }
         .body::-webkit-scrollbar-track {
           background: none;
         }
