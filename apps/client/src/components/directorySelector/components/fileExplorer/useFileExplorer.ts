@@ -2,7 +2,7 @@ import { FileExplorerProps } from '@components/directorySelector/components/file
 import { MenuItem } from 'primereact/menuitem';
 import { DirectorySelectorEventHandler, MoveDirection, PathChangeEvent } from '@components/directorySelector/defines';
 import { TreeEventNodeParams } from 'primereact/tree';
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import TreeNode from 'primereact/treenode';
 import useQueryGetDirectory from '@hooks/queries/useQueryGetDirectory';
 import { TreeUtil } from '@utils/treeUtil';
@@ -16,16 +16,21 @@ export interface IUseFileExplorer {
   breadcrumbItems: MenuItem[];
   entries: DirectoryEntry[];
   // tree: TreeNode;
+  backwardStack: string[];
+  forwardStack: string[];
   // handleTreeExpand: DirectorySelectorEventHandler<TreeEventNodeParams>;
   // handleTreeCollapse: DirectorySelectorEventHandler<TreeEventNodeParams>;
   // handleTreeSelect: DirectorySelectorEventHandler<TreeEventNodeParams>;
   // handleTreeUnselect: DirectorySelectorEventHandler<TreeEventNodeParams>;
+  handleMovePathButtonClick: DirectorySelectorEventHandler<SelectButtonChangeParams>;
   onEntryClick: DirectorySelectorEventHandler<DirectoryEntry>;
 }
 
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   // const [tree, setTree] = useState<TreeNode>({ key: '/' });
   const [path, setPath] = useState('');
+  const [backwardStack, setBackwardStack] = useState<string[]>([]);
+  const [forwardStack, setForwardStack] = useState<string[]>([]);
   // const [selectedTreeNode, setSelectedTreeNode] = useState<TreeNode>(tree);
   // const rootPathRef = useRef('');
 
@@ -41,6 +46,40 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   // 현재 폴더
   const { data, refetch: refetchGetDirectory } = useQueryGetDirectory({ req: { path } });
   const { path: currentPath, entries } = data?.data || { path: '', entries: [] };
+
+  /**
+   * 앞으로 이동
+   * @param path 새 경로 혹은 새 경로를 반환하는 함수
+   * @param clearForwardStack forwardStack clear 여부
+   */
+  const changePathForward = (path: string | ((prevPath: string) => string), clearForwardStack?: boolean) => {
+    setPath((prev) => {
+      setBackwardStack((stack) => {
+        return [...stack, prev];
+      });
+
+      if (clearForwardStack) {
+        setForwardStack([]);
+      } else {
+        setForwardStack((stack) => stack.slice(0, stack.length - 1));
+      }
+
+      return typeof path === 'function' ? path(prev) : path;
+    });
+  };
+
+  /**
+   * 뒤로 이동
+   * @param path
+   */
+  const changePathBackward = (path: string | ((prevPath: string) => string)) => {
+    setPath((prev) => {
+      setForwardStack((stack) => [...stack, prev]);
+      setBackwardStack((stack) => stack.slice(0, stack.length - 1));
+
+      return typeof path === 'function' ? path(prev) : path;
+    });
+  };
 
   useEffect(() => {
     if (!path) {
@@ -77,7 +116,9 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
 
   const onPathChange: DirectorySelectorEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
-    setPath(e.path);
+
+    const { path } = e;
+    changePathForward(path, true);
   };
 
   // const handleTreeExpand: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {
@@ -128,9 +169,11 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     const value = e.value as MoveDirection;
     switch (value) {
       case 'forward':
+        changePathForward(forwardStack[forwardStack.length - 1]);
         break;
 
       case 'backward':
+        changePathBackward(backwardStack[backwardStack.length - 1]);
         break;
     }
   };
@@ -147,17 +190,20 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
       });
     }
 
-    setPath((path) => `${path}/${name}`);
+    changePathForward((path) => `${path}/${name}`, true);
   };
 
   return {
     breadcrumbItems,
     entries,
     // tree,
+    backwardStack,
+    forwardStack,
     // handleTreeExpand,
     // handleTreeCollapse,
     // handleTreeSelect,
     // handleTreeUnselect,
+    handleMovePathButtonClick,
     onEntryClick,
   };
 }
