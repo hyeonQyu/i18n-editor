@@ -9,6 +9,7 @@ import { TreeUtil } from '@utils/treeUtil';
 import { DirectoryEntry } from 'i18n-editor-common';
 import { useToastContext } from '@contexts/toastContext';
 import { SelectButtonChangeParams } from 'primereact/selectbutton';
+import { confirmDialog } from 'primereact/confirmdialog';
 
 export interface IUseFileExplorerParams extends FileExplorerProps {}
 
@@ -18,6 +19,8 @@ export interface IUseFileExplorer {
   // tree: TreeNode;
   backwardStack: string[];
   forwardStack: string[];
+  handleShow: DirectorySelectorEventHandler<undefined>;
+  handleHide: DirectorySelectorEventHandler<undefined>;
   // handleTreeExpand: DirectorySelectorEventHandler<TreeEventNodeParams>;
   // handleTreeCollapse: DirectorySelectorEventHandler<TreeEventNodeParams>;
   // handleTreeSelect: DirectorySelectorEventHandler<TreeEventNodeParams>;
@@ -29,8 +32,12 @@ export interface IUseFileExplorer {
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   // const [tree, setTree] = useState<TreeNode>({ key: '/' });
   const [path, setPath] = useState('');
+
   const [backwardStack, setBackwardStack] = useState<string[]>([]);
   const [forwardStack, setForwardStack] = useState<string[]>([]);
+
+  const [opened, setOpened] = useState(false);
+
   // const [selectedTreeNode, setSelectedTreeNode] = useState<TreeNode>(tree);
   // const rootPathRef = useRef('');
 
@@ -54,9 +61,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
    */
   const changePathForward = (path: string | ((prevPath: string) => string), clearForwardStack?: boolean) => {
     setPath((prev) => {
-      setBackwardStack((stack) => {
-        return [...stack, prev];
-      });
+      setBackwardStack((stack) => [...stack, prev]);
 
       if (clearForwardStack) {
         setForwardStack([]);
@@ -80,6 +85,58 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
       return typeof path === 'function' ? path(prev) : path;
     });
   };
+
+  const onPathChange: DirectorySelectorEventHandler<PathChangeEvent> = (e) => {
+    if (!e) return;
+
+    const { path } = e;
+    changePathForward(path, true);
+  };
+
+  const handleShow: DirectorySelectorEventHandler<undefined> = () => {
+    setOpened(true);
+  };
+
+  const handleHide: DirectorySelectorEventHandler<undefined> = () => {
+    setOpened(false);
+  };
+
+  const handleMovePathButtonClick: DirectorySelectorEventHandler<SelectButtonChangeParams> = (e) => {
+    if (!e) return;
+
+    const value = e.value as MoveDirection;
+    switch (value) {
+      case 'forward':
+        changePathForward(forwardStack[forwardStack.length - 1]);
+        break;
+
+      case 'backward':
+        changePathBackward(backwardStack[backwardStack.length - 1]);
+        break;
+    }
+  };
+
+  const onEntryClick: DirectorySelectorEventHandler<DirectoryEntry> = (entry) => {
+    if (!entry) return;
+    const { name, type } = entry;
+
+    if (type !== 'directory') {
+      return toastRef.current?.show({
+        severity: 'warn',
+        detail: '폴더만 선택할 수 있어요.',
+        life: 3000,
+      });
+    }
+
+    changePathForward((path) => `${path}/${name}`, true);
+  };
+
+  useEffect(() => {
+    history.pushState(null, '', '/');
+    return () => {
+      history.back();
+    };
+  }, []);
 
   useEffect(() => {
     if (!path) {
@@ -114,12 +171,32 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     refetchGetDirectory();
   }, [path]);
 
-  const onPathChange: DirectorySelectorEventHandler<PathChangeEvent> = (e) => {
-    if (!e) return;
+  useEffect(() => {
+    const preventPopState = () => {
+      if (!opened) {
+        history.back();
+        return;
+      }
 
-    const { path } = e;
-    changePathForward(path, true);
-  };
+      history.pushState(null, '', '/');
+
+      confirmDialog({
+        header: '페이지에서 나가시겠어요?',
+        message: '저장하지 않은 변경사항은 폐기됩니다',
+        icon: 'pi pi-info-circle',
+        acceptClassName: 'p-button-danger',
+        accept() {
+          history.go(-2);
+          setOpened(false);
+        },
+      });
+    };
+
+    window.addEventListener('popstate', preventPopState);
+    return () => {
+      window.removeEventListener('popstate', preventPopState);
+    };
+  }, [opened]);
 
   // const handleTreeExpand: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {
   //   if (!e) return;
@@ -163,42 +240,14 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     },
   }));
 
-  const handleMovePathButtonClick: DirectorySelectorEventHandler<SelectButtonChangeParams> = (e) => {
-    if (!e) return;
-
-    const value = e.value as MoveDirection;
-    switch (value) {
-      case 'forward':
-        changePathForward(forwardStack[forwardStack.length - 1]);
-        break;
-
-      case 'backward':
-        changePathBackward(backwardStack[backwardStack.length - 1]);
-        break;
-    }
-  };
-
-  const onEntryClick: DirectorySelectorEventHandler<DirectoryEntry> = (entry) => {
-    if (!entry) return;
-    const { name, type } = entry;
-
-    if (type !== 'directory') {
-      return toastRef.current?.show({
-        severity: 'warn',
-        detail: '폴더만 선택할 수 있어요.',
-        life: 3000,
-      });
-    }
-
-    changePathForward((path) => `${path}/${name}`, true);
-  };
-
   return {
     breadcrumbItems,
     entries,
     // tree,
     backwardStack,
     forwardStack,
+    handleShow,
+    handleHide,
     // handleTreeExpand,
     // handleTreeCollapse,
     // handleTreeSelect,

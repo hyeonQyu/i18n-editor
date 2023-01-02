@@ -21,12 +21,13 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
     icon: PrimeIcons.USER,
   };
 
-  const { breadcrumbItems, entries, backwardStack, forwardStack, handleMovePathButtonClick, onEntryClick } = useFileExplorer(props);
+  const { breadcrumbItems, entries, backwardStack, forwardStack, handleShow, handleHide, handleMovePathButtonClick, onEntryClick } =
+    useFileExplorer(props);
   const { viewType, handleViewTypeChange } = useViewOption({});
 
   return (
     <>
-      <OverlayPanel ref={ref} className={'file-explorer'} dismissable={false} showCloseIcon>
+      <OverlayPanel ref={ref} onShow={handleShow} onHide={handleHide} className={'file-explorer'} dismissable={false} showCloseIcon>
         <div className={'header'}>
           <MovePathButton onChange={handleMovePathButtonClick} backwardStack={backwardStack} forwardStack={forwardStack} />
           <BreadCrumb home={home} model={breadcrumbItems} />

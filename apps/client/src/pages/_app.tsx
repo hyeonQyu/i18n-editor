@@ -8,6 +8,7 @@ import { HomeApi } from '@apis/homeApi';
 import { DefaultConfig } from 'i18n-editor-common';
 import { Toast } from 'primereact/toast';
 import { ToastContext } from '@contexts/toastContext';
+import { ConfirmDialog } from 'primereact/confirmdialog';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ToastContext.Provider value={{ toastRef }}>
           <Component {...pageProps} />
           <Toast ref={toastRef} />
+          <ConfirmDialog />
         </ToastContext.Provider>
       </QueryClientProvider>
     </RecoilRoot>
