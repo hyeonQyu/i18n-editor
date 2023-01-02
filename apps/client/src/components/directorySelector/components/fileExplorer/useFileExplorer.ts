@@ -2,7 +2,7 @@ import { FileExplorerProps } from '@components/directorySelector/components/file
 import { MenuItem } from 'primereact/menuitem';
 import { DirectorySelectorEventHandler, MoveDirection, PathChangeEvent } from '@components/directorySelector/defines';
 import { TreeEventNodeParams } from 'primereact/tree';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { MouseEventHandler, RefObject, useEffect, useRef, useState } from 'react';
 import TreeNode from 'primereact/treenode';
 import useQueryGetDirectory from '@hooks/queries/useQueryGetDirectory';
 import { TreeUtil } from '@utils/treeUtil';
@@ -10,8 +10,11 @@ import { DirectoryEntry } from 'i18n-editor-common';
 import { useToastContext } from '@contexts/toastContext';
 import { SelectButtonChangeParams } from 'primereact/selectbutton';
 import { confirmDialog } from 'primereact/confirmdialog';
+import { OverlayPanel } from 'primereact/overlaypanel';
 
-export interface IUseFileExplorerParams extends FileExplorerProps {}
+export interface IUseFileExplorerParams extends FileExplorerProps {
+  ref: RefObject<OverlayPanel>;
+}
 
 export interface IUseFileExplorer {
   breadcrumbItems: MenuItem[];
@@ -26,12 +29,14 @@ export interface IUseFileExplorer {
   // handleTreeSelect: DirectorySelectorEventHandler<TreeEventNodeParams>;
   // handleTreeUnselect: DirectorySelectorEventHandler<TreeEventNodeParams>;
   handleMovePathButtonClick: DirectorySelectorEventHandler<SelectButtonChangeParams>;
+  handleSelectButtonClick: MouseEventHandler<HTMLButtonElement>;
   onEntryClick: DirectorySelectorEventHandler<DirectoryEntry>;
 }
 
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
+  const { ref, path: initialPath, onChange } = params;
   // const [tree, setTree] = useState<TreeNode>({ key: '/' });
-  const [path, setPath] = useState('');
+  const [path, setPath] = useState(initialPath);
 
   const [backwardStack, setBackwardStack] = useState<string[]>([]);
   const [forwardStack, setForwardStack] = useState<string[]>([]);
@@ -114,6 +119,11 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
         changePathBackward(backwardStack[backwardStack.length - 1]);
         break;
     }
+  };
+
+  const handleSelectButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+    ref.current?.hide();
+    onChange({ path });
   };
 
   const onEntryClick: DirectorySelectorEventHandler<DirectoryEntry> = (entry) => {
@@ -253,6 +263,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     // handleTreeSelect,
     // handleTreeUnselect,
     handleMovePathButtonClick,
+    handleSelectButtonClick,
     onEntryClick,
   };
 }

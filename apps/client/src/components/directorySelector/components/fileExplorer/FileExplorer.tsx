@@ -1,5 +1,5 @@
 import { OverlayPanel } from 'primereact/overlaypanel';
-import { forwardRef } from 'react';
+import { forwardRef, RefObject } from 'react';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import { BreadCrumb } from 'primereact/breadcrumb';
@@ -11,8 +11,10 @@ import useViewOption from '@components/directorySelector/components/fileExplorer
 import { ViewOptionSelector } from '@components/directorySelector/components/fileExplorer/components/viewOptionSelector';
 import classNames from 'classnames';
 import { MovePathButton } from '@components/directorySelector/components/fileExplorer/components/movePathButton';
+import { Button } from 'primereact/button';
+import { DirectorySelectorProps } from '@components/directorySelector';
 
-export interface FileExplorerProps {}
+export interface FileExplorerProps extends Pick<DirectorySelectorProps, 'path' | 'onChange'> {}
 
 export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, ref) => {
   const {} = props;
@@ -21,8 +23,17 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
     icon: PrimeIcons.USER,
   };
 
-  const { breadcrumbItems, entries, backwardStack, forwardStack, handleShow, handleHide, handleMovePathButtonClick, onEntryClick } =
-    useFileExplorer(props);
+  const {
+    breadcrumbItems,
+    entries,
+    backwardStack,
+    forwardStack,
+    handleShow,
+    handleHide,
+    handleMovePathButtonClick,
+    handleSelectButtonClick,
+    onEntryClick,
+  } = useFileExplorer({ ...props, ref: ref as RefObject<OverlayPanel> });
   const { viewType, handleViewTypeChange } = useViewOption({});
 
   return (
@@ -54,6 +65,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
 
         <div className={'footer'}>
           <ViewOptionSelector value={viewType} onChange={handleViewTypeChange} />
+          <Button label={'현재 디렉토리 선택'} onClick={handleSelectButtonClick} className={'select'} />
         </div>
       </OverlayPanel>
 
@@ -105,7 +117,11 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
 
         .footer {
           display: flex;
-          justify-content: end;
+          justify-content: space-between;
+        }
+
+        .footer > :global(.select) {
+          height: 42px;
         }
       `}</style>
     </>
