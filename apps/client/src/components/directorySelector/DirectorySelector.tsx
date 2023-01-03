@@ -4,6 +4,7 @@ import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import useDirectorySelector from '@components/directorySelector/useDirectorySelector';
 import { DirectorySelectorEventHandler, PathChangeEvent } from '@components/directorySelector/defines';
+import { InputText } from 'primereact/inputtext';
 
 export interface DirectorySelectorProps {
   path: string;
@@ -13,14 +14,23 @@ export interface DirectorySelectorProps {
 export function DirectorySelector(props: DirectorySelectorProps) {
   const { path, onChange } = props;
 
-  const { fileExplorerRef, handleClick } = useDirectorySelector(props);
+  const { fileExplorerRef, handleClick, handleFocus } = useDirectorySelector(props);
 
   return (
     <>
-      <Button label={'Locale 디렉토리 선택'} onClick={handleClick} />
+      <div className={'p-inputgroup'}>
+        <InputText placeholder={'Locale 디렉토리 선택'} value={path} onChange={() => {}} onFocus={handleFocus} />
+        <Button icon={'pi pi-search'} className={'p-button'} onClick={handleClick} />
+      </div>
+
       <FileExplorer ref={fileExplorerRef} path={path} onChange={onChange} />
 
-      <style jsx>{``}</style>
+      <style jsx>{`
+        :global(input) {
+          color: transparent;
+          text-shadow: 0 0 0 black;
+        }
+      `}</style>
     </>
   );
 }

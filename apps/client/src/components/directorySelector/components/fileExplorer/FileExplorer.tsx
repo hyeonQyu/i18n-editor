@@ -44,17 +44,6 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
           <BreadCrumb home={home} model={breadcrumbItems} />
         </div>
 
-        {/*<div className={'tree-container'}>*/}
-        {/*  <Tree*/}
-        {/*    className={'tree'}*/}
-        {/*    selectionMode={'single'}*/}
-        {/*    onExpand={handleTreeExpand}*/}
-        {/*    onCollapse={handleTreeCollapse}*/}
-        {/*    onSelect={handleTreeSelect}*/}
-        {/*    onUnselect={handleTreeUnselect}*/}
-        {/*    value={tree.children}*/}
-        {/*  />*/}
-        {/*</div>*/}
         <div className={'body'}>
           <div className={classNames('entries', viewType)}>
             {entries.map((entry) => (
@@ -73,14 +62,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
         :global(.file-explorer) {
           width: 845px;
         }
-        //.tree-container {
-        //  max-height: 500px;
-        //  overflow: auto;
-        //}
-        //
-        //:global(.tree) {
-        //  border: none;
-        //}
+
         .header {
           display: grid;
           grid-template-columns: 115px calc(100% - 125px);

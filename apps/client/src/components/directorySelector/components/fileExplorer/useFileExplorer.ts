@@ -1,11 +1,8 @@
 import { FileExplorerProps } from '@components/directorySelector/components/fileExplorer';
 import { MenuItem } from 'primereact/menuitem';
 import { DirectorySelectorEventHandler, MoveDirection, PathChangeEvent } from '@components/directorySelector/defines';
-import { TreeEventNodeParams } from 'primereact/tree';
-import { MouseEventHandler, RefObject, useEffect, useRef, useState } from 'react';
-import TreeNode from 'primereact/treenode';
+import { MouseEventHandler, RefObject, useEffect, useState } from 'react';
 import useQueryGetDirectory from '@hooks/queries/useQueryGetDirectory';
-import { TreeUtil } from '@utils/treeUtil';
 import { DirectoryEntry } from 'i18n-editor-common';
 import { useToastContext } from '@contexts/toastContext';
 import { SelectButtonChangeParams } from 'primereact/selectbutton';
@@ -19,15 +16,10 @@ export interface IUseFileExplorerParams extends FileExplorerProps {
 export interface IUseFileExplorer {
   breadcrumbItems: MenuItem[];
   entries: DirectoryEntry[];
-  // tree: TreeNode;
   backwardStack: string[];
   forwardStack: string[];
   handleShow: DirectorySelectorEventHandler<undefined>;
   handleHide: DirectorySelectorEventHandler<undefined>;
-  // handleTreeExpand: DirectorySelectorEventHandler<TreeEventNodeParams>;
-  // handleTreeCollapse: DirectorySelectorEventHandler<TreeEventNodeParams>;
-  // handleTreeSelect: DirectorySelectorEventHandler<TreeEventNodeParams>;
-  // handleTreeUnselect: DirectorySelectorEventHandler<TreeEventNodeParams>;
   handleMovePathButtonClick: DirectorySelectorEventHandler<SelectButtonChangeParams>;
   handleSelectButtonClick: MouseEventHandler<HTMLButtonElement>;
   onEntryClick: DirectorySelectorEventHandler<DirectoryEntry>;
@@ -35,7 +27,7 @@ export interface IUseFileExplorer {
 
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   const { ref, path: initialPath, onChange } = params;
-  // const [tree, setTree] = useState<TreeNode>({ key: '/' });
+
   const [path, setPath] = useState(initialPath);
 
   const [backwardStack, setBackwardStack] = useState<string[]>([]);
@@ -43,17 +35,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
 
   const [opened, setOpened] = useState(false);
 
-  // const [selectedTreeNode, setSelectedTreeNode] = useState<TreeNode>(tree);
-  // const rootPathRef = useRef('');
-
   const { toastRef } = useToastContext();
-
-  // 좌측 트리
-  // const { data: treeData } = useQueryGetDirectory({
-  //   req: { path: selectedTreeNode.key as string },
-  //   queryOption: { refetchOnWindowFocus: false },
-  // });
-  // const { entries: treeEntries } = treeData?.data || { path: '', entries: [] };
 
   // 현재 폴더
   const { data, refetch: refetchGetDirectory } = useQueryGetDirectory({ req: { path } });
@@ -133,7 +115,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     if (type !== 'directory') {
       return toastRef.current?.show({
         severity: 'warn',
-        detail: '폴더만 선택할 수 있어요.',
+        detail: '폴더만 선택할 수 있어요',
         life: 3000,
       });
     }
@@ -151,31 +133,8 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   useEffect(() => {
     if (!path) {
       setPath(currentPath);
-      // rootPathRef.current = currentPath.split('/')[0];
     }
   }, [currentPath]);
-
-  // useEffect(() => {
-  //   if (treeEntries.length === 0) return;
-  //
-  //   setTree((tree) => {
-  //     return TreeUtil.searchTreeNodeAndChange(tree, selectedTreeNode.key as string, (node) => {
-  //       const subPath = node.key === '/' ? '' : node.key;
-  //
-  //       return {
-  //         ...node,
-  //         children: treeEntries.map(({ name, type }) => {
-  //           return {
-  //             key: `${subPath}/${name}`,
-  //             label: name,
-  //             icon: `${ICON_BY_DIRECTORY_ENTRY_TYPE[type]} pi-fw`,
-  //             children: type === 'directory' ? [{ key: `${name}_temp` }] : undefined,
-  //           };
-  //         }),
-  //       };
-  //     });
-  //   });
-  // }, [selectedTreeNode.key, treeEntries]);
 
   useEffect(() => {
     refetchGetDirectory();
@@ -208,36 +167,6 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     };
   }, [opened]);
 
-  // const handleTreeExpand: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {
-  //   if (!e) return;
-  //   const { node } = e;
-  //   setSelectedTreeNode(node);
-  // };
-  //
-  // const handleTreeCollapse: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {};
-  //
-  // const handleTreeSelect: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {
-  //   if (!e) return;
-  //   const { node } = e;
-  //   const path = (node.key as string).replace('/', `${rootPathRef.current}/`);
-  //
-  //   // 파일 선택
-  //   if (!node.children) {
-  //     const tmp = path.split('/');
-  //     setPath(tmp.slice(0, tmp.length - 1).join('/'));
-  //     return;
-  //   }
-  //
-  //   // 폴더 선택
-  //   setPath(path);
-  //   setSelectedTreeNode(node);
-  // };
-  //
-  // const handleTreeUnselect: DirectorySelectorEventHandler<TreeEventNodeParams> = (e) => {
-  //   if (!e) return;
-  //   const { node } = e;
-  // };
-
   const breadcrumbItemLabels: string[] = path.split('/');
   const breadcrumbItems: MenuItem[] = breadcrumbItemLabels.map((label, i) => ({
     id: i.toString(),
@@ -253,15 +182,10 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   return {
     breadcrumbItems,
     entries,
-    // tree,
     backwardStack,
     forwardStack,
     handleShow,
     handleHide,
-    // handleTreeExpand,
-    // handleTreeCollapse,
-    // handleTreeSelect,
-    // handleTreeUnselect,
     handleMovePathButtonClick,
     handleSelectButtonClick,
     onEntryClick,
