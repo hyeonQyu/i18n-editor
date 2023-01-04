@@ -10,15 +10,17 @@ export interface DirectoryReq {
   path?: string;
 }
 
-export interface DirectoryRes {
-  path: string;
-  entries: DirectoryEntry[];
-}
+export interface DirectoryRes
+  extends CommonRes<{
+    path: string;
+    entries: DirectoryEntry[];
+  }> {}
 
 export interface TranslationFileReq {
   path: string;
 }
 
-export interface TranslationFileRes {
-  files: string[];
-}
+export interface TranslationFileRes
+  extends CommonRes<{
+    files: string[];
+  }> {}

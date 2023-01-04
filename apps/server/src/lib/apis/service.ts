@@ -1,5 +1,4 @@
 import {
-  CommonRes,
   DirectoryEntry,
   DirectoryEntryType,
   DirectoryReq,
@@ -16,7 +15,7 @@ export namespace Service {
    * 디렉토리 내 파일 (entry) 목록
    * @param req
    */
-  export function getDirectory(req: DirectoryReq): CommonRes<DirectoryRes> {
+  export function getDirectory(req: DirectoryReq): DirectoryRes {
     try {
       const path = StringUtil.getNormalizedPath(req?.path || process.cwd());
       const entries: DirectoryEntry[] = fs.readdirSync(path, { withFileTypes: true }).map((item) => {
@@ -32,12 +31,10 @@ export namespace Service {
         };
       });
 
-      const data: DirectoryRes = { path, entries };
-
       console.log(`files from ${path}`);
       console.log(entries);
 
-      return { status: 200, data };
+      return { status: 200, data: { path, entries } };
     } catch (e) {
       console.error(e);
       return { status: 500, errorMessage: (e as Error).message };
@@ -48,7 +45,7 @@ export namespace Service {
    * 다국어 번역 파일 목록
    * @param req
    */
-  export function getTranslationFiles(req: TranslationFileReq): CommonRes<TranslationFileRes> {
+  export function getTranslationFiles(req: TranslationFileReq): TranslationFileRes {
     try {
       const { path } = req;
 

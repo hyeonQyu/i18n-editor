@@ -4,9 +4,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { HomeApi } from '@apis/homeApi';
 
-export interface IUseQueryGetDirectoryParams extends UseQueryParams<DirectoryRes> {
-  req: DirectoryReq;
-}
+export interface IUseQueryGetDirectoryParams extends UseQueryParams<DirectoryRes, DirectoryReq> {}
 
 export type IUseQueryGetDirectory = UseQueryResult<DirectoryRes, AxiosError>;
 

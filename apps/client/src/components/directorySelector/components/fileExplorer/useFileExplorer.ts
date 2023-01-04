@@ -35,7 +35,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
 
   // 현재 폴더
   const { data, refetch: refetchGetDirectory } = useQueryGetDirectory({ req: { path } });
-  const { path: currentPath, entries } = data || { path: '', entries: [] };
+  const { path: currentPath, entries } = data?.data || { path: '', entries: [] };
 
   /**
    * 앞으로 이동

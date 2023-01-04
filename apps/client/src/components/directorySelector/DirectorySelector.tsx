@@ -5,11 +5,14 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import useDirectorySelector from '@components/directorySelector/useDirectorySelector';
 import { DirectorySelectorEventHandler, PathChangeEvent } from '@components/directorySelector/defines';
 import { InputText } from 'primereact/inputtext';
+import classNames from 'classnames';
 
 export interface DirectorySelectorProps {
   path: string;
   onChange: DirectorySelectorEventHandler<PathChangeEvent>;
 }
+
+const inputId = 'locale-directory';
 
 export function DirectorySelector(props: DirectorySelectorProps) {
   const { path, onChange } = props;
@@ -29,9 +32,9 @@ export function DirectorySelector(props: DirectorySelectorProps) {
       <div className={'p-inputgroup'}>
         <Button icon={'pi pi-search'} className={'p-button'} onClick={handleSelectClick} />
         <span className={'p-float-label'}>
-          <InputText id={'locale-directory'} value={path} onChange={() => {}} onFocus={handleFocus} />
-          <label htmlFor={'locale-directory'} className={isFileExplorerOpened ? 'opened' : ''}>
-            Locale 디렉토리 선택
+          <InputText id={inputId} value={path} onChange={() => {}} onFocus={handleFocus} />
+          <label htmlFor={inputId} className={classNames(isFileExplorerOpened && 'opened', Boolean(path) && 'selected')}>
+            Locale 디렉토리
           </label>
         </span>
         <Button icon={'pi pi-clone'} className={'p-button p-button-outlined'} onClick={handleCopyClick} disabled={!path} />
@@ -47,13 +50,10 @@ export function DirectorySelector(props: DirectorySelectorProps) {
       />
 
       <style jsx>{`
-        :global(input) {
-          color: transparent;
-          text-shadow: 0 0 0 black;
-        }
-
-        .p-float-label > label.opened {
+        .p-float-label > label.opened,
+        .p-float-label > label.selected {
           top: -0.75rem;
+          left: calc(-41px + 0.75rem);
           font-size: 12px;
         }
       `}</style>
