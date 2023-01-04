@@ -1,4 +1,4 @@
-import { DirectoryDto, DirectoryEntry, DirectoryEntryType, DirectoryReq, DirectoryRes, StringUtil } from 'i18n-editor-common';
+import { CommonRes, DirectoryEntry, DirectoryEntryType, DirectoryReq, DirectoryRes, StringUtil } from 'i18n-editor-common';
 import * as fs from 'fs';
 
 export namespace Service {
@@ -6,7 +6,7 @@ export namespace Service {
    * 디렉토리 내 파일 (entry) 목록
    * @param req
    */
-  export function getDirectory(req: DirectoryReq): DirectoryRes {
+  export function getDirectory(req: DirectoryReq): CommonRes<DirectoryRes> {
     try {
       const path = StringUtil.getNormalizedPath(req?.path || process.cwd());
       const entries: DirectoryEntry[] = fs.readdirSync(path, { withFileTypes: true }).map((item) => {
@@ -22,7 +22,7 @@ export namespace Service {
         };
       });
 
-      const data: DirectoryDto = { path, entries };
+      const data: DirectoryRes = { path, entries };
 
       console.log(`files from ${path}`);
       console.log(entries);

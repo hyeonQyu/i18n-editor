@@ -10,9 +10,7 @@ export interface DirectoryReq {
   path?: string;
 }
 
-export interface DirectoryRes extends CommonRes<DirectoryDto> {}
-
-export interface DirectoryDto {
+export interface DirectoryRes {
   path: string;
   entries: DirectoryEntry[];
 }
