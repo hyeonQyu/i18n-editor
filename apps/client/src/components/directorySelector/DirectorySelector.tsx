@@ -14,13 +14,14 @@ export interface DirectorySelectorProps {
 export function DirectorySelector(props: DirectorySelectorProps) {
   const { path, onChange } = props;
 
-  const { fileExplorerRef, handleClick, handleFocus } = useDirectorySelector(props);
+  const { fileExplorerRef, handleSelectClick, handleFocus, handleCopyClick } = useDirectorySelector(props);
 
   return (
     <>
       <div className={'p-inputgroup'}>
+        <Button icon={'pi pi-search'} className={'p-button'} onClick={handleSelectClick} />
         <InputText placeholder={'Locale 디렉토리 선택'} value={path} onChange={() => {}} onFocus={handleFocus} />
-        <Button icon={'pi pi-search'} className={'p-button'} onClick={handleClick} />
+        <Button icon={'pi pi-clone'} className={'p-button p-button-outlined'} onClick={handleCopyClick} disabled={!path} />
       </div>
 
       <FileExplorer ref={fileExplorerRef} path={path} onChange={onChange} />

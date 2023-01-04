@@ -16,7 +16,6 @@ function useHome(params: IUseHomeParams): IUseHome {
   const handleDirectoryPathChange: DirectorySelectorEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
     setDirectoryPath(e.path);
-    console.log(e.path);
   };
 
   return {
