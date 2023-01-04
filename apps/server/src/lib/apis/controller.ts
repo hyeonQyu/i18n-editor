@@ -1,17 +1,21 @@
-import { ParsedQs } from 'qs';
-import { DirectoryReq, DirectoryRes } from 'i18n-editor-common';
+import { DirectoryReq, DirectoryRes, TranslationFileReq, TranslationFileRes } from 'i18n-editor-common';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { Service } from './service';
 
 export namespace Controller {
   export function response(app: any) {
-    doCommonResponse<DirectoryReq, any, DirectoryRes>(app, '/directory', 'get', (req, res) => {
+    doCommonResponse<void, DirectoryReq, DirectoryRes>(app, '/directory', 'get', (req, res) => {
       const { status, data } = Service.getDirectory(req.query);
+      res.status(status).send(data);
+    });
+
+    doCommonResponse<void, TranslationFileReq, TranslationFileRes>(app, '/translation-file', 'get', (req, res) => {
+      const { status, data } = Service.getTranslationFiles(req.query);
       res.status(status).send(data);
     });
   }
 
-  function doCommonResponse<ReqBody, ReqQs extends ParsedQs, Res = void>(
+  function doCommonResponse<ReqBody, ReqQs, Res = void>(
     app: any,
     path: string,
     method: 'get' | 'post' | 'put' | 'patch' | 'delete',

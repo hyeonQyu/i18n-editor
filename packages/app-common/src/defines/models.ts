@@ -14,3 +14,11 @@ export interface DirectoryRes {
   path: string;
   entries: DirectoryEntry[];
 }
+
+export interface TranslationFileReq {
+  path: string;
+}
+
+export interface TranslationFileRes {
+  files: string[];
+}
