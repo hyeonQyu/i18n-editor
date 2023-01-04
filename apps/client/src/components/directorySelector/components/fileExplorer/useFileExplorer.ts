@@ -18,22 +18,18 @@ export interface IUseFileExplorer {
   entries: DirectoryEntry[];
   backwardStack: string[];
   forwardStack: string[];
-  handleShow: DirectorySelectorEventHandler<undefined>;
-  handleHide: DirectorySelectorEventHandler<undefined>;
   handleMovePathButtonClick: DirectorySelectorEventHandler<SelectButtonChangeParams>;
   handleSelectButtonClick: MouseEventHandler<HTMLButtonElement>;
   onEntryClick: DirectorySelectorEventHandler<DirectoryEntry>;
 }
 
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
-  const { ref, path: initialPath, onChange } = params;
+  const { ref, path: initialPath, onChange, onHide, opened } = params;
 
   const [path, setPath] = useState(initialPath);
 
   const [backwardStack, setBackwardStack] = useState<string[]>([]);
   const [forwardStack, setForwardStack] = useState<string[]>([]);
-
-  const [opened, setOpened] = useState(false);
 
   const { toastRef } = useToastContext();
 
@@ -78,14 +74,6 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
 
     const { path } = e;
     changePathForward(path, true);
-  };
-
-  const handleShow: DirectorySelectorEventHandler<undefined> = () => {
-    setOpened(true);
-  };
-
-  const handleHide: DirectorySelectorEventHandler<undefined> = () => {
-    setOpened(false);
   };
 
   const handleMovePathButtonClick: DirectorySelectorEventHandler<SelectButtonChangeParams> = (e) => {
@@ -143,8 +131,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   useEffect(() => {
     const preventPopState = () => {
       if (!opened) {
-        history.back();
-        return;
+        return history.back();
       }
 
       history.pushState(null, '', '/');
@@ -156,7 +143,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
         acceptClassName: 'p-button-danger',
         accept() {
           history.go(-2);
-          setOpened(false);
+          onHide();
         },
       });
     };
@@ -165,7 +152,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     return () => {
       window.removeEventListener('popstate', preventPopState);
     };
-  }, [opened]);
+  }, [opened, onHide]);
 
   const breadcrumbItemLabels: string[] = path.split('/');
   const breadcrumbItems: MenuItem[] = breadcrumbItemLabels.map((label, i) => ({
@@ -184,8 +171,6 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     entries,
     backwardStack,
     forwardStack,
-    handleShow,
-    handleHide,
     handleMovePathButtonClick,
     handleSelectButtonClick,
     onEntryClick,

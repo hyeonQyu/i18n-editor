@@ -14,22 +14,47 @@ export interface DirectorySelectorProps {
 export function DirectorySelector(props: DirectorySelectorProps) {
   const { path, onChange } = props;
 
-  const { fileExplorerRef, handleSelectClick, handleFocus, handleCopyClick } = useDirectorySelector(props);
+  const {
+    fileExplorerRef,
+    isFileExplorerOpened,
+    handleSelectClick,
+    handleFocus,
+    handleCopyClick,
+    handleFileExplorerShow,
+    handleFileExplorerHide,
+  } = useDirectorySelector(props);
 
   return (
     <>
       <div className={'p-inputgroup'}>
         <Button icon={'pi pi-search'} className={'p-button'} onClick={handleSelectClick} />
-        <InputText placeholder={'Locale 디렉토리 선택'} value={path} onChange={() => {}} onFocus={handleFocus} />
+        <span className={'p-float-label'}>
+          <InputText id={'locale-directory'} value={path} onChange={() => {}} onFocus={handleFocus} />
+          <label htmlFor={'locale-directory'} className={isFileExplorerOpened ? 'opened' : ''}>
+            Locale 디렉토리 선택
+          </label>
+        </span>
         <Button icon={'pi pi-clone'} className={'p-button p-button-outlined'} onClick={handleCopyClick} disabled={!path} />
       </div>
 
-      <FileExplorer ref={fileExplorerRef} path={path} onChange={onChange} />
+      <FileExplorer
+        ref={fileExplorerRef}
+        path={path}
+        opened={isFileExplorerOpened}
+        onChange={onChange}
+        onShow={handleFileExplorerShow}
+        onHide={handleFileExplorerHide}
+      />
 
       <style jsx>{`
         :global(input) {
           color: transparent;
           text-shadow: 0 0 0 black;
+        }
+
+        .p-float-label > label.opened {
+          top: -0.75rem;
+          font-size: 12px;
         }
       `}</style>
     </>

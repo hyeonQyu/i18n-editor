@@ -13,32 +13,28 @@ import classNames from 'classnames';
 import { MovePathButton } from '@components/directorySelector/components/fileExplorer/components/movePathButton';
 import { Button } from 'primereact/button';
 import { DirectorySelectorProps } from '@components/directorySelector';
+import { DirectorySelectorEventHandler } from '@components/directorySelector/defines';
 
-export interface FileExplorerProps extends Pick<DirectorySelectorProps, 'path' | 'onChange'> {}
+export interface FileExplorerProps extends Pick<DirectorySelectorProps, 'path' | 'onChange'> {
+  onShow: DirectorySelectorEventHandler;
+  onHide: DirectorySelectorEventHandler;
+  opened: boolean;
+}
 
 export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, ref) => {
-  const {} = props;
+  const { onShow, onHide } = props;
 
   const home: MenuItem = {
     icon: PrimeIcons.USER,
   };
 
-  const {
-    breadcrumbItems,
-    entries,
-    backwardStack,
-    forwardStack,
-    handleShow,
-    handleHide,
-    handleMovePathButtonClick,
-    handleSelectButtonClick,
-    onEntryClick,
-  } = useFileExplorer({ ...props, ref: ref as RefObject<OverlayPanel> });
+  const { breadcrumbItems, entries, backwardStack, forwardStack, handleMovePathButtonClick, handleSelectButtonClick, onEntryClick } =
+    useFileExplorer({ ...props, ref: ref as RefObject<OverlayPanel> });
   const { viewType, handleViewTypeChange } = useViewOption({});
 
   return (
     <>
-      <OverlayPanel ref={ref} onShow={handleShow} onHide={handleHide} className={'file-explorer'} dismissable={false} showCloseIcon>
+      <OverlayPanel ref={ref} onShow={onShow} onHide={onHide} className={'file-explorer'} dismissable={false} showCloseIcon>
         <div className={'header'}>
           <MovePathButton onChange={handleMovePathButtonClick} backwardStack={backwardStack} forwardStack={forwardStack} />
           <BreadCrumb home={home} model={breadcrumbItems} />
