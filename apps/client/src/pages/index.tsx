@@ -1,5 +1,6 @@
 import { DirectorySelector } from '@components/directorySelector';
 import useHome from '@hooks/pages/useHome';
+import { Layout } from '@components/directorySelector/components/layout';
 
 export interface IndexProps {}
 
@@ -9,11 +10,19 @@ function Index(props: IndexProps) {
 
   return (
     <>
-      <div>
-        <DirectorySelector path={directoryPath} onChange={handleDirectoryPathChange} />
-      </div>
+      <Layout>
+        <div className={'container'}>
+          <DirectorySelector path={directoryPath} onChange={handleDirectoryPathChange} />
+        </div>
+      </Layout>
 
-      <style jsx>{``}</style>
+      <style jsx>{`
+        .container {
+          padding: 80px 0;
+          width: 600px;
+          margin: 0 auto;
+        }
+      `}</style>
     </>
   );
 }
