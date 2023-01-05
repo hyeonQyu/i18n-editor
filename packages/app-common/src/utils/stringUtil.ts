@@ -4,6 +4,6 @@ export namespace StringUtil {
   }
 
   export function getExtensionName(fileName: string) {
-    return fileName.split('.').pop();
+    return fileName.slice(fileName.lastIndexOf('.') + 1);
   }
 }

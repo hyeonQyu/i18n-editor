@@ -1,14 +1,18 @@
 import {
+  ColumnData,
   DirectoryEntry,
   DirectoryEntryType,
   DirectoryReq,
   DirectoryRes,
+  GetContentReq,
+  GetContentRes,
+  RowData,
   StringUtil,
   TranslationFileReq,
   TranslationFileRes,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
-import { LANGUAGE_CODE_SET } from 'i18n-editor-common/lib/defines/constants';
+import { FileSystemManager } from '../utils/fileSystemManager';
 
 export namespace Service {
   /**
@@ -49,32 +53,82 @@ export namespace Service {
     try {
       const { path } = req;
 
-      const localeDirectories: string[] = fs
-        .readdirSync(path, { withFileTypes: true })
-        .filter((entry) => entry.isDirectory() && LANGUAGE_CODE_SET.has(entry.name))
-        .map((entry) => entry.name);
+      const directories = FileSystemManager.getTranslationDirectoryNames(path);
 
-      if (localeDirectories.length === 0) {
+      if (directories.length === 0) {
         const errorMessage = 'Invalid locale directory';
         console.error(errorMessage);
         return { status: 999, errorMessage };
       }
 
-      const filesWithDuplication = localeDirectories.reduce((acc: string[], directory) => {
-        const translationFiles = fs
-          .readdirSync(`${path}/${directory}`, { withFileTypes: true })
-          .filter((entry) => entry.isFile() && StringUtil.getExtensionName(entry.name) === 'json')
-          .map((entry) => entry.name);
-
-        return [...acc, ...translationFiles];
-      }, []);
-
-      const files = Array.from(new Set(filesWithDuplication));
+      const files = FileSystemManager.getFileNames(directories, ['json']);
 
       console.log('valid locale directory');
       console.log(files);
 
       return { status: 200, data: { files } };
+    } catch (e) {
+      console.error(e);
+      return { status: 500, errorMessage: (e as Error).message };
+    }
+  }
+
+  /**
+   * 번역 파일 내용 조회
+   * @param req
+   */
+  export function getContent(req: GetContentReq): GetContentRes {
+    try {
+      const { path, fileName } = req;
+
+      const directories = FileSystemManager.getTranslationDirectoryNames(path);
+
+      if (directories.length === 0) {
+        const errorMessage = 'Invalid locale directory';
+        console.error(errorMessage);
+        return { status: 999, errorMessage };
+      }
+
+      const contents = FileSystemManager.getFilesFromDirectoriesByFileName(directories, fileName);
+
+      // 언어 코드 (폴더 이름) 목록
+      const languages = directories.map((directory) => directory.slice(directory.lastIndexOf('/') + 1));
+      // 기본 번역 데이터
+      const defaultTranslationData = languages.reduce((acc, language) => {
+        return {
+          ...acc,
+          [language]: '',
+        };
+      }, {});
+      // key 별 번역 데이터
+      const translationDataByKey: { [key in string]?: { [key in string]?: string } } = {};
+
+      contents.forEach((content, i) => {
+        const language = languages[i];
+        Object.entries(content).forEach(([key, translation]) => {
+          if (!translationDataByKey[key]) {
+            translationDataByKey[key] = {
+              ...defaultTranslationData,
+              [language]: translation,
+            };
+          } else {
+            translationDataByKey[key]![language] = translation;
+          }
+        });
+      });
+
+      const columns: ColumnData[] = languages.map((language) => ({ header: language }));
+      const rows: RowData[] = Object.entries(translationDataByKey).map(([key, translationData]) => {
+        return {
+          key,
+          ...translationData,
+        };
+      });
+
+      console.log('column data', columns);
+      console.log('row data', rows);
+
+      return { status: 200, data: { columns, rows } };
     } catch (e) {
       console.error(e);
       return { status: 500, errorMessage: (e as Error).message };
