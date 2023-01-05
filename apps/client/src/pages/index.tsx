@@ -15,31 +15,30 @@ function Index(props: IndexProps) {
     hasDirectorySelectorError,
     contentColumns,
     contentRows,
+    tableContainerRef,
     handleDirectoryPathChange,
     handleTranslationFileChange,
   } = useHome({});
 
   return (
     <>
-      <Layout>
-        <div className={'file-select-container'}>
-          <DirectorySelector path={directoryPath} invalid={hasDirectorySelectorError} onChange={handleDirectoryPathChange} />
-          <TranslationFileSelector
-            directoryPath={directoryPath}
-            file={translationFile}
-            files={translationFiles}
-            onChange={handleTranslationFileChange}
-          />
-        </div>
+      <div className={'file-select-container'}>
+        <DirectorySelector path={directoryPath} invalid={hasDirectorySelectorError} onChange={handleDirectoryPathChange} />
+        <TranslationFileSelector
+          directoryPath={directoryPath}
+          file={translationFile}
+          files={translationFiles}
+          onChange={handleTranslationFileChange}
+        />
+      </div>
 
-        <div className={'table-container'}>
-          <TranslationFileEditor columns={contentColumns} rows={contentRows} />
-        </div>
-      </Layout>
+      <div className={'table-container'} ref={tableContainerRef}>
+        <TranslationFileEditor columns={contentColumns} rows={contentRows} />
+      </div>
 
       <style jsx>{`
         .file-select-container {
-          padding: 80px 0;
+          padding: 60px 0;
           width: 600px;
           margin: 0 auto;
         }
@@ -50,6 +49,24 @@ function Index(props: IndexProps) {
 
         .table-container {
           width: 100%;
+          ${Boolean(contentColumns) && Boolean(contentRows) ? 'height: 100vh' : ''};
+          padding: 0 50px;
+        }
+        :global(.p-datatable-wrapper::-webkit-scrollbar) {
+          width: 8px;
+        }
+        :global(.p-datatable-wrapper::-webkit-scrollbar-thumb) {
+          background-color: var(--surface-400);
+          border-radius: 10px;
+        }
+        :global(.p-datatable-wrapper::-webkit-scrollbar-thumb:hover) {
+          background-color: var(--surface-500);
+        }
+        :global(.p-datatable-wrapper::-webkit-scrollbar-thumb:active) {
+          background-color: var(--surface-600);
+        }
+        :global(.p-datatable-wrapper::-webkit-scrollbar-track) {
+          background: none;
         }
       `}</style>
     </>

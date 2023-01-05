@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { DirectorySelectorEventHandler, PathChangeEvent } from '@components/directorySelector/defines';
 import useQueryGetTranslationFile from '@hooks/queries/useQueryGetTranslationFile';
 import { DropdownChangeParams } from 'primereact/dropdown';
@@ -14,6 +14,7 @@ export interface IUseHome {
   hasDirectorySelectorError: boolean;
   contentColumns: ColumnData[] | undefined;
   contentRows: RowData[] | undefined;
+  tableContainerRef: MutableRefObject<HTMLDivElement | null>;
   handleDirectoryPathChange: DirectorySelectorEventHandler<PathChangeEvent>;
   handleTranslationFileChange: DirectorySelectorEventHandler<DropdownChangeParams>;
 }
@@ -27,6 +28,8 @@ function useHome(params: IUseHomeParams): IUseHome {
   const [contentColumns, setContentColumns] = useState<ColumnData[]>();
   const [contentRows, setContentRows] = useState<RowData[]>();
 
+  const tableContainerRef = useRef<HTMLDivElement>(null);
+
   const { data: dataGetTranslationFile, error: errorGetTranslationFile } = useQueryGetTranslationFile({
     req: { path: directoryPath },
     queryOption: {
@@ -38,11 +41,25 @@ function useHome(params: IUseHomeParams): IUseHome {
   const translationFiles: string[] = dataGetTranslationFile?.data?.files ?? [];
   const hasDirectorySelectorError = Boolean(errorGetTranslationFile);
 
-  const { data: dataGetContent } = useQueryGetContent({
+  const {} = useQueryGetContent({
     req: { path: directoryPath, fileName: translationFile || '' },
     queryOption: {
       enabled: Boolean(translationFile) && Boolean(directoryPath),
       retry: false,
+      onSuccess({ data }) {
+        if (!data) return;
+
+        const { columns, rows } = data;
+        setContentColumns(columns);
+        setContentRows(rows);
+
+        setTimeout(() => {
+          tableContainerRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }, 0);
+      },
     },
   });
 
@@ -55,13 +72,6 @@ function useHome(params: IUseHomeParams): IUseHome {
     setTranslationFile(e?.value);
   };
 
-  useEffect(() => {
-    if (!dataGetContent?.data) return;
-    const { columns, rows } = dataGetContent?.data;
-    setContentColumns(columns);
-    setContentRows(rows);
-  }, [dataGetContent]);
-
   return {
     directoryPath,
     translationFiles,
@@ -69,6 +79,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     hasDirectorySelectorError,
     contentColumns,
     contentRows,
+    tableContainerRef,
     handleDirectoryPathChange,
     handleTranslationFileChange,
   };

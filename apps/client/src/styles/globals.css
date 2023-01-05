@@ -14,19 +14,6 @@ a {
   box-sizing: border-box;
 }
 
-body::-webkit-scrollbar {
-  width: 8px; /* 스크롤바의 너비 */
-}
-
-body::-webkit-scrollbar-thumb {
-  background: #c2c2c2; /* 스크롤바의 색상 */
-  border-radius: 20px;
-}
-
-body::-webkit-scrollbar-track {
-  background: none; /*스크롤바 뒷 배경 색상*/
-}
-
 /*@media (prefers-color-scheme: dark) {*/
 /*  html {*/
 /*    color-scheme: dark;*/
