@@ -14,6 +14,7 @@ import { MovePathButton } from '@components/directorySelector/components/fileExp
 import { Button } from 'primereact/button';
 import { DirectorySelectorProps } from '@components/directorySelector';
 import { DirectorySelectorEventHandler } from '@components/directorySelector/defines';
+import { InputFilter } from '@components/directorySelector/components/fileExplorer/components/inputFilter';
 
 export interface FileExplorerProps extends Pick<DirectorySelectorProps, 'path' | 'onChange'> {
   onShow: DirectorySelectorEventHandler;
@@ -28,8 +29,18 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
     icon: PrimeIcons.USER,
   };
 
-  const { breadcrumbItems, entries, backwardStack, forwardStack, handleMovePathButtonClick, handleSelectButtonClick, onEntryClick } =
-    useFileExplorer({ ...props, ref: ref as RefObject<OverlayPanel> });
+  const {
+    breadcrumbItems,
+    entries,
+    backwardStack,
+    forwardStack,
+    filterKeyword,
+    filterPlaceholder,
+    handleMovePathButtonClick,
+    handleSelectButtonClick,
+    handleFilterKeywordChange,
+    onEntryClick,
+  } = useFileExplorer({ ...props, ref: ref as RefObject<OverlayPanel> });
   const { viewType, handleViewTypeChange } = useViewOption({});
 
   return (
@@ -38,6 +49,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
         <div className={'header'}>
           <MovePathButton onChange={handleMovePathButtonClick} backwardStack={backwardStack} forwardStack={forwardStack} />
           <BreadCrumb home={home} model={breadcrumbItems} />
+          <InputFilter keyword={filterKeyword} placeholder={filterPlaceholder} onChange={handleFilterKeywordChange} />
         </div>
 
         <div className={'body'}>
@@ -61,8 +73,21 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
 
         .header {
           display: grid;
-          grid-template-columns: 115px calc(100% - 125px);
+          grid-template-columns: 75px calc(100% - 237px) 140px;
           justify-content: space-between;
+        }
+
+        :global(.p-breadcrumb),
+        :global(.p-breadcrumb-chevron),
+        :global(.p-menuitem-icon) {
+          font-size: 13px;
+        }
+        :global(.p-breadcrumb) {
+          display: flex;
+          height: 42px;
+        }
+        :global(.p-breadcrumb ul li.p-breadcrumb-chevron) {
+          margin: 0 0.3rem;
         }
 
         .body {

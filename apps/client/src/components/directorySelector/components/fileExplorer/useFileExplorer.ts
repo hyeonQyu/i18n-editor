@@ -1,7 +1,7 @@
 import { FileExplorerProps } from '@components/directorySelector/components/fileExplorer';
 import { MenuItem } from 'primereact/menuitem';
 import { DirectorySelectorEventHandler, MoveDirection, PathChangeEvent } from '@components/directorySelector/defines';
-import { MouseEventHandler, RefObject, useEffect, useState } from 'react';
+import { ChangeEventHandler, MouseEventHandler, RefObject, useEffect, useState } from 'react';
 import useQueryGetDirectory from '@hooks/queries/useQueryGetDirectory';
 import { DirectoryEntry } from 'i18n-editor-common';
 import { useToastContext } from '@contexts/toastContext';
@@ -18,8 +18,11 @@ export interface IUseFileExplorer {
   entries: DirectoryEntry[];
   backwardStack: string[];
   forwardStack: string[];
+  filterKeyword: string;
+  filterPlaceholder: string;
   handleMovePathButtonClick: DirectorySelectorEventHandler<SelectButtonChangeParams>;
   handleSelectButtonClick: MouseEventHandler<HTMLButtonElement>;
+  handleFilterKeywordChange: ChangeEventHandler<HTMLInputElement>;
   onEntryClick: DirectorySelectorEventHandler<DirectoryEntry>;
 }
 
@@ -31,11 +34,16 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   const [backwardStack, setBackwardStack] = useState<string[]>([]);
   const [forwardStack, setForwardStack] = useState<string[]>([]);
 
+  const [filterKeyword, setFilterKeyword] = useState<string>('');
+  const filterPlaceholder = `${path.split('/').pop()} 검색`;
+
+  const [entries, setEntries] = useState<DirectoryEntry[]>([]);
+
   const { toastRef } = useToastContext();
 
   // 현재 폴더
   const { data, refetch: refetchGetDirectory } = useQueryGetDirectory({ req: { path } });
-  const { path: currentPath, entries } = data?.data || { path: '', entries: [] };
+  const { path: currentPath, entries: allEntries } = data?.data || { path: '', entries: undefined };
 
   /**
    * 앞으로 이동
@@ -96,6 +104,10 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     onChange({ path });
   };
 
+  const handleFilterKeywordChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setFilterKeyword(e.target.value);
+  };
+
   const onEntryClick: DirectorySelectorEventHandler<DirectoryEntry> = (entry) => {
     if (!entry) return;
     const { name, type } = entry;
@@ -126,7 +138,13 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
 
   useEffect(() => {
     refetchGetDirectory();
+    setFilterKeyword('');
   }, [path]);
+
+  useEffect(() => {
+    if (!allEntries) return;
+    setEntries(allEntries.filter(({ name }) => name.toLowerCase().includes(filterKeyword.toLowerCase())));
+  }, [allEntries, filterKeyword]);
 
   useEffect(() => {
     const preventPopState = () => {
@@ -171,8 +189,11 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     entries,
     backwardStack,
     forwardStack,
+    filterKeyword,
+    filterPlaceholder,
     handleMovePathButtonClick,
     handleSelectButtonClick,
+    handleFilterKeywordChange,
     onEntryClick,
   };
 }
