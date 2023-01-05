@@ -15,9 +15,6 @@ function useQueryGetTranslationFile(params: IUseQueryGetTranslationFileParams): 
   const { toastRef } = useToastContext();
 
   return useQuery<GetTranslationFileRes, AxiosError<GetTranslationFileRes>>({
-    ...queryOption,
-    queryKey: QUERY_KEY.translationFile.getTranslationFile(req.path),
-    queryFn: () => HomeApi.getTranslationFile(req),
     onError(error) {
       const data = error?.response?.data;
       const status = data?.status;
@@ -42,6 +39,9 @@ function useQueryGetTranslationFile(params: IUseQueryGetTranslationFileParams): 
           break;
       }
     },
+    ...queryOption,
+    queryKey: QUERY_KEY.translationFile.getTranslationFile(req.path),
+    queryFn: () => HomeApi.getTranslationFile(req),
   });
 }
 

@@ -19,4 +19,8 @@ export const QUERY_KEY = {
     base: ['translationFile'] as const,
     getTranslationFile: (path: string) => [...QUERY_KEY.translationFile.base, 'get', 'translationFile', path],
   },
+  content: {
+    base: ['content'] as const,
+    getContent: (path: string, fileName: string) => [...QUERY_KEY.content.base, 'get', 'content', path, fileName],
+  },
 };

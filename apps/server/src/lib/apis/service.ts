@@ -117,7 +117,7 @@ export namespace Service {
         });
       });
 
-      const columns: ColumnData[] = languages.map((language) => ({ header: language }));
+      const columns: ColumnData[] = [{ header: 'Key' }, ...languages.map((language) => ({ header: language }))];
       const rows: RowData[] = Object.entries(translationDataByKey).map(([key, translationData]) => {
         return {
           key,

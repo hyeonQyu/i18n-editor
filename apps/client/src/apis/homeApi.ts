@@ -1,5 +1,12 @@
 import axios, { AxiosInstance } from 'axios';
-import { GetDirectoryReq, GetDirectoryRes, GetTranslationFileReq, GetTranslationFileRes } from 'i18n-editor-common';
+import {
+  GetContentReq,
+  GetContentRes,
+  GetDirectoryReq,
+  GetDirectoryRes,
+  GetTranslationFileReq,
+  GetTranslationFileRes,
+} from 'i18n-editor-common';
 
 export namespace HomeApi {
   let client: AxiosInstance;
@@ -21,6 +28,14 @@ export namespace HomeApi {
    * @param req
    */
   export async function getTranslationFile(req: GetTranslationFileReq): Promise<GetTranslationFileRes> {
-    return (await client.get('./translation-file', { params: req })).data;
+    return (await client.get('/translation-file', { params: req })).data;
+  }
+
+  /**
+   * 선택한 다국어 번역 파일 내용 불러오기
+   * @param req
+   */
+  export async function getContent(req: GetContentReq): Promise<GetContentRes> {
+    return (await client.get('/content', { params: req })).data;
   }
 }

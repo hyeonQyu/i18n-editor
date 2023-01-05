@@ -2,6 +2,7 @@ import { DirectorySelector } from '@components/directorySelector';
 import useHome from '@hooks/pages/useHome';
 import { Layout } from '@components/directorySelector/components/layout';
 import { TranslationFileSelector } from '@components/translationFileSelector';
+import TranslationFileEditor from '@components/translationFileEditor/TranslationFileEditor';
 
 export interface IndexProps {}
 
@@ -12,6 +13,8 @@ function Index(props: IndexProps) {
     translationFiles,
     translationFile,
     hasDirectorySelectorError,
+    contentColumns,
+    contentRows,
     handleDirectoryPathChange,
     handleTranslationFileChange,
   } = useHome({});
@@ -19,7 +22,7 @@ function Index(props: IndexProps) {
   return (
     <>
       <Layout>
-        <div className={'container'}>
+        <div className={'file-select-container'}>
           <DirectorySelector path={directoryPath} invalid={hasDirectorySelectorError} onChange={handleDirectoryPathChange} />
           <TranslationFileSelector
             directoryPath={directoryPath}
@@ -28,17 +31,25 @@ function Index(props: IndexProps) {
             onChange={handleTranslationFileChange}
           />
         </div>
+
+        <div className={'table-container'}>
+          <TranslationFileEditor columns={contentColumns} rows={contentRows} />
+        </div>
       </Layout>
 
       <style jsx>{`
-        .container {
+        .file-select-container {
           padding: 80px 0;
           width: 600px;
           margin: 0 auto;
         }
 
-        .container > :global(*:not(:first-child)) {
+        .file-select-container > :global(*:not(:first-child)) {
           margin-top: 42px;
+        }
+
+        .table-container {
+          width: 100%;
         }
       `}</style>
     </>
