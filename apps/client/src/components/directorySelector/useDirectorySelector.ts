@@ -36,7 +36,7 @@ function useDirectorySelector(params: IUseDirectorySelectorParams): IUseDirector
     await navigator.clipboard.writeText(path);
     toastRef.current?.show({
       severity: 'info',
-      detail: '클립보드로 복사되었어요',
+      detail: '클립보드에 복사되었어요',
     });
   };
 

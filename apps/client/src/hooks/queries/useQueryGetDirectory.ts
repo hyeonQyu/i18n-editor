@@ -6,12 +6,12 @@ import { HomeApi } from '@apis/homeApi';
 
 export interface IUseQueryGetDirectoryParams extends UseQueryParams<DirectoryRes, DirectoryReq> {}
 
-export type IUseQueryGetDirectory = UseQueryResult<DirectoryRes, AxiosError>;
+export type IUseQueryGetDirectory = UseQueryResult<DirectoryRes, AxiosError<DirectoryRes>>;
 
 function useQueryGetDirectory(params: IUseQueryGetDirectoryParams): IUseQueryGetDirectory {
   const { req, queryOption = {} } = params;
 
-  return useQuery<DirectoryRes, AxiosError>({
+  return useQuery<DirectoryRes, AxiosError<DirectoryRes>>({
     ...queryOption,
     queryKey: QUERY_KEY.directory.getDirectory(req.path ?? ''),
     queryFn: () => HomeApi.getDirectory(req),

@@ -1,30 +1,33 @@
-import { Dropdown } from 'primereact/dropdown';
+import { Dropdown, DropdownChangeParams } from 'primereact/dropdown';
 import 'primereact/resources/primereact.css';
 import useTranslationFileSelector from '@components/translationFileSelector/useTranslationFileSelector';
 import classNames from 'classnames';
+import { DirectorySelectorEventHandler } from '@components/directorySelector/defines';
 
 export interface TranslationFileSelectorProps {
   directoryPath: string;
+  file?: string;
   files: string[];
+  onChange: DirectorySelectorEventHandler<DropdownChangeParams>;
 }
 
 const selectId = 'translation-file';
 
 export function TranslationFileSelector(props: TranslationFileSelectorProps) {
-  const {} = props;
-  const { options, disabled, opened, selectedFile, handleShow, handleHide, handleChange } = useTranslationFileSelector(props);
+  const { file, onChange } = props;
+  const { options, disabled, opened, handleShow, handleHide } = useTranslationFileSelector(props);
 
   return (
     <>
       <span className={'p-float-label'}>
         <Dropdown
           inputId={selectId}
-          value={selectedFile}
+          value={file}
           options={options}
           disabled={disabled}
           onShow={handleShow}
           onHide={handleHide}
-          onChange={handleChange}
+          onChange={onChange}
           className={'dropdown'}
           tooltip={disabled ? 'Locale 디렉토리를 먼저 선택하세요' : undefined}
           tooltipOptions={{
@@ -33,7 +36,7 @@ export function TranslationFileSelector(props: TranslationFileSelectorProps) {
             mouseTrack: true,
           }}
         />
-        <label htmlFor={selectId} className={classNames(opened && 'opened', Boolean(selectedFile) && 'selected')}>
+        <label htmlFor={selectId} className={classNames(opened && 'opened', Boolean(file) && 'selected')}>
           편집할 번역 파일
         </label>
       </span>

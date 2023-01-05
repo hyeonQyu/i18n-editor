@@ -7,14 +7,26 @@ export interface IndexProps {}
 
 function Index(props: IndexProps) {
   const {} = props;
-  const { directoryPath, translationFiles, handleDirectoryPathChange } = useHome({});
+  const {
+    directoryPath,
+    translationFiles,
+    translationFile,
+    hasDirectorySelectorError,
+    handleDirectoryPathChange,
+    handleTranslationFileChange,
+  } = useHome({});
 
   return (
     <>
       <Layout>
         <div className={'container'}>
-          <DirectorySelector path={directoryPath} onChange={handleDirectoryPathChange} />
-          <TranslationFileSelector directoryPath={directoryPath} files={translationFiles} />
+          <DirectorySelector path={directoryPath} invalid={hasDirectorySelectorError} onChange={handleDirectoryPathChange} />
+          <TranslationFileSelector
+            directoryPath={directoryPath}
+            file={translationFile}
+            files={translationFiles}
+            onChange={handleTranslationFileChange}
+          />
         </div>
       </Layout>
 

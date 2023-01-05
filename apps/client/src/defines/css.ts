@@ -25,3 +25,7 @@ export type SizeCss = `${SizeProperty}: ${Exclude<Size, number>};` | '';
 export type RotateDeg = `${number}deg`;
 
 export type Color = `#${string}`;
+
+export const COLOR = {
+  invalid: '#e24c4c',
+};

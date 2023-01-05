@@ -55,7 +55,9 @@ export namespace Service {
         .map((entry) => entry.name);
 
       if (localeDirectories.length === 0) {
-        throw new Error('Invalid locale directory');
+        const errorMessage = 'Invalid locale directory';
+        console.error(errorMessage);
+        return { status: 999, errorMessage };
       }
 
       const filesWithDuplication = localeDirectories.reduce((acc: string[], directory) => {

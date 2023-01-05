@@ -6,16 +6,18 @@ import useDirectorySelector from '@components/directorySelector/useDirectorySele
 import { DirectorySelectorEventHandler, PathChangeEvent } from '@components/directorySelector/defines';
 import { InputText } from 'primereact/inputtext';
 import classNames from 'classnames';
+import { COLOR } from '@defines/css';
 
 export interface DirectorySelectorProps {
   path: string;
+  invalid: boolean;
   onChange: DirectorySelectorEventHandler<PathChangeEvent>;
 }
 
 const inputId = 'locale-directory';
 
 export function DirectorySelector(props: DirectorySelectorProps) {
-  const { path, onChange } = props;
+  const { path, invalid, onChange } = props;
 
   const {
     fileExplorerRef,
@@ -32,8 +34,11 @@ export function DirectorySelector(props: DirectorySelectorProps) {
       <div className={'p-inputgroup'}>
         <Button icon={'pi pi-search'} className={'p-button'} onClick={handleSelectClick} />
         <span className={'p-float-label'}>
-          <InputText id={inputId} value={path} onChange={() => {}} onFocus={handleFocus} />
-          <label htmlFor={inputId} className={classNames(isFileExplorerOpened && 'opened', Boolean(path) && 'selected')}>
+          <InputText id={inputId} value={path} onChange={() => {}} onFocus={handleFocus} className={classNames(invalid && 'p-invalid')} />
+          <label
+            htmlFor={inputId}
+            className={classNames(isFileExplorerOpened && 'opened', Boolean(path) && 'selected', invalid && 'invalid')}
+          >
             Locale 디렉토리
           </label>
         </span>
@@ -55,6 +60,10 @@ export function DirectorySelector(props: DirectorySelectorProps) {
           top: -0.75rem;
           left: calc(-41px + 0.75rem);
           font-size: 12px;
+        }
+
+        label.invalid {
+          color: ${COLOR.invalid};
         }
       `}</style>
     </>
