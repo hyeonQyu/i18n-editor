@@ -1,23 +1,23 @@
 import {
   CommonRes,
-  DirectoryReq,
-  DirectoryRes,
+  GetDirectoryReq,
+  GetDirectoryRes,
   GetContentReq,
   GetContentRes,
-  TranslationFileReq,
-  TranslationFileRes,
+  GetTranslationFileReq,
+  GetTranslationFileRes,
 } from 'i18n-editor-common';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { Service } from './service';
 
 export namespace Controller {
   export function response(app: any) {
-    doCommonResponse<void, DirectoryReq, DirectoryRes>(app, '/directory', 'get', (req, res) => {
+    doCommonResponse<void, GetDirectoryReq, GetDirectoryRes>(app, '/directory', 'get', (req, res) => {
       const response = Service.getDirectory(req.query);
       res.status(response.status).send(response);
     });
 
-    doCommonResponse<void, TranslationFileReq, TranslationFileRes>(app, '/translation-file', 'get', (req, res) => {
+    doCommonResponse<void, GetTranslationFileReq, GetTranslationFileRes>(app, '/translation-file', 'get', (req, res) => {
       const response = Service.getTranslationFiles(req.query);
       res.status(response.status).send(response);
     });

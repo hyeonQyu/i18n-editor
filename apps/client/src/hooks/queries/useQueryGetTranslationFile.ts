@@ -1,20 +1,20 @@
 import { QUERY_KEY, UseQueryParams } from '@defines/reactQuery';
-import { TranslationFileReq, TranslationFileRes } from 'i18n-editor-common';
+import { GetTranslationFileReq, GetTranslationFileRes } from 'i18n-editor-common';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { HomeApi } from '@apis/homeApi';
 import { useToastContext } from '@contexts/toastContext';
 
-export interface IUseQueryGetTranslationFileParams extends UseQueryParams<TranslationFileRes, TranslationFileReq> {}
+export interface IUseQueryGetTranslationFileParams extends UseQueryParams<GetTranslationFileRes, GetTranslationFileReq> {}
 
-export type IUseQueryGetTranslationFile = UseQueryResult<TranslationFileRes, AxiosError<TranslationFileRes>>;
+export type IUseQueryGetTranslationFile = UseQueryResult<GetTranslationFileRes, AxiosError<GetTranslationFileRes>>;
 
 function useQueryGetTranslationFile(params: IUseQueryGetTranslationFileParams): IUseQueryGetTranslationFile {
   const { req, queryOption } = params;
 
   const { toastRef } = useToastContext();
 
-  return useQuery<TranslationFileRes, AxiosError<TranslationFileRes>>({
+  return useQuery<GetTranslationFileRes, AxiosError<GetTranslationFileRes>>({
     ...queryOption,
     queryKey: QUERY_KEY.translationFile.getTranslationFile(req.path),
     queryFn: () => HomeApi.getTranslationFile(req),

@@ -2,14 +2,14 @@ import {
   ColumnData,
   DirectoryEntry,
   DirectoryEntryType,
-  DirectoryReq,
-  DirectoryRes,
+  GetDirectoryReq,
+  GetDirectoryRes,
   GetContentReq,
   GetContentRes,
   RowData,
   StringUtil,
-  TranslationFileReq,
-  TranslationFileRes,
+  GetTranslationFileReq,
+  GetTranslationFileRes,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
@@ -19,7 +19,7 @@ export namespace Service {
    * 디렉토리 내 파일 (entry) 목록
    * @param req
    */
-  export function getDirectory(req: DirectoryReq): DirectoryRes {
+  export function getDirectory(req: GetDirectoryReq): GetDirectoryRes {
     try {
       const path = StringUtil.getNormalizedPath(req?.path || process.cwd());
       const entries: DirectoryEntry[] = fs.readdirSync(path, { withFileTypes: true }).map((item) => {
@@ -49,7 +49,7 @@ export namespace Service {
    * 다국어 번역 파일 목록
    * @param req
    */
-  export function getTranslationFiles(req: TranslationFileReq): TranslationFileRes {
+  export function getTranslationFiles(req: GetTranslationFileReq): GetTranslationFileRes {
     try {
       const { path } = req;
 

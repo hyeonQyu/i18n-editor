@@ -6,21 +6,21 @@ export interface CommonRes<T = object> {
   data?: T;
 }
 
-export interface DirectoryReq {
+export interface GetDirectoryReq {
   path?: string;
 }
 
-export interface DirectoryRes
+export interface GetDirectoryRes
   extends CommonRes<{
     path: string;
     entries: DirectoryEntry[];
   }> {}
 
-export interface TranslationFileReq {
+export interface GetTranslationFileReq {
   path: string;
 }
 
-export interface TranslationFileRes
+export interface GetTranslationFileRes
   extends CommonRes<{
     files: string[];
   }> {}
