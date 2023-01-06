@@ -1,6 +1,6 @@
-import { ColumnData, DirectoryEntry, RowData } from './types';
+import { CellData, ColumnData, DirectoryEntry, RowData } from './types';
 
-export interface CommonRes<T = object> {
+export interface CommonRes<T = void> {
   status: number;
   errorMessage?: string;
   data?: T;
@@ -35,3 +35,11 @@ export interface GetContentRes
     columns: ColumnData[];
     rows: RowData[];
   }> {}
+
+export interface PutContentReq {
+  path: string;
+  fileName: string;
+  cell: CellData;
+}
+
+export interface PutContentRes extends CommonRes {}

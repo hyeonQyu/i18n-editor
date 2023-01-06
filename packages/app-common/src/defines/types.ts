@@ -16,3 +16,9 @@ export interface ColumnData {
 export type RowData = { key: string } & {
   [languageCode in LanguageCode]?: string;
 };
+
+export interface CellData {
+  locale: string;
+  key: string;
+  value: string;
+}

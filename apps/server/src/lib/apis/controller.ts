@@ -6,6 +6,8 @@ import {
   GetContentRes,
   GetTranslationFileReq,
   GetTranslationFileRes,
+  PutContentReq,
+  PutContentRes,
 } from 'i18n-editor-common';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { Service } from './service';
@@ -26,9 +28,14 @@ export namespace Controller {
       const response = Service.getContent(req.query);
       res.status(response.status).send(response);
     });
+
+    doCommonResponse<PutContentReq, void, PutContentRes>(app, '/content', 'put', (req, res) => {
+      const response = Service.putContent(req.body);
+      res.status(response.status).send(response);
+    });
   }
 
-  function doCommonResponse<ReqBody, ReqQs, Res extends CommonRes>(
+  function doCommonResponse<ReqBody, ReqQs, Res extends CommonRes<any>>(
     app: any,
     path: string,
     method: 'get' | 'post' | 'put' | 'patch' | 'delete',

@@ -10,9 +10,12 @@ import {
   StringUtil,
   GetTranslationFileReq,
   GetTranslationFileRes,
+  PutContentReq,
+  PutContentRes,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
+import { JsonObject } from '../defines/types';
 
 export namespace Service {
   /**
@@ -101,7 +104,7 @@ export namespace Service {
         };
       }, {});
       // key 별 번역 데이터
-      const translationDataByKey: { [key in string]?: { [key in string]?: string } } = {};
+      const translationDataByKey: { [key in string]?: JsonObject } = {};
 
       contents.forEach((content, i) => {
         const language = languages[i];
@@ -129,6 +132,30 @@ export namespace Service {
       console.log('row data', rows);
 
       return { status: 200, data: { columns, rows } };
+    } catch (e) {
+      console.error(e);
+      return { status: 500, errorMessage: (e as Error).message };
+    }
+  }
+
+  /**
+   * 번역 파일 수정
+   * @param req
+   */
+  export function putContent(req: PutContentReq): PutContentRes {
+    try {
+      const {
+        path,
+        fileName,
+        cell: { locale, key, value },
+      } = req;
+
+      const filePath = `${path}/${locale}/${fileName}`;
+      const content = FileSystemManager.readFile(filePath);
+      content[key] = value;
+      FileSystemManager.writeFile(filePath, content);
+
+      return { status: 200 };
     } catch (e) {
       console.error(e);
       return { status: 500, errorMessage: (e as Error).message };

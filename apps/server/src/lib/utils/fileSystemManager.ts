@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { LANGUAGE_CODE_SET } from 'i18n-editor-common/lib/defines/constants';
 import { StringUtil } from 'i18n-editor-common';
+import { JsonObject } from '../defines/types';
 
 export namespace FileSystemManager {
   /**
@@ -60,11 +61,28 @@ export namespace FileSystemManager {
    * @param directories 파일이 위치한 디렉토리
    * @param fileName 파일 이름
    */
-  export function getFilesFromDirectoriesByFileName(directories: string[], fileName: string): { [key in string]: string }[] {
+  export function getFilesFromDirectoriesByFileName(directories: string[], fileName: string): JsonObject[] {
     return directories.map((directory) => {
       const filePath = `${directory}/${fileName}`;
       FileSystemManager.createFileWhenNotExist(filePath, '{}');
-      return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      return readFile(filePath);
     });
+  }
+
+  /**
+   * JSON 파일 읽어서 object 반환
+   * @param filePath
+   */
+  export function readFile(filePath: string): JsonObject {
+    return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+  }
+
+  /**
+   * JSON object 쓰기
+   * @param filePath
+   * @param jsonObject
+   */
+  export function writeFile(filePath: string, jsonObject: JsonObject) {
+    fs.writeFileSync(filePath, JSON.stringify(jsonObject));
   }
 }
