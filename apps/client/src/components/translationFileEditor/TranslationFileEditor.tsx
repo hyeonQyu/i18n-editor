@@ -4,6 +4,7 @@ import { Column, ColumnEventParams } from 'primereact/column';
 import useTranslationFileEditor from '@components/translationFileEditor/useTranslationFileEditor';
 import { CellEditor } from '@components/translationFileEditor/components/cellEditor';
 import { CustomEventHandler } from '@defines/event';
+import classNames from 'classnames';
 
 export interface TranslationFileEditorProps {
   columns?: ColumnData[];
@@ -29,7 +30,16 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
         className={'translation-file-editor'}
       >
         {columns.map((column) => (
-          <Column key={column.header} {...column} field={column.header} filter sortable editor={CellEditor} onCellEditComplete={onChange} />
+          <Column
+            key={column.header}
+            {...column}
+            field={column.header}
+            filter
+            sortable
+            editor={CellEditor}
+            onCellEditComplete={onChange}
+            className={classNames(column.header === 'key' && 'key')}
+          />
         ))}
       </DataTable>
 
@@ -37,6 +47,14 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
         :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td.p-cell-editing) {
           padding-top: 0;
           padding-bottom: 0;
+        }
+
+        :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td) {
+          font-size: 14px;
+        }
+
+        :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td.key) {
+          cursor: default;
         }
       `}</style>
     </>
