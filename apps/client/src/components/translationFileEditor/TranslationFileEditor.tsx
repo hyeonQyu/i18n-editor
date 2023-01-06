@@ -38,7 +38,7 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
             sortable
             editor={CellEditor}
             onCellEditComplete={onChange}
-            className={classNames(column.header === 'key' && 'key')}
+            className={classNames(column.header === 'key' ? 'key' : 'translation')}
           />
         ))}
       </DataTable>
@@ -52,9 +52,11 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
         :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td) {
           font-size: 14px;
         }
-
+        :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td:not(.p-cell-editing).translation:hover) {
+          background-color: var(--blue-50);
+          cursor: pointer;
+        }
         :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td.key) {
-          cursor: default;
         }
       `}</style>
     </>
