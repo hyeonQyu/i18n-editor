@@ -1,6 +1,6 @@
 import { FileExplorerProps } from '@components/directorySelector/components/fileExplorer';
 import { MenuItem } from 'primereact/menuitem';
-import { DirectorySelectorEventHandler, MoveDirection, PathChangeEvent } from '@components/directorySelector/defines';
+import { MoveDirection, PathChangeEvent } from '@components/directorySelector/defines';
 import { ChangeEventHandler, MouseEventHandler, RefObject, useEffect, useState } from 'react';
 import useQueryGetDirectory from '@hooks/queries/useQueryGetDirectory';
 import { DirectoryEntry } from 'i18n-editor-common';
@@ -8,6 +8,7 @@ import { useToastContext } from '@contexts/toastContext';
 import { SelectButtonChangeParams } from 'primereact/selectbutton';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { OverlayPanel } from 'primereact/overlaypanel';
+import { CustomEventHandler } from '@defines/event';
 
 export interface IUseFileExplorerParams extends FileExplorerProps {
   ref: RefObject<OverlayPanel>;
@@ -20,10 +21,10 @@ export interface IUseFileExplorer {
   forwardStack: string[];
   filterKeyword: string;
   filterPlaceholder: string;
-  handleMovePathButtonClick: DirectorySelectorEventHandler<SelectButtonChangeParams>;
+  handleMovePathButtonClick: CustomEventHandler<SelectButtonChangeParams>;
   handleSelectButtonClick: MouseEventHandler<HTMLButtonElement>;
   handleFilterKeywordChange: ChangeEventHandler<HTMLInputElement>;
-  onEntryClick: DirectorySelectorEventHandler<DirectoryEntry>;
+  onEntryClick: CustomEventHandler<DirectoryEntry>;
 }
 
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
@@ -77,14 +78,14 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     });
   };
 
-  const onPathChange: DirectorySelectorEventHandler<PathChangeEvent> = (e) => {
+  const onPathChange: CustomEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
 
     const { path } = e;
     changePathForward(path, true);
   };
 
-  const handleMovePathButtonClick: DirectorySelectorEventHandler<SelectButtonChangeParams> = (e) => {
+  const handleMovePathButtonClick: CustomEventHandler<SelectButtonChangeParams> = (e) => {
     if (!e) return;
 
     const value = e.value as MoveDirection;
@@ -108,7 +109,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     setFilterKeyword(e.target.value);
   };
 
-  const onEntryClick: DirectorySelectorEventHandler<DirectoryEntry> = (entry) => {
+  const onEntryClick: CustomEventHandler<DirectoryEntry> = (entry) => {
     if (!entry) return;
     const { name, type } = entry;
 

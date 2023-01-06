@@ -1,12 +1,13 @@
 import { SelectButton, SelectButtonChangeParams } from 'primereact/selectbutton';
-import { DirectorySelectorEventHandler, VIEW_OPTIONS, ViewType } from '@components/directorySelector/defines';
+import { VIEW_OPTIONS, ViewType } from '@components/directorySelector/defines';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import { SelectButtonTemplate } from '@components/selectButtonTemplate';
+import { CustomEventHandler } from '@defines/event';
 
 export interface ViewOptionSelectorProps {
   value: ViewType;
-  onChange: DirectorySelectorEventHandler<SelectButtonChangeParams>;
+  onChange: CustomEventHandler<SelectButtonChangeParams>;
 }
 
 export function ViewOptionSelector(props: ViewOptionSelectorProps) {

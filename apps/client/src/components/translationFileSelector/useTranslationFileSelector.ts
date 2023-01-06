@@ -1,7 +1,7 @@
 import { TranslationFileSelectorProps } from '@components/translationFileSelector/TranslationFileSelector';
 import { SelectItem } from 'primereact/selectitem';
 import { useState } from 'react';
-import { DirectorySelectorEventHandler } from '@components/directorySelector/defines';
+import { CustomEventHandler } from '@defines/event';
 
 export interface IUseTranslationFileSelectorParams extends TranslationFileSelectorProps {}
 
@@ -9,8 +9,8 @@ export interface IUseTranslationFileSelector {
   options: SelectItem[];
   disabled: boolean;
   opened: boolean;
-  handleShow: DirectorySelectorEventHandler;
-  handleHide: DirectorySelectorEventHandler;
+  handleShow: CustomEventHandler;
+  handleHide: CustomEventHandler;
 }
 
 function useTranslationFileSelector(params: IUseTranslationFileSelectorParams): IUseTranslationFileSelector {

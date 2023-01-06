@@ -13,12 +13,12 @@ import classNames from 'classnames';
 import { MovePathButton } from '@components/directorySelector/components/fileExplorer/components/movePathButton';
 import { Button } from 'primereact/button';
 import { DirectorySelectorProps } from '@components/directorySelector';
-import { DirectorySelectorEventHandler } from '@components/directorySelector/defines';
 import { InputFilter } from '@components/directorySelector/components/fileExplorer/components/inputFilter';
+import { CustomEventHandler } from '@defines/event';
 
 export interface FileExplorerProps extends Pick<DirectorySelectorProps, 'path' | 'onChange'> {
-  onShow: DirectorySelectorEventHandler;
-  onHide: DirectorySelectorEventHandler;
+  onShow: CustomEventHandler;
+  onHide: CustomEventHandler;
   opened: boolean;
 }
 

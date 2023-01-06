@@ -1,6 +1,5 @@
 import { DirectorySelector } from '@components/directorySelector';
 import useHome from '@hooks/pages/useHome';
-import { Layout } from '@components/directorySelector/components/layout';
 import { TranslationFileSelector } from '@components/translationFileSelector';
 import TranslationFileEditor from '@components/translationFileEditor/TranslationFileEditor';
 
@@ -18,6 +17,7 @@ function Index(props: IndexProps) {
     tableContainerRef,
     handleDirectoryPathChange,
     handleTranslationFileChange,
+    handleTranslationContentChange,
   } = useHome({});
 
   return (
@@ -33,7 +33,7 @@ function Index(props: IndexProps) {
       </div>
 
       <div className={'table-container'} ref={tableContainerRef}>
-        <TranslationFileEditor columns={contentColumns} rows={contentRows} />
+        <TranslationFileEditor columns={contentColumns} rows={contentRows} onChange={handleTranslationContentChange} />
       </div>
 
       <style jsx>{`

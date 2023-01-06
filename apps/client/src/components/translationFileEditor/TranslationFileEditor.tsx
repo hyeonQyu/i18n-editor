@@ -1,16 +1,18 @@
 import { DataTable } from 'primereact/datatable';
 import { ColumnData, RowData } from 'i18n-editor-common';
-import { Column } from 'primereact/column';
+import { Column, ColumnEventParams } from 'primereact/column';
 import useTranslationFileEditor from '@components/translationFileEditor/useTranslationFileEditor';
 import { CellEditor } from '@components/translationFileEditor/components/cellEditor';
+import { CustomEventHandler } from '@defines/event';
 
 export interface TranslationFileEditorProps {
   columns?: ColumnData[];
   rows?: RowData[];
+  onChange: CustomEventHandler<ColumnEventParams>;
 }
 
 function TranslationFileEditor(props: TranslationFileEditorProps) {
-  const { columns = [], rows = [] } = props;
+  const { columns = [], rows = [], onChange } = props;
   const { globalFilterFields } = useTranslationFileEditor(props);
 
   return (
@@ -27,17 +29,7 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
         className={'translation-file-editor'}
       >
         {columns.map((column) => (
-          <Column
-            key={column.header}
-            {...column}
-            field={column.header}
-            filter
-            sortable
-            editor={CellEditor}
-            onCellEditComplete={(e) => {
-              console.log(e);
-            }}
-          />
+          <Column key={column.header} {...column} field={column.header} filter sortable editor={CellEditor} onCellEditComplete={onChange} />
         ))}
       </DataTable>
 

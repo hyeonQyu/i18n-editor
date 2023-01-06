@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { DirectorySelectorEventHandler, ViewType } from '@components/directorySelector/defines';
+import { ViewType } from '@components/directorySelector/defines';
 import { SelectButtonChangeParams } from 'primereact/selectbutton';
+import { CustomEventHandler } from '@defines/event';
 
 export interface IUseViewOptionParams {}
 
 export interface IUseViewOption {
   viewType: ViewType;
-  handleViewTypeChange: DirectorySelectorEventHandler<SelectButtonChangeParams>;
+  handleViewTypeChange: CustomEventHandler<SelectButtonChangeParams>;
 }
 
 function useViewOption(params: IUseViewOptionParams): IUseViewOption {
@@ -14,7 +15,7 @@ function useViewOption(params: IUseViewOptionParams): IUseViewOption {
 
   const [viewType, setViewType] = useState<ViewType>('table');
 
-  const handleViewTypeChange: DirectorySelectorEventHandler<SelectButtonChangeParams> = (e) => {
+  const handleViewTypeChange: CustomEventHandler<SelectButtonChangeParams> = (e) => {
     if (!e) return;
     setViewType(e.value);
   };

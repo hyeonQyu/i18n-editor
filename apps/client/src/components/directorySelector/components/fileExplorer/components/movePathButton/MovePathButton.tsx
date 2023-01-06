@@ -1,10 +1,11 @@
 import { SelectButton, SelectButtonChangeParams } from 'primereact/selectbutton';
 import { SelectButtonTemplate } from '@components/selectButtonTemplate';
-import { DirectorySelectorEventHandler, MOVE_PATH_OPTIONS } from '@components/directorySelector/defines';
+import { MOVE_PATH_OPTIONS } from '@components/directorySelector/defines';
 import useMovePathButton from '@components/directorySelector/components/fileExplorer/components/movePathButton/useMovePathButton';
+import { CustomEventHandler } from '@defines/event';
 
 export interface MovePathButtonProps {
-  onChange: DirectorySelectorEventHandler<SelectButtonChangeParams>;
+  onChange: CustomEventHandler<SelectButtonChangeParams>;
   backwardStack: string[];
   forwardStack: string[];
 }

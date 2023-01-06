@@ -3,15 +3,16 @@ import { Button } from 'primereact/button';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import useDirectorySelector from '@components/directorySelector/useDirectorySelector';
-import { DirectorySelectorEventHandler, PathChangeEvent } from '@components/directorySelector/defines';
+import { PathChangeEvent } from '@components/directorySelector/defines';
 import { InputText } from 'primereact/inputtext';
 import classNames from 'classnames';
 import { COLOR } from '@defines/css';
+import { CustomEventHandler } from '@defines/event';
 
 export interface DirectorySelectorProps {
   path: string;
   invalid: boolean;
-  onChange: DirectorySelectorEventHandler<PathChangeEvent>;
+  onChange: CustomEventHandler<PathChangeEvent>;
 }
 
 const inputId = 'locale-directory';

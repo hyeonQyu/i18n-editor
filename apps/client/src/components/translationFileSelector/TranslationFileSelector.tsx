@@ -2,13 +2,13 @@ import { Dropdown, DropdownChangeParams } from 'primereact/dropdown';
 import 'primereact/resources/primereact.css';
 import useTranslationFileSelector from '@components/translationFileSelector/useTranslationFileSelector';
 import classNames from 'classnames';
-import { DirectorySelectorEventHandler } from '@components/directorySelector/defines';
+import { CustomEventHandler } from '@defines/event';
 
 export interface TranslationFileSelectorProps {
   directoryPath: string;
   file?: string;
   files: string[];
-  onChange: DirectorySelectorEventHandler<DropdownChangeParams>;
+  onChange: CustomEventHandler<DropdownChangeParams>;
 }
 
 const selectId = 'translation-file';

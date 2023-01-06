@@ -2,7 +2,7 @@ import { FocusEventHandler, MouseEventHandler, RefObject, useRef, useState } fro
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { DirectorySelectorProps } from '@components/directorySelector/DirectorySelector';
 import { useToastContext } from '@contexts/toastContext';
-import { DirectorySelectorEventHandler } from '@components/directorySelector/defines';
+import { CustomEventHandler } from '@defines/event';
 
 export interface IUseDirectorySelectorParams extends DirectorySelectorProps {}
 
@@ -12,8 +12,8 @@ export interface IUseDirectorySelector {
   handleSelectClick: MouseEventHandler<HTMLButtonElement>;
   handleFocus: FocusEventHandler<HTMLInputElement>;
   handleCopyClick: MouseEventHandler<HTMLButtonElement>;
-  handleFileExplorerShow: DirectorySelectorEventHandler;
-  handleFileExplorerHide: DirectorySelectorEventHandler;
+  handleFileExplorerShow: CustomEventHandler;
+  handleFileExplorerHide: CustomEventHandler;
 }
 
 function useDirectorySelector(params: IUseDirectorySelectorParams): IUseDirectorySelector {
@@ -40,11 +40,11 @@ function useDirectorySelector(params: IUseDirectorySelectorParams): IUseDirector
     });
   };
 
-  const handleFileExplorerShow: DirectorySelectorEventHandler = () => {
+  const handleFileExplorerShow: CustomEventHandler = () => {
     setIsFileExplorerOpened(true);
   };
 
-  const handleFileExplorerHide: DirectorySelectorEventHandler = () => {
+  const handleFileExplorerHide: CustomEventHandler = () => {
     setIsFileExplorerOpened(false);
   };
 

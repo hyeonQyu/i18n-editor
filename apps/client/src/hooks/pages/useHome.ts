@@ -1,9 +1,12 @@
 import { MutableRefObject, useRef, useState } from 'react';
-import { DirectorySelectorEventHandler, PathChangeEvent } from '@components/directorySelector/defines';
+import { PathChangeEvent } from '@components/directorySelector/defines';
 import useQueryGetTranslationFile from '@hooks/queries/useQueryGetTranslationFile';
 import { DropdownChangeParams } from 'primereact/dropdown';
 import useQueryGetContent from '@hooks/queries/useQueryGetContent';
 import { ColumnData, RowData } from 'i18n-editor-common';
+import { ColumnEventParams } from 'primereact/column';
+import { CustomEventHandler } from '@defines/event';
+import useMutationPutContent from '@hooks/queries/useMutationPutContent';
 
 export interface IUseHomeParams {}
 
@@ -15,8 +18,9 @@ export interface IUseHome {
   contentColumns: ColumnData[] | undefined;
   contentRows: RowData[] | undefined;
   tableContainerRef: MutableRefObject<HTMLDivElement | null>;
-  handleDirectoryPathChange: DirectorySelectorEventHandler<PathChangeEvent>;
-  handleTranslationFileChange: DirectorySelectorEventHandler<DropdownChangeParams>;
+  handleDirectoryPathChange: CustomEventHandler<PathChangeEvent>;
+  handleTranslationFileChange: CustomEventHandler<DropdownChangeParams>;
+  handleTranslationContentChange: CustomEventHandler<ColumnEventParams>;
 }
 
 function useHome(params: IUseHomeParams): IUseHome {
@@ -63,13 +67,44 @@ function useHome(params: IUseHomeParams): IUseHome {
     },
   });
 
-  const handleDirectoryPathChange: DirectorySelectorEventHandler<PathChangeEvent> = (e) => {
+  const { mutate: mutatePutContent } = useMutationPutContent({
+    mutationOption: {
+      onSuccess() {},
+    },
+  });
+
+  const handleDirectoryPathChange: CustomEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
     setDirectoryPath(e.path);
   };
 
-  const handleTranslationFileChange: DirectorySelectorEventHandler<DropdownChangeParams> = (e) => {
+  const handleTranslationFileChange: CustomEventHandler<DropdownChangeParams> = (e) => {
     setTranslationFile(e?.value);
+  };
+
+  const handleTranslationContentChange: CustomEventHandler<ColumnEventParams> = async (e) => {
+    if (!e) return;
+    const { value, newValue, field, newRowData: anyNewRowData } = e;
+    if (value === newValue) return;
+
+    const newRowData = anyNewRowData as RowData;
+    const { key } = newRowData;
+
+    setContentRows((prevRows) => {
+      return prevRows?.map((rowData) => {
+        return rowData.key === newRowData.key ? newRowData : rowData;
+      });
+    });
+
+    await mutatePutContent({
+      path: directoryPath,
+      fileName: translationFile!,
+      cell: {
+        key,
+        value: newValue,
+        locale: field,
+      },
+    });
   };
 
   return {
@@ -82,6 +117,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     tableContainerRef,
     handleDirectoryPathChange,
     handleTranslationFileChange,
+    handleTranslationContentChange,
   };
 }
 
