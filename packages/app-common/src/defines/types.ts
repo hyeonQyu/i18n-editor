@@ -10,10 +10,10 @@ export type DirectoryEntryType = 'directory' | 'file' | 'unknown';
 export type LanguageCode = typeof LANGUAGE_CODES[number];
 
 export interface ColumnData {
-  header: string;
+  header: 'key' | 'index' | LanguageCode;
 }
 
-export type RowData = { key: string } & {
+export type RowData = { index: number; key: string } & {
   [languageCode in LanguageCode]?: string;
 };
 

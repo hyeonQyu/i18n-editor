@@ -12,6 +12,7 @@ import {
   GetTranslationFileRes,
   PutContentReq,
   PutContentRes,
+  LanguageCode,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
@@ -95,7 +96,7 @@ export namespace Service {
       const contents = FileSystemManager.getFilesFromDirectoriesByFileName(directories, fileName);
 
       // 언어 코드 (폴더 이름) 목록
-      const languages = directories.map((directory) => directory.slice(directory.lastIndexOf('/') + 1));
+      const languages = directories.map((directory) => directory.slice(directory.lastIndexOf('/') + 1)) as LanguageCode[];
       // 기본 번역 데이터
       const defaultTranslationData = languages.reduce((acc, language) => {
         return {
@@ -121,9 +122,10 @@ export namespace Service {
       });
 
       const columns: ColumnData[] = [{ header: 'key' }, ...languages.map((language) => ({ header: language }))];
-      const rows: RowData[] = Object.entries(translationDataByKey).map(([key, translationData]) => {
+      const rows: RowData[] = Object.entries(translationDataByKey).map(([key, translationData], index) => {
         return {
           key,
+          index,
           ...translationData,
         };
       });

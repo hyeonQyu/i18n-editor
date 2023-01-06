@@ -107,12 +107,11 @@ function useHome(params: IUseHomeParams): IUseHome {
     if (value === newValue) return;
 
     const newRowData = anyNewRowData as RowData;
-    const { key } = newRowData;
+    const { key, index } = newRowData;
 
     setContentRows((prevRows) => {
-      return prevRows?.map((rowData) => {
-        return rowData.key === newRowData.key ? newRowData : rowData;
-      });
+      prevRows![index] = newRowData;
+      return prevRows;
     });
 
     await mutatePutContent({

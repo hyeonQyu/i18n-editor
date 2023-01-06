@@ -5,6 +5,7 @@ import useTranslationFileEditor from '@components/translationFileEditor/useTrans
 import { CellEditor } from '@components/translationFileEditor/components/cellEditor';
 import { CustomEventHandler } from '@defines/event';
 import classNames from 'classnames';
+import { CellViewer } from '@components/translationFileEditor/components/cellViewer';
 
 export interface TranslationFileEditorProps {
   columns?: ColumnData[];
@@ -38,25 +39,20 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
             sortable
             editor={CellEditor}
             onCellEditComplete={onChange}
+            body={(row) => <CellViewer rowData={row} field={column.header} />}
             className={classNames(column.header === 'key' ? 'key' : 'translation')}
           />
         ))}
       </DataTable>
 
       <style jsx>{`
-        :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td.p-cell-editing) {
-          padding-top: 0;
-          padding-bottom: 0;
-        }
-
         :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td) {
           font-size: 14px;
+          padding: 0 16px;
         }
         :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td:not(.p-cell-editing).translation:hover) {
           background-color: var(--blue-50);
           cursor: pointer;
-        }
-        :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td.key) {
         }
       `}</style>
     </>
