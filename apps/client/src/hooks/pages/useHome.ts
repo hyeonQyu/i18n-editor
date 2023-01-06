@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useRef, useState } from 'react';
 import { DirectorySelectorEventHandler, PathChangeEvent } from '@components/directorySelector/defines';
 import useQueryGetTranslationFile from '@hooks/queries/useQueryGetTranslationFile';
 import { DropdownChangeParams } from 'primereact/dropdown';
@@ -41,7 +41,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   const translationFiles: string[] = dataGetTranslationFile?.data?.files ?? [];
   const hasDirectorySelectorError = Boolean(errorGetTranslationFile);
 
-  const {} = useQueryGetContent({
+  useQueryGetContent({
     req: { path: directoryPath, fileName: translationFile || '' },
     queryOption: {
       enabled: Boolean(translationFile) && Boolean(directoryPath),
