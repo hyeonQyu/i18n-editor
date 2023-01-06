@@ -7,6 +7,7 @@ import { ColumnData, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
 import { CustomEventHandler } from '@defines/event';
 import useMutationPutContent from '@hooks/queries/useMutationPutContent';
+import { useToastContext } from '@contexts/toastContext';
 
 export interface IUseHomeParams {}
 
@@ -33,6 +34,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   const [contentRows, setContentRows] = useState<RowData[]>();
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
+  const { toastRef } = useToastContext();
 
   const { data: dataGetTranslationFile, error: errorGetTranslationFile } = useQueryGetTranslationFile({
     req: { path: directoryPath },
@@ -50,6 +52,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     queryOption: {
       enabled: Boolean(translationFile) && Boolean(directoryPath),
       retry: false,
+      refetchOnWindowFocus: false,
       onSuccess({ data }) {
         if (!data) return;
 
@@ -69,7 +72,23 @@ function useHome(params: IUseHomeParams): IUseHome {
 
   const { mutate: mutatePutContent } = useMutationPutContent({
     mutationOption: {
-      onSuccess() {},
+      onSuccess() {
+        toastRef.current?.show({
+          severity: 'success',
+          detail: '변경사항을 저장했어요',
+          life: 3000,
+        });
+      },
+      onError(error) {
+        const data = error?.response?.data;
+        const errorMessage = data?.errorMessage;
+
+        toastRef.current?.show({
+          severity: 'error',
+          detail: `처리 중 오류가 발생했어요${errorMessage ? `\nerror message: ${errorMessage}` : ''}`,
+          life: 3000,
+        });
+      },
     },
   });
 
