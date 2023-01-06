@@ -17,7 +17,9 @@ function useCellEditor(params: IUseCellEditorParams): IUseCellEditor {
   };
 
   const handleChange: FocusEventHandler<HTMLTextAreaElement> = (e) => {
-    editorCallback?.(e.target.value);
+    try {
+      editorCallback?.(e.target.value);
+    } catch (e) {}
   };
 
   return {
