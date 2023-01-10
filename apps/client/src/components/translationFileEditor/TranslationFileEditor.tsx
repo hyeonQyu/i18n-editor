@@ -3,7 +3,7 @@ import { ColumnData, RowData } from 'i18n-editor-common';
 import { Column, ColumnEventParams } from 'primereact/column';
 import useTranslationFileEditor from '@components/translationFileEditor/useTranslationFileEditor';
 import { CellEditor } from '@components/translationFileEditor/components/cellEditor';
-import { CustomEventHandler } from '@defines/event';
+import { CustomEventHandler, EditTranslationTableRowEvent } from '@defines/event';
 import classNames from 'classnames';
 import { CellViewer } from '@components/translationFileEditor/components/cellViewer';
 import { TranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
@@ -13,6 +13,10 @@ export interface TranslationFileEditorProps {
   columns?: ColumnData[];
   rows?: RowData[];
   onChange: CustomEventHandler<ColumnEventParams>;
+  onAddRowAbove: CustomEventHandler<EditTranslationTableRowEvent>;
+  onAddRowBelow: CustomEventHandler<EditTranslationTableRowEvent>;
+  onClearRowContent: CustomEventHandler<EditTranslationTableRowEvent>;
+  onDeleteRow: CustomEventHandler<EditTranslationTableRowEvent>;
 }
 
 function TranslationFileEditor(props: TranslationFileEditorProps) {
@@ -22,7 +26,7 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
 
   return (
     <>
-      <TranslationFileEditorContext.Provider value={translationFileEditor}>
+      <TranslationFileEditorContext.Provider value={{ ...translationFileEditor, ...props }}>
         <TableMoreOptionsRowMenu />
 
         <DataTable
@@ -30,7 +34,7 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
           editMode={'cell'}
           selectionMode={'single'}
           responsiveLayout={'scroll'}
-          dataKey={'key'}
+          dataKey={'index'}
           filterDisplay={'row'}
           globalFilterFields={globalFilterFields}
           scrollable
@@ -70,10 +74,10 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
         :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td) {
           font-size: 14px;
           padding: 0 16px;
+          cursor: initial;
         }
         :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td:not(.p-cell-editing).translation:hover) {
           background-color: var(--blue-50);
-          cursor: pointer;
         }
       `}</style>
     </>

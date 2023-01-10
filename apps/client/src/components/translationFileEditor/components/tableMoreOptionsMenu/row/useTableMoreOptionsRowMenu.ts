@@ -1,4 +1,5 @@
 import { MenuItem } from 'primereact/menuitem';
+import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 
 export interface IUseTableMoreOptionsRowMenuParams {}
 
@@ -8,32 +9,36 @@ export interface IUseTableMoreOptionsRowMenu {
 
 function useTableMoreOptionsRowMenu(params: IUseTableMoreOptionsRowMenuParams): IUseTableMoreOptionsRowMenu {
   const {} = params;
+  const { handleAddRowAbove, handleAddRowBelow, handleClearRowContent, handleDeleteRow } = useTranslationFileEditorContext();
 
   const items: MenuItem[] = [
     {
       label: '위쪽에 행 추가',
       icon: 'pi pi-arrow-up',
-      command() {},
+      command() {
+        handleAddRowAbove();
+      },
     },
     {
       label: '아래쪽에 행 추가',
       icon: 'pi pi-arrow-down',
-      command() {},
+      command() {
+        handleAddRowBelow();
+      },
     },
     {
       label: '행 내용 지우기',
       icon: 'pi pi-eraser',
-      command() {},
-    },
-    {
-      label: '행 복제',
-      icon: 'pi pi-clone',
-      command() {},
+      command() {
+        handleClearRowContent();
+      },
     },
     {
       label: '행 삭제',
       icon: 'pi pi-trash',
-      command() {},
+      command() {
+        handleDeleteRow();
+      },
     },
   ];
 

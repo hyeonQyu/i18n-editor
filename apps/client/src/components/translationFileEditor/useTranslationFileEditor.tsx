@@ -14,12 +14,16 @@ export interface IUseTranslationFileEditor {
   selectedRow: RowData | undefined;
   globalFilterFields: string[];
   handleTableMouseLeave: MouseEventHandler;
+  handleAddRowAbove: CustomEventHandler;
+  handleAddRowBelow: CustomEventHandler;
+  handleClearRowContent: CustomEventHandler;
+  handleDeleteRow: CustomEventHandler;
   onCellMouseEnter: CustomEventHandler<TableCellEvent>;
   onTableMoreOptionsRowButtonClick: CustomEventHandler<TableMoreOptionsRowMenuClickEvent>;
 }
 
 function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUseTranslationFileEditor {
-  const { rows, columns = [] } = params;
+  const { rows, columns = [], onAddRowAbove, onAddRowBelow, onClearRowContent, onDeleteRow } = params;
 
   const rowMenuRef = useRef<Menu>(null);
 
@@ -53,7 +57,23 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     setEditRowIndex(rowIndex);
   };
 
-  const selectedRow = rows && editRowIndex ? rows[editRowIndex] : undefined;
+  const selectedRow = rows && (editRowIndex || editRowIndex === 0) ? rows[editRowIndex] : undefined;
+
+  const handleAddRowAbove: CustomEventHandler = () => {
+    onAddRowAbove({ rowIndex: editRowIndex! });
+  };
+
+  const handleAddRowBelow: CustomEventHandler = () => {
+    onAddRowBelow({ rowIndex: editRowIndex! });
+  };
+
+  const handleClearRowContent: CustomEventHandler = () => {
+    onClearRowContent({ rowIndex: editRowIndex! });
+  };
+
+  const handleDeleteRow: CustomEventHandler = () => {
+    onDeleteRow({ rowIndex: editRowIndex! });
+  };
 
   return {
     rowMenuRef,
@@ -62,6 +82,10 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     selectedRow,
     globalFilterFields,
     handleTableMouseLeave,
+    handleAddRowAbove,
+    handleAddRowBelow,
+    handleClearRowContent,
+    handleDeleteRow,
     onCellMouseEnter,
     onTableMoreOptionsRowButtonClick,
   };

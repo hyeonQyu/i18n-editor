@@ -4,14 +4,25 @@ import { IUseTranslationFileEditor } from '@components/translationFileEditor/use
 export interface ITranslationFileEditorContext
   extends Pick<
     IUseTranslationFileEditor,
-    'rowMenuRef' | 'mouseHoveredRowIndex' | 'onCellMouseEnter' | 'onTableMoreOptionsRowButtonClick'
+    | 'rowMenuRef'
+    | 'mouseHoveredRowIndex'
+    | 'onCellMouseEnter'
+    | 'onTableMoreOptionsRowButtonClick'
+    | 'handleAddRowAbove'
+    | 'handleAddRowBelow'
+    | 'handleClearRowContent'
+    | 'handleDeleteRow'
   > {}
 
 export const TranslationFileEditorContext = React.createContext<ITranslationFileEditorContext>({
   rowMenuRef: undefined,
   mouseHoveredRowIndex: undefined,
-  onCellMouseEnter: () => {},
-  onTableMoreOptionsRowButtonClick: () => {},
+  onCellMouseEnter() {},
+  onTableMoreOptionsRowButtonClick() {},
+  handleAddRowAbove() {},
+  handleAddRowBelow() {},
+  handleClearRowContent() {},
+  handleDeleteRow() {},
 });
 
 export const useTranslationFileEditorContext = () => React.useContext(TranslationFileEditorContext);

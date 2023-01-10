@@ -9,7 +9,7 @@ export interface CellViewerProps {
 
 export function CellViewer(props: CellViewerProps) {
   const { rowData, field } = props;
-  const { isShowTableOptionsButton, handleMouseEnter, handleTableMoreOptionRowButtonClick } = useCellViewer(props);
+  const { isKey, isShowTableOptionsButton, handleMouseEnter, handleTableMoreOptionRowButtonClick } = useCellViewer(props);
 
   return (
     <>
@@ -30,6 +30,7 @@ export function CellViewer(props: CellViewerProps) {
           width: 100%;
           height: 100%;
           position: relative;
+          cursor: ${isKey ? 'initial' : 'pointer'};
         }
 
         .data {

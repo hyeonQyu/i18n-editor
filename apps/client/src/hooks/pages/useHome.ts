@@ -5,7 +5,7 @@ import { DropdownChangeParams } from 'primereact/dropdown';
 import useQueryGetContent from '@hooks/queries/useQueryGetContent';
 import { ColumnData, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
-import { CustomEventHandler } from '@defines/event';
+import { CustomEventHandler, EditTranslationTableRowEvent } from '@defines/event';
 import useMutationPutContent from '@hooks/queries/useMutationPutContent';
 import { useToastContext } from '@contexts/toastContext';
 
@@ -22,7 +22,41 @@ export interface IUseHome {
   handleDirectoryPathChange: CustomEventHandler<PathChangeEvent>;
   handleTranslationFileChange: CustomEventHandler<DropdownChangeParams>;
   handleTranslationContentChange: CustomEventHandler<ColumnEventParams>;
+  onAddRowAbove: CustomEventHandler<EditTranslationTableRowEvent>;
+  onAddRowBelow: CustomEventHandler<EditTranslationTableRowEvent>;
+  onClearRowContent: CustomEventHandler<EditTranslationTableRowEvent>;
+  onDeleteRow: CustomEventHandler<EditTranslationTableRowEvent>;
 }
+
+const getNewContentRow = (row: RowData, index: number, clearKey: boolean): RowData => {
+  return Object.entries(row).reduce(
+    (acc, [key, value]) => {
+      if (key === 'index') return acc;
+      if (!clearKey && key === 'key') {
+        return {
+          ...acc,
+          [key]: value,
+        };
+      }
+      return {
+        ...acc,
+        [key]: '',
+      };
+    },
+    { index },
+  ) as RowData;
+};
+
+const getRowsBeforePivot = (rows: RowData[], pivotIndex: number) => rows.slice(0, pivotIndex);
+
+const getRowsAfterWithPivot = (rows: RowData[], pivotIndex: number) =>
+  rows.slice(pivotIndex).map((row) => ({ ...row, index: row.index + 1 }));
+
+const getNewRowAddedContentRows = (rows: RowData[], currentContentRow: RowData, rowIndex: number) => [
+  ...getRowsBeforePivot(rows, rowIndex),
+  getNewContentRow(currentContentRow, rowIndex, true),
+  ...getRowsAfterWithPivot(rows, rowIndex),
+];
 
 function useHome(params: IUseHomeParams): IUseHome {
   const {} = params;
@@ -125,6 +159,36 @@ function useHome(params: IUseHomeParams): IUseHome {
     });
   };
 
+  // 위쪽에 행 추가
+  const onAddRowAbove: CustomEventHandler<EditTranslationTableRowEvent> = (e) => {
+    if (!e) return;
+    const { rowIndex } = e;
+    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![rowIndex], rowIndex));
+  };
+
+  // 아래쪽에 행 추가
+  const onAddRowBelow: CustomEventHandler<EditTranslationTableRowEvent> = (e) => {
+    if (!e) return;
+    const { rowIndex } = e;
+    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![rowIndex], rowIndex + 1));
+  };
+
+  // 행 내용 지우기
+  const onClearRowContent: CustomEventHandler<EditTranslationTableRowEvent> = (e) => {
+    if (!e) return;
+    const { rowIndex } = e;
+    setContentRows((prev) => prev!.map((row) => (rowIndex === row.index ? getNewContentRow(row, row.index, false) : row)));
+  };
+
+  // 행 삭제
+  const onDeleteRow: CustomEventHandler<EditTranslationTableRowEvent> = (e) => {
+    if (!e) return;
+    const { rowIndex } = e;
+    setContentRows((prev) => {
+      return [...prev!.slice(0, rowIndex), ...prev!.slice(rowIndex + 1).map((row) => ({ ...row, index: row.index - 1 }))];
+    });
+  };
+
   return {
     directoryPath,
     translationFiles,
@@ -136,6 +200,10 @@ function useHome(params: IUseHomeParams): IUseHome {
     handleDirectoryPathChange,
     handleTranslationFileChange,
     handleTranslationContentChange,
+    onAddRowAbove,
+    onAddRowBelow,
+    onClearRowContent,
+    onDeleteRow,
   };
 }
 

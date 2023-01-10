@@ -5,6 +5,7 @@ import { MouseEventHandler } from 'react';
 export interface IUseCellViewerParams extends CellViewerProps {}
 
 export interface IUseCellViewer {
+  isKey: boolean;
   isShowTableOptionsButton: boolean;
   handleMouseEnter: MouseEventHandler<HTMLDivElement>;
   handleTableMoreOptionRowButtonClick: MouseEventHandler<HTMLButtonElement>;
@@ -30,6 +31,7 @@ function useCellViewer(params: IUseCellViewerParams): IUseCellViewer {
   const isShowTableOptionsButton = isHoveredRow && isKey;
 
   return {
+    isKey,
     isShowTableOptionsButton,
     handleMouseEnter,
     handleTableMoreOptionRowButtonClick,

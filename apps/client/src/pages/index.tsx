@@ -18,6 +18,10 @@ function Index(props: IndexProps) {
     handleDirectoryPathChange,
     handleTranslationFileChange,
     handleTranslationContentChange,
+    onAddRowAbove,
+    onAddRowBelow,
+    onClearRowContent,
+    onDeleteRow,
   } = useHome({});
 
   return (
@@ -33,7 +37,15 @@ function Index(props: IndexProps) {
       </div>
 
       <div className={'table-container'} ref={tableContainerRef}>
-        <TranslationFileEditor columns={contentColumns} rows={contentRows} onChange={handleTranslationContentChange} />
+        <TranslationFileEditor
+          columns={contentColumns}
+          rows={contentRows}
+          onChange={handleTranslationContentChange}
+          onAddRowAbove={onAddRowAbove}
+          onAddRowBelow={onAddRowBelow}
+          onClearRowContent={onClearRowContent}
+          onDeleteRow={onDeleteRow}
+        />
       </div>
 
       <style jsx>{`
