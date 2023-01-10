@@ -8,6 +8,7 @@ import { ColumnEventParams } from 'primereact/column';
 import { CustomEventHandler, EditTranslationTableRowEvent } from '@defines/event';
 import useMutationPutContent from '@hooks/queries/useMutationPutContent';
 import { useToastContext } from '@contexts/toastContext';
+import { confirmDialog } from 'primereact/confirmdialog';
 
 export interface IUseHomeParams {}
 
@@ -177,7 +178,16 @@ function useHome(params: IUseHomeParams): IUseHome {
   const onClearRowContent: CustomEventHandler<EditTranslationTableRowEvent> = (e) => {
     if (!e) return;
     const { rowIndex } = e;
-    setContentRows((prev) => prev!.map((row) => (rowIndex === row.index ? getNewContentRow(row, row.index, false) : row)));
+
+    confirmDialog({
+      header: '선택된 행의 내용을 지우시겠어요?',
+      message: `${contentRows![rowIndex].key}에 해당하는 모든 번역값을 초기화합니다`,
+      icon: 'pi pi-info-circle',
+      acceptClassName: 'p-button-danger',
+      accept() {
+        setContentRows((prev) => prev!.map((row) => (rowIndex === row.index ? getNewContentRow(row, row.index, false) : row)));
+      },
+    });
   };
 
   // 행 삭제

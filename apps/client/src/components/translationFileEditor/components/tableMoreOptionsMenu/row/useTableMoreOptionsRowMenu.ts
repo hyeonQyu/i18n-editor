@@ -9,7 +9,10 @@ export interface IUseTableMoreOptionsRowMenu {
 
 function useTableMoreOptionsRowMenu(params: IUseTableMoreOptionsRowMenuParams): IUseTableMoreOptionsRowMenu {
   const {} = params;
-  const { handleAddRowAbove, handleAddRowBelow, handleClearRowContent, handleDeleteRow } = useTranslationFileEditorContext();
+  const { isClearableRow, handleAddRowAbove, handleAddRowBelow, handleClearRowContent, handleDeleteRow } =
+    useTranslationFileEditorContext();
+
+  console.log('isClearableRow', isClearableRow);
 
   const items: MenuItem[] = [
     {
@@ -29,6 +32,7 @@ function useTableMoreOptionsRowMenu(params: IUseTableMoreOptionsRowMenuParams): 
     {
       label: '행 내용 지우기',
       icon: 'pi pi-eraser',
+      disabled: !isClearableRow,
       command() {
         handleClearRowContent();
       },

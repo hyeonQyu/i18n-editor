@@ -6,6 +6,7 @@ export interface ITranslationFileEditorContext
     IUseTranslationFileEditor,
     | 'rowMenuRef'
     | 'mouseHoveredRowIndex'
+    | 'isClearableRow'
     | 'onCellMouseEnter'
     | 'onTableMoreOptionsRowButtonClick'
     | 'handleAddRowAbove'
@@ -17,6 +18,7 @@ export interface ITranslationFileEditorContext
 export const TranslationFileEditorContext = React.createContext<ITranslationFileEditorContext>({
   rowMenuRef: undefined,
   mouseHoveredRowIndex: undefined,
+  isClearableRow: false,
   onCellMouseEnter() {},
   onTableMoreOptionsRowButtonClick() {},
   handleAddRowAbove() {},

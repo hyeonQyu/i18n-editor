@@ -13,6 +13,7 @@ export interface IUseTranslationFileEditor {
   editRowIndex: number | undefined;
   selectedRow: RowData | undefined;
   globalFilterFields: string[];
+  isClearableRow: boolean;
   handleTableMouseLeave: MouseEventHandler;
   handleAddRowAbove: CustomEventHandler;
   handleAddRowBelow: CustomEventHandler;
@@ -57,7 +58,13 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     setEditRowIndex(rowIndex);
   };
 
-  const selectedRow = rows && (editRowIndex || editRowIndex === 0) ? rows[editRowIndex] : undefined;
+  const hasSelectedRow = rows && (editRowIndex || editRowIndex === 0);
+
+  const selectedRow = hasSelectedRow ? rows[editRowIndex] : undefined;
+
+  const isClearableRow = Boolean(
+    rows && hasSelectedRow && Object.entries(rows[editRowIndex]).filter(([key, value]) => key !== 'key' && key !== 'index' && value).length,
+  );
 
   const handleAddRowAbove: CustomEventHandler = () => {
     onAddRowAbove({ rowIndex: editRowIndex! });
@@ -81,6 +88,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     editRowIndex,
     selectedRow,
     globalFilterFields,
+    isClearableRow,
     handleTableMouseLeave,
     handleAddRowAbove,
     handleAddRowBelow,
