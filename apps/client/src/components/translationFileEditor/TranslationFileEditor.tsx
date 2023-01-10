@@ -6,6 +6,7 @@ import { CellEditor } from '@components/translationFileEditor/components/cellEdi
 import { CustomEventHandler } from '@defines/event';
 import classNames from 'classnames';
 import { CellViewer } from '@components/translationFileEditor/components/cellViewer';
+import { TranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 
 export interface TranslationFileEditorProps {
   columns?: ColumnData[];
@@ -15,35 +16,38 @@ export interface TranslationFileEditorProps {
 
 function TranslationFileEditor(props: TranslationFileEditorProps) {
   const { columns = [], rows = [], onChange } = props;
-  const { globalFilterFields } = useTranslationFileEditor(props);
+  const { mouseHoveredIndex, globalFilterFields, handleTableMouseLeave, handleCellMouseEnter } = useTranslationFileEditor(props);
 
   return (
     <>
-      <DataTable
-        value={rows}
-        editMode={'cell'}
-        responsiveLayout={'scroll'}
-        dataKey={'key'}
-        filterDisplay={'row'}
-        globalFilterFields={globalFilterFields}
-        scrollable
-        scrollHeight={'flex'}
-        className={'translation-file-editor'}
-      >
-        {columns.map((column) => (
-          <Column
-            key={column.header}
-            {...column}
-            field={column.header}
-            filter
-            sortable
-            editor={CellEditor}
-            onCellEditComplete={onChange}
-            body={(row) => <CellViewer rowData={row} field={column.header} />}
-            className={classNames(column.header === 'key' ? 'key' : 'translation')}
-          />
-        ))}
-      </DataTable>
+      <TranslationFileEditorContext.Provider value={{ mouseHoveredIndex, onCellMouseEnter: handleCellMouseEnter }}>
+        <DataTable
+          value={rows}
+          editMode={'cell'}
+          responsiveLayout={'scroll'}
+          dataKey={'key'}
+          filterDisplay={'row'}
+          globalFilterFields={globalFilterFields}
+          scrollable
+          scrollHeight={'flex'}
+          onMouseLeave={handleTableMouseLeave}
+          className={'translation-file-editor'}
+        >
+          {columns.map((column) => (
+            <Column
+              key={column.header}
+              {...column}
+              field={column.header}
+              filter
+              sortable
+              editor={(option) => <CellEditor {...option} />}
+              onCellEditComplete={onChange}
+              body={(row) => <CellViewer rowData={row} field={column.header} />}
+              className={classNames(column.header === 'key' ? 'key' : 'translation')}
+            />
+          ))}
+        </DataTable>
+      </TranslationFileEditorContext.Provider>
 
       <style jsx>{`
         :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td) {

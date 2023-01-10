@@ -7,7 +7,7 @@ export interface CellEditorProps extends ColumnEditorOptions {}
 
 export function CellEditor(props: CellEditorProps) {
   const { value, field, rowData } = props;
-  const { handleFocus, handleChange } = useCellEditor(props);
+  const { handleFocus, handleChange, handleMouseEnter } = useCellEditor(props);
 
   if (field === 'key') {
     return <CellViewer rowData={rowData} field={field} />;
@@ -15,7 +15,14 @@ export function CellEditor(props: CellEditorProps) {
 
   return (
     <>
-      <InputTextarea className={'cell-editor'} value={value} onFocus={handleFocus} onChange={handleChange} autoResize />
+      <InputTextarea
+        className={'cell-editor'}
+        value={value}
+        onFocus={handleFocus}
+        onChange={handleChange}
+        onMouseEnter={handleMouseEnter}
+        autoResize
+      />
 
       <style jsx>{`
         :global(.cell-editor) {
