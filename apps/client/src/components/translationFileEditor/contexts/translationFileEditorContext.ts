@@ -1,15 +1,17 @@
 import React from 'react';
-import { CustomEventHandler } from '@defines/event';
-import { TableCellHoverEvent } from '@components/translationFileEditor/defines';
+import { IUseTranslationFileEditor } from '@components/translationFileEditor/useTranslationFileEditor';
 
-export interface ITranslationFileEditorContext {
-  mouseHoveredIndex: number | undefined;
-  onCellMouseEnter: CustomEventHandler<TableCellHoverEvent>;
-}
+export interface ITranslationFileEditorContext
+  extends Pick<
+    IUseTranslationFileEditor,
+    'rowMenuRef' | 'mouseHoveredRowIndex' | 'onCellMouseEnter' | 'onTableMoreOptionsRowButtonClick'
+  > {}
 
 export const TranslationFileEditorContext = React.createContext<ITranslationFileEditorContext>({
-  mouseHoveredIndex: undefined,
+  rowMenuRef: undefined,
+  mouseHoveredRowIndex: undefined,
   onCellMouseEnter: () => {},
+  onTableMoreOptionsRowButtonClick: () => {},
 });
 
 export const useTranslationFileEditorContext = () => React.useContext(TranslationFileEditorContext);

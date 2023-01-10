@@ -9,13 +9,19 @@ export interface CellViewerProps {
 
 export function CellViewer(props: CellViewerProps) {
   const { rowData, field } = props;
-  const { isShowTableOptionsButton, handleMouseEnter } = useCellViewer(props);
+  const { isShowTableOptionsButton, handleMouseEnter, handleTableMoreOptionRowButtonClick } = useCellViewer(props);
 
   return (
     <>
       <div className={'cell'} onMouseEnter={handleMouseEnter}>
         <div className={'data'}>{rowData[field]}</div>
-        {isShowTableOptionsButton && <Button icon={'pi pi-angle-down'} className={'p-button-raised p-button-text table-options'} />}
+        {isShowTableOptionsButton && (
+          <Button
+            icon={'pi pi-angle-down'}
+            onClick={handleTableMoreOptionRowButtonClick}
+            className={'p-button-raised p-button-text table-options'}
+          />
+        )}
       </div>
 
       <style jsx>{`

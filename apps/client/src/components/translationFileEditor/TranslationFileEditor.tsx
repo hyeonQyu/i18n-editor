@@ -7,6 +7,7 @@ import { CustomEventHandler } from '@defines/event';
 import classNames from 'classnames';
 import { CellViewer } from '@components/translationFileEditor/components/cellViewer';
 import { TranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { TableMoreOptionsRowMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row';
 
 export interface TranslationFileEditorProps {
   columns?: ColumnData[];
@@ -16,14 +17,18 @@ export interface TranslationFileEditorProps {
 
 function TranslationFileEditor(props: TranslationFileEditorProps) {
   const { columns = [], rows = [], onChange } = props;
-  const { mouseHoveredIndex, globalFilterFields, handleTableMouseLeave, handleCellMouseEnter } = useTranslationFileEditor(props);
+  const translationFileEditor = useTranslationFileEditor(props);
+  const { selectedRow, globalFilterFields, handleTableMouseLeave } = translationFileEditor;
 
   return (
     <>
-      <TranslationFileEditorContext.Provider value={{ mouseHoveredIndex, onCellMouseEnter: handleCellMouseEnter }}>
+      <TranslationFileEditorContext.Provider value={translationFileEditor}>
+        <TableMoreOptionsRowMenu />
+
         <DataTable
           value={rows}
           editMode={'cell'}
+          selectionMode={'single'}
           responsiveLayout={'scroll'}
           dataKey={'key'}
           filterDisplay={'row'}
@@ -31,6 +36,7 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
           scrollable
           scrollHeight={'flex'}
           onMouseLeave={handleTableMouseLeave}
+          selection={selectedRow}
           className={'translation-file-editor'}
         >
           {columns.map((column) => (
@@ -50,6 +56,17 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
       </TranslationFileEditorContext.Provider>
 
       <style jsx>{`
+        :global(
+            .p-datatable.p-datatable-selectable
+              .p-datatable-tbody
+              > tr.p-selectable-row:not(.p-highlight):not(.p-datatable-emptymessage):hover
+          ) {
+          background: var(--surface-0);
+        }
+        :global(.p-datatable.p-datatable-selectable .p-datatable-tbody > tr.p-selectable-row:focus) {
+          outline: none;
+        }
+
         :global(.translation-file-editor .p-datatable-table .p-datatable-tbody > tr > td) {
           font-size: 14px;
           padding: 0 16px;
