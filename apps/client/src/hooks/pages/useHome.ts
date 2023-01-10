@@ -194,8 +194,18 @@ function useHome(params: IUseHomeParams): IUseHome {
   const onDeleteRow: CustomEventHandler<EditTranslationTableRowEvent> = (e) => {
     if (!e) return;
     const { rowIndex } = e;
-    setContentRows((prev) => {
-      return [...prev!.slice(0, rowIndex), ...prev!.slice(rowIndex + 1).map((row) => ({ ...row, index: row.index - 1 }))];
+
+    confirmDialog({
+      header: '선택된 행을 삭제하시겠어요?',
+      message: `${contentRows![rowIndex].key} 키가 삭제됩니다.`,
+      icon: 'pi pi-info-circle',
+      acceptClassName: 'p-button-danger',
+      accept() {
+        setContentRows((prev) => [
+          ...prev!.slice(0, rowIndex),
+          ...prev!.slice(rowIndex + 1).map((row) => ({ ...row, index: row.index - 1 })),
+        ]);
+      },
     });
   };
 
