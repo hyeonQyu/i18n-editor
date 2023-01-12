@@ -40,7 +40,7 @@ export function DirectorySelector(props: DirectorySelectorProps) {
             htmlFor={inputId}
             className={classNames(isFileExplorerOpened && 'opened', Boolean(path) && 'selected', invalid && 'invalid')}
           >
-            Locale 디렉토리
+            Locale 디렉토리를 선택하세요
           </label>
         </span>
         <Button icon={'pi pi-clone'} className={'p-button p-button-outlined'} onClick={handleCopyClick} disabled={!path} />

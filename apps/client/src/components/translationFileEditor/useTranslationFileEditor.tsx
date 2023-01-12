@@ -40,9 +40,17 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   const [mouseHoveredRowIndex, setMouseHoveredRowIndex] = useState<number>();
   const [editRowIndex, setEditRowIndex] = useState<number>();
 
-  const inputAddingKey = useInput({});
   const [tableExtendDialogData, setTableExtendDialogData] = useState<TableExtendDialogData>({
     ...INITIAL_TABLE_EXTEND_DIALOG_DATA,
+  });
+  const inputAddingKey = useInput({
+    onChangeValue() {
+      setTableExtendDialogData((prev) => ({
+        ...prev,
+        invalid: false,
+        inputLabel: prev.header.includes('행') ? '새로 추가할 행의 key를 입력하세요' : '새로 추가할 열의 언어 code 입력',
+      }));
+    },
   });
 
   const globalFilterFields = columns.map(({ header }) => header);
@@ -94,9 +102,34 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     visible: true,
     header: '행을 추가하시겠어요?',
     position: getEditRowDialogPosition(e!.target as HTMLElement),
-    inputLabel: '새로 추가할 행의 key 입력',
+    inputLabel: '새로 추가할 행의 key를 입력하세요',
+    invalid: false,
     onHide: hideTableExtendDialog,
   });
+
+  const isDuplicatedRowKey = (key: string) => {
+    return Boolean(rows?.filter((row) => row.key === key).length);
+  };
+
+  const checkInvalidRowAndAlert = (key: string): boolean => {
+    if (!key) {
+      setTableExtendDialogData((prev) => ({
+        ...prev,
+        invalid: true,
+      }));
+      return true;
+    }
+
+    if (isDuplicatedRowKey(key)) {
+      setTableExtendDialogData((prev) => ({
+        ...prev,
+        invalid: true,
+        inputLabel: '이미 동일한 key가 있어요',
+      }));
+      return true;
+    }
+    return false;
+  };
 
   const handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent> = (e) => {
     inputAddingKey.clear();
@@ -104,8 +137,10 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     setTableExtendDialogData((prev) => ({
       ...prev,
       ...commonAddRowDialogProps(e!),
-      onAdd(keyValue) {
-        onAddRowAbove({ index: editRowIndex!, keyValue });
+      onAdd(key) {
+        if (checkInvalidRowAndAlert(key)) return;
+
+        onAddRowAbove({ index: editRowIndex!, key });
         hideTableExtendDialog();
       },
     }));
@@ -117,8 +152,10 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     setTableExtendDialogData((prev) => ({
       ...prev,
       ...commonAddRowDialogProps(e!),
-      onAdd(keyValue) {
-        onAddRowBelow({ index: editRowIndex!, keyValue });
+      onAdd(key) {
+        if (checkInvalidRowAndAlert(key)) return;
+
+        onAddRowBelow({ index: editRowIndex!, key });
         hideTableExtendDialog();
       },
     }));

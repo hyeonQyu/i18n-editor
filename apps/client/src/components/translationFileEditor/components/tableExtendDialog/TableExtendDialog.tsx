@@ -1,18 +1,25 @@
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
-import { MouseEventHandler } from 'react';
+import { FormEventHandler, MouseEventHandler } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import classNames from 'classnames';
+import { COLOR } from '@defines/css';
 
 const inputId = 'table-extend';
 
 export function TableExtendDialog() {
   const {
-    tableExtendDialogData: { inputLabel, onAdd, onHide, ...rest },
+    tableExtendDialogData: { inputLabel, invalid, onAdd, onHide, ...rest },
     inputAddingKey,
   } = useTranslationFileEditorContext();
 
   const handleAddRow = () => {
+    onAdd(inputAddingKey.value);
+  };
+
+  const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
     onAdd(inputAddingKey.value);
   };
 
@@ -24,18 +31,20 @@ export function TableExtendDialog() {
         footer={() => <TableExtendDialogFooter onYesClick={handleAddRow} onNoClick={onHide} disabledYes={!inputAddingKey.value} />}
         className={'table-extend-dialog-container'}
       >
-        <div className={'table-extend-dialog'}>
+        <form className={'table-extend-dialog'} onSubmit={handleFormSubmit}>
           <span className={'p-float-label'}>
             <InputText
               id={inputId}
               value={inputAddingKey.value}
               onChange={inputAddingKey.onChange}
               autoFocus
-              className={'table-extend-input'}
+              className={classNames('table-extend-input', invalid && 'p-invalid')}
             />
-            <label htmlFor={inputId}>{inputLabel}</label>
+            <label className={classNames(invalid && 'invalid')} htmlFor={inputId}>
+              {inputLabel}
+            </label>
           </span>
-        </div>
+        </form>
       </Dialog>
 
       <style jsx>{`
@@ -50,6 +59,11 @@ export function TableExtendDialog() {
 
         .table-extend-dialog :global(.table-extend-input) {
           width: 100%;
+        }
+
+        label.invalid {
+          color: ${COLOR.invalid};
+          animation: shake 0.2s ease;
         }
       `}</style>
     </>

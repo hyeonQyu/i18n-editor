@@ -5,6 +5,7 @@ export interface TableExtendDialogData {
   header: string;
   position: DialogPositionType;
   inputLabel: string;
-  onAdd: (keyValue: string) => void;
+  invalid: boolean;
+  onAdd: (key: string) => void;
   onHide: () => void;
 }

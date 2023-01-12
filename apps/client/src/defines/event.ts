@@ -7,7 +7,7 @@ export interface TranslationTableEditEvent {
 }
 
 export interface TranslationTableAddEvent extends TranslationTableEditEvent {
-  keyValue: string;
+  key: string;
 }
 
 export interface TranslationTableDeleteRowEvent extends TranslationTableEditEvent {

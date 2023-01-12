@@ -29,17 +29,17 @@ export interface IUseHome {
   onDeleteRow: CustomEventHandler<TranslationTableDeleteRowEvent>;
 }
 
-const getNewContentRow = (row: RowData, index: number, keyValue: string): RowData => {
+const getNewContentRow = (row: RowData, index: number, key: string): RowData => {
   return Object.keys(row).reduce(
-    (acc, key) => {
-      if (key === 'index' || key === 'key') return acc;
+    (acc, prop) => {
+      if (prop === 'index' || prop === 'key') return acc;
 
       return {
         ...acc,
-        [key]: '',
+        [prop]: '',
       };
     },
-    { index, key: keyValue },
+    { index, key },
   ) as RowData;
 };
 
@@ -48,9 +48,9 @@ const getRowsBeforePivot = (rows: RowData[], pivotIndex: number) => rows.slice(0
 const getRowsAfterWithPivot = (rows: RowData[], pivotIndex: number) =>
   rows.slice(pivotIndex).map((row) => ({ ...row, index: row.index + 1 }));
 
-const getNewRowAddedContentRows = (rows: RowData[], currentContentRow: RowData, rowIndex: number, keyValue: string) => [
+const getNewRowAddedContentRows = (rows: RowData[], currentContentRow: RowData, rowIndex: number, key: string) => [
   ...getRowsBeforePivot(rows, rowIndex),
-  getNewContentRow(currentContentRow, rowIndex, keyValue),
+  getNewContentRow(currentContentRow, rowIndex, key),
   ...getRowsAfterWithPivot(rows, rowIndex),
 ];
 
@@ -158,15 +158,15 @@ function useHome(params: IUseHomeParams): IUseHome {
   // 위쪽에 행 추가
   const onAddRowAbove: CustomEventHandler<TranslationTableAddEvent> = (e) => {
     if (!e) return;
-    const { index, keyValue } = e;
-    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index, keyValue));
+    const { index, key } = e;
+    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index, key));
   };
 
   // 아래쪽에 행 추가
   const onAddRowBelow: CustomEventHandler<TranslationTableAddEvent> = (e) => {
     if (!e) return;
-    const { index, keyValue } = e;
-    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index + 1, keyValue));
+    const { index, key } = e;
+    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index + 1, key));
   };
 
   // 행 내용 지우기

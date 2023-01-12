@@ -5,6 +5,7 @@ export const INITIAL_TABLE_EXTEND_DIALOG_DATA: TableExtendDialogData = {
   header: '',
   position: 'left',
   inputLabel: '',
+  invalid: false,
   onAdd() {},
   onHide() {},
 };

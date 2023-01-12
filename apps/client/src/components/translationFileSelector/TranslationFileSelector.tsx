@@ -37,7 +37,7 @@ export function TranslationFileSelector(props: TranslationFileSelectorProps) {
           }}
         />
         <label htmlFor={selectId} className={classNames(opened && 'opened', Boolean(file) && 'selected')}>
-          편집할 번역 파일
+          편집할 번역 파일을 선택하세요
         </label>
       </span>
 

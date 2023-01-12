@@ -1,0 +1,17 @@
+@keyframes shake {
+    0% {
+        transform: rotateY(0deg);
+    }
+    30% {
+        transform: rotateY(-30deg);
+    }
+    60% {
+        transform: rotateY(0deg);
+    }
+    80% {
+        transform: rotateY(-15deg);
+    }
+    100% {
+        transform: rotateY(0deg);
+    }
+}
