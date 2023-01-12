@@ -1,5 +1,15 @@
+import { DialogPositionType } from 'primereact/dialog';
+
 export type CustomEventHandler<E = undefined> = (e?: E) => void;
 
-export interface EditTranslationTableRowEvent {
-  rowIndex: number;
+export interface TranslationTableEditEvent {
+  index: number;
+}
+
+export interface TranslationTableAddEvent extends TranslationTableEditEvent {
+  keyValue: string;
+}
+
+export interface TranslationTableDeleteRowEvent extends TranslationTableEditEvent {
+  position: DialogPositionType;
 }

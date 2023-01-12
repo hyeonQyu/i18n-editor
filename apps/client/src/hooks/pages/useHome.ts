@@ -5,7 +5,7 @@ import { DropdownChangeParams } from 'primereact/dropdown';
 import useQueryGetContent from '@hooks/queries/useQueryGetContent';
 import { ColumnData, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
-import { CustomEventHandler, EditTranslationTableRowEvent } from '@defines/event';
+import { CustomEventHandler, TranslationTableAddEvent, TranslationTableDeleteRowEvent } from '@defines/event';
 import useMutationPutContent from '@hooks/queries/useMutationPutContent';
 import { useToastContext } from '@contexts/toastContext';
 import { confirmDialog } from 'primereact/confirmdialog';
@@ -23,28 +23,23 @@ export interface IUseHome {
   handleDirectoryPathChange: CustomEventHandler<PathChangeEvent>;
   handleTranslationFileChange: CustomEventHandler<DropdownChangeParams>;
   handleTranslationContentChange: CustomEventHandler<ColumnEventParams>;
-  onAddRowAbove: CustomEventHandler<EditTranslationTableRowEvent>;
-  onAddRowBelow: CustomEventHandler<EditTranslationTableRowEvent>;
-  onClearRowContent: CustomEventHandler<EditTranslationTableRowEvent>;
-  onDeleteRow: CustomEventHandler<EditTranslationTableRowEvent>;
+  onAddRowAbove: CustomEventHandler<TranslationTableAddEvent>;
+  onAddRowBelow: CustomEventHandler<TranslationTableAddEvent>;
+  onClearRowContent: CustomEventHandler<TranslationTableDeleteRowEvent>;
+  onDeleteRow: CustomEventHandler<TranslationTableDeleteRowEvent>;
 }
 
-const getNewContentRow = (row: RowData, index: number, clearKey: boolean): RowData => {
-  return Object.entries(row).reduce(
-    (acc, [key, value]) => {
-      if (key === 'index') return acc;
-      if (!clearKey && key === 'key') {
-        return {
-          ...acc,
-          [key]: value,
-        };
-      }
+const getNewContentRow = (row: RowData, index: number, keyValue: string): RowData => {
+  return Object.keys(row).reduce(
+    (acc, key) => {
+      if (key === 'index' || key === 'key') return acc;
+
       return {
         ...acc,
         [key]: '',
       };
     },
-    { index },
+    { index, key: keyValue },
   ) as RowData;
 };
 
@@ -53,9 +48,9 @@ const getRowsBeforePivot = (rows: RowData[], pivotIndex: number) => rows.slice(0
 const getRowsAfterWithPivot = (rows: RowData[], pivotIndex: number) =>
   rows.slice(pivotIndex).map((row) => ({ ...row, index: row.index + 1 }));
 
-const getNewRowAddedContentRows = (rows: RowData[], currentContentRow: RowData, rowIndex: number) => [
+const getNewRowAddedContentRows = (rows: RowData[], currentContentRow: RowData, rowIndex: number, keyValue: string) => [
   ...getRowsBeforePivot(rows, rowIndex),
-  getNewContentRow(currentContentRow, rowIndex, true),
+  getNewContentRow(currentContentRow, rowIndex, keyValue),
   ...getRowsAfterWithPivot(rows, rowIndex),
 ];
 
@@ -161,50 +156,51 @@ function useHome(params: IUseHomeParams): IUseHome {
   };
 
   // 위쪽에 행 추가
-  const onAddRowAbove: CustomEventHandler<EditTranslationTableRowEvent> = (e) => {
+  const onAddRowAbove: CustomEventHandler<TranslationTableAddEvent> = (e) => {
     if (!e) return;
-    const { rowIndex } = e;
-    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![rowIndex], rowIndex));
+    const { index, keyValue } = e;
+    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index, keyValue));
   };
 
   // 아래쪽에 행 추가
-  const onAddRowBelow: CustomEventHandler<EditTranslationTableRowEvent> = (e) => {
+  const onAddRowBelow: CustomEventHandler<TranslationTableAddEvent> = (e) => {
     if (!e) return;
-    const { rowIndex } = e;
-    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![rowIndex], rowIndex + 1));
+    const { index, keyValue } = e;
+    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index + 1, keyValue));
   };
 
   // 행 내용 지우기
-  const onClearRowContent: CustomEventHandler<EditTranslationTableRowEvent> = (e) => {
+  const onClearRowContent: CustomEventHandler<TranslationTableDeleteRowEvent> = (e) => {
     if (!e) return;
-    const { rowIndex } = e;
+    const { index, position } = e;
 
     confirmDialog({
       header: '선택된 행의 내용을 지우시겠어요?',
-      message: `${contentRows![rowIndex].key}에 해당하는 모든 번역값을 초기화합니다`,
+      message: `${contentRows![index].key}에 해당하는 모든 번역값을 초기화합니다`,
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
+      position,
+      className: 'delete-row-dialog',
       accept() {
-        setContentRows((prev) => prev!.map((row) => (rowIndex === row.index ? getNewContentRow(row, row.index, false) : row)));
+        setContentRows((prev) => prev!.map((row) => (index === row.index ? getNewContentRow(row, row.index, row.key) : row)));
       },
     });
   };
 
   // 행 삭제
-  const onDeleteRow: CustomEventHandler<EditTranslationTableRowEvent> = (e) => {
+  const onDeleteRow: CustomEventHandler<TranslationTableDeleteRowEvent> = (e) => {
     if (!e) return;
-    const { rowIndex } = e;
+    const { index, position } = e;
 
     confirmDialog({
       header: '선택된 행을 삭제하시겠어요?',
-      message: `${contentRows![rowIndex].key} 키가 삭제됩니다.`,
+      message: `${contentRows![index].key} 키가 삭제됩니다.`,
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
+      position,
+      className: 'delete-row-dialog',
       accept() {
-        setContentRows((prev) => [
-          ...prev!.slice(0, rowIndex),
-          ...prev!.slice(rowIndex + 1).map((row) => ({ ...row, index: row.index - 1 })),
-        ]);
+        setContentRows((prev) => [...prev!.slice(0, index), ...prev!.slice(index + 1).map((row) => ({ ...row, index: row.index - 1 }))]);
       },
     });
   };

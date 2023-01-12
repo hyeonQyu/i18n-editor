@@ -9,39 +9,42 @@ export interface IUseTableMoreOptionsRowMenu {
 
 function useTableMoreOptionsRowMenu(params: IUseTableMoreOptionsRowMenuParams): IUseTableMoreOptionsRowMenu {
   const {} = params;
-  const { isClearableRow, handleAddRowAbove, handleAddRowBelow, handleClearRowContent, handleDeleteRow } =
-    useTranslationFileEditorContext();
-
-  console.log('isClearableRow', isClearableRow);
+  const {
+    isClearableRow,
+    handleRowMenuClickAddRowAbove,
+    handleRowMenuClickAddRowBelow,
+    handleRowMenuClickClearRowContent,
+    handleRowMenuClickDeleteRow,
+  } = useTranslationFileEditorContext();
 
   const items: MenuItem[] = [
     {
       label: '위쪽에 행 추가',
       icon: 'pi pi-arrow-up',
-      command() {
-        handleAddRowAbove();
+      command(e) {
+        handleRowMenuClickAddRowAbove(e.originalEvent);
       },
     },
     {
       label: '아래쪽에 행 추가',
       icon: 'pi pi-arrow-down',
-      command() {
-        handleAddRowBelow();
+      command(e) {
+        handleRowMenuClickAddRowBelow(e.originalEvent);
       },
     },
     {
       label: '행 내용 지우기',
       icon: 'pi pi-eraser',
       disabled: !isClearableRow,
-      command() {
-        handleClearRowContent();
+      command(e) {
+        handleRowMenuClickClearRowContent(e.originalEvent);
       },
     },
     {
       label: '행 삭제',
       icon: 'pi pi-trash',
-      command() {
-        handleDeleteRow();
+      command(e) {
+        handleRowMenuClickDeleteRow(e.originalEvent);
       },
     },
   ];
