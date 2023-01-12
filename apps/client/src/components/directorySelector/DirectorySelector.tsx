@@ -65,6 +65,7 @@ export function DirectorySelector(props: DirectorySelectorProps) {
 
         label.invalid {
           color: ${COLOR.invalid};
+          animation: shake 0.2s ease;
         }
       `}</style>
     </>

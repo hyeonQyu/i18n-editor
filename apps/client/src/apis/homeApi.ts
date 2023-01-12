@@ -6,8 +6,8 @@ import {
   GetDirectoryRes,
   GetTranslationFileReq,
   GetTranslationFileRes,
-  PutContentReq,
-  PutContentRes,
+  PatchContentReq,
+  PatchContentRes,
 } from 'i18n-editor-common';
 
 export namespace HomeApi {
@@ -45,7 +45,7 @@ export namespace HomeApi {
    * 다국어 번역 파일 내용 편집
    * @param req
    */
-  export async function putContent(req: PutContentReq): Promise<PutContentRes> {
-    return (await client.put('/content', req)).data;
+  export async function patchContent(req: PatchContentReq): Promise<PatchContentRes> {
+    return (await client.patch('/content', req)).data;
   }
 }

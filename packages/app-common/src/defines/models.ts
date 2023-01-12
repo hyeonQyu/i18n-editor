@@ -36,10 +36,10 @@ export interface GetContentRes
     rows: RowData[];
   }> {}
 
-export interface PutContentReq {
+export interface PatchContentReq {
   path: string;
   fileName: string;
-  cell: CellData;
+  cells: CellData[];
 }
 
-export interface PutContentRes extends CommonRes {}
+export interface PatchContentRes extends CommonRes {}

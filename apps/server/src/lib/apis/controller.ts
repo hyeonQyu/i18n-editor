@@ -6,8 +6,8 @@ import {
   GetContentRes,
   GetTranslationFileReq,
   GetTranslationFileRes,
-  PutContentReq,
-  PutContentRes,
+  PatchContentReq,
+  PatchContentRes,
 } from 'i18n-editor-common';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { Service } from './service';
@@ -29,8 +29,8 @@ export namespace Controller {
       res.status(response.status).send(response);
     });
 
-    doCommonResponse<PutContentReq, void, PutContentRes>(app, '/content', 'put', (req, res) => {
-      const response = Service.putContent(req.body);
+    doCommonResponse<PatchContentReq, void, PatchContentRes>(app, '/content', 'patch', (req, res) => {
+      const response = Service.patchContent(req.body);
       res.status(response.status).send(response);
     });
   }

@@ -6,7 +6,7 @@ import useQueryGetContent from '@hooks/queries/useQueryGetContent';
 import { ColumnData, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
 import { CustomEventHandler, TranslationTableAddEvent, TranslationTableDeleteRowEvent } from '@defines/event';
-import useMutationPutContent from '@hooks/queries/useMutationPutContent';
+import useMutationPatchContent from '@hooks/queries/useMutationPatchContent';
 import { useToastContext } from '@contexts/toastContext';
 import { confirmDialog } from 'primereact/confirmdialog';
 
@@ -100,7 +100,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     },
   });
 
-  const { mutate: mutatePutContent } = useMutationPutContent({
+  const { mutate: mutatePatchContent } = useMutationPatchContent({
     mutationOption: {
       onSuccess() {
         toastRef.current?.show({
@@ -144,14 +144,16 @@ function useHome(params: IUseHomeParams): IUseHome {
       return prevRows;
     });
 
-    await mutatePutContent({
+    await mutatePatchContent({
       path: directoryPath,
       fileName: translationFile!,
-      cell: {
-        key,
-        value: newValue,
-        locale: field,
-      },
+      cells: [
+        {
+          key,
+          value: newValue,
+          locale: field,
+        },
+      ],
     });
   };
 

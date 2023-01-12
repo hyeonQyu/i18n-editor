@@ -10,8 +10,8 @@ import {
   StringUtil,
   GetTranslationFileReq,
   GetTranslationFileRes,
-  PutContentReq,
-  PutContentRes,
+  PatchContentReq,
+  PatchContentRes,
   LanguageCode,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
@@ -105,7 +105,7 @@ export namespace Service {
         };
       }, {});
       // key 별 번역 데이터
-      const translationDataByKey: { [key in string]?: JsonObject } = {};
+      const translationDataByKey: Record<string, JsonObject> = {};
 
       contents.forEach((content, i) => {
         const language = languages[i];
@@ -144,18 +144,18 @@ export namespace Service {
    * 번역 파일 수정
    * @param req
    */
-  export function putContent(req: PutContentReq): PutContentRes {
+  export function patchContent(req: PatchContentReq): PatchContentRes {
     try {
-      const {
-        path,
-        fileName,
-        cell: { locale, key, value },
-      } = req;
+      const { path, fileName, cells } = req;
 
-      const filePath = `${path}/${locale}/${fileName}`;
-      const content = FileSystemManager.readFile(filePath);
-      content[key] = value;
-      FileSystemManager.writeFile(filePath, content);
+      cells.forEach(({ locale, key, value }) => {
+        const filePath = `${path}/${locale}/${fileName}`;
+        const content = FileSystemManager.readFile(filePath);
+        content[key] = value;
+        FileSystemManager.writeFile(filePath, content);
+
+        console.log(`edit: ${locale}) [${key}]: ${value}`);
+      });
 
       return { status: 200 };
     } catch (e) {
