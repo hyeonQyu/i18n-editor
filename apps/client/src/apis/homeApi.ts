@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import {
+  DeleteContentRowReq,
+  DeleteContentRowRes,
   GetContentReq,
   GetContentRes,
   GetDirectoryReq,
@@ -57,5 +59,13 @@ export namespace HomeApi {
    */
   export async function postContentRow(req: PostContentRowReq): Promise<PostContentRowRes> {
     return (await client.post('/content/row', req)).data;
+  }
+
+  /**
+   * 행 삭제
+   * @param req
+   */
+  export async function deleteContentRow(req: DeleteContentRowReq): Promise<DeleteContentRowRes> {
+    return (await client.delete('/content/row', { data: req })).data;
   }
 }

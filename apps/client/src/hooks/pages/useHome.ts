@@ -10,6 +10,7 @@ import useMutationPatchContent from '@hooks/queries/useMutationPatchContent';
 import { useToastContext } from '@contexts/toastContext';
 import { confirmDialog } from 'primereact/confirmdialog';
 import useMutationPostContentRow from '@hooks/queries/useMutationPostContentRow';
+import useMutationDeleteContentRow from '@hooks/queries/useMutationDeleteContentRow';
 
 export interface IUseHomeParams {}
 
@@ -83,7 +84,6 @@ function useHome(params: IUseHomeParams): IUseHome {
     queryOption: {
       enabled: Boolean(translationFile) && Boolean(directoryPath),
       retry: false,
-      refetchOnWindowFocus: false,
       onSuccess({ data }) {
         if (!data) return;
 
@@ -103,6 +103,7 @@ function useHome(params: IUseHomeParams): IUseHome {
 
   const { mutate: mutatePatchContent } = useMutationPatchContent({});
   const { mutate: mutatePostContentRow } = useMutationPostContentRow({});
+  const { mutate: mutateDeleteContentRow } = useMutationDeleteContentRow({});
 
   const handleDirectoryPathChange: CustomEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
@@ -233,7 +234,21 @@ function useHome(params: IUseHomeParams): IUseHome {
       position,
       className: 'delete-row-dialog',
       accept() {
-        setContentRows((prev) => [...prev!.slice(0, index), ...prev!.slice(index + 1).map((row) => ({ ...row, index: row.index - 1 }))]);
+        mutateDeleteContentRow(
+          {
+            path: directoryPath,
+            fileName: translationFile!,
+            key: contentRows![index].key,
+          },
+          {
+            onSuccess() {
+              setContentRows((prev) => [
+                ...prev!.slice(0, index),
+                ...prev!.slice(index + 1).map((row) => ({ ...row, index: row.index - 1 })),
+              ]);
+            },
+          },
+        );
       },
     });
   };
