@@ -185,6 +185,11 @@ export namespace ContentUtil {
     };
   }
 
+  /**
+   * 변경 사항 번역 파일에 쓰기
+   * @param translationFiles
+   * @param rows
+   */
   export function writeTranslationFilesByChangedRows(translationFiles: FileData[], rows: RowData[]) {
     translationFiles.forEach(({ path, language }) => {
       const content = ContentUtil.getNewContentByRowsAndLanguageCode(rows, language);
