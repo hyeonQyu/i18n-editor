@@ -9,6 +9,7 @@ import { CustomEventHandler, TranslationTableAddEvent, TranslationTableDeleteRow
 import useMutationPatchContent from '@hooks/queries/useMutationPatchContent';
 import { useToastContext } from '@contexts/toastContext';
 import { confirmDialog } from 'primereact/confirmdialog';
+import useMutationPostContentRow from '@hooks/queries/useMutationPostContentRow';
 
 export interface IUseHomeParams {}
 
@@ -101,6 +102,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   });
 
   const { mutate: mutatePatchContent } = useMutationPatchContent({});
+  const { mutate: mutatePostContentRow } = useMutationPostContentRow({});
 
   const handleDirectoryPathChange: CustomEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
@@ -163,15 +165,41 @@ function useHome(params: IUseHomeParams): IUseHome {
   // 위쪽에 행 추가
   const onAddRowAbove: CustomEventHandler<TranslationTableAddEvent> = (e) => {
     if (!e) return;
+
     const { index, key } = e;
-    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index, key));
+
+    mutatePostContentRow(
+      {
+        row: { index, key },
+        path: directoryPath,
+        fileName: translationFile!,
+      },
+      {
+        onSuccess() {
+          setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index, key));
+        },
+      },
+    );
   };
 
   // 아래쪽에 행 추가
   const onAddRowBelow: CustomEventHandler<TranslationTableAddEvent> = (e) => {
     if (!e) return;
+
     const { index, key } = e;
-    setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index + 1, key));
+
+    mutatePostContentRow(
+      {
+        row: { index: index + 1, key },
+        path: directoryPath,
+        fileName: translationFile!,
+      },
+      {
+        onSuccess() {
+          setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index + 1, key));
+        },
+      },
+    );
   };
 
   // 행 내용 지우기

@@ -8,6 +8,8 @@ import {
   GetTranslationFileRes,
   PatchContentReq,
   PatchContentRes,
+  PostContentRowReq,
+  PostContentRowRes,
 } from 'i18n-editor-common';
 
 export namespace HomeApi {
@@ -47,5 +49,13 @@ export namespace HomeApi {
    */
   export async function patchContent(req: PatchContentReq): Promise<PatchContentRes> {
     return (await client.patch('/content', req)).data;
+  }
+
+  /**
+   * 행 추가
+   * @param req
+   */
+  export async function postContentRow(req: PostContentRowReq): Promise<PostContentRowRes> {
+    return (await client.post('/content/row', req)).data;
   }
 }

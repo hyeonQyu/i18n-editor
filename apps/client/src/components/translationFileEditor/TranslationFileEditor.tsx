@@ -36,7 +36,7 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
           editMode={'cell'}
           selectionMode={'single'}
           responsiveLayout={'scroll'}
-          dataKey={'index'}
+          dataKey={'key'}
           filterDisplay={'row'}
           globalFilterFields={globalFilterFields}
           scrollable
