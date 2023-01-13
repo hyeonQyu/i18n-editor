@@ -10,6 +10,8 @@ import {
   GetTranslationFileRes,
   PatchContentReq,
   PatchContentRes,
+  DeleteContentRowReq,
+  DeleteContentRowRes,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
@@ -88,20 +90,16 @@ export namespace Service {
     try {
       const { path, fileName } = req;
 
-      const directories = ContentUtil.getDirectoryPathsByRootDirectoryPath(path);
+      const contentData = ContentUtil.getContentDataFromPathWithFileName(path, fileName);
 
-      if (directories.length === 0) {
+      if (!contentData) {
         const errorMessage = 'Invalid locale directory';
         console.error(errorMessage);
         return { status: 999, errorMessage };
       }
 
-      const contents = ContentUtil.getFileDataListFromDirectoryNamesWithFileName(directories, fileName).map(({ content }) => content);
-      const languages = ContentUtil.getLanguageCodesFromDirectoryPaths(directories);
-      const translationDataByKey = ContentUtil.getTranslationDataByKeyFromContentsAndLanguageCodes(contents, languages);
+      const { rows, columns } = contentData;
 
-      const columns = ContentUtil.getColumnDataListFromLanguageCodes(languages);
-      const rows = ContentUtil.getRowDataListFromTranslationDataByKey(translationDataByKey);
       cache.lastReadRows = rows;
 
       console.log('column data', columns);
@@ -146,19 +144,15 @@ export namespace Service {
     try {
       const { path, fileName, row } = req;
 
-      const directories = ContentUtil.getDirectoryPathsByRootDirectoryPath(path);
+      const contentData = ContentUtil.getContentDataFromPathWithFileName(path, fileName);
 
-      if (directories.length === 0) {
+      if (!contentData) {
         const errorMessage = 'Invalid locale directory';
         console.error(errorMessage);
         return { status: 999, errorMessage };
       }
 
-      const translationFiles = ContentUtil.getFileDataListFromDirectoryNamesWithFileName(directories, fileName);
-      const contents = translationFiles.map(({ content }) => content);
-      const languages = ContentUtil.getLanguageCodesFromDirectoryPaths(directories);
-      const translationDataByKey = ContentUtil.getTranslationDataByKeyFromContentsAndLanguageCodes(contents, languages);
-      const rows = ContentUtil.getRowDataListFromTranslationDataByKey(translationDataByKey);
+      const { translationFiles, rows } = contentData;
 
       if (!ContentUtil.compareRowKeys(rows, cache.lastReadRows)) {
         const errorMessage = 'Keys changed by external write';
@@ -167,12 +161,38 @@ export namespace Service {
       }
 
       const newRows = [...rows.slice(0, row.index), row, ...rows.slice(row.index)];
+      ContentUtil.writeTranslationFilesByChangedRows(translationFiles, newRows);
+      cache.lastReadRows = newRows;
 
-      translationFiles.forEach(({ path, language }) => {
-        const content = ContentUtil.getNewContentByRowsAndLanguageCode(newRows, language);
-        FileSystemManager.writeFile(path, content);
-      });
+      return { status: 200 };
+    } catch (e) {
+      console.error(e);
+      return { status: 500, errorMessage: (e as Error).message };
+    }
+  }
 
+  export function deleteContentRow(req: DeleteContentRowReq): DeleteContentRowRes {
+    try {
+      const { path, fileName, key } = req;
+
+      const contentData = ContentUtil.getContentDataFromPathWithFileName(path, fileName);
+
+      if (!contentData) {
+        const errorMessage = 'Invalid locale directory';
+        console.error(errorMessage);
+        return { status: 999, errorMessage };
+      }
+
+      const { translationFiles, rows } = contentData;
+
+      if (!ContentUtil.compareRowKeys(rows, cache.lastReadRows)) {
+        const errorMessage = 'Keys changed by external write';
+        console.error(errorMessage);
+        return { status: 998, errorMessage };
+      }
+
+      const newRows = rows.filter((row) => row.key !== key);
+      ContentUtil.writeTranslationFilesByChangedRows(translationFiles, newRows);
       cache.lastReadRows = newRows;
 
       return { status: 200 };

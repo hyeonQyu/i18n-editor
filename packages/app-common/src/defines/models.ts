@@ -51,3 +51,11 @@ export interface PostContentRowReq {
 }
 
 export interface PostContentRowRes extends CommonRes {}
+
+export interface DeleteContentRowReq {
+  path: string;
+  fileName: string;
+  key: string;
+}
+
+export interface DeleteContentRowRes extends CommonRes {}

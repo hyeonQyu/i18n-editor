@@ -10,6 +10,8 @@ import {
   PatchContentRes,
   PostContentRowReq,
   PostContentRowRes,
+  DeleteContentRowReq,
+  DeleteContentRowRes,
 } from 'i18n-editor-common';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { Service } from './service';
@@ -38,6 +40,11 @@ export namespace Controller {
 
     doCommonResponse<PostContentRowReq, void, PostContentRowRes>(app, '/content/row', 'post', (req, res) => {
       const response = Service.postContentRow(req.body);
+      res.status(response.status).send(response);
+    });
+
+    doCommonResponse<DeleteContentRowReq, void, DeleteContentRowRes>(app, '/content/row', 'delete', (req, res) => {
+      const response = Service.deleteContentRow(req.body);
       res.status(response.status).send(response);
     });
   }

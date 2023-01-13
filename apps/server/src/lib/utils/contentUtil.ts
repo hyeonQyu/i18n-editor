@@ -123,6 +123,11 @@ export namespace ContentUtil {
     }, {} as JsonObject);
   }
 
+  /**
+   * 두 개의 row 목록의 키 값 비교
+   * @param rows1
+   * @param rows2
+   */
   export function compareRowKeys(rows1: RowData[], rows2: RowData[]): boolean {
     if (rows1.length !== rows2.length) return false;
 
@@ -143,5 +148,47 @@ export namespace ContentUtil {
     }
 
     return true;
+  }
+
+  /**
+   * 번역 파일 관련 필요한 정보 반환
+   * @param path
+   * @param fileName
+   */
+  export function getContentDataFromPathWithFileName(
+    path: string,
+    fileName: string,
+  ): {
+    translationFiles: FileData[];
+    languages: LanguageCode[];
+    translationDataByKey: Record<string, JsonObject>;
+    rows: RowData[];
+    columns: ColumnData[];
+  } | null {
+    const directories = getDirectoryPathsByRootDirectoryPath(path);
+
+    if (directories.length === 0) return null;
+
+    const translationFiles = getFileDataListFromDirectoryNamesWithFileName(directories, fileName);
+    const contents = translationFiles.map(({ content }) => content);
+    const languages = getLanguageCodesFromDirectoryPaths(directories);
+    const translationDataByKey = getTranslationDataByKeyFromContentsAndLanguageCodes(contents, languages);
+    const rows = getRowDataListFromTranslationDataByKey(translationDataByKey);
+    const columns = getColumnDataListFromLanguageCodes(languages);
+
+    return {
+      translationFiles,
+      languages,
+      translationDataByKey,
+      rows,
+      columns,
+    };
+  }
+
+  export function writeTranslationFilesByChangedRows(translationFiles: FileData[], rows: RowData[]) {
+    translationFiles.forEach(({ path, language }) => {
+      const content = ContentUtil.getNewContentByRowsAndLanguageCode(rows, language);
+      FileSystemManager.writeFile(path, content);
+    });
   }
 }
