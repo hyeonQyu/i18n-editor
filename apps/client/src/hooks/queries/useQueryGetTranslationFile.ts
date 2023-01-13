@@ -33,7 +33,9 @@ function useQueryGetTranslationFile(params: IUseQueryGetTranslationFileParams): 
         default:
           toastRef.current?.show({
             severity: 'error',
-            detail: `처리 중 오류가 발생했어요${errorMessage ? `\nerror message: ${errorMessage}` : ''}`,
+            detail: `번역 파일 조회 중 오류가 발생했어요\n계속해서 같은 오류가 발생한다면 새로고침 해주세요${
+              errorMessage ? `\n\nerror message: ${errorMessage}` : ''
+            }`,
             life: 3000,
           });
           break;

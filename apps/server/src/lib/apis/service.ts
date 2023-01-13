@@ -1,24 +1,27 @@
 import {
-  ColumnData,
   DirectoryEntry,
   DirectoryEntryType,
   GetDirectoryReq,
   GetDirectoryRes,
   GetContentReq,
   GetContentRes,
-  RowData,
   StringUtil,
   GetTranslationFileReq,
   GetTranslationFileRes,
   PatchContentReq,
   PatchContentRes,
-  LanguageCode,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
-import { JsonObject } from '../defines/types';
+import { PostContentRowReq, PostContentRowRes } from 'i18n-editor-common/lib/defines/models';
+import { ContentUtil } from '../utils/contentUtil';
+import { ServiceCache } from '../defines/types';
 
 export namespace Service {
+  const cache: ServiceCache = {
+    lastReadRows: [],
+  };
+
   /**
    * 디렉토리 내 파일 (entry) 목록
    * @param req
@@ -57,7 +60,7 @@ export namespace Service {
     try {
       const { path } = req;
 
-      const directories = FileSystemManager.getTranslationDirectoryNames(path);
+      const directories = ContentUtil.getDirectoryPathsByRootDirectoryPath(path);
 
       if (directories.length === 0) {
         const errorMessage = 'Invalid locale directory';
@@ -65,7 +68,7 @@ export namespace Service {
         return { status: 999, errorMessage };
       }
 
-      const files = FileSystemManager.getFileNames(directories, ['json']);
+      const files = ContentUtil.getAllTranslationFileNamesFromDirectoryPaths(directories);
 
       console.log('valid locale directory');
       console.log(files);
@@ -85,7 +88,7 @@ export namespace Service {
     try {
       const { path, fileName } = req;
 
-      const directories = FileSystemManager.getTranslationDirectoryNames(path);
+      const directories = ContentUtil.getDirectoryPathsByRootDirectoryPath(path);
 
       if (directories.length === 0) {
         const errorMessage = 'Invalid locale directory';
@@ -93,42 +96,13 @@ export namespace Service {
         return { status: 999, errorMessage };
       }
 
-      const contents = FileSystemManager.getFilesFromDirectoriesByFileName(directories, fileName);
+      const contents = ContentUtil.getFileDataListFromDirectoryNamesWithFileName(directories, fileName).map(({ content }) => content);
+      const languages = ContentUtil.getLanguageCodesFromDirectoryPaths(directories);
+      const translationDataByKey = ContentUtil.getTranslationDataByKeyFromContentsAndLanguageCodes(contents, languages);
 
-      // 언어 코드 (폴더 이름) 목록
-      const languages = directories.map((directory) => directory.slice(directory.lastIndexOf('/') + 1)) as LanguageCode[];
-      // 기본 번역 데이터
-      const defaultTranslationData = languages.reduce((acc, language) => {
-        return {
-          ...acc,
-          [language]: '',
-        };
-      }, {});
-      // key 별 번역 데이터
-      const translationDataByKey: Record<string, JsonObject> = {};
-
-      contents.forEach((content, i) => {
-        const language = languages[i];
-        Object.entries(content).forEach(([key, translation]) => {
-          if (!translationDataByKey[key]) {
-            translationDataByKey[key] = {
-              ...defaultTranslationData,
-              [language]: translation,
-            };
-          } else {
-            translationDataByKey[key]![language] = translation;
-          }
-        });
-      });
-
-      const columns: ColumnData[] = [{ header: 'key' }, ...languages.map((language) => ({ header: language }))];
-      const rows: RowData[] = Object.entries(translationDataByKey).map(([key, translationData], index) => {
-        return {
-          key,
-          index,
-          ...translationData,
-        };
-      });
+      const columns = ContentUtil.getColumnDataListFromLanguageCodes(languages);
+      const rows = ContentUtil.getRowDataListFromTranslationDataByKey(translationDataByKey);
+      cache.lastReadRows = rows;
 
       console.log('column data', columns);
       console.log('row data', rows);
@@ -156,6 +130,50 @@ export namespace Service {
 
         console.log(`edit: ${locale}) [${key}]: ${value}`);
       });
+
+      return { status: 200 };
+    } catch (e) {
+      console.error(e);
+      return { status: 500, errorMessage: (e as Error).message };
+    }
+  }
+
+  /**
+   * 행 추가
+   * @param req
+   */
+  export function postContentRow(req: PostContentRowReq): PostContentRowRes {
+    try {
+      const { path, fileName, row } = req;
+
+      const directories = ContentUtil.getDirectoryPathsByRootDirectoryPath(path);
+
+      if (directories.length === 0) {
+        const errorMessage = 'Invalid locale directory';
+        console.error(errorMessage);
+        return { status: 999, errorMessage };
+      }
+
+      const translationFiles = ContentUtil.getFileDataListFromDirectoryNamesWithFileName(directories, fileName);
+      const contents = translationFiles.map(({ content }) => content);
+      const languages = ContentUtil.getLanguageCodesFromDirectoryPaths(directories);
+      const translationDataByKey = ContentUtil.getTranslationDataByKeyFromContentsAndLanguageCodes(contents, languages);
+      const rows = ContentUtil.getRowDataListFromTranslationDataByKey(translationDataByKey);
+
+      if (!ContentUtil.compareRowKeys(rows, cache.lastReadRows)) {
+        const errorMessage = 'Keys changed by external write';
+        console.error(errorMessage);
+        return { status: 998, errorMessage };
+      }
+
+      const newRows = [...rows.slice(0, row.index), row, ...rows.slice(row.index)];
+
+      translationFiles.forEach(({ path, language }) => {
+        const content = ContentUtil.getNewContentByRowsAndLanguageCode(newRows, language);
+        FileSystemManager.writeFile(path, content);
+      });
+
+      cache.lastReadRows = newRows;
 
       return { status: 200 };
     } catch (e) {

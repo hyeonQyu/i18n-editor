@@ -43,3 +43,11 @@ export interface PatchContentReq {
 }
 
 export interface PatchContentRes extends CommonRes {}
+
+export interface PostContentRowReq {
+  path: string;
+  fileName: string;
+  row: RowData;
+}
+
+export interface PostContentRowRes extends CommonRes {}

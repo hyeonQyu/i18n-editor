@@ -100,27 +100,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     },
   });
 
-  const { mutate: mutatePatchContent } = useMutationPatchContent({
-    mutationOption: {
-      onSuccess() {
-        toastRef.current?.show({
-          severity: 'success',
-          detail: '변경사항을 저장했어요',
-          life: 3000,
-        });
-      },
-      onError(error) {
-        const data = error?.response?.data;
-        const errorMessage = data?.errorMessage;
-
-        toastRef.current?.show({
-          severity: 'error',
-          detail: `처리 중 오류가 발생했어요${errorMessage ? `\nerror message: ${errorMessage}` : ''}`,
-          life: 3000,
-        });
-      },
-    },
-  });
+  const { mutate: mutatePatchContent } = useMutationPatchContent({});
 
   const handleDirectoryPathChange: CustomEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
@@ -139,22 +119,45 @@ function useHome(params: IUseHomeParams): IUseHome {
     const newRowData = anyNewRowData as RowData;
     const { key, index } = newRowData;
 
-    setContentRows((prevRows) => {
-      prevRows![index] = newRowData;
-      return prevRows;
-    });
+    await mutatePatchContent(
+      {
+        path: directoryPath,
+        fileName: translationFile!,
+        cells: [
+          {
+            key,
+            value: newValue,
+            locale: field,
+          },
+        ],
+      },
+      {
+        onSuccess() {
+          setContentRows((prevRows) => {
+            prevRows![index] = newRowData;
+            return prevRows;
+          });
 
-    await mutatePatchContent({
-      path: directoryPath,
-      fileName: translationFile!,
-      cells: [
-        {
-          key,
-          value: newValue,
-          locale: field,
+          toastRef.current?.show({
+            severity: 'success',
+            detail: '변경사항을 저장했어요',
+            life: 3000,
+          });
         },
-      ],
-    });
+        onError(error) {
+          const data = error?.response?.data;
+          const errorMessage = data?.errorMessage;
+
+          toastRef.current?.show({
+            severity: 'error',
+            detail: `변경 사항 저장 중 오류가 발생했어요\n계속해서 같은 오류가 발생한다면 새로고침 해주세요${
+              errorMessage ? `\nerror message: ${errorMessage}` : ''
+            }`,
+            life: 3000,
+          });
+        },
+      },
+    );
   };
 
   // 위쪽에 행 추가
