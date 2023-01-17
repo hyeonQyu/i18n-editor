@@ -178,6 +178,11 @@ function useHome(params: IUseHomeParams): IUseHome {
       {
         onSuccess() {
           setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index, key));
+          toastRef.current?.show({
+            severity: 'success',
+            detail: '행을 추가했어요',
+            life: 3000,
+          });
         },
       },
     );
@@ -198,6 +203,11 @@ function useHome(params: IUseHomeParams): IUseHome {
       {
         onSuccess() {
           setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index + 1, key));
+          toastRef.current?.show({
+            severity: 'success',
+            detail: '행을 추가했어요',
+            life: 3000,
+          });
         },
       },
     );
@@ -246,6 +256,11 @@ function useHome(params: IUseHomeParams): IUseHome {
                 ...prev!.slice(0, index),
                 ...prev!.slice(index + 1).map((row) => ({ ...row, index: row.index - 1 })),
               ]);
+              toastRef.current?.show({
+                severity: 'success',
+                detail: '행을 삭제했어요',
+                life: 3000,
+              });
             },
           },
         );
