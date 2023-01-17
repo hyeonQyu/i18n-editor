@@ -3,7 +3,7 @@ import { PathChangeEvent } from '@components/directorySelector/defines';
 import useQueryGetTranslationFile from '@hooks/queries/useQueryGetTranslationFile';
 import { DropdownChangeParams } from 'primereact/dropdown';
 import useQueryGetContent from '@hooks/queries/useQueryGetContent';
-import { ColumnData, RowData } from 'i18n-editor-common';
+import { CellData, ColumnData, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
 import { CustomEventHandler, TranslationTableAddEvent, TranslationTableDeleteRowEvent } from '@defines/event';
 import useMutationPatchContent from '@hooks/queries/useMutationPatchContent';
@@ -55,6 +55,19 @@ const getNewRowAddedContentRows = (rows: RowData[], currentContentRow: RowData, 
   getNewContentRow(currentContentRow, rowIndex, key),
   ...getRowsAfterWithPivot(rows, rowIndex),
 ];
+
+const rowToCell = (row: RowData, getCell: (cell: CellData) => CellData = (cell) => cell): CellData[] => {
+  const { key } = row;
+  return Object.entries(row)
+    .filter(([prop]) => !(prop === 'index' || prop === 'key'))
+    .map(([locale, value]) =>
+      getCell({
+        locale,
+        key,
+        value: value as string,
+      }),
+    );
+};
 
 function useHome(params: IUseHomeParams): IUseHome {
   const {} = params;
@@ -226,7 +239,23 @@ function useHome(params: IUseHomeParams): IUseHome {
       position,
       className: 'delete-row-dialog',
       accept() {
-        setContentRows((prev) => prev!.map((row) => (index === row.index ? getNewContentRow(row, row.index, row.key) : row)));
+        mutatePatchContent(
+          {
+            path: directoryPath,
+            fileName: translationFile!,
+            cells: rowToCell(contentRows![index], (cell) => ({ ...cell, value: '' })),
+          },
+          {
+            onSuccess() {
+              setContentRows((prev) => prev!.map((row) => (index === row.index ? getNewContentRow(row, row.index, row.key) : row)));
+              toastRef.current?.show({
+                severity: 'success',
+                detail: '행의 모든 내용을 지웠어요',
+                life: 3000,
+              });
+            },
+          },
+        );
       },
     });
   };
