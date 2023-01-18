@@ -1,16 +1,18 @@
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
-import { FormEventHandler, MouseEventHandler } from 'react';
+import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import classNames from 'classnames';
 import { COLOR } from '@defines/css';
+import { Dropdown } from 'primereact/dropdown';
+import { LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defines';
 
 const inputId = 'table-extend';
 
 export function TableExtendDialog() {
   const {
-    tableExtendDialogData: { inputLabel, invalid, onAdd, onHide, ...rest },
+    tableExtendDialogData: { type, visible, inputLabel, invalid, onAdd, onHide, ...rest },
     inputAddingKey,
   } = useTranslationFileEditorContext();
 
@@ -23,23 +25,40 @@ export function TableExtendDialog() {
     onAdd(inputAddingKey.value);
   };
 
+  useEffect(() => {
+    document.body.style.overflowY = visible ? 'hidden' : 'initial';
+  }, [visible]);
+
   return (
     <>
       <Dialog
         {...rest}
+        visible={visible}
         onHide={onHide}
         footer={() => <TableExtendDialogFooter onYesClick={handleAddRow} onNoClick={onHide} disabledYes={!inputAddingKey.value} />}
         className={'table-extend-dialog-container'}
       >
         <form className={'table-extend-dialog'} onSubmit={handleFormSubmit}>
           <span className={'p-float-label'}>
-            <InputText
-              id={inputId}
-              value={inputAddingKey.value}
-              onChange={inputAddingKey.onChange}
-              autoFocus
-              className={classNames('table-extend-input', invalid && 'p-invalid')}
-            />
+            {type === 'row' && (
+              <InputText
+                id={inputId}
+                value={inputAddingKey.value}
+                onChange={inputAddingKey.onChange}
+                autoFocus
+                className={classNames('table-extend-input', invalid && 'p-invalid')}
+              />
+            )}
+            {type === 'column' && (
+              <Dropdown
+                options={LANGUAGE_SELECT_OPTIONS}
+                optionLabel={'label'}
+                filter
+                filterBy={'title'}
+                autoFocus
+                className={'table-extend-select'}
+              />
+            )}
             <label className={classNames(invalid && 'invalid')} htmlFor={inputId}>
               {inputLabel}
             </label>
@@ -57,7 +76,8 @@ export function TableExtendDialog() {
           padding-top: 20px;
         }
 
-        .table-extend-dialog :global(.table-extend-input) {
+        .table-extend-dialog :global(.table-extend-input),
+        .table-extend-dialog :global(.table-extend-select) {
           width: 100%;
         }
 

@@ -3,8 +3,10 @@ import { MouseEventHandler, RefObject, SyntheticEvent, useRef, useState } from '
 import { CustomEventHandler } from '@defines/event';
 import {
   INITIAL_TABLE_EXTEND_DIALOG_DATA,
+  LABELS_BY_TABLE_EXTEND_TYPE,
   TableCellEvent,
   TableExtendDialogData,
+  TableMoreOptionsColumnMenuClickEvent,
   TableMoreOptionsRowMenuClickEvent,
 } from '@components/translationFileEditor/defines';
 import { Menu } from 'primereact/menu';
@@ -17,6 +19,7 @@ export interface IUseTranslationFileEditorParams extends TranslationFileEditorPr
 
 export interface IUseTranslationFileEditor {
   rowMenuRef: RefObject<Menu> | undefined;
+  columnMenuRef: RefObject<Menu> | undefined;
   mouseHoveredRowIndex: number | undefined;
   editRowIndex: number | undefined;
   selectedRow: RowData | undefined;
@@ -27,11 +30,15 @@ export interface IUseTranslationFileEditor {
   handleTableMouseLeave: MouseEventHandler;
   handleRowClick: CustomEventHandler<DataTableRowClickEventParams>;
   handleRowMouseEnter: CustomEventHandler<DataTableRowMouseEventParams>;
+  handleColumnMenuClickAddColumnLeft: CustomEventHandler<SyntheticEvent>;
+  handleColumnMenuClickAddColumnRight: CustomEventHandler<SyntheticEvent>;
+  handleColumnMenuClickDeleteColumn: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickAddRowBelow: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickClearRowContent: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickDeleteRow: CustomEventHandler<SyntheticEvent>;
   onCellMouseEnter: CustomEventHandler<TableCellEvent>;
+  onTableMoreOptionsColumnButtonClick: CustomEventHandler<TableMoreOptionsColumnMenuClickEvent>;
   onTableMoreOptionsRowButtonClick: CustomEventHandler<TableMoreOptionsRowMenuClickEvent>;
 }
 
@@ -39,6 +46,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   const { rows, columns = [], onAddRowAbove, onAddRowBelow, onClearRowContent, onDeleteRow } = params;
 
   const rowMenuRef = useRef<Menu>(null);
+  const columnMenuRef = useRef<Menu>(null);
 
   const [mouseHoveredRowIndex, setMouseHoveredRowIndex] = useState<number>();
   const [editRowIndex, setEditRowIndex] = useState<number>();
@@ -46,12 +54,13 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   const [tableExtendDialogData, setTableExtendDialogData] = useState<TableExtendDialogData>({
     ...INITIAL_TABLE_EXTEND_DIALOG_DATA,
   });
+
   const inputAddingKey = useInput({
     onChangeValue() {
       setTableExtendDialogData((prev) => ({
         ...prev,
         invalid: false,
-        inputLabel: prev.header.includes('행') ? '새로 추가할 행의 key를 입력하세요' : '새로 추가할 열의 언어 code 입력',
+        ...LABELS_BY_TABLE_EXTEND_TYPE[prev.type],
       }));
     },
   });
@@ -81,6 +90,14 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
 
   const onCellMouseEnter: CustomEventHandler<TableCellEvent> = () => {};
 
+  const onTableMoreOptionsColumnButtonClick: CustomEventHandler<TableMoreOptionsColumnMenuClickEvent> = (e) => {
+    if (!e) return;
+
+    const { columnIndex, event } = e;
+
+    columnMenuRef.current?.toggle(event);
+  };
+
   const onTableMoreOptionsRowButtonClick: CustomEventHandler<TableMoreOptionsRowMenuClickEvent> = (e) => {
     if (!e) return;
 
@@ -108,17 +125,30 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     return 'bottom-left';
   };
 
-  const commonAddRowDialogProps = (e: SyntheticEvent): Partial<TableExtendDialogData> => ({
+  const commonAddColumnDialogProps = (e: SyntheticEvent): Partial<TableExtendDialogData> => ({
+    type: 'column',
+    ...LABELS_BY_TABLE_EXTEND_TYPE['column'],
     visible: true,
-    header: '행을 추가하시겠어요?',
+    position: 'top',
+    invalid: false,
+    onHide: hideTableExtendDialog,
+  });
+
+  const commonAddRowDialogProps = (e: SyntheticEvent): Partial<TableExtendDialogData> => ({
+    type: 'row',
+    ...LABELS_BY_TABLE_EXTEND_TYPE['row'],
+    visible: true,
     position: getEditRowDialogPosition(e!.target as HTMLElement),
-    inputLabel: '새로 추가할 행의 key를 입력하세요',
     invalid: false,
     onHide: hideTableExtendDialog,
   });
 
   const isDuplicatedRowKey = (key: string) => {
     return Boolean(rows?.filter((row) => row.key === key).length);
+  };
+
+  const checkInvalidColumnAndAlert = (key: string): boolean => {
+    return false;
   };
 
   const checkInvalidRowAndAlert = (key: string): boolean => {
@@ -141,6 +171,28 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     return false;
   };
 
+  const handleColumnMenuClickAddColumnLeft: CustomEventHandler<SyntheticEvent> = (e) => {
+    inputAddingKey.clear();
+
+    setTableExtendDialogData((prev) => ({
+      ...prev,
+      ...commonAddColumnDialogProps(e!),
+      onAdd(language) {},
+    }));
+  };
+
+  const handleColumnMenuClickAddColumnRight: CustomEventHandler<SyntheticEvent> = (e) => {
+    inputAddingKey.clear();
+
+    setTableExtendDialogData((prev) => ({
+      ...prev,
+      ...commonAddColumnDialogProps(e!),
+      onAdd(language) {},
+    }));
+  };
+
+  const handleColumnMenuClickDeleteColumn: CustomEventHandler<SyntheticEvent> = (e) => {};
+
   const handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent> = (e) => {
     inputAddingKey.clear();
 
@@ -157,6 +209,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
             setEditRowIndex(index);
           },
         });
+
         hideTableExtendDialog();
       },
     }));
@@ -178,6 +231,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
             setEditRowIndex(index);
           },
         });
+
         hideTableExtendDialog();
       },
     }));
@@ -193,6 +247,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
 
   return {
     rowMenuRef,
+    columnMenuRef,
     mouseHoveredRowIndex,
     editRowIndex,
     selectedRow,
@@ -203,11 +258,15 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     handleTableMouseLeave,
     handleRowClick,
     handleRowMouseEnter,
+    handleColumnMenuClickAddColumnLeft,
+    handleColumnMenuClickAddColumnRight,
+    handleColumnMenuClickDeleteColumn,
     handleRowMenuClickAddRowAbove,
     handleRowMenuClickAddRowBelow,
     handleRowMenuClickClearRowContent,
     handleRowMenuClickDeleteRow,
     onCellMouseEnter,
+    onTableMoreOptionsColumnButtonClick,
     onTableMoreOptionsRowButtonClick,
   };
 }

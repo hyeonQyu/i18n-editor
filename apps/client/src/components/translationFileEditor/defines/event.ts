@@ -9,3 +9,9 @@ export interface TableMoreOptionsRowMenuClickEvent {
   // @ts-ignore
   event: MouseEvent<HTMLButtonElement>;
 }
+
+export interface TableMoreOptionsColumnMenuClickEvent {
+  columnIndex: number;
+  // @ts-ignore
+  event: MouseEvent<HTMLButtonElement>;
+}

@@ -1,3 +1,5 @@
+import { LanguageCode } from './types';
+
 export const LANGUAGE_CODES = [
   'ar-xa',
   'bg',
@@ -24,6 +26,7 @@ export const LANGUAGE_CODES = [
   'lt',
   'nl',
   'no',
+  'pl',
   'pt',
   'sv',
   'ro',
@@ -40,3 +43,45 @@ export const LANGUAGE_CODES = [
 ] as const;
 
 export const LANGUAGE_CODE_SET = new Set<string>(LANGUAGE_CODES);
+
+export const LANGUAGE_NAME_BY_CODE: Record<LanguageCode, string> = {
+  'ar-xa': '아랍어',
+  bg: '불가리아어',
+  hr: '크로아티아어',
+  cs: '체코어',
+  da: '덴마크어',
+  de: '독일어',
+  el: '그리스어',
+  en: '영어',
+  'en-us': '영어(미국)',
+  'en-uk': '영어(영국)',
+  et: '에스토니아어',
+  es: '스페인어',
+  fi: '핀란드어',
+  fr: '프랑스어',
+  ga: '아일랜드어',
+  hi: '힌디어',
+  hu: '헝가리어',
+  he: '히브리어',
+  it: '이탈리아어',
+  ja: '일본어',
+  ko: '한국어',
+  lv: '라트비아어',
+  lt: '리투아니아어',
+  nl: '네덜란드어',
+  no: '노르웨이어',
+  pl: '폴란드어',
+  pt: '포르투갈어',
+  sv: '스웨덴어',
+  ro: '루마니아어',
+  ru: '러시아어',
+  'sr-cs': '세르비아어',
+  sk: '슬로바키아어',
+  sl: '슬로베니아어',
+  th: '태국어',
+  tr: '터키어',
+  'uk-ua': '우크라이나어',
+  zh: '중국어',
+  'zh-chs': '중국어(간체)',
+  'zh-cht': '중국어(번체)',
+};

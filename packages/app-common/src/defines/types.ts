@@ -9,8 +9,10 @@ export type DirectoryEntryType = 'directory' | 'file' | 'unknown';
 
 export type LanguageCode = typeof LANGUAGE_CODES[number];
 
+export type ColumnHeaderKey = 'key' | 'index' | LanguageCode;
+
 export interface ColumnData {
-  header: 'key' | 'index' | LanguageCode;
+  header: ColumnHeaderKey;
 }
 
 export type RowData = { index: number; key: string } & {

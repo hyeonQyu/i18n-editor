@@ -6,12 +6,17 @@ export interface ITranslationFileEditorContext
   extends Pick<
     IUseTranslationFileEditor,
     | 'rowMenuRef'
+    | 'columnMenuRef'
     | 'mouseHoveredRowIndex'
     | 'isClearableRow'
     | 'tableExtendDialogData'
     | 'inputAddingKey'
     | 'onCellMouseEnter'
+    | 'onTableMoreOptionsColumnButtonClick'
     | 'onTableMoreOptionsRowButtonClick'
+    | 'handleColumnMenuClickAddColumnLeft'
+    | 'handleColumnMenuClickAddColumnRight'
+    | 'handleColumnMenuClickDeleteColumn'
     | 'handleRowMenuClickAddRowAbove'
     | 'handleRowMenuClickAddRowBelow'
     | 'handleRowMenuClickClearRowContent'
@@ -20,12 +25,17 @@ export interface ITranslationFileEditorContext
 
 export const TranslationFileEditorContext = React.createContext<ITranslationFileEditorContext>({
   rowMenuRef: undefined,
+  columnMenuRef: undefined,
   mouseHoveredRowIndex: undefined,
   isClearableRow: false,
   tableExtendDialogData: INITIAL_TABLE_EXTEND_DIALOG_DATA,
   inputAddingKey: { value: '', onChange() {}, changeValue() {}, clear() {}, inputRef: createRef() },
   onCellMouseEnter() {},
+  onTableMoreOptionsColumnButtonClick() {},
   onTableMoreOptionsRowButtonClick() {},
+  handleColumnMenuClickAddColumnLeft() {},
+  handleColumnMenuClickAddColumnRight() {},
+  handleColumnMenuClickDeleteColumn() {},
   handleRowMenuClickAddRowAbove() {},
   handleRowMenuClickAddRowBelow() {},
   handleRowMenuClickClearRowContent() {},

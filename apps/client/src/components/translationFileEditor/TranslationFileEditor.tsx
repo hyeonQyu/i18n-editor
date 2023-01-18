@@ -9,6 +9,8 @@ import { CellViewer } from '@components/translationFileEditor/components/cellVie
 import { TranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import { TableMoreOptionsRowMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row';
 import { TableExtendDialog } from '@components/translationFileEditor/components/tableExtendDialog';
+import { ColumnHeader } from '@components/translationFileEditor/components/columnHeader';
+import { TableMoreOptionsColumnMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/column';
 
 export interface TranslationFileEditorProps {
   columns?: ColumnData[];
@@ -29,6 +31,7 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
     <>
       <TranslationFileEditorContext.Provider value={{ ...translationFileEditor, ...props }}>
         <TableMoreOptionsRowMenu />
+        <TableMoreOptionsColumnMenu />
         <TableExtendDialog />
 
         <DataTable
@@ -47,22 +50,26 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
           selection={selectedRow}
           className={'translation-file-editor'}
         >
-          {columns.map((column) => (
+          {columns.map(({ header }, i) => (
             <Column
-              key={column.header}
-              {...column}
-              field={column.header}
+              key={header}
+              field={header}
               filter
+              header={() => <ColumnHeader header={header} index={i} />}
               editor={(option) => <CellEditor {...option} />}
               onCellEditComplete={onChange}
-              body={(row) => <CellViewer rowData={row} field={column.header} />}
-              className={classNames(column.header === 'key' ? 'key' : 'translation')}
+              body={(row) => <CellViewer rowData={row} field={header} />}
+              className={classNames(header === 'key' ? 'key' : 'translation')}
             />
           ))}
         </DataTable>
       </TranslationFileEditorContext.Provider>
 
       <style jsx>{`
+        :global(.p-datatable .p-datatable-thead > tr > th[role='columnheader']) {
+          padding: 0;
+        }
+
         :global(.p-column-header-content),
         :global(.p-column-title) {
           width: 100%;
