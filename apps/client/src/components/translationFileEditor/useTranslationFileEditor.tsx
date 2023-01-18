@@ -11,6 +11,7 @@ import { Menu } from 'primereact/menu';
 import { RowData } from 'i18n-editor-common';
 import { DialogPositionType } from 'primereact/dialog';
 import useInput, { IUseInput } from '@hooks/common/useInput';
+import { DataTableRowClickEventParams, DataTableRowMouseEventParams } from 'primereact/datatable';
 
 export interface IUseTranslationFileEditorParams extends TranslationFileEditorProps {}
 
@@ -24,6 +25,8 @@ export interface IUseTranslationFileEditor {
   inputAddingKey: IUseInput;
   tableExtendDialogData: TableExtendDialogData;
   handleTableMouseLeave: MouseEventHandler;
+  handleRowClick: CustomEventHandler<DataTableRowClickEventParams>;
+  handleRowMouseEnter: CustomEventHandler<DataTableRowMouseEventParams>;
   handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickAddRowBelow: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickClearRowContent: CustomEventHandler<SyntheticEvent>;
@@ -59,17 +62,24 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     setMouseHoveredRowIndex(undefined);
   };
 
-  const onCellMouseEnter: CustomEventHandler<TableCellEvent> = (e) => {
+  const handleRowClick: CustomEventHandler<DataTableRowClickEventParams> = (e) => {
     if (!e) return;
-    const { rowIndex, event } = e;
+    const { index } = e;
+    setEditRowIndex(index);
+  };
 
-    if (rowIndex !== editRowIndex) {
-      setEditRowIndex(undefined);
-      rowMenuRef.current?.hide(event);
+  const handleRowMouseEnter: CustomEventHandler<DataTableRowMouseEventParams> = (e) => {
+    if (!e) return;
+    const { index, originalEvent } = e;
+
+    if (index !== editRowIndex) {
+      rowMenuRef.current?.hide(originalEvent);
     }
 
-    setMouseHoveredRowIndex(rowIndex);
+    setMouseHoveredRowIndex(index);
   };
+
+  const onCellMouseEnter: CustomEventHandler<TableCellEvent> = (e) => {};
 
   const onTableMoreOptionsRowButtonClick: CustomEventHandler<TableMoreOptionsRowMenuClickEvent> = (e) => {
     if (!e) return;
@@ -179,6 +189,8 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     tableExtendDialogData,
     inputAddingKey,
     handleTableMouseLeave,
+    handleRowClick,
+    handleRowMouseEnter,
     handleRowMenuClickAddRowAbove,
     handleRowMenuClickAddRowBelow,
     handleRowMenuClickClearRowContent,

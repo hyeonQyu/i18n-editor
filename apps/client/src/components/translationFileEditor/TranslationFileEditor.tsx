@@ -23,7 +23,7 @@ export interface TranslationFileEditorProps {
 function TranslationFileEditor(props: TranslationFileEditorProps) {
   const { columns = [], rows = [], onChange } = props;
   const translationFileEditor = useTranslationFileEditor(props);
-  const { selectedRow, globalFilterFields, handleTableMouseLeave } = translationFileEditor;
+  const { selectedRow, globalFilterFields, handleTableMouseLeave, handleRowClick, handleRowMouseEnter } = translationFileEditor;
 
   return (
     <>
@@ -42,6 +42,8 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
           scrollable
           scrollHeight={'flex'}
           onMouseLeave={handleTableMouseLeave}
+          onRowClick={handleRowClick}
+          onRowMouseEnter={handleRowMouseEnter}
           selection={selectedRow}
           className={'translation-file-editor'}
         >
@@ -51,7 +53,6 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
               {...column}
               field={column.header}
               filter
-              sortable
               editor={(option) => <CellEditor {...option} />}
               onCellEditComplete={onChange}
               body={(row) => <CellViewer rowData={row} field={column.header} />}
@@ -62,6 +63,11 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
       </TranslationFileEditorContext.Provider>
 
       <style jsx>{`
+        :global(.p-column-header-content),
+        :global(.p-column-title) {
+          width: 100%;
+        }
+
         :global(
             .p-datatable.p-datatable-selectable
               .p-datatable-tbody

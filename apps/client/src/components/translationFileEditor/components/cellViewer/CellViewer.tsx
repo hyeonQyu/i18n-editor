@@ -19,7 +19,7 @@ export function CellViewer(props: CellViewerProps) {
           <Button
             icon={'pi pi-angle-down'}
             onClick={handleTableMoreOptionRowButtonClick}
-            className={'p-button-raised p-button-text table-options'}
+            className={'p-button-raised p-button-text row-options'}
           />
         )}
       </div>
@@ -37,7 +37,7 @@ export function CellViewer(props: CellViewerProps) {
           height: 100%;
         }
 
-        .cell :global(button.table-options) {
+        .cell :global(button.row-options) {
           position: absolute;
           top: 4px;
           right: 4px;

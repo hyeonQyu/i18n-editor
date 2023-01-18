@@ -26,7 +26,7 @@ function useCellEditor(params: IUseCellEditorParams): IUseCellEditor {
   };
 
   const handleMouseEnter: MouseEventHandler<HTMLTextAreaElement> = (e) => {
-    onCellMouseEnter({ rowIndex: rowData?.index, event: e });
+    // onCellMouseEnter({ rowIndex: rowData?.index, event: e });
   };
 
   return {

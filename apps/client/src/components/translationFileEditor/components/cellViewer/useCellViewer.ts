@@ -19,7 +19,7 @@ function useCellViewer(params: IUseCellViewerParams): IUseCellViewer {
   const { mouseHoveredRowIndex, onCellMouseEnter, onTableMoreOptionsRowButtonClick } = useTranslationFileEditorContext();
 
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
-    onCellMouseEnter({ rowIndex: index, event: e });
+    // onCellMouseEnter({ rowIndex: index, event: e });
   };
 
   const handleTableMoreOptionRowButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
