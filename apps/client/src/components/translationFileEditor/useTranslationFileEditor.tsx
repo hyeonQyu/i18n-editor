@@ -79,7 +79,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     setMouseHoveredRowIndex(index);
   };
 
-  const onCellMouseEnter: CustomEventHandler<TableCellEvent> = (e) => {};
+  const onCellMouseEnter: CustomEventHandler<TableCellEvent> = () => {};
 
   const onTableMoreOptionsRowButtonClick: CustomEventHandler<TableMoreOptionsRowMenuClickEvent> = (e) => {
     if (!e) return;
@@ -150,7 +150,13 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
       onAdd(key) {
         if (checkInvalidRowAndAlert(key)) return;
 
-        onAddRowAbove({ index: editRowIndex!, key });
+        onAddRowAbove({
+          index: editRowIndex!,
+          key,
+          onSuccess(index) {
+            setEditRowIndex(index);
+          },
+        });
         hideTableExtendDialog();
       },
     }));
@@ -165,7 +171,13 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
       onAdd(key) {
         if (checkInvalidRowAndAlert(key)) return;
 
-        onAddRowBelow({ index: editRowIndex!, key });
+        onAddRowBelow({
+          index: editRowIndex!,
+          key,
+          onSuccess(index) {
+            setEditRowIndex(index);
+          },
+        });
         hideTableExtendDialog();
       },
     }));

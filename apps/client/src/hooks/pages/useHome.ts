@@ -180,7 +180,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   const onAddRowAbove: CustomEventHandler<TranslationTableAddEvent> = (e) => {
     if (!e) return;
 
-    const { index, key } = e;
+    const { index, key, onSuccess } = e;
 
     mutatePostContentRow(
       {
@@ -196,6 +196,7 @@ function useHome(params: IUseHomeParams): IUseHome {
             detail: '행을 추가했어요',
             life: 3000,
           });
+          onSuccess?.(index);
         },
       },
     );
@@ -205,11 +206,12 @@ function useHome(params: IUseHomeParams): IUseHome {
   const onAddRowBelow: CustomEventHandler<TranslationTableAddEvent> = (e) => {
     if (!e) return;
 
-    const { index, key } = e;
+    const { index, key, onSuccess } = e;
+    const rowIndex = index + 1;
 
     mutatePostContentRow(
       {
-        row: { index: index + 1, key },
+        row: { index: rowIndex, key },
         path: directoryPath,
         fileName: translationFile!,
       },
@@ -221,6 +223,7 @@ function useHome(params: IUseHomeParams): IUseHome {
             detail: '행을 추가했어요',
             life: 3000,
           });
+          onSuccess?.(rowIndex);
         },
       },
     );
