@@ -5,12 +5,18 @@ import { DropdownChangeParams } from 'primereact/dropdown';
 import useQueryGetContent from '@hooks/queries/useQueryGetContent';
 import { CellData, ColumnData, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
-import { CustomEventHandler, TranslationTableAddEvent, TranslationTableDeleteRowEvent } from '@defines/event';
+import {
+  CustomEventHandler,
+  TranslationTableRowAddEvent,
+  TranslationTableDeleteRowEvent,
+  TranslationTableColumnEditEvent,
+} from '@defines/event';
 import useMutationPatchContent from '@hooks/queries/useMutationPatchContent';
 import { useToastContext } from '@contexts/toastContext';
 import { confirmDialog } from 'primereact/confirmdialog';
 import useMutationPostContentRow from '@hooks/queries/useMutationPostContentRow';
 import useMutationDeleteContentRow from '@hooks/queries/useMutationDeleteContentRow';
+import useMutationPostContentColumn from '@hooks/queries/useMutationPostContentColumn';
 
 export interface IUseHomeParams {}
 
@@ -25,8 +31,9 @@ export interface IUseHome {
   handleDirectoryPathChange: CustomEventHandler<PathChangeEvent>;
   handleTranslationFileChange: CustomEventHandler<DropdownChangeParams>;
   handleTranslationContentChange: CustomEventHandler<ColumnEventParams>;
-  onAddRowAbove: CustomEventHandler<TranslationTableAddEvent>;
-  onAddRowBelow: CustomEventHandler<TranslationTableAddEvent>;
+  onAddColumn: CustomEventHandler<TranslationTableColumnEditEvent>;
+  onAddRowAbove: CustomEventHandler<TranslationTableRowAddEvent>;
+  onAddRowBelow: CustomEventHandler<TranslationTableRowAddEvent>;
   onClearRowContent: CustomEventHandler<TranslationTableDeleteRowEvent>;
   onDeleteRow: CustomEventHandler<TranslationTableDeleteRowEvent>;
 }
@@ -92,6 +99,18 @@ function useHome(params: IUseHomeParams): IUseHome {
   const translationFiles: string[] = dataGetTranslationFile?.data?.files ?? [];
   const hasDirectorySelectorError = Boolean(errorGetTranslationFile);
 
+  const setContent = (columns: ColumnData[], rows: RowData[]) => {
+    setContentColumns(columns);
+    setContentRows(rows);
+
+    setTimeout(() => {
+      tableContainerRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }, 0);
+  };
+
   useQueryGetContent({
     req: { path: directoryPath, fileName: translationFile || '' },
     queryOption: {
@@ -99,17 +118,8 @@ function useHome(params: IUseHomeParams): IUseHome {
       retry: false,
       onSuccess({ data }) {
         if (!data) return;
-
         const { columns, rows } = data;
-        setContentColumns(columns);
-        setContentRows(rows);
-
-        setTimeout(() => {
-          tableContainerRef.current?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
-        }, 0);
+        setContent(columns, rows);
       },
     },
   });
@@ -117,6 +127,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   const { mutate: mutatePatchContent } = useMutationPatchContent({});
   const { mutate: mutatePostContentRow } = useMutationPostContentRow({});
   const { mutate: mutateDeleteContentRow } = useMutationDeleteContentRow({});
+  const { mutate: mutatePostContentColumn } = useMutationPostContentColumn({});
 
   const handleDirectoryPathChange: CustomEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
@@ -176,17 +187,38 @@ function useHome(params: IUseHomeParams): IUseHome {
     );
   };
 
+  const onAddColumn: CustomEventHandler<TranslationTableColumnEditEvent> = (e) => {
+    if (!e) return;
+
+    const { languageCode } = e;
+
+    mutatePostContentColumn(
+      {
+        path: directoryPath,
+        fileName: translationFile!,
+        languageCode,
+      },
+      {
+        onSuccess({ data }) {
+          if (!data) return;
+          const { columns, rows } = data;
+          setContent(columns, rows);
+        },
+      },
+    );
+  };
+
   // 위쪽에 행 추가
-  const onAddRowAbove: CustomEventHandler<TranslationTableAddEvent> = (e) => {
+  const onAddRowAbove: CustomEventHandler<TranslationTableRowAddEvent> = (e) => {
     if (!e) return;
 
     const { index, key, onSuccess } = e;
 
     mutatePostContentRow(
       {
-        row: { index, key },
         path: directoryPath,
         fileName: translationFile!,
+        row: { index, key },
       },
       {
         onSuccess() {
@@ -203,7 +235,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   };
 
   // 아래쪽에 행 추가
-  const onAddRowBelow: CustomEventHandler<TranslationTableAddEvent> = (e) => {
+  const onAddRowBelow: CustomEventHandler<TranslationTableRowAddEvent> = (e) => {
     if (!e) return;
 
     const { index, key, onSuccess } = e;
@@ -211,9 +243,9 @@ function useHome(params: IUseHomeParams): IUseHome {
 
     mutatePostContentRow(
       {
-        row: { index: rowIndex, key },
         path: directoryPath,
         fileName: translationFile!,
+        row: { index: rowIndex, key },
       },
       {
         onSuccess() {
@@ -311,6 +343,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     handleDirectoryPathChange,
     handleTranslationFileChange,
     handleTranslationContentChange,
+    onAddColumn,
     onAddRowAbove,
     onAddRowBelow,
     onClearRowContent,

@@ -12,10 +12,10 @@ function useQueryGetContent(params: IUseQueryGetContentParams): IUseQueryGetCont
   const { req, queryOption } = params;
   const { path, fileName } = req;
 
-  return useQuery<GetContentRes, AxiosError<GetContentRes>>({
-    ...queryOption,
+  return useQuery({
     queryKey: QUERY_KEY.content.getContent(path, fileName),
     queryFn: () => HomeApi.getContent(req),
+    ...queryOption,
   });
 }
 

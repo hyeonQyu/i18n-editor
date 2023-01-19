@@ -17,7 +17,7 @@ export function TableExtendDialog() {
     inputAddingKey,
   } = useTranslationFileEditorContext();
 
-  const { handleAddRow, handleFormSubmit, disabledYes } = useTableExtendDialog({});
+  const { handleClickAdd, handleFormSubmit, disabledYes } = useTableExtendDialog({});
 
   return (
     <>
@@ -26,7 +26,7 @@ export function TableExtendDialog() {
         visible={visible}
         onHide={onHide}
         draggable={false}
-        footer={() => <TableExtendDialogFooter onYesClick={handleAddRow} onNoClick={onHide} disabledYes={disabledYes} />}
+        footer={() => <TableExtendDialogFooter onYesClick={handleClickAdd} onNoClick={onHide} disabledYes={disabledYes} />}
         className={'table-extend-dialog-container'}
       >
         <form className={'table-extend-dialog'} onSubmit={handleFormSubmit}>

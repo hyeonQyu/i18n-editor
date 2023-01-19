@@ -11,9 +11,9 @@ export type IUseMutationPostContentRow = UseMutationResult<PostContentRowRes, Ax
 function useMutationPostContentRow(params: IUseMutationPostContentRowParams): IUseMutationPostContentRow {
   const { mutationOption } = params;
 
-  return useMutation<PostContentRowRes, AxiosError<PostContentRowRes>, PostContentRowReq>({
-    ...mutationOption,
+  return useMutation({
     mutationFn: HomeApi.postContentRow,
+    ...mutationOption,
   });
 }
 

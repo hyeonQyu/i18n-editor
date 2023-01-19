@@ -10,7 +10,7 @@ import {
   TableMoreOptionsRowMenuClickEvent,
 } from '@components/translationFileEditor/defines';
 import { Menu } from 'primereact/menu';
-import { RowData } from 'i18n-editor-common';
+import { LanguageCode, RowData } from 'i18n-editor-common';
 import { DialogPositionType } from 'primereact/dialog';
 import useInput, { IUseInput } from '@hooks/common/useInput';
 import { DataTableRowClickEventParams, DataTableRowMouseEventParams } from 'primereact/datatable';
@@ -42,7 +42,7 @@ export interface IUseTranslationFileEditor {
 }
 
 function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUseTranslationFileEditor {
-  const { rows, columns = [], onAddRowAbove, onAddRowBelow, onClearRowContent, onDeleteRow } = params;
+  const { rows, columns = [], onAddColumn, onAddRowAbove, onAddRowBelow, onClearRowContent, onDeleteRow } = params;
 
   const rowMenuRef = useRef<Menu>(null);
   const columnMenuRef = useRef<Menu>(null);
@@ -146,10 +146,6 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     return Boolean(rows?.filter((row) => row.key === key).length);
   };
 
-  const checkInvalidColumnAndAlert = (key: string): boolean => {
-    return false;
-  };
-
   const checkInvalidRowAndAlert = (key: string): boolean => {
     if (!key) {
       setTableExtendDialogData((prev) => ({
@@ -170,11 +166,14 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     return false;
   };
 
-  const handleAddColumnClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleAddColumnClick: MouseEventHandler<HTMLButtonElement> = () => {
     setTableExtendDialogData((prev) => ({
       ...prev,
       ...commonAddColumnDialogProps(),
-      onAdd(language) {},
+      onAdd(language) {
+        onAddColumn({ languageCode: language as LanguageCode });
+        hideTableExtendDialog();
+      },
     }));
   };
 

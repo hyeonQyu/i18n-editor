@@ -4,7 +4,7 @@ import { useTranslationFileEditorContext } from '@components/translationFileEdit
 export interface IUseTableExtendDialogParams {}
 
 export interface IUseTableExtendDialog {
-  handleAddRow: MouseEventHandler<HTMLButtonElement>;
+  handleClickAdd: MouseEventHandler<HTMLButtonElement>;
   handleFormSubmit: FormEventHandler<HTMLFormElement>;
   disabledYes: boolean;
 }
@@ -16,7 +16,7 @@ function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExt
     inputAddingKey,
   } = useTranslationFileEditorContext();
 
-  const handleAddRow = () => {
+  const handleClickAdd = () => {
     onAdd(inputAddingKey.value);
   };
 
@@ -36,7 +36,7 @@ function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExt
 
   return {
     handleFormSubmit,
-    handleAddRow,
+    handleClickAdd,
     disabledYes,
   };
 }

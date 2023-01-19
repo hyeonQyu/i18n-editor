@@ -11,9 +11,9 @@ export type IUseMutationPatchContent = UseMutationResult<PatchContentRes, AxiosE
 function useMutationPatchContent(params: IUseMutationPatchContentParams): IUseMutationPatchContent {
   const { mutationOption } = params;
 
-  return useMutation<PatchContentRes, AxiosError<PatchContentRes>, PatchContentReq>({
-    ...mutationOption,
+  return useMutation({
     mutationFn: HomeApi.patchContent,
+    ...mutationOption,
   });
 }
 

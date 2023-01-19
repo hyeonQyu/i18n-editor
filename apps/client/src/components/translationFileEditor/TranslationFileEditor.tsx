@@ -1,7 +1,12 @@
 import { ColumnData, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
 import useTranslationFileEditor from '@components/translationFileEditor/useTranslationFileEditor';
-import { CustomEventHandler, TranslationTableAddEvent, TranslationTableDeleteRowEvent } from '@defines/event';
+import {
+  CustomEventHandler,
+  TranslationTableRowAddEvent,
+  TranslationTableDeleteRowEvent,
+  TranslationTableColumnEditEvent,
+} from '@defines/event';
 import { TranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import { TableMoreOptionsRowMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row';
 import { TableExtendDialog } from '@components/translationFileEditor/components/tableExtendDialog';
@@ -12,8 +17,9 @@ export interface TranslationFileEditorProps {
   columns?: ColumnData[];
   rows?: RowData[];
   onChange: CustomEventHandler<ColumnEventParams>;
-  onAddRowAbove: CustomEventHandler<TranslationTableAddEvent>;
-  onAddRowBelow: CustomEventHandler<TranslationTableAddEvent>;
+  onAddColumn: CustomEventHandler<TranslationTableColumnEditEvent>;
+  onAddRowAbove: CustomEventHandler<TranslationTableRowAddEvent>;
+  onAddRowBelow: CustomEventHandler<TranslationTableRowAddEvent>;
   onClearRowContent: CustomEventHandler<TranslationTableDeleteRowEvent>;
   onDeleteRow: CustomEventHandler<TranslationTableDeleteRowEvent>;
 }

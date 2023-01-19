@@ -11,10 +11,10 @@ export type IUseQueryGetDirectory = UseQueryResult<GetDirectoryRes, AxiosError<G
 function useQueryGetDirectory(params: IUseQueryGetDirectoryParams): IUseQueryGetDirectory {
   const { req, queryOption = {} } = params;
 
-  return useQuery<GetDirectoryRes, AxiosError<GetDirectoryRes>>({
-    ...queryOption,
+  return useQuery({
     queryKey: QUERY_KEY.directory.getDirectory(req.path ?? ''),
     queryFn: () => HomeApi.getDirectory(req),
+    ...queryOption,
   });
 }
 

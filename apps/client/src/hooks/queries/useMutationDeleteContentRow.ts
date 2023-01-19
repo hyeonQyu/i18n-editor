@@ -11,9 +11,9 @@ export type IUseMutationDeleteContentRow = UseMutationResult<DeleteContentRowRes
 function useMutationDeleteContentRow(params: IUseMutationDeleteContentRowParams): IUseMutationDeleteContentRow {
   const { mutationOption } = params;
 
-  return useMutation<DeleteContentRowRes, AxiosError<DeleteContentRowRes>, DeleteContentRowReq>({
-    ...mutationOption,
+  return useMutation({
     mutationFn: HomeApi.deleteContentRow,
+    ...mutationOption,
   });
 }
 

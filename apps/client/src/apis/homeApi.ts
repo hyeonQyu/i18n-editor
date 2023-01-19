@@ -10,6 +10,8 @@ import {
   GetTranslationFileRes,
   PatchContentReq,
   PatchContentRes,
+  PostContentColumnReq,
+  PostContentColumnRes,
   PostContentRowReq,
   PostContentRowRes,
 } from 'i18n-editor-common';
@@ -67,5 +69,13 @@ export namespace HomeApi {
    */
   export async function deleteContentRow(req: DeleteContentRowReq): Promise<DeleteContentRowRes> {
     return (await client.delete('/content/row', { data: req })).data;
+  }
+
+  /**
+   * 열 추가
+   * @param req
+   */
+  export async function postContentColumn(req: PostContentColumnReq): Promise<PostContentColumnRes> {
+    return (await client.post('/content/column', { data: req })).data;
   }
 }
