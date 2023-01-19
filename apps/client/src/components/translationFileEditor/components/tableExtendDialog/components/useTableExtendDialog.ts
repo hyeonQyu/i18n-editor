@@ -13,26 +13,29 @@ function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExt
   const {} = params;
   const {
     tableExtendDialogData: { type, visible, onAdd },
+    dropdownAddingLanguageCode,
     inputAddingKey,
   } = useTranslationFileEditorContext();
 
+  const value = {
+    row: inputAddingKey.value,
+    column: dropdownAddingLanguageCode.value,
+  }[type];
+
   const handleClickAdd = () => {
-    onAdd(inputAddingKey.value);
+    onAdd(value);
   };
 
   const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    onAdd(inputAddingKey.value);
+    onAdd(value);
   };
 
   useEffect(() => {
     document.body.style.overflowY = visible ? 'hidden' : 'initial';
   }, [visible]);
 
-  const disabledYes = {
-    row: !inputAddingKey.value,
-    column: true,
-  }[type];
+  const disabledYes = !value;
 
   return {
     handleFormSubmit,

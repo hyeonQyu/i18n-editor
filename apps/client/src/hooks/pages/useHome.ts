@@ -203,6 +203,11 @@ function useHome(params: IUseHomeParams): IUseHome {
           if (!data) return;
           const { columns, rows } = data;
           setContent(columns, rows);
+          toastRef.current?.show({
+            severity: 'success',
+            detail: '언어를 추가했어요',
+            life: 3000,
+          });
         },
       },
     );

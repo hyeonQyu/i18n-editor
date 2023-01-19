@@ -8,12 +8,14 @@ import { LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defin
 import { TableExtendDialogFooter } from '@components/translationFileEditor/components/tableExtendDialog/components/tableExtendDialogFooter';
 import { DropdownLanguageOptionTemplate } from '@components/translationFileEditor/components/tableExtendDialog/components/dropdownLanguageOptionTemplate';
 import useTableExtendDialog from '@components/translationFileEditor/components/tableExtendDialog/components/useTableExtendDialog';
+import { DropdownLanguageHeaderTemplate } from '@components/translationFileEditor/components/tableExtendDialog/components/dropdownLanguageHeaderTemplate';
 
 const inputId = 'table-extend';
 
 export function TableExtendDialog() {
   const {
     tableExtendDialogData: { type, visible, inputLabel, invalid, onAdd, onHide, ...rest },
+    dropdownAddingLanguageCode,
     inputAddingKey,
   } = useTranslationFileEditorContext();
 
@@ -42,6 +44,8 @@ export function TableExtendDialog() {
             )}
             {type === 'column' && (
               <Dropdown
+                value={dropdownAddingLanguageCode.value}
+                onChange={dropdownAddingLanguageCode.onChange}
                 options={LANGUAGE_SELECT_OPTIONS}
                 optionLabel={'label'}
                 filter
@@ -50,6 +54,7 @@ export function TableExtendDialog() {
                 scrollHeight={'300px'}
                 emptyFilterMessage={'일치하는 언어 코드가 없어요'}
                 itemTemplate={DropdownLanguageOptionTemplate}
+                valueTemplate={DropdownLanguageHeaderTemplate}
                 className={'table-extend-select'}
               />
             )}

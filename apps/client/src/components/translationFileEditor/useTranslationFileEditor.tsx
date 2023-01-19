@@ -14,6 +14,7 @@ import { LanguageCode, RowData } from 'i18n-editor-common';
 import { DialogPositionType } from 'primereact/dialog';
 import useInput, { IUseInput } from '@hooks/common/useInput';
 import { DataTableRowClickEventParams, DataTableRowMouseEventParams } from 'primereact/datatable';
+import useDropdown, { IUseDropdown } from '@hooks/common/useDropdown';
 
 export interface IUseTranslationFileEditorParams extends TranslationFileEditorProps {}
 
@@ -25,6 +26,7 @@ export interface IUseTranslationFileEditor {
   selectedRow: RowData | undefined;
   globalFilterFields: string[];
   isClearableRow: boolean;
+  dropdownAddingLanguageCode: IUseDropdown;
   inputAddingKey: IUseInput;
   tableExtendDialogData: TableExtendDialogData;
   handleTableMouseLeave: MouseEventHandler;
@@ -53,6 +55,8 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   const [tableExtendDialogData, setTableExtendDialogData] = useState<TableExtendDialogData>({
     ...INITIAL_TABLE_EXTEND_DIALOG_DATA,
   });
+
+  const dropdownAddingLanguageCode = useDropdown({});
 
   const inputAddingKey = useInput({
     onChangeValue() {
@@ -167,6 +171,8 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   };
 
   const handleAddColumnClick: MouseEventHandler<HTMLButtonElement> = () => {
+    dropdownAddingLanguageCode.clear();
+
     setTableExtendDialogData((prev) => ({
       ...prev,
       ...commonAddColumnDialogProps(),
@@ -240,6 +246,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     globalFilterFields,
     isClearableRow,
     tableExtendDialogData,
+    dropdownAddingLanguageCode,
     inputAddingKey,
     handleTableMouseLeave,
     handleRowClick,

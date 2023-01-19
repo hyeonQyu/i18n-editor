@@ -76,6 +76,6 @@ export namespace HomeApi {
    * @param req
    */
   export async function postContentColumn(req: PostContentColumnReq): Promise<PostContentColumnRes> {
-    return (await client.post('/content/column', { data: req })).data;
+    return (await client.post('/content/column', req)).data;
   }
 }

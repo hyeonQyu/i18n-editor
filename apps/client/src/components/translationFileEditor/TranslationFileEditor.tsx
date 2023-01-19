@@ -38,9 +38,7 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
               <TableExtendDialog />
             </>
 
-            <>
-              <TranslationContentTable />
-            </>
+            <TranslationContentTable />
           </>
         )}
       </TranslationFileEditorContext.Provider>
