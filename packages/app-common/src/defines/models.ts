@@ -1,4 +1,4 @@
-import { CellData, ColumnData, DirectoryEntry, RowData } from './types';
+import { CellData, ColumnData, DirectoryEntry, LanguageCode, RowData } from './types';
 
 export interface CommonRes<T = void> {
   status: number;
@@ -59,3 +59,11 @@ export interface DeleteContentRowReq {
 }
 
 export interface DeleteContentRowRes extends CommonRes {}
+
+export interface PostContentColumnReq {
+  path: string;
+  fileName: string;
+  languageCode: LanguageCode;
+}
+
+export interface PostContentColumnRes extends GetContentRes {}

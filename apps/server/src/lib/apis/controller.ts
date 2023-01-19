@@ -12,6 +12,8 @@ import {
   PostContentRowRes,
   DeleteContentRowReq,
   DeleteContentRowRes,
+  PostContentColumnReq,
+  PostContentColumnRes,
 } from 'i18n-editor-common';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { Service } from './service';
@@ -45,6 +47,11 @@ export namespace Controller {
 
     doCommonResponse<DeleteContentRowReq, void, DeleteContentRowRes>(app, '/content/row', 'delete', (req, res) => {
       const response = Service.deleteContentRow(req.body);
+      res.status(response.status).send(response);
+    });
+
+    doCommonResponse<PostContentColumnReq, void, PostContentColumnRes>(app, '/content/column', 'post', (req, res) => {
+      const response = Service.postContentColumn(req.body);
       res.status(response.status).send(response);
     });
   }

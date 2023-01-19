@@ -12,6 +12,8 @@ import {
   PatchContentRes,
   DeleteContentRowReq,
   DeleteContentRowRes,
+  PostContentColumnReq,
+  PostContentColumnRes,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
@@ -171,6 +173,10 @@ export namespace Service {
     }
   }
 
+  /**
+   * 행 삭제
+   * @param req
+   */
   export function deleteContentRow(req: DeleteContentRowReq): DeleteContentRowRes {
     try {
       const { path, fileName, key } = req;
@@ -196,6 +202,29 @@ export namespace Service {
       cache.lastReadRows = newRows;
 
       return { status: 200 };
+    } catch (e) {
+      console.error(e);
+      return { status: 500, errorMessage: (e as Error).message };
+    }
+  }
+
+  /**
+   * 열 추가
+   * @param req
+   */
+  export function postContentColumn(req: PostContentColumnReq): PostContentColumnRes {
+    try {
+      const { path, fileName, languageCode } = req;
+
+      const newDirectoryPath = `${path}/${languageCode}`;
+      FileSystemManager.createDirectoryWhenNotExist(newDirectoryPath);
+      console.log(`directory: ${newDirectoryPath}`);
+
+      const newFilePath = `${newDirectoryPath}/${fileName}`;
+      FileSystemManager.createFileWhenNotExist(newFilePath, '{}');
+      console.log(`file: ${newFilePath}`);
+
+      return getContent({ path, fileName });
     } catch (e) {
       console.error(e);
       return { status: 500, errorMessage: (e as Error).message };
