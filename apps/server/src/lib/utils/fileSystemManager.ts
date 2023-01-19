@@ -60,4 +60,15 @@ export namespace FileSystemManager {
   export function writeFile(filePath: string, jsonObject: JsonObject) {
     fs.writeFileSync(filePath, JSON.stringify(jsonObject, null, 2));
   }
+
+  export function removeDirectory(directoryPath: string) {
+    fs.rm(
+      directoryPath,
+      {
+        recursive: true,
+        force: true,
+      },
+      () => {},
+    );
+  }
 }

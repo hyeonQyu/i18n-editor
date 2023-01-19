@@ -14,6 +14,8 @@ import {
   DeleteContentRowRes,
   PostContentColumnReq,
   PostContentColumnRes,
+  DeleteContentColumnReq,
+  DeleteContentColumnRes,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
@@ -216,15 +218,34 @@ export namespace Service {
     try {
       const { path, fileName, languageCode } = req;
 
-      const newDirectoryPath = `${path}/${languageCode}`;
-      FileSystemManager.createDirectoryWhenNotExist(newDirectoryPath);
-      console.log(`directory: ${newDirectoryPath}`);
+      const directoryPath = `${path}/${languageCode}`;
+      FileSystemManager.createDirectoryWhenNotExist(directoryPath);
+      console.log(`directory: ${directoryPath}`);
 
-      const newFilePath = `${newDirectoryPath}/${fileName}`;
-      FileSystemManager.createFileWhenNotExist(newFilePath, '{}');
-      console.log(`file: ${newFilePath}`);
+      const filePath = `${directoryPath}/${fileName}`;
+      FileSystemManager.createFileWhenNotExist(filePath, '{}');
+      console.log(`file: ${filePath}`);
 
       return getContent({ path, fileName });
+    } catch (e) {
+      console.error(e);
+      return { status: 500, errorMessage: (e as Error).message };
+    }
+  }
+
+  /**
+   * 열 삭제
+   * @param req
+   */
+  export function deleteContentColumn(req: DeleteContentColumnReq): DeleteContentColumnRes {
+    try {
+      const { path, languageCode } = req;
+
+      const directoryPath = `${path}/${languageCode}`;
+      FileSystemManager.removeDirectory(directoryPath);
+      console.log(`directory removed: ${directoryPath}`);
+
+      return { status: 200 };
     } catch (e) {
       console.error(e);
       return { status: 500, errorMessage: (e as Error).message };
