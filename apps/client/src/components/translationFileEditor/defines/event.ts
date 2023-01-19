@@ -11,7 +11,6 @@ export interface TableMoreOptionsRowMenuClickEvent {
 }
 
 export interface TableMoreOptionsColumnMenuClickEvent {
-  columnIndex: number;
   // @ts-ignore
   event: MouseEvent<HTMLButtonElement>;
 }

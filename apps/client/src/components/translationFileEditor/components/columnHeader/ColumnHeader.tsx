@@ -4,7 +4,6 @@ import useColumnHeader from '@components/translationFileEditor/components/column
 
 export interface ColumnHeaderProps {
   header: ColumnHeaderKey;
-  index: number;
 }
 
 export function ColumnHeader(props: ColumnHeaderProps) {

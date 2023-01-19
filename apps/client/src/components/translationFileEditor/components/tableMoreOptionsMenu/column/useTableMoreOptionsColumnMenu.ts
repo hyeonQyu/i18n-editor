@@ -9,24 +9,9 @@ export interface IUseTableMoreOptionsColumnMenu {
 
 function useTableMoreOptionsColumnMenu(params: IUseTableMoreOptionsColumnMenuParams): IUseTableMoreOptionsColumnMenu {
   const {} = params;
-  const { handleColumnMenuClickAddColumnLeft, handleColumnMenuClickAddColumnRight, handleColumnMenuClickDeleteColumn } =
-    useTranslationFileEditorContext();
+  const { handleColumnMenuClickDeleteColumn } = useTranslationFileEditorContext();
 
   const items: MenuItem[] = [
-    {
-      label: '왼쪽에 열 추가',
-      icon: 'pi pi-arrow-left',
-      command(e) {
-        handleColumnMenuClickAddColumnLeft(e.originalEvent);
-      },
-    },
-    {
-      label: '오른쪽에 열 추가',
-      icon: 'pi pi-arrow-right',
-      command(e) {
-        handleColumnMenuClickAddColumnRight(e.originalEvent);
-      },
-    },
     {
       label: '열 삭제',
       icon: 'pi pi-trash',

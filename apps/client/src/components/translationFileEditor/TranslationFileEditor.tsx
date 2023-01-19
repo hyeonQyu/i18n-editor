@@ -50,12 +50,12 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
           selection={selectedRow}
           className={'translation-file-editor'}
         >
-          {columns.map(({ header }, i) => (
+          {columns.map(({ header }) => (
             <Column
               key={header}
               field={header}
               filter
-              header={() => <ColumnHeader header={header} index={i} />}
+              header={() => <ColumnHeader header={header} />}
               editor={(option) => <CellEditor {...option} />}
               onCellEditComplete={onChange}
               body={(row) => <CellViewer rowData={row} field={header} />}

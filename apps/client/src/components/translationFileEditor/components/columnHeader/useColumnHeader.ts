@@ -12,7 +12,7 @@ export interface IUseColumnHeader {
 }
 
 function useColumnHeader(params: IUseColumnHeaderParams): IUseColumnHeader {
-  const { header, index } = params;
+  const { header } = params;
   const [isHovered, setIsHovered] = useState(false);
   const { onTableMoreOptionsColumnButtonClick } = useTranslationFileEditorContext();
 
@@ -25,7 +25,7 @@ function useColumnHeader(params: IUseColumnHeaderParams): IUseColumnHeader {
   };
 
   const handleTableMoreOptionColumnButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    onTableMoreOptionsColumnButtonClick({ columnIndex: index, event: e });
+    onTableMoreOptionsColumnButtonClick({ event: e });
   };
 
   const isShowColumnOptionButton = isHovered && !(header === 'key' || header === 'index');

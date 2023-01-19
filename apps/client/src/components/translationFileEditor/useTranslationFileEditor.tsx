@@ -30,8 +30,6 @@ export interface IUseTranslationFileEditor {
   handleTableMouseLeave: MouseEventHandler;
   handleRowClick: CustomEventHandler<DataTableRowClickEventParams>;
   handleRowMouseEnter: CustomEventHandler<DataTableRowMouseEventParams>;
-  handleColumnMenuClickAddColumnLeft: CustomEventHandler<SyntheticEvent>;
-  handleColumnMenuClickAddColumnRight: CustomEventHandler<SyntheticEvent>;
   handleColumnMenuClickDeleteColumn: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickAddRowBelow: CustomEventHandler<SyntheticEvent>;
@@ -93,7 +91,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   const onTableMoreOptionsColumnButtonClick: CustomEventHandler<TableMoreOptionsColumnMenuClickEvent> = (e) => {
     if (!e) return;
 
-    const { columnIndex, event } = e;
+    const { event } = e;
 
     columnMenuRef.current?.toggle(event);
   };
@@ -125,7 +123,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     return 'bottom-left';
   };
 
-  const commonAddColumnDialogProps = (e: SyntheticEvent): Partial<TableExtendDialogData> => ({
+  const commonAddColumnDialogProps = (): Partial<TableExtendDialogData> => ({
     type: 'column',
     ...LABELS_BY_TABLE_EXTEND_TYPE['column'],
     visible: true,
@@ -171,22 +169,10 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     return false;
   };
 
-  const handleColumnMenuClickAddColumnLeft: CustomEventHandler<SyntheticEvent> = (e) => {
-    inputAddingKey.clear();
-
+  const handleAddColumnClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     setTableExtendDialogData((prev) => ({
       ...prev,
-      ...commonAddColumnDialogProps(e!),
-      onAdd(language) {},
-    }));
-  };
-
-  const handleColumnMenuClickAddColumnRight: CustomEventHandler<SyntheticEvent> = (e) => {
-    inputAddingKey.clear();
-
-    setTableExtendDialogData((prev) => ({
-      ...prev,
-      ...commonAddColumnDialogProps(e!),
+      ...commonAddColumnDialogProps(),
       onAdd(language) {},
     }));
   };
@@ -258,8 +244,6 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     handleTableMouseLeave,
     handleRowClick,
     handleRowMouseEnter,
-    handleColumnMenuClickAddColumnLeft,
-    handleColumnMenuClickAddColumnRight,
     handleColumnMenuClickDeleteColumn,
     handleRowMenuClickAddRowAbove,
     handleRowMenuClickAddRowBelow,
