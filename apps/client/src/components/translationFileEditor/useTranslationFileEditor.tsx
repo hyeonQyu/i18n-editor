@@ -30,6 +30,7 @@ export interface IUseTranslationFileEditor {
   handleTableMouseLeave: MouseEventHandler;
   handleRowClick: CustomEventHandler<DataTableRowClickEventParams>;
   handleRowMouseEnter: CustomEventHandler<DataTableRowMouseEventParams>;
+  handleAddColumnClick: MouseEventHandler<HTMLButtonElement>;
   handleColumnMenuClickDeleteColumn: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickAddRowBelow: CustomEventHandler<SyntheticEvent>;
@@ -244,6 +245,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     handleTableMouseLeave,
     handleRowClick,
     handleRowMouseEnter,
+    handleAddColumnClick,
     handleColumnMenuClickDeleteColumn,
     handleRowMenuClickAddRowAbove,
     handleRowMenuClickAddRowBelow,

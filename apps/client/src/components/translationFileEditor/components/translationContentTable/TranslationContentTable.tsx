@@ -5,6 +5,7 @@ import { CellViewer } from '@components/translationFileEditor/components/transla
 import classNames from 'classnames';
 import { DataTable } from 'primereact/datatable';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import TableHeader from '@components/translationFileEditor/components/translationContentTable/components/tableHeader/TableHeader';
 
 export interface TranslationContentTableProps {}
 
@@ -25,6 +26,7 @@ export function TranslationContentTable(props: TranslationContentTableProps) {
     <>
       <DataTable
         value={rows}
+        header={TableHeader}
         editMode={'cell'}
         selectionMode={'single'}
         responsiveLayout={'scroll'}
@@ -54,6 +56,10 @@ export function TranslationContentTable(props: TranslationContentTableProps) {
       </DataTable>
 
       <style jsx>{`
+        :global(.translation-file-editor) {
+          margin-top: 20px;
+        }
+
         :global(.p-datatable .p-datatable-thead > tr > th[role='columnheader']) {
           padding: 0;
         }

@@ -66,6 +66,7 @@ function Index(props: IndexProps) {
         }
         :global(.p-datatable-wrapper::-webkit-scrollbar) {
           width: 8px;
+          background-color: var(--surface-b);
         }
         :global(.p-datatable-wrapper::-webkit-scrollbar-thumb) {
           background-color: var(--surface-400);

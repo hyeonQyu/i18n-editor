@@ -19,16 +19,24 @@ export interface TranslationFileEditorProps {
 }
 
 function TranslationFileEditor(props: TranslationFileEditorProps) {
+  const { rows, columns } = props;
+
   return (
     <>
       <TranslationFileEditorContext.Provider value={{ ...useTranslationFileEditor(props), ...props }}>
-        <>
-          <TableMoreOptionsRowMenu />
-          <TableMoreOptionsColumnMenu />
-          <TableExtendDialog />
-        </>
+        {rows && columns && (
+          <>
+            <>
+              <TableMoreOptionsRowMenu />
+              <TableMoreOptionsColumnMenu />
+              <TableExtendDialog />
+            </>
 
-        <TranslationContentTable />
+            <>
+              <TranslationContentTable />
+            </>
+          </>
+        )}
       </TranslationFileEditorContext.Provider>
 
       <style jsx>{``}</style>

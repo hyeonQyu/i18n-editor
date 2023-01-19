@@ -20,6 +20,7 @@ export interface ITranslationFileEditorContext
       | 'handleTableMouseLeave'
       | 'handleRowClick'
       | 'handleRowMouseEnter'
+      | 'handleAddColumnClick'
       | 'handleColumnMenuClickDeleteColumn'
       | 'handleRowMenuClickAddRowAbove'
       | 'handleRowMenuClickAddRowBelow'
@@ -44,6 +45,7 @@ export const TranslationFileEditorContext = React.createContext<ITranslationFile
   handleTableMouseLeave() {},
   handleRowClick() {},
   handleRowMouseEnter() {},
+  handleAddColumnClick() {},
   handleColumnMenuClickDeleteColumn() {},
   handleRowMenuClickAddRowAbove() {},
   handleRowMenuClickAddRowBelow() {},
