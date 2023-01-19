@@ -1,12 +1,13 @@
 import { Dialog } from 'primereact/dialog';
-import { Button } from 'primereact/button';
-import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
+import { FormEventHandler, useEffect } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import classNames from 'classnames';
 import { COLOR } from '@defines/css';
 import { Dropdown } from 'primereact/dropdown';
 import { LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defines';
+import { TableExtendDialogFooter } from '@components/translationFileEditor/components/tableExtendDialog/components/tableExtendDialogFooter';
+import { DropdownLanguageOptionTemplate } from '@components/translationFileEditor/components/tableExtendDialog/components/dropdownLanguageOptionTemplate';
 
 const inputId = 'table-extend';
 
@@ -29,13 +30,19 @@ export function TableExtendDialog() {
     document.body.style.overflowY = visible ? 'hidden' : 'initial';
   }, [visible]);
 
+  const disabledYes = {
+    row: !inputAddingKey.value,
+    column: true,
+  }[type];
+
   return (
     <>
       <Dialog
         {...rest}
         visible={visible}
         onHide={onHide}
-        footer={() => <TableExtendDialogFooter onYesClick={handleAddRow} onNoClick={onHide} disabledYes={!inputAddingKey.value} />}
+        draggable={false}
+        footer={() => <TableExtendDialogFooter onYesClick={handleAddRow} onNoClick={onHide} disabledYes={disabledYes} />}
         className={'table-extend-dialog-container'}
       >
         <form className={'table-extend-dialog'} onSubmit={handleFormSubmit}>
@@ -56,6 +63,9 @@ export function TableExtendDialog() {
                 filter
                 filterBy={'title'}
                 autoFocus
+                scrollHeight={'300px'}
+                emptyFilterMessage={'일치하는 언어 코드가 없어요'}
+                itemTemplate={DropdownLanguageOptionTemplate}
                 className={'table-extend-select'}
               />
             )}
@@ -86,23 +96,6 @@ export function TableExtendDialog() {
           animation: shake 0.2s ease;
         }
       `}</style>
-    </>
-  );
-}
-
-interface TableExtendDialogFooterProps {
-  onYesClick: MouseEventHandler<HTMLButtonElement>;
-  onNoClick: MouseEventHandler<HTMLButtonElement>;
-  disabledYes: boolean;
-}
-
-function TableExtendDialogFooter(props: TableExtendDialogFooterProps) {
-  const { onYesClick, onNoClick, disabledYes } = props;
-
-  return (
-    <>
-      <Button label={'아니요'} icon={'pi pi-times'} onClick={onNoClick} className={'p-button-text'} />
-      <Button label={'네, 추가할래요'} icon={'pi pi-check'} onClick={onYesClick} disabled={disabledYes} />
     </>
   );
 }
