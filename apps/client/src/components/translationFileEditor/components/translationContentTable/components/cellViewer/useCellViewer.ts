@@ -1,4 +1,4 @@
-import { CellViewerProps } from '@components/translationFileEditor/components/cellViewer/CellViewer';
+import { CellViewerProps } from '@components/translationFileEditor/components/translationContentTable/components/cellViewer';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import { MouseEventHandler } from 'react';
 

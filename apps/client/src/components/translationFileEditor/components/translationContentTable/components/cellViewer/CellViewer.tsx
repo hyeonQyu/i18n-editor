@@ -1,5 +1,5 @@
 import { LanguageCode, RowData } from 'i18n-editor-common';
-import useCellViewer from '@components/translationFileEditor/components/cellViewer/useCellViewer';
+import useCellViewer from '@components/translationFileEditor/components/translationContentTable/components/cellViewer/useCellViewer';
 import { Button } from 'primereact/button';
 
 export interface CellViewerProps {

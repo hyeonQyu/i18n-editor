@@ -1,7 +1,7 @@
 import { ColumnEditorOptions } from 'primereact/column';
 import { InputTextarea } from 'primereact/inputtextarea';
-import useCellEditor from '@components/translationFileEditor/components/cellEditor/useCellEditor';
-import { CellViewer } from '@components/translationFileEditor/components/cellViewer';
+import useCellEditor from '@components/translationFileEditor/components/translationContentTable/components/cellEditor/useCellEditor';
+import { CellViewer } from '@components/translationFileEditor/components/translationContentTable/components/cellViewer';
 
 export interface CellEditorProps extends ColumnEditorOptions {}
 

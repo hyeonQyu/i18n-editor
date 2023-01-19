@@ -1,4 +1,4 @@
-import { ColumnHeaderProps } from '@components/translationFileEditor/components/columnHeader/ColumnHeader';
+import { ColumnHeaderProps } from '@components/translationFileEditor/components/translationContentTable/components/columnHeader';
 import { MouseEventHandler, useState } from 'react';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 
