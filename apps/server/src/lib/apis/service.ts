@@ -219,7 +219,10 @@ export namespace Service {
       const { path, fileName, languageCode } = req;
 
       const directoryPath = `${path}/${languageCode}`;
-      FileSystemManager.createDirectoryWhenNotExist(directoryPath);
+      if (fs.existsSync(directoryPath)) {
+        return { status: 999, errorMessage: `(${languageCode}) is Duplicated` };
+      }
+      fs.mkdirSync(directoryPath);
       console.log(`directory: ${directoryPath}`);
 
       const filePath = `${directoryPath}/${fileName}`;
