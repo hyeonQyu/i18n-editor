@@ -1,5 +1,4 @@
 import { Dialog } from 'primereact/dialog';
-import { FormEventHandler, useEffect } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import classNames from 'classnames';
@@ -8,6 +7,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defines';
 import { TableExtendDialogFooter } from '@components/translationFileEditor/components/tableExtendDialog/components/tableExtendDialogFooter';
 import { DropdownLanguageOptionTemplate } from '@components/translationFileEditor/components/tableExtendDialog/components/dropdownLanguageOptionTemplate';
+import useTableExtendDialog from '@components/translationFileEditor/components/tableExtendDialog/components/useTableExtendDialog';
 
 const inputId = 'table-extend';
 
@@ -17,23 +17,7 @@ export function TableExtendDialog() {
     inputAddingKey,
   } = useTranslationFileEditorContext();
 
-  const handleAddRow = () => {
-    onAdd(inputAddingKey.value);
-  };
-
-  const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    onAdd(inputAddingKey.value);
-  };
-
-  useEffect(() => {
-    document.body.style.overflowY = visible ? 'hidden' : 'initial';
-  }, [visible]);
-
-  const disabledYes = {
-    row: !inputAddingKey.value,
-    column: true,
-  }[type];
+  const { handleAddRow, handleFormSubmit, disabledYes } = useTableExtendDialog({});
 
   return (
     <>
