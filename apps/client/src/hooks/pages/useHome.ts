@@ -19,6 +19,7 @@ import useMutationPostContentRow from '@hooks/queries/useMutationPostContentRow'
 import useMutationDeleteContentRow from '@hooks/queries/useMutationDeleteContentRow';
 import useMutationPostContentColumn from '@hooks/queries/useMutationPostContentColumn';
 import useMutationDeleteContentColumn from '@hooks/queries/useMutationDeleteContentColumn';
+import { DeleteColumnConfirmMessageTemplate } from '@components/page/home/deleteColumnConfirmMessageTemplate';
 
 export interface IUseHomeParams {}
 
@@ -221,34 +222,42 @@ function useHome(params: IUseHomeParams): IUseHome {
   // 열 삭제
   const onDeleteColumn: CustomEventHandler<TranslationTableColumnDeleteEvent> = (e) => {
     if (!e) return;
-
     const { languageCode } = e;
 
-    mutateDeleteContentColumn(
-      {
-        path: directoryPath,
-        fileName: translationFile!,
-        languageCode,
+    confirmDialog({
+      header: '선택된 언어를 삭제하시겠어요?',
+      message: DeleteColumnConfirmMessageTemplate({ languageCode, translationFile: translationFile! }),
+      icon: 'pi pi-info-circle',
+      acceptClassName: 'p-button-danger',
+      position: 'top',
+      className: 'delete-dialog',
+      accept() {
+        mutateDeleteContentColumn(
+          {
+            path: directoryPath,
+            fileName: translationFile!,
+            languageCode,
+          },
+          {
+            onSuccess({ data }) {
+              if (!data) return;
+              const { columns, rows } = data;
+              setContent(columns, rows);
+              toastRef.current?.show({
+                severity: 'success',
+                detail: '언어를 삭제했어요',
+                life: 3000,
+              });
+            },
+          },
+        );
       },
-      {
-        onSuccess({ data }) {
-          if (!data) return;
-          const { columns, rows } = data;
-          setContent(columns, rows);
-          toastRef.current?.show({
-            severity: 'success',
-            detail: '언어를 삭제했어요',
-            life: 3000,
-          });
-        },
-      },
-    );
+    });
   };
 
   // 위쪽에 행 추가
   const onAddRowAbove: CustomEventHandler<TranslationTableRowAddEvent> = (e) => {
     if (!e) return;
-
     const { index, key, onSuccess } = e;
 
     mutatePostContentRow(
@@ -274,7 +283,6 @@ function useHome(params: IUseHomeParams): IUseHome {
   // 아래쪽에 행 추가
   const onAddRowBelow: CustomEventHandler<TranslationTableRowAddEvent> = (e) => {
     if (!e) return;
-
     const { index, key, onSuccess } = e;
     const rowIndex = index + 1;
 
@@ -305,11 +313,11 @@ function useHome(params: IUseHomeParams): IUseHome {
 
     confirmDialog({
       header: '선택된 행의 내용을 지우시겠어요?',
-      message: `${contentRows![index].key}에 해당하는 모든 번역값을 초기화합니다`,
+      message: `${contentRows![index].key}에 해당하는 모든 번역값을 초기화해요`,
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
       position,
-      className: 'delete-row-dialog',
+      className: 'delete-dialog',
       accept() {
         mutatePatchContent(
           {
@@ -339,11 +347,11 @@ function useHome(params: IUseHomeParams): IUseHome {
 
     confirmDialog({
       header: '선택된 행을 삭제하시겠어요?',
-      message: `${contentRows![index].key} 키가 삭제됩니다.`,
+      message: `${contentRows![index].key} 키를 삭제해요`,
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
       position,
-      className: 'delete-row-dialog',
+      className: 'delete-dialog',
       accept() {
         mutateDeleteContentRow(
           {

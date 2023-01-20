@@ -89,8 +89,12 @@ export function TranslationContentTable(props: TranslationContentTableProps) {
           background-color: var(--blue-50);
         }
 
-        :global(.p-dialog.p-confirm-dialog.delete-row-dialog) {
+        :global(.p-dialog.p-confirm-dialog.delete-dialog) {
           margin: 5rem 3rem !important;
+        }
+        :global(.p-dialog.p-confirm-dialog.delete-dialog .p-confirm-dialog-message) {
+          line-height: 1.4;
+          white-space: pre-line;
         }
       `}</style>
     </>
