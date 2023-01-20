@@ -16,12 +16,15 @@ import {
   PostContentColumnRes,
   DeleteContentColumnReq,
   DeleteContentColumnRes,
+  GetFileExplorerReq,
+  GetFileExplorerRes,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
 import { PostContentRowReq, PostContentRowRes } from 'i18n-editor-common/lib/defines/models';
 import { ContentUtil } from '../utils/contentUtil';
 import { ServiceCache } from '../defines/types';
+import childProcess from 'child_process';
 
 export namespace Service {
   const cache: ServiceCache = {
@@ -52,6 +55,24 @@ export namespace Service {
       console.log(entries);
 
       return { status: 200, data: { path, entries } };
+    } catch (e) {
+      console.error(e);
+      return { status: 500, errorMessage: (e as Error).message };
+    }
+  }
+
+  /**
+   * 파일 익스플로러 열기
+   * @param req
+   */
+  export function getFileExplorer(req: GetFileExplorerReq): GetFileExplorerRes {
+    try {
+      const { path } = req;
+
+      childProcess.execSync(`start "" "${path}"`);
+      console.log(`file explorer opened with path: ${path}`);
+
+      return { status: 200 };
     } catch (e) {
       console.error(e);
       return { status: 500, errorMessage: (e as Error).message };

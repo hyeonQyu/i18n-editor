@@ -16,6 +16,12 @@ export interface GetDirectoryRes
     entries: DirectoryEntry[];
   }> {}
 
+export interface GetFileExplorerReq {
+  path: string;
+}
+
+export interface GetFileExplorerRes extends CommonRes {}
+
 export interface GetTranslationFileReq {
   path: string;
 }
