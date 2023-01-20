@@ -37,7 +37,6 @@ function useInput(params: IUseInputParams): IUseInput {
     const { value: targetValue } = e.target;
     if (validator(targetValue)) {
       setValue(targetValue);
-      onChangeValue(targetValue);
     }
   };
 
@@ -46,6 +45,10 @@ function useInput(params: IUseInputParams): IUseInput {
       setValue('');
     }
   };
+
+  useEffect(() => {
+    onChangeValue(value);
+  }, [value]);
 
   return {
     value,
