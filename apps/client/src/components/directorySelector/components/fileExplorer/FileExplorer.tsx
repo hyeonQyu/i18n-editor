@@ -77,17 +77,20 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
           justify-content: space-between;
         }
 
-        :global(.p-breadcrumb),
-        :global(.p-breadcrumb-chevron),
+        .header :global(.p-breadcrumb),
+        .header :global(.p-breadcrumb-chevron),
         :global(.p-menuitem-icon) {
           font-size: 13px;
         }
-        :global(.p-breadcrumb) {
+        .header :global(.p-breadcrumb) {
           display: flex;
           height: 42px;
         }
-        :global(.p-breadcrumb ul li.p-breadcrumb-chevron) {
+        .header :global(.p-breadcrumb ul li.p-breadcrumb-chevron) {
           margin: 0 0.3rem;
+        }
+        .header :global(.p-breadcrumb ul li:not(.p-breadcrumb-chevron):hover .p-menuitem-link .p-menuitem-text) {
+          color: var(--primary-color);
         }
 
         .body {
