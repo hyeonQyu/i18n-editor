@@ -69,6 +69,10 @@ export function Entry(props: EntryProps) {
           line-height: 1.4;
           text-align: center;
         }
+
+        .icon.pi-file {
+          opacity: 0.7;
+        }
       `}</style>
     </>
   );
