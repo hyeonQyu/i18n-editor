@@ -61,14 +61,14 @@ export namespace FileSystemManager {
     fs.writeFileSync(filePath, JSON.stringify(jsonObject, null, 2));
   }
 
+  /**
+   * 디렉토리 삭제
+   * @param directoryPath
+   */
   export function removeDirectory(directoryPath: string) {
-    fs.rm(
-      directoryPath,
-      {
-        recursive: true,
-        force: true,
-      },
-      () => {},
-    );
+    fs.rmSync(directoryPath, {
+      recursive: true,
+      force: true,
+    });
   }
 }

@@ -9,7 +9,8 @@ import {
   CustomEventHandler,
   TranslationTableRowAddEvent,
   TranslationTableDeleteRowEvent,
-  TranslationTableColumnEditEvent,
+  TranslationTableColumnAddEvent,
+  TranslationTableColumnDeleteEvent,
 } from '@defines/event';
 import useMutationPatchContent from '@hooks/queries/useMutationPatchContent';
 import { useToastContext } from '@contexts/toastContext';
@@ -17,6 +18,7 @@ import { confirmDialog } from 'primereact/confirmdialog';
 import useMutationPostContentRow from '@hooks/queries/useMutationPostContentRow';
 import useMutationDeleteContentRow from '@hooks/queries/useMutationDeleteContentRow';
 import useMutationPostContentColumn from '@hooks/queries/useMutationPostContentColumn';
+import useMutationDeleteContentColumn from '@hooks/queries/useMutationDeleteContentColumn';
 
 export interface IUseHomeParams {}
 
@@ -31,7 +33,8 @@ export interface IUseHome {
   handleDirectoryPathChange: CustomEventHandler<PathChangeEvent>;
   handleTranslationFileChange: CustomEventHandler<DropdownChangeParams>;
   handleTranslationContentChange: CustomEventHandler<ColumnEventParams>;
-  onAddColumn: CustomEventHandler<TranslationTableColumnEditEvent>;
+  onAddColumn: CustomEventHandler<TranslationTableColumnAddEvent>;
+  onDeleteColumn: CustomEventHandler<TranslationTableColumnDeleteEvent>;
   onAddRowAbove: CustomEventHandler<TranslationTableRowAddEvent>;
   onAddRowBelow: CustomEventHandler<TranslationTableRowAddEvent>;
   onClearRowContent: CustomEventHandler<TranslationTableDeleteRowEvent>;
@@ -128,6 +131,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   const { mutate: mutatePostContentRow } = useMutationPostContentRow({});
   const { mutate: mutateDeleteContentRow } = useMutationDeleteContentRow({});
   const { mutate: mutatePostContentColumn } = useMutationPostContentColumn({});
+  const { mutate: mutateDeleteContentColumn } = useMutationDeleteContentColumn({});
 
   const handleDirectoryPathChange: CustomEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
@@ -187,7 +191,8 @@ function useHome(params: IUseHomeParams): IUseHome {
     );
   };
 
-  const onAddColumn: CustomEventHandler<TranslationTableColumnEditEvent> = (e) => {
+  // 열 추가
+  const onAddColumn: CustomEventHandler<TranslationTableColumnAddEvent> = (e) => {
     if (!e) return;
 
     const { languageCode } = e;
@@ -206,6 +211,33 @@ function useHome(params: IUseHomeParams): IUseHome {
           toastRef.current?.show({
             severity: 'success',
             detail: '언어를 추가했어요',
+            life: 3000,
+          });
+        },
+      },
+    );
+  };
+
+  // 열 삭제
+  const onDeleteColumn: CustomEventHandler<TranslationTableColumnDeleteEvent> = (e) => {
+    if (!e) return;
+
+    const { languageCode } = e;
+
+    mutateDeleteContentColumn(
+      {
+        path: directoryPath,
+        fileName: translationFile!,
+        languageCode,
+      },
+      {
+        onSuccess({ data }) {
+          if (!data) return;
+          const { columns, rows } = data;
+          setContent(columns, rows);
+          toastRef.current?.show({
+            severity: 'success',
+            detail: '언어를 삭제했어요',
             life: 3000,
           });
         },
@@ -349,6 +381,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     handleTranslationFileChange,
     handleTranslationContentChange,
     onAddColumn,
+    onDeleteColumn,
     onAddRowAbove,
     onAddRowBelow,
     onClearRowContent,

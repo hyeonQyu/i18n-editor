@@ -70,7 +70,8 @@ export interface PostContentColumnRes extends GetContentRes {}
 
 export interface DeleteContentColumnReq {
   path: string;
+  fileName: string;
   languageCode: LanguageCode;
 }
 
-export interface DeleteContentColumnRes extends CommonRes {}
+export interface DeleteContentColumnRes extends GetContentRes {}

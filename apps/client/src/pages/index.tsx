@@ -19,6 +19,7 @@ function Index(props: IndexProps) {
     handleTranslationFileChange,
     handleTranslationContentChange,
     onAddColumn,
+    onDeleteColumn,
     onAddRowAbove,
     onAddRowBelow,
     onClearRowContent,
@@ -43,6 +44,7 @@ function Index(props: IndexProps) {
           rows={contentRows}
           onChange={handleTranslationContentChange}
           onAddColumn={onAddColumn}
+          onDeleteColumn={onDeleteColumn}
           onAddRowAbove={onAddRowAbove}
           onAddRowBelow={onAddRowBelow}
           onClearRowContent={onClearRowContent}

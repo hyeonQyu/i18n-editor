@@ -10,7 +10,7 @@ import {
   TableMoreOptionsRowMenuClickEvent,
 } from '@components/translationFileEditor/defines';
 import { Menu } from 'primereact/menu';
-import { LanguageCode, RowData } from 'i18n-editor-common';
+import { ColumnHeaderKey, LanguageCode, RowData } from 'i18n-editor-common';
 import { DialogPositionType } from 'primereact/dialog';
 import useInput, { IUseInput } from '@hooks/common/useInput';
 import { DataTableRowClickEventParams, DataTableRowMouseEventParams } from 'primereact/datatable';
@@ -44,13 +44,14 @@ export interface IUseTranslationFileEditor {
 }
 
 function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUseTranslationFileEditor {
-  const { rows, columns = [], onAddColumn, onAddRowAbove, onAddRowBelow, onClearRowContent, onDeleteRow } = params;
+  const { rows, columns = [], onAddColumn, onDeleteColumn, onAddRowAbove, onAddRowBelow, onClearRowContent, onDeleteRow } = params;
 
   const rowMenuRef = useRef<Menu>(null);
   const columnMenuRef = useRef<Menu>(null);
 
   const [mouseHoveredRowIndex, setMouseHoveredRowIndex] = useState<number>();
   const [editRowIndex, setEditRowIndex] = useState<number>();
+  const [editColumnHeaderKey, setEditColumnHeaderKey] = useState<ColumnHeaderKey>();
 
   const [tableExtendDialogData, setTableExtendDialogData] = useState<TableExtendDialogData>({
     ...INITIAL_TABLE_EXTEND_DIALOG_DATA,
@@ -96,9 +97,10 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   const onTableMoreOptionsColumnButtonClick: CustomEventHandler<TableMoreOptionsColumnMenuClickEvent> = (e) => {
     if (!e) return;
 
-    const { event } = e;
+    const { columnHeaderKey, event } = e;
 
     columnMenuRef.current?.toggle(event);
+    setEditColumnHeaderKey(columnHeaderKey);
   };
 
   const onTableMoreOptionsRowButtonClick: CustomEventHandler<TableMoreOptionsRowMenuClickEvent> = (e) => {
@@ -183,7 +185,9 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     }));
   };
 
-  const handleColumnMenuClickDeleteColumn: CustomEventHandler<SyntheticEvent> = (e) => {};
+  const handleColumnMenuClickDeleteColumn: CustomEventHandler<SyntheticEvent> = () => {
+    onDeleteColumn({ languageCode: editColumnHeaderKey as LanguageCode });
+  };
 
   const handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent> = (e) => {
     inputAddingKey.clear();

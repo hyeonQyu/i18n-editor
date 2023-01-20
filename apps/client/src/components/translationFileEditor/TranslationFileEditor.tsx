@@ -5,7 +5,8 @@ import {
   CustomEventHandler,
   TranslationTableRowAddEvent,
   TranslationTableDeleteRowEvent,
-  TranslationTableColumnEditEvent,
+  TranslationTableColumnDeleteEvent,
+  TranslationTableColumnAddEvent,
 } from '@defines/event';
 import { TranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import { TableMoreOptionsRowMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row';
@@ -17,7 +18,8 @@ export interface TranslationFileEditorProps {
   columns?: ColumnData[];
   rows?: RowData[];
   onChange: CustomEventHandler<ColumnEventParams>;
-  onAddColumn: CustomEventHandler<TranslationTableColumnEditEvent>;
+  onAddColumn: CustomEventHandler<TranslationTableColumnAddEvent>;
+  onDeleteColumn: CustomEventHandler<TranslationTableColumnDeleteEvent>;
   onAddRowAbove: CustomEventHandler<TranslationTableRowAddEvent>;
   onAddRowBelow: CustomEventHandler<TranslationTableRowAddEvent>;
   onClearRowContent: CustomEventHandler<TranslationTableDeleteRowEvent>;

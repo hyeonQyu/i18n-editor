@@ -242,13 +242,13 @@ export namespace Service {
    */
   export function deleteContentColumn(req: DeleteContentColumnReq): DeleteContentColumnRes {
     try {
-      const { path, languageCode } = req;
+      const { path, fileName, languageCode } = req;
 
       const directoryPath = `${path}/${languageCode}`;
       FileSystemManager.removeDirectory(directoryPath);
       console.log(`directory removed: ${directoryPath}`);
 
-      return { status: 200 };
+      return getContent({ path, fileName });
     } catch (e) {
       console.error(e);
       return { status: 500, errorMessage: (e as Error).message };

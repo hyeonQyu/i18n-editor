@@ -25,7 +25,7 @@ function useColumnHeader(params: IUseColumnHeaderParams): IUseColumnHeader {
   };
 
   const handleTableMoreOptionColumnButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    onTableMoreOptionsColumnButtonClick({ event: e });
+    onTableMoreOptionsColumnButtonClick({ columnHeaderKey: header, event: e });
   };
 
   const isShowColumnOptionButton = isHovered && !(header === 'key' || header === 'index');
