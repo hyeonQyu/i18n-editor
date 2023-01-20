@@ -13,7 +13,7 @@ import { Menu } from 'primereact/menu';
 import { ColumnHeaderKey, LanguageCode, RowData } from 'i18n-editor-common';
 import { DialogPositionType } from 'primereact/dialog';
 import useInput, { IUseInput } from '@hooks/common/useInput';
-import { DataTableRowClickEventParams, DataTableRowMouseEventParams } from 'primereact/datatable';
+import { DataTableFilterMeta, DataTableRowClickEventParams, DataTableRowMouseEventParams } from 'primereact/datatable';
 import useDropdown, { IUseDropdown } from '@hooks/common/useDropdown';
 
 export interface IUseTranslationFileEditorParams extends TranslationFileEditorProps {}
@@ -29,6 +29,8 @@ export interface IUseTranslationFileEditor {
   dropdownAddingLanguageCode: IUseDropdown;
   inputAddingKey: IUseInput;
   tableExtendDialogData: TableExtendDialogData;
+  filter: DataTableFilterMeta;
+  inputFilter: IUseInput;
   handleTableMouseLeave: MouseEventHandler;
   handleRowClick: CustomEventHandler<DataTableRowClickEventParams>;
   handleRowMouseEnter: CustomEventHandler<DataTableRowMouseEventParams>;
@@ -65,6 +67,25 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
         ...prev,
         invalid: false,
         ...LABELS_BY_TABLE_EXTEND_TYPE[prev.type],
+      }));
+    },
+  });
+
+  const [filter, setFilter] = useState<DataTableFilterMeta>({
+    global: {
+      value: null,
+      matchMode: 'contains',
+    },
+  });
+
+  const inputFilter = useInput({
+    onChangeValue(value) {
+      setFilter((prev) => ({
+        ...prev,
+        global: {
+          ...prev.global,
+          value,
+        },
       }));
     },
   });
@@ -252,6 +273,8 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     tableExtendDialogData,
     dropdownAddingLanguageCode,
     inputAddingKey,
+    filter,
+    inputFilter,
     handleTableMouseLeave,
     handleRowClick,
     handleRowMouseEnter,

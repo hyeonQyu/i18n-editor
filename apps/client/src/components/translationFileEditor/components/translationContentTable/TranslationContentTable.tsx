@@ -14,6 +14,7 @@ export function TranslationContentTable(props: TranslationContentTableProps) {
   const {
     selectedRow,
     globalFilterFields,
+    filter,
     handleTableMouseLeave,
     handleRowClick,
     handleRowMouseEnter,
@@ -31,7 +32,6 @@ export function TranslationContentTable(props: TranslationContentTableProps) {
         selectionMode={'single'}
         responsiveLayout={'scroll'}
         dataKey={'key'}
-        filterDisplay={'row'}
         globalFilterFields={globalFilterFields}
         scrollable
         scrollHeight={'flex'}
@@ -39,13 +39,13 @@ export function TranslationContentTable(props: TranslationContentTableProps) {
         onRowClick={handleRowClick}
         onRowMouseEnter={handleRowMouseEnter}
         selection={selectedRow}
+        filters={filter}
         className={'translation-file-editor'}
       >
         {columns.map(({ header }) => (
           <Column
             key={header}
             field={header}
-            filter
             header={() => <ColumnHeader header={header} />}
             editor={(option) => <CellEditor {...option} />}
             onCellEditComplete={onChange}
