@@ -4,7 +4,6 @@ import { useTranslationFileEditorContext } from '@components/translationFileEdit
 import classNames from 'classnames';
 import { COLOR } from '@defines/css';
 import { Dropdown } from 'primereact/dropdown';
-import { LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defines';
 import { TableExtendDialogFooter } from '@components/translationFileEditor/components/tableExtendDialog/components/tableExtendDialogFooter';
 import { DropdownLanguageOptionTemplate } from '@components/translationFileEditor/components/tableExtendDialog/components/dropdownLanguageOptionTemplate';
 import useTableExtendDialog from '@components/translationFileEditor/components/tableExtendDialog/components/useTableExtendDialog';
@@ -19,7 +18,7 @@ export function TableExtendDialog() {
     inputAddingKey,
   } = useTranslationFileEditorContext();
 
-  const { handleClickAdd, handleFormSubmit, disabledYes } = useTableExtendDialog({});
+  const { disabledYes, languageSelectOptions, handleClickAdd, handleFormSubmit } = useTableExtendDialog({});
 
   return (
     <>
@@ -46,7 +45,7 @@ export function TableExtendDialog() {
               <Dropdown
                 value={dropdownAddingLanguageCode.value}
                 onChange={dropdownAddingLanguageCode.onChange}
-                options={LANGUAGE_SELECT_OPTIONS}
+                options={languageSelectOptions}
                 optionLabel={'label'}
                 filter
                 filterBy={'title'}

@@ -1,17 +1,21 @@
 import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defines';
+import { SelectItem } from 'primereact/selectitem';
 
 export interface IUseTableExtendDialogParams {}
 
 export interface IUseTableExtendDialog {
+  disabledYes: boolean;
+  languageSelectOptions: SelectItem[];
   handleClickAdd: MouseEventHandler<HTMLButtonElement>;
   handleFormSubmit: FormEventHandler<HTMLFormElement>;
-  disabledYes: boolean;
 }
 
 function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExtendDialog {
   const {} = params;
   const {
+    columns = [],
     tableExtendDialogData: { type, visible, onAdd },
     dropdownAddingLanguageCode,
     inputAddingKey,
@@ -37,10 +41,19 @@ function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExt
 
   const disabledYes = !value;
 
+  const existLanguageSet = new Set(columns.map(({ header }) => header));
+  const languageSelectOptions = LANGUAGE_SELECT_OPTIONS.map((option) => {
+    return {
+      ...option,
+      disabled: existLanguageSet.has(option.value),
+    };
+  });
+
   return {
+    disabledYes,
+    languageSelectOptions,
     handleFormSubmit,
     handleClickAdd,
-    disabledYes,
   };
 }
 
