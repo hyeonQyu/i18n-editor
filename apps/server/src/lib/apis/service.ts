@@ -62,7 +62,7 @@ export namespace Service {
   }
 
   /**
-   * 파일 익스플로러 열기
+   * 파일 탐색기 열기
    * @param req
    */
   export function getFileExplorer(req: GetFileExplorerReq): GetFileExplorerRes {

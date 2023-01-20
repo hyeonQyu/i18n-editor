@@ -15,6 +15,10 @@ export const QUERY_KEY = {
     base: ['directory'] as const,
     getDirectory: (path: string) => [...QUERY_KEY.directory.base, 'get', 'directory', path],
   },
+  fileExplorer: {
+    base: ['fileExplorer'] as const,
+    getFileExplorer: (path: string) => [...QUERY_KEY.fileExplorer.base, 'get', 'fileExplorer', path],
+  },
   translationFile: {
     base: ['translationFile'] as const,
     getTranslationFile: (path: string) => [...QUERY_KEY.translationFile.base, 'get', 'translationFile', path],

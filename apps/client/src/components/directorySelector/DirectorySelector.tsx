@@ -8,6 +8,7 @@ import { InputText } from 'primereact/inputtext';
 import classNames from 'classnames';
 import { COLOR } from '@defines/css';
 import { CustomEventHandler } from '@defines/event';
+import { Menu } from 'primereact/menu';
 
 export interface DirectorySelectorProps {
   path: string;
@@ -22,18 +23,31 @@ export function DirectorySelector(props: DirectorySelectorProps) {
 
   const {
     fileExplorerRef,
+    menuRef,
     isFileExplorerOpened,
+    menuItems,
     handleSelectClick,
     handleFocus,
-    handleCopyClick,
+    handleMenuClick,
     handleFileExplorerShow,
     handleFileExplorerHide,
   } = useDirectorySelector(props);
 
   return (
     <>
-      <div className={'p-inputgroup'}>
+      <div className={'directory-selector p-inputgroup'}>
         <Button icon={'pi pi-search'} className={'p-button'} onClick={handleSelectClick} />
+        <>
+          <FileExplorer
+            ref={fileExplorerRef}
+            path={path}
+            opened={isFileExplorerOpened}
+            onChange={onChange}
+            onShow={handleFileExplorerShow}
+            onHide={handleFileExplorerHide}
+          />
+        </>
+
         <span className={'p-float-label'}>
           <InputText id={inputId} value={path} onChange={() => {}} onFocus={handleFocus} className={classNames(invalid && 'p-invalid')} />
           <label
@@ -43,19 +57,18 @@ export function DirectorySelector(props: DirectorySelectorProps) {
             Locale 디렉토리를 선택하세요
           </label>
         </span>
-        <Button icon={'pi pi-clone'} className={'p-button p-button-outlined'} onClick={handleCopyClick} disabled={!path} />
+
+        <Button icon={'pi pi-bars'} className={'p-button p-button-outlined'} onClick={handleMenuClick} disabled={!path} />
+        <>
+          <Menu ref={menuRef} model={menuItems} popup />
+        </>
       </div>
 
-      <FileExplorer
-        ref={fileExplorerRef}
-        path={path}
-        opened={isFileExplorerOpened}
-        onChange={onChange}
-        onShow={handleFileExplorerShow}
-        onHide={handleFileExplorerHide}
-      />
-
       <style jsx>{`
+        .directory-selector {
+          position: relative;
+        }
+
         .p-float-label > label.opened,
         .p-float-label > label.selected {
           top: -0.75rem;
