@@ -160,6 +160,7 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
         message: '저장하지 않은 변경사항은 폐기됩니다',
         icon: 'pi pi-info-circle',
         acceptClassName: 'p-button-danger',
+        draggable: false,
         accept() {
           history.go(-2);
           onHide();

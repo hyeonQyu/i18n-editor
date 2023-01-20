@@ -230,6 +230,7 @@ function useHome(params: IUseHomeParams): IUseHome {
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
       position: 'top',
+      draggable: false,
       className: 'delete-dialog',
       accept() {
         mutateDeleteContentColumn(
@@ -317,6 +318,7 @@ function useHome(params: IUseHomeParams): IUseHome {
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
       position,
+      draggable: false,
       className: 'delete-dialog',
       accept() {
         mutatePatchContent(
@@ -351,6 +353,7 @@ function useHome(params: IUseHomeParams): IUseHome {
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
       position,
+      draggable: false,
       className: 'delete-dialog',
       accept() {
         mutateDeleteContentRow(
