@@ -15,11 +15,11 @@ export const INITIAL_TABLE_EXTEND_DIALOG_DATA: TableExtendDialogData = {
 
 export const LABELS_BY_TABLE_EXTEND_TYPE: Record<TableExtendType, Record<'header' | 'inputLabel', string>> = {
   row: {
-    header: '행을 추가하시겠어요?',
-    inputLabel: '새로 추가할 행의 key를 입력하세요',
+    header: '번역할 문구를 추가하시겠어요?',
+    inputLabel: '새로 추가할 번역 key 값을 입력하세요',
   },
   column: {
-    header: '열을 추가하시겠어요?',
+    header: '언어코드를 추가하시겠어요?',
     inputLabel: '새로 추가할 언어 코드를 선택하세요',
   },
 };
