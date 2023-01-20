@@ -138,7 +138,10 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   const selectedRow = hasSelectedRow ? rows[editRowIndex] : undefined;
 
   const isClearableRow = Boolean(
-    rows && hasSelectedRow && Object.entries(rows[editRowIndex]).filter(([key, value]) => key !== 'key' && key !== 'index' && value).length,
+    rows &&
+      hasSelectedRow &&
+      rows[editRowIndex] &&
+      Object.entries(rows[editRowIndex]).filter(([key, value]) => key !== 'key' && key !== 'index' && value).length,
   );
 
   const hideTableExtendDialog = () => setTableExtendDialogData((prev) => ({ ...prev, visible: false }));
