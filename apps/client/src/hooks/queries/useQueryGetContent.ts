@@ -1,14 +1,18 @@
 import { QUERY_KEY, UseQueryParams } from '@defines/reactQuery';
-import { GetContentReq, GetContentRes } from 'i18n-editor-common';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { GetContentReq, GetContentRes } from 'i18n-editor-common';
 import { HomeApi } from '@apis/homeApi';
 
-export interface IUseQueryGetContentParams extends UseQueryParams<GetContentRes, GetContentReq> {}
+type Request = GetContentReq;
 
-export type IUseQueryGetContent = UseQueryResult<GetContentRes, AxiosError<GetContentRes>>;
+type Response = GetContentRes;
 
-function useQueryGetContent(params: IUseQueryGetContentParams): IUseQueryGetContent {
+export interface UseQueryGetContentParams extends UseQueryParams<Response, Request> {}
+
+export type UseQueryGetContent = UseQueryResult<Response, AxiosError<Response>>;
+
+function useQueryGetContent(params: UseQueryGetContentParams): UseQueryGetContent {
   const { req, queryOption } = params;
   const { path, fileName } = req;
 

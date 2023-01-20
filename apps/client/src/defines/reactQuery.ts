@@ -24,3 +24,14 @@ export const QUERY_KEY = {
     getContent: (path: string, fileName: string) => [...QUERY_KEY.content.base, 'get', 'content', path, fileName],
   },
 };
+
+export const MUTATION_KEY = {
+  content: {
+    base: ['content'] as const,
+    patchContent: () => [...MUTATION_KEY.content.base, 'patch', 'content'],
+    postContentRow: () => [...MUTATION_KEY.content.base, 'post', 'content', 'row'],
+    deleteContentRow: () => [...MUTATION_KEY.content.base, 'delete', 'content', 'row'],
+    postContentColumn: () => [...MUTATION_KEY.content.base, 'post', 'content', 'column'],
+    deleteContentColumn: () => [...MUTATION_KEY.content.base, 'delete', 'content', 'column'],
+  },
+};

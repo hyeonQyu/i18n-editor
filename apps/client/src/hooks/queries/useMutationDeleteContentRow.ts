@@ -1,17 +1,22 @@
-import { UseMutationParams } from '@defines/reactQuery';
-import { DeleteContentRowReq, DeleteContentRowRes } from 'i18n-editor-common';
+import { MUTATION_KEY, UseMutationParams } from '@defines/reactQuery';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { DeleteContentRowReq, DeleteContentRowRes } from 'i18n-editor-common';
 import { HomeApi } from '@apis/homeApi';
 
-export interface IUseMutationDeleteContentRowParams extends UseMutationParams<DeleteContentRowRes, DeleteContentRowReq> {}
+type Request = DeleteContentRowReq;
 
-export type IUseMutationDeleteContentRow = UseMutationResult<DeleteContentRowRes, AxiosError<DeleteContentRowRes>, DeleteContentRowReq>;
+type Response = DeleteContentRowRes;
 
-function useMutationDeleteContentRow(params: IUseMutationDeleteContentRowParams): IUseMutationDeleteContentRow {
+export interface UseMutationDeleteContentRowParams extends UseMutationParams<Response, Request> {}
+
+export type UseMutationDeleteContentRow = UseMutationResult<Response, AxiosError<Response>, Request>;
+
+function useMutationDeleteContentRow(params: UseMutationDeleteContentRowParams): UseMutationDeleteContentRow {
   const { mutationOption } = params;
 
   return useMutation({
+    mutationKey: MUTATION_KEY.content.deleteContentRow(),
     mutationFn: HomeApi.deleteContentRow,
     ...mutationOption,
   });

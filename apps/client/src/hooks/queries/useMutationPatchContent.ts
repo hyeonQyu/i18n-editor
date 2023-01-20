@@ -1,17 +1,22 @@
-import { UseMutationParams } from '@defines/reactQuery';
-import { PatchContentReq, PatchContentRes } from 'i18n-editor-common';
+import { MUTATION_KEY, UseMutationParams } from '@defines/reactQuery';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { PatchContentReq, PatchContentRes } from 'i18n-editor-common';
 import { HomeApi } from '@apis/homeApi';
 
-export interface IUseMutationPatchContentParams extends UseMutationParams<PatchContentRes, PatchContentReq> {}
+type Request = PatchContentReq;
 
-export type IUseMutationPatchContent = UseMutationResult<PatchContentRes, AxiosError<PatchContentRes>, PatchContentReq>;
+type Response = PatchContentRes;
 
-function useMutationPatchContent(params: IUseMutationPatchContentParams): IUseMutationPatchContent {
+export interface UseMutationPatchContentParams extends UseMutationParams<Response, Request> {}
+
+export type UseMutationPatchContent = UseMutationResult<Response, AxiosError<Response>, Request>;
+
+function useMutationPatchContent(params: UseMutationPatchContentParams): UseMutationPatchContent {
   const { mutationOption } = params;
 
   return useMutation({
+    mutationKey: MUTATION_KEY.content.patchContent(),
     mutationFn: HomeApi.patchContent,
     ...mutationOption,
   });

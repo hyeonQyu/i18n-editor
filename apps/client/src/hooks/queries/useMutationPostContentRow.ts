@@ -1,17 +1,22 @@
-import { UseMutationParams } from '@defines/reactQuery';
-import { PostContentRowReq, PostContentRowRes } from 'i18n-editor-common';
+import { MUTATION_KEY, UseMutationParams } from '@defines/reactQuery';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { PostContentRowReq, PostContentRowRes } from 'i18n-editor-common';
 import { HomeApi } from '@apis/homeApi';
 
-export interface IUseMutationPostContentRowParams extends UseMutationParams<PostContentRowRes, PostContentRowReq> {}
+type Request = PostContentRowReq;
 
-export type IUseMutationPostContentRow = UseMutationResult<PostContentRowRes, AxiosError<PostContentRowRes>, PostContentRowReq>;
+type Response = PostContentRowRes;
 
-function useMutationPostContentRow(params: IUseMutationPostContentRowParams): IUseMutationPostContentRow {
+export interface UseMutationPostContentRowParams extends UseMutationParams<Response, Request> {}
+
+export type UseMutationPostContentRow = UseMutationResult<Response, AxiosError<Response>, Request>;
+
+function useMutationPostContentRow(params: UseMutationPostContentRowParams): UseMutationPostContentRow {
   const { mutationOption } = params;
 
   return useMutation({
+    mutationKey: MUTATION_KEY.content.postContentRow(),
     mutationFn: HomeApi.postContentRow,
     ...mutationOption,
   });
