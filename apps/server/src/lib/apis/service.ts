@@ -18,6 +18,7 @@ import {
   DeleteContentColumnRes,
   GetFileExplorerReq,
   GetFileExplorerRes,
+  CommonRes,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
@@ -36,7 +37,7 @@ export namespace Service {
    * @param req
    */
   export function getDirectory(req: GetDirectoryReq): GetDirectoryRes {
-    try {
+    return doService<GetDirectoryRes>(() => {
       const path = StringUtil.getNormalizedPath(req?.path || process.cwd());
       const entries: DirectoryEntry[] = fs.readdirSync(path, { withFileTypes: true }).map((item) => {
         const type: DirectoryEntryType = (() => {
@@ -55,10 +56,7 @@ export namespace Service {
       console.log(entries);
 
       return { status: 200, data: { path, entries } };
-    } catch (e) {
-      console.error(e);
-      return { status: 500, errorMessage: (e as Error).message };
-    }
+    });
   }
 
   /**
@@ -66,17 +64,14 @@ export namespace Service {
    * @param req
    */
   export function getFileExplorer(req: GetFileExplorerReq): GetFileExplorerRes {
-    try {
+    return doService<GetFileExplorerRes>(() => {
       const { path } = req;
 
       childProcess.execSync(`start "" "${path}"`);
       console.log(`file explorer opened with path: ${path}`);
 
       return { status: 200 };
-    } catch (e) {
-      console.error(e);
-      return { status: 500, errorMessage: (e as Error).message };
-    }
+    });
   }
 
   /**
@@ -84,7 +79,7 @@ export namespace Service {
    * @param req
    */
   export function getTranslationFiles(req: GetTranslationFileReq): GetTranslationFileRes {
-    try {
+    return doService<GetTranslationFileRes>(() => {
       const { path } = req;
 
       const directories = ContentUtil.getDirectoryPathsByRootDirectoryPath(path);
@@ -101,10 +96,7 @@ export namespace Service {
       console.log(files);
 
       return { status: 200, data: { files } };
-    } catch (e) {
-      console.error(e);
-      return { status: 500, errorMessage: (e as Error).message };
-    }
+    });
   }
 
   /**
@@ -112,7 +104,7 @@ export namespace Service {
    * @param req
    */
   export function getContent(req: GetContentReq): GetContentRes {
-    try {
+    return doService<GetContentRes>(() => {
       const { path, fileName } = req;
 
       const contentData = ContentUtil.getContentDataFromPathWithFileName(path, fileName);
@@ -131,10 +123,7 @@ export namespace Service {
       console.log('row data', rows);
 
       return { status: 200, data: { columns, rows } };
-    } catch (e) {
-      console.error(e);
-      return { status: 500, errorMessage: (e as Error).message };
-    }
+    });
   }
 
   /**
@@ -142,7 +131,7 @@ export namespace Service {
    * @param req
    */
   export function patchContent(req: PatchContentReq): PatchContentRes {
-    try {
+    return doService<PatchContentRes>(() => {
       const { path, fileName, cells } = req;
 
       cells.forEach(({ locale, key, value }) => {
@@ -155,10 +144,7 @@ export namespace Service {
       });
 
       return { status: 200 };
-    } catch (e) {
-      console.error(e);
-      return { status: 500, errorMessage: (e as Error).message };
-    }
+    });
   }
 
   /**
@@ -166,7 +152,7 @@ export namespace Service {
    * @param req
    */
   export function postContentRow(req: PostContentRowReq): PostContentRowRes {
-    try {
+    return doService<PostContentRowRes>(() => {
       const { path, fileName, row } = req;
 
       const contentData = ContentUtil.getContentDataFromPathWithFileName(path, fileName);
@@ -190,10 +176,7 @@ export namespace Service {
       cache.lastReadRows = newRows;
 
       return { status: 200 };
-    } catch (e) {
-      console.error(e);
-      return { status: 500, errorMessage: (e as Error).message };
-    }
+    });
   }
 
   /**
@@ -201,7 +184,7 @@ export namespace Service {
    * @param req
    */
   export function deleteContentRow(req: DeleteContentRowReq): DeleteContentRowRes {
-    try {
+    return doService<DeleteContentRowRes>(() => {
       const { path, fileName, key } = req;
 
       const contentData = ContentUtil.getContentDataFromPathWithFileName(path, fileName);
@@ -225,10 +208,7 @@ export namespace Service {
       cache.lastReadRows = newRows;
 
       return { status: 200 };
-    } catch (e) {
-      console.error(e);
-      return { status: 500, errorMessage: (e as Error).message };
-    }
+    });
   }
 
   /**
@@ -236,7 +216,7 @@ export namespace Service {
    * @param req
    */
   export function postContentColumn(req: PostContentColumnReq): PostContentColumnRes {
-    try {
+    return doService<PostContentColumnRes>(() => {
       const { path, fileName, languageCode } = req;
 
       const directoryPath = `${path}/${languageCode}`;
@@ -251,10 +231,7 @@ export namespace Service {
       console.log(`file: ${filePath}`);
 
       return getContent({ path, fileName });
-    } catch (e) {
-      console.error(e);
-      return { status: 500, errorMessage: (e as Error).message };
-    }
+    });
   }
 
   /**
@@ -262,14 +239,25 @@ export namespace Service {
    * @param req
    */
   export function deleteContentColumn(req: DeleteContentColumnReq): DeleteContentColumnRes {
+    return doService<DeleteContentColumnRes>(() => {
+      try {
+        const { path, fileName, languageCode } = req;
+
+        const directoryPath = `${path}/${languageCode}`;
+        FileSystemManager.removeDirectory(directoryPath);
+        console.log(`directory removed: ${directoryPath}`);
+
+        return getContent({ path, fileName });
+      } catch (e) {
+        console.error(e);
+        return { status: 500, errorMessage: (e as Error).message };
+      }
+    });
+  }
+
+  function doService<Res extends CommonRes<any>>(callback: () => Res): Pick<Res, 'status' | 'errorMessage' | 'data'> {
     try {
-      const { path, fileName, languageCode } = req;
-
-      const directoryPath = `${path}/${languageCode}`;
-      FileSystemManager.removeDirectory(directoryPath);
-      console.log(`directory removed: ${directoryPath}`);
-
-      return getContent({ path, fileName });
+      return callback();
     } catch (e) {
       console.error(e);
       return { status: 500, errorMessage: (e as Error).message };
