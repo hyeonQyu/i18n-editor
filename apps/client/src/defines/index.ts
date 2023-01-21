@@ -4,3 +4,4 @@ export * from './css';
 export * from './iconCommonProps';
 export * from './checkable';
 export * from './reactQuery';
+export * from './axios';

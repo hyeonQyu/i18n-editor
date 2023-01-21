@@ -19,6 +19,7 @@ import {
   GetFileExplorerReq,
   GetFileExplorerRes,
   CommonRes,
+  ErrorMessage,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
@@ -85,7 +86,7 @@ export namespace Service {
       const directories = ContentUtil.getDirectoryPathsByRootDirectoryPath(path);
 
       if (directories.length === 0) {
-        const errorMessage = 'Invalid locale directory';
+        const errorMessage: ErrorMessage = 'INVALID_LOCALE_DIRECTORY';
         console.error(errorMessage);
         return { status: 999, errorMessage };
       }
@@ -110,7 +111,7 @@ export namespace Service {
       const contentData = ContentUtil.getContentDataFromPathWithFileName(path, fileName);
 
       if (!contentData) {
-        const errorMessage = 'Invalid locale directory';
+        const errorMessage: ErrorMessage = 'INVALID_LOCALE_DIRECTORY';
         console.error(errorMessage);
         return { status: 999, errorMessage };
       }
@@ -158,7 +159,7 @@ export namespace Service {
       const contentData = ContentUtil.getContentDataFromPathWithFileName(path, fileName);
 
       if (!contentData) {
-        const errorMessage = 'Invalid locale directory';
+        const errorMessage: ErrorMessage = 'INVALID_LOCALE_DIRECTORY';
         console.error(errorMessage);
         return { status: 999, errorMessage };
       }
@@ -166,9 +167,9 @@ export namespace Service {
       const { translationFiles, rows } = contentData;
 
       if (!ContentUtil.compareRowKeys(rows, cache.lastReadRows)) {
-        const errorMessage = 'Keys changed by external write';
+        const errorMessage: ErrorMessage = 'KEYS_CHANGED_BY_EXTERNAL_WRITE';
         console.error(errorMessage);
-        return { status: 998, errorMessage };
+        return { status: 999, errorMessage };
       }
 
       const newRows = [...rows.slice(0, row.index), row, ...rows.slice(row.index)];
@@ -190,7 +191,7 @@ export namespace Service {
       const contentData = ContentUtil.getContentDataFromPathWithFileName(path, fileName);
 
       if (!contentData) {
-        const errorMessage = 'Invalid locale directory';
+        const errorMessage: ErrorMessage = 'INVALID_LOCALE_DIRECTORY';
         console.error(errorMessage);
         return { status: 999, errorMessage };
       }
@@ -198,9 +199,9 @@ export namespace Service {
       const { translationFiles, rows } = contentData;
 
       if (!ContentUtil.compareRowKeys(rows, cache.lastReadRows)) {
-        const errorMessage = 'Keys changed by external write';
+        const errorMessage: ErrorMessage = 'KEYS_CHANGED_BY_EXTERNAL_WRITE';
         console.error(errorMessage);
-        return { status: 998, errorMessage };
+        return { status: 999, errorMessage };
       }
 
       const newRows = rows.filter((row) => row.key !== key);

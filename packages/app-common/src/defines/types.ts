@@ -24,3 +24,5 @@ export interface CellData {
   key: string;
   value: string;
 }
+
+export type ErrorMessage = 'INVALID_LOCALE_DIRECTORY' | 'KEYS_CHANGED_BY_EXTERNAL_WRITE';

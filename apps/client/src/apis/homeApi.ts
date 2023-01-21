@@ -19,12 +19,18 @@ import {
   PostContentRowReq,
   PostContentRowRes,
 } from 'i18n-editor-common';
+import { AxiosInstanceProps } from '@defines/axios';
 
 export namespace HomeApi {
   let client: AxiosInstance;
 
-  export function setPort(port: number) {
+  export function createAxiosInstance({ port, responseInterceptor }: AxiosInstanceProps) {
     client = axios.create({ baseURL: `http://localhost:${port}/api` });
+
+    if (responseInterceptor) {
+      const { onFulfilled, onRejected, options } = responseInterceptor;
+      client.interceptors.response.use(onFulfilled, onRejected, options);
+    }
   }
 
   /**

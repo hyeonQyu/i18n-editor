@@ -176,18 +176,6 @@ function useHome(params: IUseHomeParams): IUseHome {
             life: 3000,
           });
         },
-        onError(error) {
-          const data = error?.response?.data;
-          const errorMessage = data?.errorMessage;
-
-          toastRef.current?.show({
-            severity: 'error',
-            detail: `변경 사항 저장 중 오류가 발생했어요\n계속해서 같은 오류가 발생한다면 새로고침 해주세요${
-              errorMessage ? `\nerror message: ${errorMessage}` : ''
-            }`,
-            life: 3000,
-          });
-        },
       },
     );
   };
