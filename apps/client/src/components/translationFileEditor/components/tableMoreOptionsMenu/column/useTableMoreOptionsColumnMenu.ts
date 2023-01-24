@@ -13,7 +13,7 @@ function useTableMoreOptionsColumnMenu(params: IUseTableMoreOptionsColumnMenuPar
 
   const items: MenuItem[] = [
     {
-      label: '열 삭제',
+      label: '언어 코드 삭제',
       icon: 'pi pi-trash',
       command(e) {
         handleColumnMenuClickDeleteColumn(e.originalEvent);

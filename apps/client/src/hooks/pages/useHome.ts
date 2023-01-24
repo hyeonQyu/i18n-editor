@@ -3,7 +3,7 @@ import { PathChangeEvent } from '@components/directorySelector/defines';
 import useQueryGetTranslationFile from '@hooks/queries/useQueryGetTranslationFile';
 import { DropdownChangeParams } from 'primereact/dropdown';
 import useQueryGetContent from '@hooks/queries/useQueryGetContent';
-import { CellData, ColumnData, RowData } from 'i18n-editor-common';
+import { CellData, ColumnData, ErrorMessage, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
 import {
   CustomEventHandler,
@@ -20,6 +20,7 @@ import useMutationDeleteContentRow from '@hooks/queries/useMutationDeleteContent
 import useMutationPostContentColumn from '@hooks/queries/useMutationPostContentColumn';
 import useMutationDeleteContentColumn from '@hooks/queries/useMutationDeleteContentColumn';
 import { DeleteColumnConfirmMessageTemplate } from '@components/page/home/deleteColumnConfirmMessageTemplate';
+import { InvalidLocaleDirectoryConfirmMessageTemplate } from '@components/page/home/invalidLocaleDirectoryConfirmMessageTemplate';
 
 export interface IUseHomeParams {}
 
@@ -97,6 +98,19 @@ function useHome(params: IUseHomeParams): IUseHome {
     queryOption: {
       enabled: Boolean(directoryPath),
       retry: false,
+      onError(error) {
+        if ((error.response?.data.errorMessage as ErrorMessage) === 'INVALID_LOCALE_DIRECTORY') {
+          confirmDialog({
+            header: '언어 코드명으로 디렉토리를 만드시겠어요?',
+            message: InvalidLocaleDirectoryConfirmMessageTemplate({}),
+            icon: 'pi pi-info-circle',
+            acceptClassName: 'p-button-danger',
+            position: 'top',
+            draggable: false,
+            className: 'delete-dialog',
+          });
+        }
+      },
     },
   });
 
