@@ -7,7 +7,7 @@ export interface CellEditorProps extends ColumnEditorOptions {}
 
 export function CellEditor(props: CellEditorProps) {
   const { value, field, rowData } = props;
-  const { handleFocus, handleChange, handleMouseEnter } = useCellEditor(props);
+  const { handleClick, handleFocus, handleChange, handleMouseEnter } = useCellEditor(props);
 
   if (field === 'key') {
     return <CellViewer rowData={rowData} field={field} />;
@@ -18,6 +18,7 @@ export function CellEditor(props: CellEditorProps) {
       <InputTextarea
         className={'cell-editor'}
         value={value}
+        onClick={handleClick}
         onFocus={handleFocus}
         onChange={handleChange}
         onMouseEnter={handleMouseEnter}

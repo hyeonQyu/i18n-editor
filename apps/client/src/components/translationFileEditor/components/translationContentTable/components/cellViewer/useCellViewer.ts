@@ -7,6 +7,7 @@ export interface IUseCellViewerParams extends CellViewerProps {}
 export interface IUseCellViewer {
   isKey: boolean;
   isShowTableOptionsButton: boolean;
+  handleClick: MouseEventHandler<HTMLDivElement>;
   handleMouseEnter: MouseEventHandler<HTMLDivElement>;
   handleTableMoreOptionRowButtonClick: MouseEventHandler<HTMLButtonElement>;
 }
@@ -16,10 +17,14 @@ function useCellViewer(params: IUseCellViewerParams): IUseCellViewer {
     rowData: { index },
     field,
   } = params;
-  const { mouseHoveredRowIndex, onCellMouseEnter, onTableMoreOptionsRowButtonClick } = useTranslationFileEditorContext();
+  const { mouseHoveredRowIndex, onCellClick, onCellMouseEnter, onTableMoreOptionsRowButtonClick } = useTranslationFileEditorContext();
+
+  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    onCellClick({ rowIndex: index, event: e });
+  };
 
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
-    // onCellMouseEnter({ rowIndex: index, event: e });
+    onCellMouseEnter({ rowIndex: index, event: e });
   };
 
   const handleTableMoreOptionRowButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -33,6 +38,7 @@ function useCellViewer(params: IUseCellViewerParams): IUseCellViewer {
   return {
     isKey,
     isShowTableOptionsButton,
+    handleClick,
     handleMouseEnter,
     handleTableMoreOptionRowButtonClick,
   };

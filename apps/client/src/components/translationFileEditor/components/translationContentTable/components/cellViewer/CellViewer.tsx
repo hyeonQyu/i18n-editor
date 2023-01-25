@@ -9,11 +9,11 @@ export interface CellViewerProps {
 
 export function CellViewer(props: CellViewerProps) {
   const { rowData, field } = props;
-  const { isKey, isShowTableOptionsButton, handleMouseEnter, handleTableMoreOptionRowButtonClick } = useCellViewer(props);
+  const { isKey, isShowTableOptionsButton, handleClick, handleMouseEnter, handleTableMoreOptionRowButtonClick } = useCellViewer(props);
 
   return (
     <>
-      <div className={'cell'} onMouseEnter={handleMouseEnter}>
+      <div className={'cell'} onClick={handleClick} onMouseEnter={handleMouseEnter}>
         <div className={'data'}>{rowData[field]}</div>
         {isShowTableOptionsButton && (
           <Button

@@ -13,7 +13,7 @@ import { Menu } from 'primereact/menu';
 import { ColumnHeaderKey, LanguageCode, RowData } from 'i18n-editor-common';
 import { DialogPositionType } from 'primereact/dialog';
 import useInput, { IUseInput } from '@hooks/common/useInput';
-import { DataTableFilterMeta, DataTableRowClickEventParams, DataTableRowMouseEventParams } from 'primereact/datatable';
+import { DataTableFilterMeta } from 'primereact/datatable';
 import useDropdown, { IUseDropdown } from '@hooks/common/useDropdown';
 
 export interface IUseTranslationFileEditorParams extends TranslationFileEditorProps {}
@@ -32,14 +32,13 @@ export interface IUseTranslationFileEditor {
   filter: DataTableFilterMeta;
   inputFilter: IUseInput;
   handleTableMouseLeave: MouseEventHandler;
-  handleRowClick: CustomEventHandler<DataTableRowClickEventParams>;
-  handleRowMouseEnter: CustomEventHandler<DataTableRowMouseEventParams>;
   handleAddColumnClick: MouseEventHandler<HTMLButtonElement>;
   handleColumnMenuClickDeleteColumn: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickAddRowBelow: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickClearRowContent: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickDeleteRow: CustomEventHandler<SyntheticEvent>;
+  onCellClick: CustomEventHandler<TableCellEvent>;
   onCellMouseEnter: CustomEventHandler<TableCellEvent>;
   onTableMoreOptionsColumnButtonClick: CustomEventHandler<TableMoreOptionsColumnMenuClickEvent>;
   onTableMoreOptionsRowButtonClick: CustomEventHandler<TableMoreOptionsRowMenuClickEvent>;
@@ -96,24 +95,22 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     setMouseHoveredRowIndex(undefined);
   };
 
-  const handleRowClick: CustomEventHandler<DataTableRowClickEventParams> = (e) => {
+  const onCellClick: CustomEventHandler<TableCellEvent> = (e) => {
     if (!e) return;
-    const { index } = e;
-    setEditRowIndex(index);
+    const { rowIndex } = e;
+    setEditRowIndex(rowIndex);
   };
 
-  const handleRowMouseEnter: CustomEventHandler<DataTableRowMouseEventParams> = (e) => {
+  const onCellMouseEnter: CustomEventHandler<TableCellEvent> = (e) => {
     if (!e) return;
-    const { index, originalEvent } = e;
+    const { rowIndex, event } = e;
 
-    if (index !== editRowIndex) {
-      rowMenuRef.current?.hide(originalEvent);
+    if (rowIndex !== editRowIndex) {
+      rowMenuRef.current?.hide(event);
     }
 
-    setMouseHoveredRowIndex(index);
+    setMouseHoveredRowIndex(rowIndex);
   };
-
-  const onCellMouseEnter: CustomEventHandler<TableCellEvent> = () => {};
 
   const onTableMoreOptionsColumnButtonClick: CustomEventHandler<TableMoreOptionsColumnMenuClickEvent> = (e) => {
     if (!e) return;
@@ -273,14 +270,13 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     filter,
     inputFilter,
     handleTableMouseLeave,
-    handleRowClick,
-    handleRowMouseEnter,
     handleAddColumnClick,
     handleColumnMenuClickDeleteColumn,
     handleRowMenuClickAddRowAbove,
     handleRowMenuClickAddRowBelow,
     handleRowMenuClickClearRowContent,
     handleRowMenuClickDeleteRow,
+    onCellClick,
     onCellMouseEnter,
     onTableMoreOptionsColumnButtonClick,
     onTableMoreOptionsRowButtonClick,

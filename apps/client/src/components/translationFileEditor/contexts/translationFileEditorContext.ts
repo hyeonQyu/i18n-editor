@@ -17,12 +17,11 @@ export interface ITranslationFileEditorContext
       | 'selectedRow'
       | 'filter'
       | 'inputFilter'
+      | 'onCellClick'
       | 'onCellMouseEnter'
       | 'onTableMoreOptionsColumnButtonClick'
       | 'onTableMoreOptionsRowButtonClick'
       | 'handleTableMouseLeave'
-      | 'handleRowClick'
-      | 'handleRowMouseEnter'
       | 'handleAddColumnClick'
       | 'handleColumnMenuClickDeleteColumn'
       | 'handleRowMenuClickAddRowAbove'
@@ -45,12 +44,11 @@ export const TranslationFileEditorContext = React.createContext<ITranslationFile
   filter: {},
   inputFilter: { value: '', onChange() {}, changeValue() {}, clear() {}, inputRef: createRef() },
   onChange() {},
+  onCellClick() {},
   onCellMouseEnter() {},
   onTableMoreOptionsColumnButtonClick() {},
   onTableMoreOptionsRowButtonClick() {},
   handleTableMouseLeave() {},
-  handleRowClick() {},
-  handleRowMouseEnter() {},
   handleAddColumnClick() {},
   handleColumnMenuClickDeleteColumn() {},
   handleRowMenuClickAddRowAbove() {},

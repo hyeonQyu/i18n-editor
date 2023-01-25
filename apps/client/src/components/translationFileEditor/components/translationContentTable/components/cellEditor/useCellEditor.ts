@@ -5,6 +5,7 @@ import { useTranslationFileEditorContext } from '@components/translationFileEdit
 export interface IUseCellEditorParams extends ColumnEditorOptions {}
 
 export interface IUseCellEditor {
+  handleClick: MouseEventHandler<HTMLTextAreaElement>;
   handleFocus: FocusEventHandler<HTMLTextAreaElement>;
   handleChange: FocusEventHandler<HTMLTextAreaElement>;
   handleMouseEnter: MouseEventHandler<HTMLTextAreaElement>;
@@ -12,7 +13,11 @@ export interface IUseCellEditor {
 
 function useCellEditor(params: IUseCellEditorParams): IUseCellEditor {
   const { rowData, editorCallback } = params;
-  const { onCellMouseEnter } = useTranslationFileEditorContext();
+  const { onCellClick, onCellMouseEnter } = useTranslationFileEditorContext();
+
+  const handleClick: MouseEventHandler<HTMLTextAreaElement> = (e) => {
+    onCellClick({ rowIndex: rowData?.index, event: e });
+  };
 
   const handleFocus: FocusEventHandler<HTMLTextAreaElement> = (e) => {
     const { length } = e.target.value;
@@ -26,10 +31,11 @@ function useCellEditor(params: IUseCellEditorParams): IUseCellEditor {
   };
 
   const handleMouseEnter: MouseEventHandler<HTMLTextAreaElement> = (e) => {
-    // onCellMouseEnter({ rowIndex: rowData?.index, event: e });
+    onCellMouseEnter({ rowIndex: rowData?.index, event: e });
   };
 
   return {
+    handleClick,
     handleFocus,
     handleChange,
     handleMouseEnter,

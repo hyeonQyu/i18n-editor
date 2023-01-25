@@ -16,8 +16,6 @@ export function TranslationContentTable(props: TranslationContentTableProps) {
     globalFilterFields,
     filter,
     handleTableMouseLeave,
-    handleRowClick,
-    handleRowMouseEnter,
     rows = [],
     columns = [],
     onChange,
@@ -36,9 +34,8 @@ export function TranslationContentTable(props: TranslationContentTableProps) {
         scrollable
         scrollHeight={'flex'}
         onMouseLeave={handleTableMouseLeave}
-        onRowClick={handleRowClick}
-        onRowMouseEnter={handleRowMouseEnter}
         selection={selectedRow}
+        onSelectionChange={(e) => console.log(e)}
         filters={filter}
         className={'translation-file-editor'}
       >
