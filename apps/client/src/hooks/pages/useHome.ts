@@ -3,7 +3,7 @@ import { PathChangeEvent } from '@components/directorySelector/defines';
 import useQueryGetTranslationFile from '@hooks/queries/useQueryGetTranslationFile';
 import { DropdownChangeParams } from 'primereact/dropdown';
 import useQueryGetContent from '@hooks/queries/useQueryGetContent';
-import { CellData, ColumnData, ErrorMessage, LanguageCode, RowData } from 'i18n-editor-common';
+import { CellData, ColumnData, ErrorMessage, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
 import {
   CustomEventHandler,
@@ -11,6 +11,7 @@ import {
   TranslationTableDeleteRowEvent,
   TranslationTableColumnAddEvent,
   TranslationTableColumnDeleteEvent,
+  CreateDirectoryEvent,
 } from '@defines/event';
 import useMutationPatchContent from '@hooks/queries/useMutationPatchContent';
 import { useToastContext } from '@contexts/toastContext';
@@ -21,6 +22,7 @@ import useMutationPostContentColumn from '@hooks/queries/useMutationPostContentC
 import useMutationDeleteContentColumn from '@hooks/queries/useMutationDeleteContentColumn';
 import { DeleteColumnConfirmMessageTemplate } from '@components/page/home/deleteColumnConfirmMessageTemplate';
 import { InvalidLocaleDirectoryConfirmMessageTemplate } from '@components/page/home/invalidLocaleDirectoryConfirmMessageTemplate';
+import useMutationPostDirectory from '@hooks/queries/useMutationPostDirectory';
 
 export interface IUseHomeParams {}
 
@@ -35,7 +37,7 @@ export interface IUseHome {
   tableContainerRef: MutableRefObject<HTMLDivElement | null>;
   handleDirectoryPathChange: CustomEventHandler<PathChangeEvent>;
   handleTranslationFileChange: CustomEventHandler<DropdownChangeParams>;
-  handleCreateLocaleDirectory: CustomEventHandler<LanguageCode>;
+  handleCreateLocaleDirectory: CustomEventHandler<CreateDirectoryEvent>;
   handleCloseLocaleDirectoryCreationDialog: CustomEventHandler;
   handleTranslationContentChange: CustomEventHandler<ColumnEventParams>;
   onAddColumn: CustomEventHandler<TranslationTableColumnAddEvent>;
@@ -101,15 +103,13 @@ function useHome(params: IUseHomeParams): IUseHome {
   const { data: dataGetTranslationFile, error: errorGetTranslationFile } = useQueryGetTranslationFile({
     req: { path: directoryPath },
     queryOption: {
-      enabled: Boolean(directoryPath),
+      enabled: Boolean(directoryPath) && !localeDirectoryCreationDialogOpened,
       retry: false,
       onSettled() {
-        setTranslationFile(undefined);
+        setTranslationFile(mutationPostDirectoryData?.data?.fileName);
       },
       onError(error) {
         if ((error.response?.data.errorMessage as ErrorMessage) === 'INVALID_LOCALE_DIRECTORY') {
-          if (localeDirectoryCreationDialogOpened) return;
-
           confirmDialog({
             header: '언어 코드명으로 디렉토리를 만드시겠어요?',
             message: InvalidLocaleDirectoryConfirmMessageTemplate({}),
@@ -167,6 +167,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     },
   });
 
+  const { mutate: mutatePostDirectory, data: mutationPostDirectoryData } = useMutationPostDirectory({});
   const { mutate: mutatePatchContent } = useMutationPatchContent({});
   const { mutate: mutatePostContentRow } = useMutationPostContentRow({});
   const { mutate: mutateDeleteContentRow } = useMutationDeleteContentRow({});
@@ -182,7 +183,31 @@ function useHome(params: IUseHomeParams): IUseHome {
     setTranslationFile(e?.value);
   };
 
-  const handleCreateLocaleDirectory: CustomEventHandler<LanguageCode> = (languageCode) => {};
+  const handleCreateLocaleDirectory: CustomEventHandler<CreateDirectoryEvent> = (e) => {
+    if (!e) return;
+
+    const { fileName, directoryName } = e;
+
+    mutatePostDirectory(
+      {
+        path: directoryPath!,
+        fileName: `${fileName}.json`,
+        directoryName,
+      },
+      {
+        onSettled() {
+          setLocaleDirectoryCreationDialogOpened(false);
+        },
+        onSuccess() {
+          toastRef.current?.show({
+            severity: 'success',
+            detail: '디렉토리와 파일을 생성했어요',
+            life: 3000,
+          });
+        },
+      },
+    );
+  };
 
   const handleCloseLocaleDirectoryCreationDialog = () => {
     toastRef.current?.show({

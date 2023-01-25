@@ -22,7 +22,10 @@ export interface PostDirectoryReq {
   fileName: string;
 }
 
-export interface PostDirectoryRes extends CommonRes {}
+export interface PostDirectoryRes
+  extends CommonRes<{
+    fileName: string;
+  }> {}
 
 export interface GetFileExplorerReq {
   path: string;

@@ -78,7 +78,7 @@ export namespace Service {
       FileSystemManager.createFileWhenNotExist(filePath, '{}');
       console.log(`file: ${filePath}`);
 
-      return { status: 200 };
+      return { status: 200, data: { fileName } };
     });
   }
 

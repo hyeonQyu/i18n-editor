@@ -23,3 +23,8 @@ export interface TranslationTableColumnEditEvent {
 export interface TranslationTableColumnAddEvent extends TranslationTableColumnEditEvent {}
 
 export interface TranslationTableColumnDeleteEvent extends TranslationTableColumnEditEvent {}
+
+export interface CreateDirectoryEvent {
+  directoryName: LanguageCode;
+  fileName: string;
+}
