@@ -18,6 +18,8 @@ import {
   PostContentColumnRes,
   PostContentRowReq,
   PostContentRowRes,
+  PostDirectoryReq,
+  PostDirectoryRes,
 } from 'i18n-editor-common';
 import { AxiosInstanceProps } from '@defines/axios';
 
@@ -39,6 +41,14 @@ export namespace HomeApi {
    */
   export async function getDirectory(req: GetDirectoryReq): Promise<GetDirectoryRes> {
     return (await client.get('/directory', { params: req })).data;
+  }
+
+  /**
+   * 디렉토리 및 파일 생성
+   * @param req
+   */
+  export async function postDirectory(req: PostDirectoryReq): Promise<PostDirectoryRes> {
+    return (await client.post('/directory', req)).data;
   }
 
   /**
