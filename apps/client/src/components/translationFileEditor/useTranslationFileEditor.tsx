@@ -220,6 +220,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
           key,
           onSuccess(index) {
             setEditRowIndex(index);
+            inputFilter.clear();
           },
         });
 
@@ -240,6 +241,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
           key,
           onSuccess(index) {
             setEditRowIndex(index);
+            inputFilter.clear();
           },
         });
 
