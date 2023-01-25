@@ -26,6 +26,11 @@ function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExt
     column: dropdownAddingLanguageCode.value,
   }[type];
 
+  const clear = {
+    row: inputAddingKey.clear,
+    column: dropdownAddingLanguageCode.clear,
+  }[type];
+
   const handleClickAdd = () => {
     onAdd(value);
   };
@@ -37,6 +42,9 @@ function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExt
 
   useEffect(() => {
     document.body.style.overflowY = visible ? 'hidden' : 'initial';
+    if (!visible) {
+      clear();
+    }
   }, [visible]);
 
   const disabledYes = !value;

@@ -197,8 +197,6 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   };
 
   const handleAddColumnClick: MouseEventHandler<HTMLButtonElement> = () => {
-    dropdownAddingLanguageCode.clear();
-
     setTableExtendDialogData((prev) => ({
       ...prev,
       ...commonAddColumnDialogProps(),
@@ -214,8 +212,6 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   };
 
   const handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent> = (e) => {
-    inputAddingKey.clear();
-
     setTableExtendDialogData((prev) => ({
       ...prev,
       ...commonAddRowDialogProps(e!),
@@ -236,8 +232,6 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   };
 
   const handleRowMenuClickAddRowBelow: CustomEventHandler<SyntheticEvent> = (e) => {
-    inputAddingKey.clear();
-
     setTableExtendDialogData((prev) => ({
       ...prev,
       ...commonAddRowDialogProps(e!),
