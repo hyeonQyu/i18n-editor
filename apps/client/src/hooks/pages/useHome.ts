@@ -91,6 +91,7 @@ function useHome(params: IUseHomeParams): IUseHome {
 
   const [directoryPath, setDirectoryPath] = useState('');
   const [translationFile, setTranslationFile] = useState<string>();
+  const tempTranslationFileRef = useRef<string>();
 
   const [localeDirectoryCreationDialogOpened, setLocaleDirectoryCreationDialogOpened] = useState(false);
 
@@ -106,10 +107,15 @@ function useHome(params: IUseHomeParams): IUseHome {
       enabled: Boolean(directoryPath) && !localeDirectoryCreationDialogOpened,
       retry: false,
       onSettled() {
-        setTranslationFile(mutationPostDirectoryData?.data?.fileName);
+        if (translationFile) return;
+
+        setTranslationFile(tempTranslationFileRef.current);
+        tempTranslationFileRef.current = undefined;
       },
       onError(error) {
         if ((error.response?.data.errorMessage as ErrorMessage) === 'INVALID_LOCALE_DIRECTORY') {
+          setContent(undefined, undefined);
+
           confirmDialog({
             header: '언어 코드명으로 디렉토리를 만드시겠어요?',
             message: InvalidLocaleDirectoryConfirmMessageTemplate({}),
@@ -142,16 +148,18 @@ function useHome(params: IUseHomeParams): IUseHome {
   const translationFiles: string[] = dataGetTranslationFile?.data?.files ?? [];
   const hasDirectorySelectorError = Boolean(errorGetTranslationFile);
 
-  const setContent = (columns: ColumnData[], rows: RowData[]) => {
+  const setContent = (columns: ColumnData[] | undefined, rows: RowData[] | undefined) => {
     setContentColumns(columns);
     setContentRows(rows);
 
-    setTimeout(() => {
-      tableContainerRef.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }, 0);
+    if (columns && rows) {
+      setTimeout(() => {
+        tableContainerRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }, 0);
+    }
   };
 
   useQueryGetContent({
@@ -167,7 +175,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     },
   });
 
-  const { mutate: mutatePostDirectory, data: mutationPostDirectoryData } = useMutationPostDirectory({});
+  const { mutate: mutatePostDirectory } = useMutationPostDirectory({});
   const { mutate: mutatePatchContent } = useMutationPatchContent({});
   const { mutate: mutatePostContentRow } = useMutationPostContentRow({});
   const { mutate: mutateDeleteContentRow } = useMutationDeleteContentRow({});
@@ -177,6 +185,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   const handleDirectoryPathChange: CustomEventHandler<PathChangeEvent> = (e) => {
     if (!e) return;
     setDirectoryPath(e.path);
+    setTranslationFile(undefined);
   };
 
   const handleTranslationFileChange: CustomEventHandler<DropdownChangeParams> = (e) => {
@@ -198,12 +207,16 @@ function useHome(params: IUseHomeParams): IUseHome {
         onSettled() {
           setLocaleDirectoryCreationDialogOpened(false);
         },
-        onSuccess() {
+        onSuccess({ data }) {
+          if (!data) return;
+
           toastRef.current?.show({
             severity: 'success',
             detail: '디렉토리와 파일을 생성했어요',
             life: 3000,
           });
+
+          tempTranslationFileRef.current = data.fileName;
         },
       },
     );
