@@ -161,6 +161,10 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
         icon: 'pi pi-info-circle',
         acceptClassName: 'p-button-danger',
         draggable: false,
+        acceptLabel: '네, 나갈래요',
+        rejectLabel: '아니요',
+        acceptIcon: 'pi pi-check',
+        rejectIcon: 'pi pi-times',
         accept() {
           history.go(-2);
           onHide();

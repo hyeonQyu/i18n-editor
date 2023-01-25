@@ -309,6 +309,10 @@ function useHome(params: IUseHomeParams): IUseHome {
       position: 'top',
       draggable: false,
       className: 'delete-dialog',
+      acceptLabel: '네, 삭제할게요',
+      rejectLabel: '아니요',
+      acceptIcon: 'pi pi-check',
+      rejectIcon: 'pi pi-times',
       accept() {
         mutateDeleteContentColumn(
           {
@@ -397,6 +401,10 @@ function useHome(params: IUseHomeParams): IUseHome {
       position,
       draggable: false,
       className: 'delete-dialog',
+      acceptLabel: '네, 지울래요',
+      rejectLabel: '아니요',
+      acceptIcon: 'pi pi-check',
+      rejectIcon: 'pi pi-times',
       accept() {
         mutatePatchContent(
           {
@@ -432,6 +440,10 @@ function useHome(params: IUseHomeParams): IUseHome {
       position,
       draggable: false,
       className: 'delete-dialog',
+      acceptLabel: '네, 삭제할게요',
+      rejectLabel: '아니요',
+      acceptIcon: 'pi pi-check',
+      rejectIcon: 'pi pi-times',
       accept() {
         mutateDeleteContentRow(
           {
