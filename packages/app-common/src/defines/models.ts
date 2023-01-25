@@ -16,6 +16,14 @@ export interface GetDirectoryRes
     entries: DirectoryEntry[];
   }> {}
 
+export interface PostDirectoryReq {
+  path: string;
+  directoryName: LanguageCode;
+  fileName: string;
+}
+
+export interface PostDirectoryRes extends CommonRes {}
+
 export interface GetFileExplorerReq {
   path: string;
 }

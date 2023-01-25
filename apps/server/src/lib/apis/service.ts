@@ -20,6 +20,8 @@ import {
   GetFileExplorerRes,
   CommonRes,
   ErrorMessage,
+  PostDirectoryReq,
+  PostDirectoryRes,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
@@ -57,6 +59,26 @@ export namespace Service {
       console.log(entries);
 
       return { status: 200, data: { path, entries } };
+    });
+  }
+
+  /**
+   * 디렉토리 및 파일 생성
+   * @param req
+   */
+  export function postDirectory(req: PostDirectoryReq): PostDirectoryRes {
+    return doService<PostDirectoryRes>(() => {
+      const { path, directoryName, fileName } = req;
+
+      const directoryPath = `${path}/${directoryName}`;
+      FileSystemManager.createDirectoryWhenNotExist(directoryPath);
+      console.log(`directory: ${directoryPath}`);
+
+      const filePath = `${directoryPath}/${fileName}`;
+      FileSystemManager.createFileWhenNotExist(filePath, '{}');
+      console.log(`file: ${filePath}`);
+
+      return { status: 200 };
     });
   }
 

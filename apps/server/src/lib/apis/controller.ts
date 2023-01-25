@@ -18,6 +18,8 @@ import {
   DeleteContentColumnRes,
   GetFileExplorerReq,
   GetFileExplorerRes,
+  PostDirectoryReq,
+  PostDirectoryRes,
 } from 'i18n-editor-common';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { Service } from './service';
@@ -26,6 +28,11 @@ export namespace Controller {
   export function response(app: any) {
     doCommonResponse<void, GetDirectoryReq, GetDirectoryRes>(app, '/directory', 'get', (req, res) => {
       const response = Service.getDirectory(req.query);
+      res.status(response.status).send(response);
+    });
+
+    doCommonResponse<PostDirectoryReq, void, PostDirectoryRes>(app, '/directory', 'post', (req, res) => {
+      const response = Service.postDirectory(req.body);
       res.status(response.status).send(response);
     });
 
