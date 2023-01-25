@@ -3,7 +3,7 @@ import { PathChangeEvent } from '@components/directorySelector/defines';
 import useQueryGetTranslationFile from '@hooks/queries/useQueryGetTranslationFile';
 import { DropdownChangeParams } from 'primereact/dropdown';
 import useQueryGetContent from '@hooks/queries/useQueryGetContent';
-import { CellData, ColumnData, ErrorMessage, RowData } from 'i18n-editor-common';
+import { CellData, ColumnData, ErrorMessage, LanguageCode, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
 import {
   CustomEventHandler,
@@ -31,9 +31,12 @@ export interface IUseHome {
   hasDirectorySelectorError: boolean;
   contentColumns: ColumnData[] | undefined;
   contentRows: RowData[] | undefined;
+  localeDirectoryCreationDialogOpened: boolean;
   tableContainerRef: MutableRefObject<HTMLDivElement | null>;
   handleDirectoryPathChange: CustomEventHandler<PathChangeEvent>;
   handleTranslationFileChange: CustomEventHandler<DropdownChangeParams>;
+  handleCreateLocaleDirectory: CustomEventHandler<LanguageCode>;
+  handleCloseLocaleDirectoryCreationDialog: CustomEventHandler;
   handleTranslationContentChange: CustomEventHandler<ColumnEventParams>;
   onAddColumn: CustomEventHandler<TranslationTableColumnAddEvent>;
   onDeleteColumn: CustomEventHandler<TranslationTableColumnDeleteEvent>;
@@ -87,6 +90,8 @@ function useHome(params: IUseHomeParams): IUseHome {
   const [directoryPath, setDirectoryPath] = useState('');
   const [translationFile, setTranslationFile] = useState<string>();
 
+  const [localeDirectoryCreationDialogOpened, setLocaleDirectoryCreationDialogOpened] = useState(false);
+
   const [contentColumns, setContentColumns] = useState<ColumnData[]>();
   const [contentRows, setContentRows] = useState<RowData[]>();
 
@@ -98,16 +103,36 @@ function useHome(params: IUseHomeParams): IUseHome {
     queryOption: {
       enabled: Boolean(directoryPath),
       retry: false,
+      onSettled() {
+        setTranslationFile(undefined);
+      },
       onError(error) {
         if ((error.response?.data.errorMessage as ErrorMessage) === 'INVALID_LOCALE_DIRECTORY') {
+          if (localeDirectoryCreationDialogOpened) return;
+
           confirmDialog({
             header: '언어 코드명으로 디렉토리를 만드시겠어요?',
             message: InvalidLocaleDirectoryConfirmMessageTemplate({}),
             icon: 'pi pi-info-circle',
-            acceptClassName: 'p-button-danger',
             position: 'top',
             draggable: false,
             className: 'delete-dialog',
+            acceptLabel: '네, 생성할게요',
+            rejectLabel: '아니요',
+            acceptIcon: 'pi pi-check',
+            rejectIcon: 'pi pi-times',
+            accept() {
+              setLocaleDirectoryCreationDialogOpened(true);
+            },
+            onHide(result: string) {
+              if (result === 'accept') return;
+
+              toastRef.current?.show({
+                severity: 'error',
+                detail: 'Locale 디렉토리를 다시 선택하세요',
+                life: 3000,
+              });
+            },
           });
         }
       },
@@ -155,6 +180,18 @@ function useHome(params: IUseHomeParams): IUseHome {
 
   const handleTranslationFileChange: CustomEventHandler<DropdownChangeParams> = (e) => {
     setTranslationFile(e?.value);
+  };
+
+  const handleCreateLocaleDirectory: CustomEventHandler<LanguageCode> = (languageCode) => {};
+
+  const handleCloseLocaleDirectoryCreationDialog = () => {
+    toastRef.current?.show({
+      severity: 'error',
+      detail: 'Locale 디렉토리를 다시 선택하세요',
+      life: 3000,
+    });
+
+    setLocaleDirectoryCreationDialogOpened(false);
   };
 
   const handleTranslationContentChange: CustomEventHandler<ColumnEventParams> = async (e) => {
@@ -389,9 +426,12 @@ function useHome(params: IUseHomeParams): IUseHome {
     hasDirectorySelectorError,
     contentColumns,
     contentRows,
+    localeDirectoryCreationDialogOpened,
     tableContainerRef,
     handleDirectoryPathChange,
     handleTranslationFileChange,
+    handleCreateLocaleDirectory,
+    handleCloseLocaleDirectoryCreationDialog,
     handleTranslationContentChange,
     onAddColumn,
     onDeleteColumn,

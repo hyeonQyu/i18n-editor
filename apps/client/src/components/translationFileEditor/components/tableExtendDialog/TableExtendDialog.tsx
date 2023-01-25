@@ -3,11 +3,9 @@ import { InputText } from 'primereact/inputtext';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import classNames from 'classnames';
 import { COLOR } from '@defines/css';
-import { Dropdown } from 'primereact/dropdown';
-import { TableExtendDialogFooter } from '@components/translationFileEditor/components/tableExtendDialog/components/tableExtendDialogFooter';
-import { DropdownLanguageOptionTemplate } from '@components/translationFileEditor/components/tableExtendDialog/components/dropdownLanguageOptionTemplate';
-import useTableExtendDialog from '@components/translationFileEditor/components/tableExtendDialog/components/useTableExtendDialog';
-import { DropdownLanguageHeaderTemplate } from '@components/translationFileEditor/components/tableExtendDialog/components/dropdownLanguageHeaderTemplate';
+import useTableExtendDialog from '@components/translationFileEditor/components/tableExtendDialog/useTableExtendDialog';
+import { LanguageCodeDropdown } from '@components/languageCodeDropdown';
+import { CustomConfirmDialogFooter } from '@components/customConfirmDialogFooter';
 
 const inputId = 'table-extend';
 
@@ -27,7 +25,15 @@ export function TableExtendDialog() {
         visible={visible}
         onHide={onHide}
         draggable={false}
-        footer={() => <TableExtendDialogFooter onYesClick={handleClickAdd} onNoClick={onHide} disabledYes={disabledYes} />}
+        footer={
+          <CustomConfirmDialogFooter
+            yesLabel={'네, 추가할래요'}
+            noLabel={'아니요'}
+            yesDisabled={disabledYes}
+            onYesClick={handleClickAdd}
+            onNoClick={onHide}
+          />
+        }
         className={'table-extend-dialog-container'}
       >
         <form className={'table-extend-dialog'} onSubmit={handleFormSubmit}>
@@ -42,20 +48,7 @@ export function TableExtendDialog() {
               />
             )}
             {type === 'column' && (
-              <Dropdown
-                value={dropdownAddingLanguageCode.value}
-                onChange={dropdownAddingLanguageCode.onChange}
-                options={languageSelectOptions}
-                optionLabel={'label'}
-                filter
-                filterBy={'title'}
-                autoFocus
-                scrollHeight={'300px'}
-                emptyFilterMessage={'일치하는 언어 코드가 없어요'}
-                itemTemplate={DropdownLanguageOptionTemplate}
-                valueTemplate={DropdownLanguageHeaderTemplate}
-                className={'table-extend-select'}
-              />
+              <LanguageCodeDropdown dropdownLanguageCode={dropdownAddingLanguageCode} options={languageSelectOptions} />
             )}
             <label className={classNames(invalid && 'invalid')} htmlFor={inputId}>
               {inputLabel}
@@ -74,8 +67,7 @@ export function TableExtendDialog() {
           padding-top: 20px;
         }
 
-        .table-extend-dialog :global(.table-extend-input),
-        .table-extend-dialog :global(.table-extend-select) {
+        .table-extend-dialog :global(.table-extend-input) {
           width: 100%;
         }
 

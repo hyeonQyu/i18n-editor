@@ -2,6 +2,7 @@ import { DirectorySelector } from '@components/directorySelector';
 import useHome from '@hooks/pages/useHome';
 import { TranslationFileSelector } from '@components/translationFileSelector';
 import TranslationFileEditor from '@components/translationFileEditor/TranslationFileEditor';
+import { LocaleDirectoryCreationDialog } from '@components/localeDirectoryCreationDialog';
 
 export interface IndexProps {}
 
@@ -14,9 +15,12 @@ function Index(props: IndexProps) {
     hasDirectorySelectorError,
     contentColumns,
     contentRows,
+    localeDirectoryCreationDialogOpened,
     tableContainerRef,
     handleDirectoryPathChange,
     handleTranslationFileChange,
+    handleCreateLocaleDirectory,
+    handleCloseLocaleDirectoryCreationDialog,
     handleTranslationContentChange,
     onAddColumn,
     onDeleteColumn,
@@ -35,6 +39,11 @@ function Index(props: IndexProps) {
           file={translationFile}
           files={translationFiles}
           onChange={handleTranslationFileChange}
+        />
+        <LocaleDirectoryCreationDialog
+          visible={localeDirectoryCreationDialogOpened}
+          onCreate={handleCreateLocaleDirectory}
+          onHide={handleCloseLocaleDirectoryCreationDialog}
         />
       </div>
 
