@@ -9,12 +9,13 @@ export interface IUseTranslationFileSelector {
   options: SelectItem[];
   disabled: boolean;
   opened: boolean;
+  tooltipMessage: string | undefined;
   handleShow: CustomEventHandler;
   handleHide: CustomEventHandler;
 }
 
 function useTranslationFileSelector(params: IUseTranslationFileSelectorParams): IUseTranslationFileSelector {
-  const { directoryPath, files } = params;
+  const { directoryPath, files, hasDirectorySelectorError } = params;
 
   const [opened, setOpened] = useState(false);
 
@@ -27,12 +28,18 @@ function useTranslationFileSelector(params: IUseTranslationFileSelectorParams): 
   };
 
   const options: SelectItem[] = files.map((file) => ({ label: file, value: file }));
-  const disabled = !directoryPath;
+  const disabled = !directoryPath || hasDirectorySelectorError;
+  const tooltipMessage = !directoryPath
+    ? 'Locale 디렉토리를 먼저 선택하세요'
+    : hasDirectorySelectorError
+    ? '올바른 Locale 디렉토리를 선택하세요'
+    : undefined;
 
   return {
     options,
     disabled,
     opened,
+    tooltipMessage,
     handleShow,
     handleHide,
   };

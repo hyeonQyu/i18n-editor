@@ -39,6 +39,7 @@ function Index(props: IndexProps) {
           directoryPath={directoryPath}
           file={translationFile}
           files={translationFiles}
+          hasDirectorySelectorError={hasDirectorySelectorError}
           onChange={handleTranslationFileChange}
         />
         <LocaleDirectoryCreationDialog

@@ -8,6 +8,7 @@ export interface TranslationFileSelectorProps {
   directoryPath: string;
   file?: string;
   files: string[];
+  hasDirectorySelectorError: boolean;
   onChange: CustomEventHandler<DropdownChangeParams>;
 }
 
@@ -15,7 +16,7 @@ const selectId = 'translation-file';
 
 export function TranslationFileSelector(props: TranslationFileSelectorProps) {
   const { file, onChange } = props;
-  const { options, disabled, opened, handleShow, handleHide } = useTranslationFileSelector(props);
+  const { options, disabled, opened, tooltipMessage, handleShow, handleHide } = useTranslationFileSelector(props);
 
   return (
     <>
@@ -29,7 +30,7 @@ export function TranslationFileSelector(props: TranslationFileSelectorProps) {
           onHide={handleHide}
           onChange={onChange}
           className={'dropdown'}
-          tooltip={disabled ? 'Locale 디렉토리를 먼저 선택하세요' : undefined}
+          tooltip={tooltipMessage}
           tooltipOptions={{
             position: 'mouse',
             showOnDisabled: true,
