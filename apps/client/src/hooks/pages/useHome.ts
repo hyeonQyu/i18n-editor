@@ -12,6 +12,7 @@ import {
   TranslationTableColumnAddEvent,
   TranslationTableColumnDeleteEvent,
   CreateDirectoryEvent,
+  TranslationTableNewRowAddEvent,
 } from '@defines/event';
 import useMutationPatchContent from '@hooks/queries/useMutationPatchContent';
 import { useToastContext } from '@contexts/toastContext';
@@ -44,22 +45,24 @@ export interface IUseHome {
   onDeleteColumn: CustomEventHandler<TranslationTableColumnDeleteEvent>;
   onAddRowAbove: CustomEventHandler<TranslationTableRowAddEvent>;
   onAddRowBelow: CustomEventHandler<TranslationTableRowAddEvent>;
+  onAddRow: CustomEventHandler<TranslationTableNewRowAddEvent>;
   onClearRowContent: CustomEventHandler<TranslationTableDeleteRowEvent>;
   onDeleteRow: CustomEventHandler<TranslationTableDeleteRowEvent>;
 }
 
-const getNewContentRow = (row: RowData, index: number, key: string): RowData => {
-  return Object.keys(row).reduce(
-    (acc, prop) => {
-      if (prop === 'index' || prop === 'key') return acc;
-
-      return {
+const getNewContentRow = (columns: ColumnData[], index: number, key: string): RowData => {
+  return columns!
+    .filter(({ header }) => !(header === 'key' || header === 'index'))
+    .reduce(
+      (acc, { header: languageCode }) => ({
         ...acc,
-        [prop]: '',
-      };
-    },
-    { index, key },
-  ) as RowData;
+        [languageCode]: '',
+      }),
+      {
+        index,
+        key,
+      },
+    );
 };
 
 const getRowsBeforePivot = (rows: RowData[], pivotIndex: number) => rows.slice(0, pivotIndex);
@@ -67,9 +70,9 @@ const getRowsBeforePivot = (rows: RowData[], pivotIndex: number) => rows.slice(0
 const getRowsAfterWithPivot = (rows: RowData[], pivotIndex: number) =>
   rows.slice(pivotIndex).map((row) => ({ ...row, index: row.index + 1 }));
 
-const getNewRowAddedContentRows = (rows: RowData[], currentContentRow: RowData, rowIndex: number, key: string) => [
+const getNewRowAddedContentRows = (rows: RowData[], columns: ColumnData[], rowIndex: number, key: string) => [
   ...getRowsBeforePivot(rows, rowIndex),
-  getNewContentRow(currentContentRow, rowIndex, key),
+  getNewContentRow(columns, rowIndex, key),
   ...getRowsAfterWithPivot(rows, rowIndex),
 ];
 
@@ -350,12 +353,14 @@ function useHome(params: IUseHomeParams): IUseHome {
       },
       {
         onSuccess() {
-          setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index, key));
+          setContentRows((prev) => getNewRowAddedContentRows(prev!, contentColumns!, index, key));
+
           toastRef.current?.show({
             severity: 'success',
             detail: '행을 추가했어요',
             life: 3000,
           });
+
           onSuccess?.(index);
         },
       },
@@ -376,13 +381,43 @@ function useHome(params: IUseHomeParams): IUseHome {
       },
       {
         onSuccess() {
-          setContentRows((prev) => getNewRowAddedContentRows(prev!, prev![index], index + 1, key));
+          setContentRows((prev) => getNewRowAddedContentRows(prev!, contentColumns!, index + 1, key));
+
           toastRef.current?.show({
             severity: 'success',
             detail: '행을 추가했어요',
             life: 3000,
           });
+
           onSuccess?.(rowIndex);
+        },
+      },
+    );
+  };
+
+  const onAddRow: CustomEventHandler<TranslationTableNewRowAddEvent> = (e) => {
+    if (!e) return;
+    const { key, onSuccess } = e;
+
+    const index = contentRows!.length;
+
+    mutatePostContentRow(
+      {
+        path: directoryPath,
+        fileName: translationFile!,
+        row: { index, key },
+      },
+      {
+        onSuccess() {
+          setContentRows((prev) => [...prev!, getNewContentRow(contentColumns!, index, key)]);
+
+          toastRef.current?.show({
+            severity: 'success',
+            detail: '행을 추가했어요',
+            life: 3000,
+          });
+
+          onSuccess?.(index);
         },
       },
     );
@@ -414,7 +449,10 @@ function useHome(params: IUseHomeParams): IUseHome {
           },
           {
             onSuccess() {
-              setContentRows((prev) => prev!.map((row) => (index === row.index ? getNewContentRow(row, row.index, row.key) : row)));
+              setContentRows((prev) =>
+                prev!.map((row) => (index === row.index ? getNewContentRow(contentColumns!, row.index, row.key) : row)),
+              );
+
               toastRef.current?.show({
                 severity: 'success',
                 detail: '행의 모든 내용을 지웠어요',
@@ -457,6 +495,7 @@ function useHome(params: IUseHomeParams): IUseHome {
                 ...prev!.slice(0, index),
                 ...prev!.slice(index + 1).map((row) => ({ ...row, index: row.index - 1 })),
               ]);
+
               toastRef.current?.show({
                 severity: 'success',
                 detail: '행을 삭제했어요',
@@ -487,6 +526,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     onDeleteColumn,
     onAddRowAbove,
     onAddRowBelow,
+    onAddRow,
     onClearRowContent,
     onDeleteRow,
   };

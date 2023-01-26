@@ -26,6 +26,7 @@ function Index(props: IndexProps) {
     onDeleteColumn,
     onAddRowAbove,
     onAddRowBelow,
+    onAddRow,
     onClearRowContent,
     onDeleteRow,
   } = useHome({});
@@ -56,6 +57,7 @@ function Index(props: IndexProps) {
           onDeleteColumn={onDeleteColumn}
           onAddRowAbove={onAddRowAbove}
           onAddRowBelow={onAddRowBelow}
+          onAddRow={onAddRow}
           onClearRowContent={onClearRowContent}
           onDeleteRow={onDeleteRow}
         />

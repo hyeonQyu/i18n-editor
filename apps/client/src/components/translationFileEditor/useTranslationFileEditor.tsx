@@ -42,10 +42,21 @@ export interface IUseTranslationFileEditor {
   onCellMouseEnter: CustomEventHandler<TableCellEvent>;
   onTableMoreOptionsColumnButtonClick: CustomEventHandler<TableMoreOptionsColumnMenuClickEvent>;
   onTableMoreOptionsRowButtonClick: CustomEventHandler<TableMoreOptionsRowMenuClickEvent>;
+  onAddNewTranslationKey: CustomEventHandler<string>;
 }
 
 function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUseTranslationFileEditor {
-  const { rows, columns = [], onAddColumn, onDeleteColumn, onAddRowAbove, onAddRowBelow, onClearRowContent, onDeleteRow } = params;
+  const {
+    rows,
+    columns = [],
+    onAddColumn,
+    onDeleteColumn,
+    onAddRowAbove,
+    onAddRowBelow,
+    onAddRow,
+    onClearRowContent,
+    onDeleteRow,
+  } = params;
 
   const rowMenuRef = useRef<Menu>(null);
   const columnMenuRef = useRef<Menu>(null);
@@ -128,6 +139,18 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
 
     rowMenuRef.current?.toggle(event);
     setEditRowIndex(rowIndex);
+  };
+
+  const onAddNewTranslationKey: CustomEventHandler<string> = (key) => {
+    if (!key) return;
+
+    onAddRow({
+      key,
+      onSuccess(index) {
+        setEditRowIndex(index);
+        inputFilter.clear();
+      },
+    });
   };
 
   const hasSelectedRow = rows && (editRowIndex || editRowIndex === 0);
@@ -282,6 +305,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     onCellMouseEnter,
     onTableMoreOptionsColumnButtonClick,
     onTableMoreOptionsRowButtonClick,
+    onAddNewTranslationKey,
   };
 }
 

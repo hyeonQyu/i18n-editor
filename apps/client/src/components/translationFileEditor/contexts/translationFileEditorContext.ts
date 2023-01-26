@@ -21,6 +21,7 @@ export interface ITranslationFileEditorContext
       | 'onCellMouseEnter'
       | 'onTableMoreOptionsColumnButtonClick'
       | 'onTableMoreOptionsRowButtonClick'
+      | 'onAddNewTranslationKey'
       | 'handleTableMouseLeave'
       | 'handleAddColumnClick'
       | 'handleColumnMenuClickDeleteColumn'
@@ -48,6 +49,7 @@ export const TranslationFileEditorContext = React.createContext<ITranslationFile
   onCellMouseEnter() {},
   onTableMoreOptionsColumnButtonClick() {},
   onTableMoreOptionsRowButtonClick() {},
+  onAddNewTranslationKey() {},
   handleTableMouseLeave() {},
   handleAddColumnClick() {},
   handleColumnMenuClickDeleteColumn() {},

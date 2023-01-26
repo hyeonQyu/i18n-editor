@@ -8,21 +8,26 @@ const inputId = 'new-translation';
 
 export function NewTranslationAdder(props: NewTranslationAdderProps) {
   const {} = props;
-  const { isFiltered } = useNewTranslationAdder({});
+  const { isFiltered, inputTranslationKey, handleAddClick, handleFormSubmit } = useNewTranslationAdder({});
 
   return (
     <>
       {isFiltered ? (
         <div className={'empty'}>검색 결과가 없습니다</div>
       ) : (
-        <form className={'add-key'}>
+        <form onSubmit={handleFormSubmit} className={'add-key'}>
           <div className={'p-inputgroup'}>
             <div className={'p-float-label'}>
-              <InputText id={inputId} className={'input-translation-key'} />
+              <InputText
+                id={inputId}
+                value={inputTranslationKey.value}
+                onChange={inputTranslationKey.onChange}
+                className={'input-translation-key'}
+              />
               <label htmlFor={inputId}>새로 추가할 번역 key를 입력하세요</label>
             </div>
 
-            <Button type={'submit'} icon={'pi pi-plus'} />
+            <Button type={'submit'} icon={'pi pi-plus'} onClick={handleAddClick} />
           </div>
         </form>
       )}
@@ -38,9 +43,13 @@ export function NewTranslationAdder(props: NewTranslationAdderProps) {
 
         .add-key {
           width: 100%;
+        }
+
+        .p-inputgroup {
+          width: 100%;
           height: 100px;
           display: flex;
-          justify-content: space-around;
+          justify-content: center;
           align-items: center;
         }
 

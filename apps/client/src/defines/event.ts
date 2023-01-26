@@ -12,6 +12,8 @@ export interface TranslationTableRowAddEvent extends TranslationTableRowEditEven
   key: string;
 }
 
+export interface TranslationTableNewRowAddEvent extends Omit<TranslationTableRowAddEvent, 'index'> {}
+
 export interface TranslationTableDeleteRowEvent extends TranslationTableRowEditEvent {
   position: DialogPositionType;
 }
