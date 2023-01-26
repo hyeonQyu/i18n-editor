@@ -30,3 +30,7 @@ export interface CreateDirectoryEvent {
   directoryName: LanguageCode;
   fileName: string;
 }
+
+export interface CreateTranslationFileEvent {
+  fileName: string;
+}

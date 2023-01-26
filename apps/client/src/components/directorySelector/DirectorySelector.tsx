@@ -59,9 +59,7 @@ export function DirectorySelector(props: DirectorySelectorProps) {
         </span>
 
         <Button icon={'pi pi-bars'} className={'p-button p-button-outlined'} onClick={handleMenuClick} disabled={!path} />
-        <>
-          <Menu ref={menuRef} model={menuItems} popup />
-        </>
+        <Menu ref={menuRef} model={menuItems} popup />
       </div>
 
       <style jsx>{`
@@ -72,7 +70,6 @@ export function DirectorySelector(props: DirectorySelectorProps) {
         .p-float-label > label.opened,
         .p-float-label > label.selected {
           top: -0.75rem;
-          left: calc(-41px + 0.75rem);
           font-size: 12px;
         }
 

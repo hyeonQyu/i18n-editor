@@ -1,4 +1,4 @@
-import { MutableRefObject, useRef, useState } from 'react';
+import { MouseEventHandler, MutableRefObject, useRef, useState } from 'react';
 import { PathChangeEvent } from '@components/directorySelector/defines';
 import useQueryGetTranslationFile from '@hooks/queries/useQueryGetTranslationFile';
 import { DropdownChangeParams } from 'primereact/dropdown';
@@ -13,6 +13,7 @@ import {
   TranslationTableColumnDeleteEvent,
   CreateDirectoryEvent,
   TranslationTableNewRowAddEvent,
+  CreateTranslationFileEvent,
 } from '@defines/event';
 import useMutationPatchContent from '@hooks/queries/useMutationPatchContent';
 import { useToastContext } from '@contexts/toastContext';
@@ -35,12 +36,16 @@ export interface IUseHome {
   contentColumns: ColumnData[] | undefined;
   contentRows: RowData[] | undefined;
   localeDirectoryCreationDialogOpened: boolean;
+  translationFileCreationDialogOpened: boolean;
   tableContainerRef: MutableRefObject<HTMLDivElement | null>;
   handleDirectoryPathChange: CustomEventHandler<PathChangeEvent>;
   handleTranslationFileChange: CustomEventHandler<DropdownChangeParams>;
   handleCreateLocaleDirectory: CustomEventHandler<CreateDirectoryEvent>;
   handleCloseLocaleDirectoryCreationDialog: CustomEventHandler;
   handleTranslationContentChange: CustomEventHandler<ColumnEventParams>;
+  handleAddTranslationFileButtonClick: MouseEventHandler<HTMLButtonElement>;
+  handleCreateTranslationFile: CustomEventHandler<CreateTranslationFileEvent>;
+  handleCloseTranslationFileCreationDialog: CustomEventHandler;
   onAddColumn: CustomEventHandler<TranslationTableColumnAddEvent>;
   onDeleteColumn: CustomEventHandler<TranslationTableColumnDeleteEvent>;
   onAddRowAbove: CustomEventHandler<TranslationTableRowAddEvent>;
@@ -97,6 +102,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   const tempTranslationFileRef = useRef<string>();
 
   const [localeDirectoryCreationDialogOpened, setLocaleDirectoryCreationDialogOpened] = useState(false);
+  const [translationFileCreationDialogOpened, setTranslationFileCreationDialogOpened] = useState(false);
 
   const [contentColumns, setContentColumns] = useState<ColumnData[]>();
   const [contentRows, setContentRows] = useState<RowData[]>();
@@ -270,6 +276,18 @@ function useHome(params: IUseHomeParams): IUseHome {
         },
       },
     );
+  };
+
+  const handleAddTranslationFileButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+    setTranslationFileCreationDialogOpened(true);
+  };
+
+  const handleCreateTranslationFile: CustomEventHandler<CreateTranslationFileEvent> = (e) => {
+    if (!e) return;
+  };
+
+  const handleCloseTranslationFileCreationDialog = () => {
+    setTranslationFileCreationDialogOpened(false);
   };
 
   // 열 추가
@@ -516,12 +534,16 @@ function useHome(params: IUseHomeParams): IUseHome {
     contentColumns,
     contentRows,
     localeDirectoryCreationDialogOpened,
+    translationFileCreationDialogOpened,
     tableContainerRef,
     handleDirectoryPathChange,
     handleTranslationFileChange,
     handleCreateLocaleDirectory,
     handleCloseLocaleDirectoryCreationDialog,
     handleTranslationContentChange,
+    handleAddTranslationFileButtonClick,
+    handleCreateTranslationFile,
+    handleCloseTranslationFileCreationDialog,
     onAddColumn,
     onDeleteColumn,
     onAddRowAbove,

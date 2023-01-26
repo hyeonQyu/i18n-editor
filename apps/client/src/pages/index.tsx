@@ -3,6 +3,7 @@ import useHome from '@hooks/pages/useHome';
 import { TranslationFileSelector } from '@components/translationFileSelector';
 import TranslationFileEditor from '@components/translationFileEditor/TranslationFileEditor';
 import { LocaleDirectoryCreationDialog } from '@components/localeDirectoryCreationDialog';
+import { TranslationFileCreationDialog } from '@components/translationFileCreationDialog';
 
 export interface IndexProps {}
 
@@ -16,12 +17,16 @@ function Index(props: IndexProps) {
     contentColumns,
     contentRows,
     localeDirectoryCreationDialogOpened,
+    translationFileCreationDialogOpened,
     tableContainerRef,
     handleDirectoryPathChange,
     handleTranslationFileChange,
     handleCreateLocaleDirectory,
     handleCloseLocaleDirectoryCreationDialog,
     handleTranslationContentChange,
+    handleAddTranslationFileButtonClick,
+    handleCreateTranslationFile,
+    handleCloseTranslationFileCreationDialog,
     onAddColumn,
     onDeleteColumn,
     onAddRowAbove,
@@ -33,19 +38,27 @@ function Index(props: IndexProps) {
 
   return (
     <>
+      <LocaleDirectoryCreationDialog
+        visible={localeDirectoryCreationDialogOpened}
+        onCreate={handleCreateLocaleDirectory}
+        onHide={handleCloseLocaleDirectoryCreationDialog}
+      />
+      <TranslationFileCreationDialog
+        visible={translationFileCreationDialogOpened}
+        onCreate={handleCreateTranslationFile}
+        onHide={handleCloseTranslationFileCreationDialog}
+      />
+
       <div className={'file-select-container'}>
         <DirectorySelector path={directoryPath} invalid={hasDirectorySelectorError} onChange={handleDirectoryPathChange} />
+
         <TranslationFileSelector
           directoryPath={directoryPath}
           file={translationFile}
           files={translationFiles}
           hasDirectorySelectorError={hasDirectorySelectorError}
           onChange={handleTranslationFileChange}
-        />
-        <LocaleDirectoryCreationDialog
-          visible={localeDirectoryCreationDialogOpened}
-          onCreate={handleCreateLocaleDirectory}
-          onHide={handleCloseLocaleDirectoryCreationDialog}
+          onAddTranslationFileButtonClick={handleAddTranslationFileButtonClick}
         />
       </div>
 
