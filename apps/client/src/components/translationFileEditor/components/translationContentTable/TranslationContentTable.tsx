@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { DataTable } from 'primereact/datatable';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import TableHeader from '@components/translationFileEditor/components/translationContentTable/components/tableHeader/TableHeader';
+import { NewTranslationAdder } from '@components/translationFileEditor/components/translationContentTable/components/newTranslationAdder';
 
 export interface TranslationContentTableProps {}
 
@@ -36,6 +37,7 @@ export function TranslationContentTable(props: TranslationContentTableProps) {
         onMouseLeave={handleTableMouseLeave}
         selection={selectedRow}
         filters={filter}
+        emptyMessage={<NewTranslationAdder />}
         className={'translation-file-editor'}
       >
         {columns.map(({ header }) => (
