@@ -12,10 +12,10 @@ export interface IUseNewTranslationAdder {
 
 function useNewTranslationAdder(params: IUseNewTranslationAdderParams): IUseNewTranslationAdder {
   const {} = params;
-  const { inputFilter, onAddNewTranslationKey } = useTranslationFileEditorContext();
+  const { rows, inputFilter, onAddNewTranslationKey } = useTranslationFileEditorContext();
   const inputTranslationKey = useInput({});
 
-  const isFiltered = Boolean(inputFilter.value);
+  const isFiltered = Boolean(inputFilter.value && rows?.length);
 
   const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
