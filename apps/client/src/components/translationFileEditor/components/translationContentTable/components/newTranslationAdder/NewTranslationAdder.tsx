@@ -8,7 +8,7 @@ const inputId = 'new-translation';
 
 export function NewTranslationAdder(props: NewTranslationAdderProps) {
   const {} = props;
-  const { isFiltered, inputTranslationKey, handleAddClick, handleFormSubmit } = useNewTranslationAdder({});
+  const { isFiltered, inputTranslationKey, handleFormSubmit } = useNewTranslationAdder({});
 
   return (
     <>
@@ -27,7 +27,7 @@ export function NewTranslationAdder(props: NewTranslationAdderProps) {
               <label htmlFor={inputId}>새로 추가할 번역 key를 입력하세요</label>
             </div>
 
-            <Button type={'submit'} icon={'pi pi-plus'} onClick={handleAddClick} />
+            <Button type={'submit'} icon={'pi pi-plus'} />
           </div>
         </form>
       )}

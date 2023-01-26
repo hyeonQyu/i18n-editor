@@ -1,13 +1,12 @@
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import useInput, { IUseInput } from '@hooks/common/useInput';
-import { FormEventHandler, MouseEventHandler } from 'react';
+import { FormEventHandler } from 'react';
 
 export interface IUseNewTranslationAdderParams {}
 
 export interface IUseNewTranslationAdder {
   isFiltered: boolean;
   inputTranslationKey: IUseInput;
-  handleAddClick: MouseEventHandler<HTMLButtonElement>;
   handleFormSubmit: FormEventHandler<HTMLFormElement>;
 }
 
@@ -18,10 +17,6 @@ function useNewTranslationAdder(params: IUseNewTranslationAdderParams): IUseNewT
 
   const isFiltered = Boolean(inputFilter.value);
 
-  const handleAddClick: MouseEventHandler<HTMLButtonElement> = () => {
-    onAddNewTranslationKey(inputTranslationKey.value);
-  };
-
   const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     onAddNewTranslationKey(inputTranslationKey.value);
@@ -30,7 +25,6 @@ function useNewTranslationAdder(params: IUseNewTranslationAdderParams): IUseNewT
   return {
     isFiltered,
     inputTranslationKey,
-    handleAddClick,
     handleFormSubmit,
   };
 }
