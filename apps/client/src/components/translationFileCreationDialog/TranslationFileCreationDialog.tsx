@@ -4,9 +4,13 @@ import classNames from 'classnames';
 import { InputText } from 'primereact/inputtext';
 import useTranslationFileCreationDialog from '@components/translationFileCreationDialog/useTranslationFileCreationDialog';
 import { CustomConfirmDialogFooter } from '@components/customConfirmDialogFooter';
+import { COLOR } from '@defines/css';
+import { IUseInput } from '@hooks/common/useInput';
 
 export interface TranslationFileCreationDialogProps {
   visible: boolean;
+  isDuplicate: boolean;
+  inputTranslationFileName: IUseInput;
   onCreate: CustomEventHandler<CreateTranslationFileEvent>;
   onHide: () => void;
 }
@@ -14,8 +18,8 @@ export interface TranslationFileCreationDialogProps {
 const inputFileNameId = 'new-translation-file';
 
 export function TranslationFileCreationDialog(props: TranslationFileCreationDialogProps) {
-  const { visible, onHide } = props;
-  const { inputFileName, creationDisabled, handleCreateButtonClick, handleFormSubmit } = useTranslationFileCreationDialog(props);
+  const { visible, isDuplicate, inputTranslationFileName, onHide } = props;
+  const { creationDisabled, labelMessage, handleCreateButtonClick, handleFormSubmit } = useTranslationFileCreationDialog(props);
 
   return (
     <>
@@ -37,9 +41,16 @@ export function TranslationFileCreationDialog(props: TranslationFileCreationDial
       >
         <form onSubmit={handleFormSubmit} className={'translation-file-creation'}>
           <span className={classNames('p-float-label', 'file-name-container')}>
-            <InputText id={inputFileNameId} value={inputFileName.value} onChange={inputFileName.onChange} />
+            <InputText
+              id={inputFileNameId}
+              value={inputTranslationFileName.value}
+              onChange={inputTranslationFileName.onChange}
+              className={classNames(isDuplicate && 'p-invalid')}
+            />
             <span className={'json'}>.json</span>
-            <label htmlFor={inputFileNameId}>새로 생성할 번역 파일 이름을 입력하세요</label>
+            <label htmlFor={inputFileNameId} className={classNames(isDuplicate && 'invalid')}>
+              {labelMessage}
+            </label>
           </span>
         </form>
       </Dialog>
@@ -56,6 +67,11 @@ export function TranslationFileCreationDialog(props: TranslationFileCreationDial
 
         .json {
           padding-left: 6px;
+        }
+
+        label.invalid {
+          color: ${COLOR.invalid};
+          animation: shake 0.2s ease;
         }
       `}</style>
     </>

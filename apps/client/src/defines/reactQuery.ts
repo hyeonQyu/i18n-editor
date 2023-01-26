@@ -33,6 +33,7 @@ export const MUTATION_KEY = {
   content: {
     base: ['content'] as const,
     postDirectory: () => [...MUTATION_KEY.content.base, 'post', 'directory'],
+    postTranslationFile: () => [...MUTATION_KEY.content.base, 'post', 'translation', 'file'],
     patchContent: () => [...MUTATION_KEY.content.base, 'patch', 'content'],
     postContentRow: () => [...MUTATION_KEY.content.base, 'post', 'content', 'row'],
     deleteContentRow: () => [...MUTATION_KEY.content.base, 'delete', 'content', 'row'],

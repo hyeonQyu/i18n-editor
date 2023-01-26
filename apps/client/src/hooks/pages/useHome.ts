@@ -25,6 +25,10 @@ import useMutationDeleteContentColumn from '@hooks/queries/useMutationDeleteCont
 import { DeleteColumnConfirmMessageTemplate } from '@components/page/home/deleteColumnConfirmMessageTemplate';
 import { InvalidLocaleDirectoryConfirmMessageTemplate } from '@components/page/home/invalidLocaleDirectoryConfirmMessageTemplate';
 import useMutationPostDirectory from '@hooks/queries/useMutationPostDirectory';
+import useMutationPostTranslationFile from '@hooks/queries/useMutationPostTranslationFile';
+import useInput, { IUseInput } from '@hooks/common/useInput';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@defines/reactQuery';
 
 export interface IUseHomeParams {}
 
@@ -37,6 +41,8 @@ export interface IUseHome {
   contentRows: RowData[] | undefined;
   localeDirectoryCreationDialogOpened: boolean;
   translationFileCreationDialogOpened: boolean;
+  isTranslationFileNameDuplicate: boolean;
+  inputNewTranslationFileName: IUseInput;
   tableContainerRef: MutableRefObject<HTMLDivElement | null>;
   handleDirectoryPathChange: CustomEventHandler<PathChangeEvent>;
   handleTranslationFileChange: CustomEventHandler<DropdownChangeParams>;
@@ -97,12 +103,20 @@ const rowToCell = (row: RowData, getCell: (cell: CellData) => CellData = (cell) 
 function useHome(params: IUseHomeParams): IUseHome {
   const {} = params;
 
+  const queryClient = useQueryClient();
+
   const [directoryPath, setDirectoryPath] = useState('');
   const [translationFile, setTranslationFile] = useState<string>();
   const tempTranslationFileRef = useRef<string>();
 
   const [localeDirectoryCreationDialogOpened, setLocaleDirectoryCreationDialogOpened] = useState(false);
   const [translationFileCreationDialogOpened, setTranslationFileCreationDialogOpened] = useState(false);
+  const [isTranslationFileNameDuplicate, setIsTranslationFileNameDuplicate] = useState(false);
+  const inputNewTranslationFileName = useInput({
+    onChangeValue() {
+      setIsTranslationFileNameDuplicate(false);
+    },
+  });
 
   const [contentColumns, setContentColumns] = useState<ColumnData[]>();
   const [contentRows, setContentRows] = useState<RowData[]>();
@@ -185,6 +199,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   });
 
   const { mutate: mutatePostDirectory } = useMutationPostDirectory({});
+  const { mutate: mutatePostTranslationFile } = useMutationPostTranslationFile({});
   const { mutate: mutatePatchContent } = useMutationPatchContent({});
   const { mutate: mutatePostContentRow } = useMutationPostContentRow({});
   const { mutate: mutateDeleteContentRow } = useMutationDeleteContentRow({});
@@ -284,6 +299,33 @@ function useHome(params: IUseHomeParams): IUseHome {
 
   const handleCreateTranslationFile: CustomEventHandler<CreateTranslationFileEvent> = (e) => {
     if (!e) return;
+
+    const { fileName } = e;
+
+    mutatePostTranslationFile(
+      {
+        path: directoryPath!,
+        fileName: `${fileName}.json`,
+      },
+      {
+        async onSuccess() {
+          queryClient.invalidateQueries(QUERY_KEY.translationFile.base);
+
+          toastRef.current?.show({
+            severity: 'success',
+            detail: '새로운 번역 파일을 생성했어요',
+            life: 3000,
+          });
+
+          setTranslationFileCreationDialogOpened(false);
+        },
+        onError(error) {
+          if ((error.response?.data.errorMessage as ErrorMessage) === 'EXIST_FILE_NAME') {
+            setIsTranslationFileNameDuplicate(true);
+          }
+        },
+      },
+    );
   };
 
   const handleCloseTranslationFileCreationDialog = () => {
@@ -535,6 +577,8 @@ function useHome(params: IUseHomeParams): IUseHome {
     contentRows,
     localeDirectoryCreationDialogOpened,
     translationFileCreationDialogOpened,
+    isTranslationFileNameDuplicate,
+    inputNewTranslationFileName,
     tableContainerRef,
     handleDirectoryPathChange,
     handleTranslationFileChange,

@@ -18,6 +18,8 @@ function Index(props: IndexProps) {
     contentRows,
     localeDirectoryCreationDialogOpened,
     translationFileCreationDialogOpened,
+    isTranslationFileNameDuplicate,
+    inputNewTranslationFileName,
     tableContainerRef,
     handleDirectoryPathChange,
     handleTranslationFileChange,
@@ -45,6 +47,8 @@ function Index(props: IndexProps) {
       />
       <TranslationFileCreationDialog
         visible={translationFileCreationDialogOpened}
+        isDuplicate={isTranslationFileNameDuplicate}
+        inputTranslationFileName={inputNewTranslationFileName}
         onCreate={handleCreateTranslationFile}
         onHide={handleCloseTranslationFileCreationDialog}
       />

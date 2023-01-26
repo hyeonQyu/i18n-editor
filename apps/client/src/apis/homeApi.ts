@@ -20,6 +20,8 @@ import {
   PostContentRowRes,
   PostDirectoryReq,
   PostDirectoryRes,
+  PostTranslationFileReq,
+  PostTranslationFileRes,
 } from 'i18n-editor-common';
 import { AxiosInstanceProps } from '@defines/axios';
 
@@ -65,6 +67,14 @@ export namespace HomeApi {
    */
   export async function getTranslationFile(req: GetTranslationFileReq): Promise<GetTranslationFileRes> {
     return (await client.get('/translation-file', { params: req })).data;
+  }
+
+  /**
+   * 다국어 번역 파일 생성
+   * @param req
+   */
+  export async function postTranslationFile(req: PostTranslationFileReq): Promise<PostTranslationFileRes> {
+    return (await client.post('/translation-file', req)).data;
   }
 
   /**

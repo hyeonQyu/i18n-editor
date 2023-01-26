@@ -50,7 +50,7 @@ export function TableExtendDialog() {
             {type === 'column' && (
               <LanguageCodeDropdown dropdownLanguageCode={dropdownAddingLanguageCode} options={languageSelectOptions} />
             )}
-            <label className={classNames(invalid && 'invalid')} htmlFor={inputId}>
+            <label htmlFor={inputId} className={classNames(invalid && 'invalid')}>
               {inputLabel}
             </label>
           </span>

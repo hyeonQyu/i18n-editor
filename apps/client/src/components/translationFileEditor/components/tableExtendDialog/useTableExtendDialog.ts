@@ -42,6 +42,7 @@ function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExt
 
   useEffect(() => {
     document.body.style.overflowY = visible ? 'hidden' : 'initial';
+
     if (!visible) {
       clear();
     }
