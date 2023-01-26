@@ -20,6 +20,8 @@ import {
   GetFileExplorerRes,
   PostDirectoryReq,
   PostDirectoryRes,
+  PostTranslationFileReq,
+  PostTranslationFileRes,
 } from 'i18n-editor-common';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { Service } from './service';
@@ -43,6 +45,11 @@ export namespace Controller {
 
     doCommonResponse<void, GetTranslationFileReq, GetTranslationFileRes>(app, '/translation-file', 'get', (req, res) => {
       const response = Service.getTranslationFiles(req.query);
+      res.status(response.status).send(response);
+    });
+
+    doCommonResponse<PostTranslationFileReq, void, PostTranslationFileRes>(app, '/translation-file', 'post', (req, res) => {
+      const response = Service.postTranslationFile(req.body);
       res.status(response.status).send(response);
     });
 

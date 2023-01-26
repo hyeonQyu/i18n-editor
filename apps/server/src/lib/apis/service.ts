@@ -22,6 +22,8 @@ import {
   ErrorMessage,
   PostDirectoryReq,
   PostDirectoryRes,
+  PostTranslationFileReq,
+  PostTranslationFileRes,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
@@ -63,7 +65,7 @@ export namespace Service {
   }
 
   /**
-   * 디렉토리 및 파일 생성
+   * 디렉토리 및 번역 파일 생성
    * @param req
    */
   export function postDirectory(req: PostDirectoryReq): PostDirectoryRes {
@@ -119,6 +121,42 @@ export namespace Service {
       console.log(files);
 
       return { status: 200, data: { files } };
+    });
+  }
+
+  /**
+   * 번역 파일 생성
+   * @param req
+   */
+  export function postTranslationFile(req: PostTranslationFileReq): PostTranslationFileRes {
+    return doService<PostTranslationFileRes>(() => {
+      const { path, fileName } = req;
+
+      const directories = ContentUtil.getDirectoryPathsByRootDirectoryPath(path);
+
+      if (!directories.length) {
+        const errorMessage: ErrorMessage = 'INVALID_LOCALE_DIRECTORY';
+        console.error(errorMessage);
+        return { status: 999, errorMessage };
+      }
+
+      const languages = ContentUtil.getLanguageCodesFromDirectoryPaths(directories);
+
+      for (let i = 0; i < languages.length; i++) {
+        const language = languages[i];
+        const filePath = `${path}/${language}/${fileName}`;
+
+        if (fs.existsSync(filePath)) {
+          const errorMessage: ErrorMessage = 'EXIST_FILE_NAME';
+          console.error(errorMessage);
+          return { status: 999, errorMessage };
+        }
+
+        fs.writeFileSync(filePath, '{}');
+        console.log(`file: ${filePath}`);
+      }
+
+      return { status: 200 };
     });
   }
 

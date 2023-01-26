@@ -42,6 +42,13 @@ export interface GetTranslationFileRes
     files: string[];
   }> {}
 
+export interface PostTranslationFileReq {
+  path: string;
+  fileName: string;
+}
+
+export interface PostTranslationFileRes extends CommonRes {}
+
 export interface GetContentReq {
   path: string;
   fileName: string;
