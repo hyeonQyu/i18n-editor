@@ -26,15 +26,18 @@ export function CellViewer(props: CellViewerProps) {
 
       <style jsx>{`
         .cell {
-          padding: 16px 0;
+          padding: 12px 0;
           width: 100%;
           height: 100%;
           position: relative;
           cursor: ${isKey ? 'initial' : 'pointer'};
+          line-height: 1.4;
         }
 
         .data {
           height: 100%;
+          word-break: break-all;
+          line-height: 1.4;
         }
 
         .cell :global(button.row-options) {

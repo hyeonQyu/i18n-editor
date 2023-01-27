@@ -29,7 +29,7 @@ export function CellEditor(props: CellEditorProps) {
         :global(.cell-editor) {
           width: 100%;
           height: 42px;
-          line-height: 1.2;
+          line-height: 1.4;
           font-size: 14px;
         }
       `}</style>
