@@ -107,6 +107,7 @@ function useHome(params: IUseHomeParams): IUseHome {
 
   const [directoryPath, setDirectoryPath] = useState('');
   const [translationFile, setTranslationFile] = useState<string>();
+  const [translationFileChanged, setTranslationFileChanged] = useState(false);
   const tempTranslationFileRef = useRef<string>();
 
   const [localeDirectoryCreationDialogOpened, setLocaleDirectoryCreationDialogOpened] = useState(false);
@@ -171,11 +172,11 @@ function useHome(params: IUseHomeParams): IUseHome {
   const translationFiles: string[] = dataGetTranslationFile?.data?.files ?? [];
   const hasDirectorySelectorError = Boolean(errorGetTranslationFile);
 
-  const setContent = (columns: ColumnData[] | undefined, rows: RowData[] | undefined) => {
+  const setContent = (columns: ColumnData[] | undefined, rows: RowData[] | undefined, scrollToTable?: boolean) => {
     setContentColumns(columns);
     setContentRows(rows);
 
-    if (columns && rows) {
+    if (scrollToTable && columns && rows) {
       setTimeout(() => {
         tableContainerRef.current?.scrollIntoView({
           behavior: 'smooth',
@@ -193,7 +194,8 @@ function useHome(params: IUseHomeParams): IUseHome {
       onSuccess({ data }) {
         if (!data) return;
         const { columns, rows } = data;
-        setContent(columns, rows);
+        setContent(columns, rows, translationFileChanged);
+        setTranslationFileChanged(false);
       },
     },
   });
@@ -214,6 +216,7 @@ function useHome(params: IUseHomeParams): IUseHome {
 
   const handleTranslationFileChange: CustomEventHandler<DropdownChangeParams> = (e) => {
     setTranslationFile(e?.value);
+    setTranslationFileChanged(true);
   };
 
   const handleCreateLocaleDirectory: CustomEventHandler<CreateDirectoryEvent> = (e) => {
@@ -348,7 +351,9 @@ function useHome(params: IUseHomeParams): IUseHome {
         onSuccess({ data }) {
           if (!data) return;
           const { columns, rows } = data;
+
           setContent(columns, rows);
+
           toastRef.current?.show({
             severity: 'success',
             detail: '언어를 추가했어요',
@@ -386,7 +391,9 @@ function useHome(params: IUseHomeParams): IUseHome {
           {
             onSuccess({ data }) {
               if (!data) return;
+
               const { columns, rows } = data;
+
               setContent(columns, rows);
               toastRef.current?.show({
                 severity: 'success',
