@@ -29,11 +29,12 @@ import useMutationPostTranslationFile from '@hooks/queries/useMutationPostTransl
 import useInput, { IUseInput } from '@hooks/common/useInput';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@defines/reactQuery';
+import useQueryGetConfig from '@hooks/queries/useQueryGetConfig';
 
 export interface IUseHomeParams {}
 
 export interface IUseHome {
-  directoryPath: string;
+  directoryPath: string | undefined;
   translationFiles: string[];
   translationFile: string | undefined;
   hasDirectorySelectorError: boolean;
@@ -105,7 +106,7 @@ function useHome(params: IUseHomeParams): IUseHome {
 
   const queryClient = useQueryClient();
 
-  const [directoryPath, setDirectoryPath] = useState('');
+  const [directoryPath, setDirectoryPath] = useState<string>();
   const [translationFile, setTranslationFile] = useState<string>();
   const [translationFileChanged, setTranslationFileChanged] = useState(false);
   const tempTranslationFileRef = useRef<string>();
@@ -125,8 +126,18 @@ function useHome(params: IUseHomeParams): IUseHome {
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const { toastRef } = useToastContext();
 
+  useQueryGetConfig({
+    queryOption: {
+      refetchOnWindowFocus: false,
+      onSuccess({ data }) {
+        if (!data) return;
+        setDirectoryPath(data.config.localeDirectoryPath);
+      },
+    },
+  });
+
   const { data: dataGetTranslationFile, error: errorGetTranslationFile } = useQueryGetTranslationFile({
-    req: { path: directoryPath },
+    req: { path: directoryPath! },
     queryOption: {
       enabled: Boolean(directoryPath) && !localeDirectoryCreationDialogOpened,
       retry: false,
@@ -187,7 +198,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   };
 
   useQueryGetContent({
-    req: { path: directoryPath, fileName: translationFile || '' },
+    req: { path: directoryPath!, fileName: translationFile || '' },
     queryOption: {
       enabled: Boolean(translationFile) && Boolean(directoryPath),
       retry: false,
@@ -269,7 +280,7 @@ function useHome(params: IUseHomeParams): IUseHome {
 
     await mutatePatchContent(
       {
-        path: directoryPath,
+        path: directoryPath!,
         fileName: translationFile!,
         cells: [
           {
@@ -343,7 +354,7 @@ function useHome(params: IUseHomeParams): IUseHome {
 
     mutatePostContentColumn(
       {
-        path: directoryPath,
+        path: directoryPath!,
         fileName: translationFile!,
         languageCode,
       },
@@ -384,7 +395,7 @@ function useHome(params: IUseHomeParams): IUseHome {
       accept() {
         mutateDeleteContentColumn(
           {
-            path: directoryPath,
+            path: directoryPath!,
             fileName: translationFile!,
             languageCode,
           },
@@ -414,7 +425,7 @@ function useHome(params: IUseHomeParams): IUseHome {
 
     mutatePostContentRow(
       {
-        path: directoryPath,
+        path: directoryPath!,
         fileName: translationFile!,
         row: { index, key },
       },
@@ -442,7 +453,7 @@ function useHome(params: IUseHomeParams): IUseHome {
 
     mutatePostContentRow(
       {
-        path: directoryPath,
+        path: directoryPath!,
         fileName: translationFile!,
         row: { index: rowIndex, key },
       },
@@ -470,7 +481,7 @@ function useHome(params: IUseHomeParams): IUseHome {
 
     mutatePostContentRow(
       {
-        path: directoryPath,
+        path: directoryPath!,
         fileName: translationFile!,
         row: { index, key },
       },
@@ -510,7 +521,7 @@ function useHome(params: IUseHomeParams): IUseHome {
       accept() {
         mutatePatchContent(
           {
-            path: directoryPath,
+            path: directoryPath!,
             fileName: translationFile!,
             cells: rowToCell(contentRows![index], (cell) => ({ ...cell, value: '' })),
           },
@@ -552,7 +563,7 @@ function useHome(params: IUseHomeParams): IUseHome {
       accept() {
         mutateDeleteContentRow(
           {
-            path: directoryPath,
+            path: directoryPath!,
             fileName: translationFile!,
             key: contentRows![index].key,
           },

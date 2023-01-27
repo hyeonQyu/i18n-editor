@@ -11,6 +11,10 @@ export interface UseMutationParams<Res, Req> {
 }
 
 export const QUERY_KEY = {
+  config: {
+    base: ['config'] as const,
+    getConfig: () => [...QUERY_KEY.config.base, 'get', 'config'],
+  },
   directory: {
     base: ['directory'] as const,
     getDirectory: (path: string) => [...QUERY_KEY.directory.base, 'get', 'directory', path],

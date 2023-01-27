@@ -48,7 +48,7 @@ export namespace FileSystemManager {
    * JSON 파일 읽어서 object 반환
    * @param filePath
    */
-  export function readFile(filePath: string): JsonObject {
+  export function readFile<T = JsonObject>(filePath: string): T {
     return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
   }
 
@@ -57,7 +57,7 @@ export namespace FileSystemManager {
    * @param filePath
    * @param jsonObject
    */
-  export function writeFile(filePath: string, jsonObject: JsonObject) {
+  export function writeFile<T = JsonObject>(filePath: string, jsonObject: T) {
     fs.writeFileSync(filePath, JSON.stringify(jsonObject, null, 2));
   }
 

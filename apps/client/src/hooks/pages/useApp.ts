@@ -33,9 +33,6 @@ export default function useApp(): UseApp {
           switch (status) {
             case 999:
               switch (errorMessage as ErrorMessage) {
-                // case 'INVALID_LOCALE_DIRECTORY':
-                //   return showError('유효하지 않은 Locale 디렉토리입니다');
-
                 case 'KEYS_CHANGED_BY_EXTERNAL_WRITE':
                   showError('외부 쓰기에 의해 파일이 변경되었습니다\n새로고침 해주세요');
                   break;

@@ -7,7 +7,7 @@
     "cli-command": "bin/cli.js"
   },
   "scripts": {
-    "dev": "SET \"NODE_ENV=development\" && nodemon --watch \"src/lib/**/*.ts\" --exec \"ts-node\" src/bin/ljm.ts",
+    "dev": "SET \"NODE_ENV=development\" && nodemon --watch \"src/lib/**/*.ts\" --exec \"ts-node\" src/bin/i18n-editor.ts",
     "build": "tsc -p ."
   },
   "dependencies": {

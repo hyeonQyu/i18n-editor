@@ -22,12 +22,18 @@ import {
   PostDirectoryRes,
   PostTranslationFileReq,
   PostTranslationFileRes,
+  GetConfigRes,
 } from 'i18n-editor-common';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { Service } from './service';
 
 export namespace Controller {
   export function response(app: any) {
+    doCommonResponse<void, void, GetConfigRes>(app, '/config', 'get', (req, res) => {
+      const response = Service.getConfig();
+      res.status(response.status).send(response);
+    });
+
     doCommonResponse<void, GetDirectoryReq, GetDirectoryRes>(app, '/directory', 'get', (req, res) => {
       const response = Service.getDirectory(req.query);
       res.status(response.status).send(response);

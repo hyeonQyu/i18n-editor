@@ -11,7 +11,7 @@ import { CustomEventHandler } from '@defines/event';
 import { Menu } from 'primereact/menu';
 
 export interface DirectorySelectorProps {
-  path: string;
+  path: string | undefined;
   invalid: boolean;
   onChange: CustomEventHandler<PathChangeEvent>;
 }

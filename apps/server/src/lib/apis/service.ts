@@ -24,6 +24,7 @@ import {
   PostDirectoryRes,
   PostTranslationFileReq,
   PostTranslationFileRes,
+  GetConfigRes,
 } from 'i18n-editor-common';
 import * as fs from 'fs';
 import { FileSystemManager } from '../utils/fileSystemManager';
@@ -31,11 +32,20 @@ import { PostContentRowReq, PostContentRowRes } from 'i18n-editor-common/lib/def
 import { ContentUtil } from '../utils/contentUtil';
 import { ServiceCache } from '../defines/types';
 import childProcess from 'child_process';
+import { ConfigUtil } from '../utils/configUtil';
 
 export namespace Service {
   const cache: ServiceCache = {
     lastReadRows: [],
   };
+
+  /**
+   * 설정 불러오기
+   */
+  export function getConfig(): GetConfigRes {
+    const config = ConfigUtil.read();
+    return { status: 200, data: { config } };
+  }
 
   /**
    * 디렉토리 내 파일 (entry) 목록
@@ -119,6 +129,8 @@ export namespace Service {
 
       console.log('valid locale directory');
       console.log(files);
+
+      ConfigUtil.write({ localeDirectoryPath: path });
 
       return { status: 200, data: { files } };
     });

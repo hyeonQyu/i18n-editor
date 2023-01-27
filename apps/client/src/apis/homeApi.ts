@@ -4,6 +4,7 @@ import {
   DeleteContentColumnRes,
   DeleteContentRowReq,
   DeleteContentRowRes,
+  GetConfigRes,
   GetContentReq,
   GetContentRes,
   GetDirectoryReq,
@@ -35,6 +36,13 @@ export namespace HomeApi {
       const { onFulfilled, onRejected, options } = responseInterceptor;
       client.interceptors.response.use(onFulfilled, onRejected, options);
     }
+  }
+
+  /**
+   * 설정 불러오기
+   */
+  export async function getConfig(): Promise<GetConfigRes> {
+    return (await client.get('/config')).data;
   }
 
   /**

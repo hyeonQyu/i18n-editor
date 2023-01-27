@@ -26,3 +26,11 @@ export interface CellData {
 }
 
 export type ErrorMessage = 'INVALID_LOCALE_DIRECTORY' | 'KEYS_CHANGED_BY_EXTERNAL_WRITE' | 'EXIST_FILE_NAME';
+
+export interface Config {
+  localeDirectoryPath: string;
+}
+
+export interface ConfigMeta {
+  path: string;
+}

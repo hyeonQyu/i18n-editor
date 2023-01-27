@@ -1,10 +1,15 @@
-import { CellData, ColumnData, DirectoryEntry, LanguageCode, RowData } from './types';
+import { CellData, ColumnData, Config, DirectoryEntry, LanguageCode, RowData } from './types';
 
 export interface CommonRes<T = void> {
   status: number;
   errorMessage?: string;
   data?: T;
 }
+
+export interface GetConfigRes
+  extends CommonRes<{
+    config: Config;
+  }> {}
 
 export interface GetDirectoryReq {
   path?: string;

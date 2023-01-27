@@ -30,7 +30,7 @@ export interface IUseFileExplorer {
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   const { ref, path: initialPath, onChange, onHide, opened } = params;
 
-  const [path, setPath] = useState(initialPath);
+  const [path, setPath] = useState<string>(initialPath || '');
 
   const [backwardStack, setBackwardStack] = useState<string[]>([]);
   const [forwardStack, setForwardStack] = useState<string[]>([]);
@@ -43,8 +43,19 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   const { toastRef } = useToastContext();
 
   // 현재 폴더
-  const { data, refetch: refetchGetDirectory } = useQueryGetDirectory({ req: { path } });
-  const { path: currentPath, entries: allEntries } = data?.data || { path: '', entries: undefined };
+  const { data, refetch: refetchGetDirectory } = useQueryGetDirectory({
+    req: { path },
+    queryOption: {
+      enabled: initialPath !== undefined,
+      onSuccess({ data }) {
+        if (!data) return;
+        if (!path) {
+          setPath(data.path);
+        }
+      },
+    },
+  });
+  const { entries: allEntries } = data?.data || { entries: undefined };
 
   /**
    * 앞으로 이동
@@ -132,10 +143,8 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   }, []);
 
   useEffect(() => {
-    if (!path) {
-      setPath(currentPath);
-    }
-  }, [currentPath]);
+    setPath(initialPath || '');
+  }, [initialPath]);
 
   useEffect(() => {
     refetchGetDirectory();
