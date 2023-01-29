@@ -5,7 +5,7 @@ const { exec } = require('child_process');
 
 export namespace UiExecutor {
   export function runHtmlUi(port: number) {
-    const appName = 'app-name';
+    const appName = 'i18n-editor';
     const htmlPath = `${process.cwd()}/node_modules/${appName}/ui/index.html`;
     addPortToHtml(htmlPath, port);
     exec(`${getCommandLine()} ${htmlPath}`);
