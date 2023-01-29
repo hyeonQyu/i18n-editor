@@ -1,8 +1,7 @@
 import { FileData, JsonObject } from '../defines/types';
-import { ColumnData, LanguageCode, RowData, StringUtil } from 'i18n-editor-common';
+import { ColumnData, LanguageCode, RowData, StringUtil, LANGUAGE_CODE_SET } from 'i18n-editor-common';
 import { FileSystemManager } from './fileSystemManager';
 import fs from 'fs';
-import { LANGUAGE_CODE_SET } from 'i18n-editor-common/lib/defines/constants';
 
 export namespace ContentUtil {
   /**

@@ -5,8 +5,9 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "clean": "rm -rf ./lib",
-    "build": "yarn clean && tsc",
+    "clean": "node commands/clean.js",
+    "copy": "node commands/copy.js",
+    "build": "yarn clean && tsc && yarn copy",
     "watch": "tsc-watch --onSuccess 'tsc'"
   },
   "devDependencies": {
