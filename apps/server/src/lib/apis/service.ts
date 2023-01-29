@@ -253,7 +253,7 @@ export namespace Service {
   }
 
   /**
-   * 행 삭제
+   * 번역 삭제
    * @param req
    */
   export function deleteContentRow(req: DeleteContentRowReq): DeleteContentRowRes {

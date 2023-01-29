@@ -24,7 +24,7 @@ export function NewTranslationAdder(props: NewTranslationAdderProps) {
                 onChange={inputTranslationKey.onChange}
                 className={'input-translation-key'}
               />
-              <label htmlFor={inputId}>새로 추가할 번역 key를 입력하세요</label>
+              <label htmlFor={inputId}>새로 추가할 번역 키를 입력하세요</label>
             </div>
 
             <Button type={'submit'} icon={'pi pi-plus'} />

@@ -11,9 +11,13 @@ export function TableMoreOptionsRowMenu(props: TableMoreOptionsRowMenuProps) {
 
   return (
     <>
-      <Menu ref={rowMenuRef} model={items} popup />
+      <Menu ref={rowMenuRef} model={items} popup className={'row-menu'} />
 
-      <style jsx>{``}</style>
+      <style jsx>{`
+        :global(.row-menu) {
+          width: fit-content;
+        }
+      `}</style>
     </>
   );
 }

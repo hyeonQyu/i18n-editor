@@ -110,7 +110,7 @@ export namespace HomeApi {
   }
 
   /**
-   * 행 삭제
+   * 번역 삭제
    * @param req
    */
   export async function deleteContentRow(req: DeleteContentRowReq): Promise<DeleteContentRowRes> {

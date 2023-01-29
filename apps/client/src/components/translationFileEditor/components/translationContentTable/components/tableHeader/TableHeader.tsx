@@ -13,7 +13,7 @@ function TableHeader(props: TableHeaderProps) {
     <>
       <div className={'table-header'}>
         <div>
-          <Button label={'언어 코드 추가'} icon={'pi pi-plus'} onClick={handleAddColumnClick} />
+          <Button label={'언어 추가'} icon={'pi pi-plus'} onClick={handleAddColumnClick} />
         </div>
         <div>
           <div className={'p-inputgroup'}>

@@ -11,9 +11,13 @@ export function TableMoreOptionsColumnMenu(props: TableMoreOptionsColumnMenuProp
 
   return (
     <>
-      <Menu ref={columnMenuRef} model={items} popup />
+      <Menu ref={columnMenuRef} model={items} popup className={'column-menu'} />
 
-      <style jsx>{``}</style>
+      <style jsx>{`
+        :global(.column-menu) {
+          width: fit-content;
+        }
+      `}</style>
     </>
   );
 }

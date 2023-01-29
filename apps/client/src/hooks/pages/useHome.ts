@@ -418,7 +418,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     });
   };
 
-  // 위쪽에 행 추가
+  // 위쪽에 새 번역 추가
   const onAddRowAbove: CustomEventHandler<TranslationTableRowAddEvent> = (e) => {
     if (!e) return;
     const { index, key, onSuccess } = e;
@@ -445,7 +445,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     );
   };
 
-  // 아래쪽에 행 추가
+  // 아래쪽에 새 번역 추가
   const onAddRowBelow: CustomEventHandler<TranslationTableRowAddEvent> = (e) => {
     if (!e) return;
     const { index, key, onSuccess } = e;
@@ -501,7 +501,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     );
   };
 
-  // 행 내용 지우기
+  // 번역 값 지우기
   const onClearRowContent: CustomEventHandler<TranslationTableDeleteRowEvent> = (e) => {
     if (!e) return;
     const { index, position } = e;
@@ -543,7 +543,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     });
   };
 
-  // 행 삭제
+  // 번역 삭제
   const onDeleteRow: CustomEventHandler<TranslationTableDeleteRowEvent> = (e) => {
     if (!e) return;
     const { index, position } = e;

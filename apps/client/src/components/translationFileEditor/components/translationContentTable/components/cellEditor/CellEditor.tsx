@@ -22,6 +22,7 @@ export function CellEditor(props: CellEditorProps) {
         onFocus={handleFocus}
         onChange={handleChange}
         onMouseEnter={handleMouseEnter}
+        placeholder={'번역 값을 입력하세요'}
         autoResize
       />
 
