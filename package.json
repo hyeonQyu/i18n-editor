@@ -19,8 +19,8 @@
     "build:server": "yarn --cwd apps/server run build",
 
     "build": "yarn build:common && yarn build:client && yarn build:server && node setupPackage.js",
-    "publish": "yarn --cwd apps/",
-    "build-publish": "yarn build && yarn publish"
+    "publish:dist": "yarn --cwd dist publish",
+    "build-publish": "yarn build && yarn publish:dist"
   },
   "dependencies": {
     "axios": "^0.27.2",
