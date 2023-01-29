@@ -1,4 +1,5 @@
 # i18n-editor
+[![npm](https://img.shields.io/npm/v/i18n-editor.svg)](https://www.npmjs.com/package/i18n-editor) [![npm-downloads](https://img.shields.io/npm/dm/i18n-editor.svg)](https://www.npmjs.com/package/i18n-editor)
 
 i18n-editor를 사용하여 여러개로 분리되어 있는 다국어 `JSON` 번역 파일을 한 화면에서 관리하고 편집할 수 있습니다.
 
