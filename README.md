@@ -1,4 +1,5 @@
 # i18n-editor
+[![npm](https://img.shields.io/npm/v/i18n-editor.svg)](https://www.npmjs.com/package/i18n-editor) [![npm-downloads](https://img.shields.io/npm/dm/i18n-editor.svg)](https://www.npmjs.com/package/i18n-editor)
 
 i18n-editor를 사용하여 여러개로 분리되어 있는 다국어 `JSON` 번역 파일을 한 화면에서 관리하고 편집할 수 있습니다.
 
@@ -26,12 +27,13 @@ i18n-editor를 사용하여 여러개로 분리되어 있는 다국어 `JSON` �
 [https://www.npmjs.com/package/i18n-editor](https://www.npmjs.com/package/i18n-editor)
 
 ## Installation
-
-```bash
 npm
+```bash
 $ npm install -D i18n-editor
+```
 
 yarn
+```bash
 $ yarn add -D i18n-editor
 ```
 
@@ -39,12 +41,16 @@ $ yarn add -D i18n-editor
 
 Terminal에 `npx i18n-editor` 명령어를 입력하여 애플리케이션을 실행시킬 수 있습니다. 이때, 포트 번호를 옵션으로 지정할 수 있습니다.
 
-```bash
 기본 옵션으로 실행 (4848번 포트 사용)
+```bash
 $ npx i18n-editor
+```
 
 실행 포트 옵션 (9000번 포트 사용)
+```bash
 $ npx i18n-eidtor -p 9000
+```
+```bash
 $ npx i18n-editor --port 9000
 ```
 
@@ -60,19 +66,19 @@ $ npx i18n-editor --port 9000
 
 Locale 디렉토리의 구조는 다음과 같아야 합니다.
 
-```bash
-📂locale directory
-	📂ko
-		🗒️common.json
-		🗒️...
-	📂en
-		🗒️common.json
-		🗒️...
-	📂ja
-		🗒️common.json
-		🗒️...
-	📂... (언어 코드명)
 ```
+📂locale directory
+  📂ko
+    🗒️common.json
+    🗒️...
+  📂en
+    🗒️common.json
+    🗒️...
+  📂ja
+    🗒️common.json
+    🗒️...
+  📂... (언어 코드명)
+  ```
 
 - Locale 디렉토리 내에는 **언어 코드로 된 이름**을 가진 디렉토리가 하나 이상 존재해야 합니다.
 - 언어 코드로 된 이름을 가진 디렉토리 하위에 다국어 번역 파일이 존재합니다.
@@ -121,12 +127,12 @@ Locale 디렉토리의 구조는 다음과 같아야 합니다.
 
 Locale 디렉토리 하위에 있는 **언어코드명 디렉토리가 파일 편집 표의 열(Column)이 됩니다.**
 
-```bash
+```
 📂locale directory	
-	📂ko
-		🗒️animal.json
-	📂en
-		🗒️animal.json
+  📂ko
+    🗒️animal.json
+  📂en
+    🗒️animal.json
 ```
 
 위 구조와 같이 Locale 디렉토리 내에 `en`, `ko` 언어코드명 디렉토리가 있다면 아래와 같이 다국어 편집 표에서 `en`과 `ko` 열을 확인할 수 있습니다.
