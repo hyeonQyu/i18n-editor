@@ -7,7 +7,7 @@ import { Button } from 'primereact/button';
 import { MouseEventHandler } from 'react';
 
 export interface TranslationFileSelectorProps {
-  directoryPath: string;
+  directoryPath: string | undefined;
   file?: string;
   files: string[];
   hasDirectorySelectorError: boolean;

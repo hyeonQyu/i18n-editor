@@ -139,3 +139,5 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
     </>
   );
 });
+
+FileExplorer.displayName = 'FileExplorer';

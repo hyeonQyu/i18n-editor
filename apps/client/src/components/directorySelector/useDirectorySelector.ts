@@ -31,7 +31,7 @@ function useDirectorySelector(params: IUseDirectorySelectorParams): IUseDirector
   const [isFileExplorerOpened, setIsFileExplorerOpened] = useState(false);
 
   const { refetch: refetchGetFileExplorer } = useQueryGetFileExplorer({
-    req: { path },
+    req: { path: path || '' },
     queryOption: {
       enabled: false,
     },
@@ -69,7 +69,7 @@ function useDirectorySelector(params: IUseDirectorySelectorParams): IUseDirector
       label: '디렉토리 경로 복사',
       icon: 'pi pi-clone',
       async command() {
-        await navigator.clipboard.writeText(path);
+        await navigator.clipboard.writeText(path!);
         toastRef.current?.show({
           severity: 'info',
           detail: '클립보드에 복사되었어요',
