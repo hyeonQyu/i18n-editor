@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "main": "src/lib/app.ts",
   "bin": {
-    "cli-command": "bin/cli.js"
+    "i18n-editor": "bin/i18n-editor.js"
   },
   "scripts": {
     "dev": "SET \"NODE_ENV=development\" && nodemon --watch \"src/lib/**/*.ts\" --exec \"ts-node\" src/bin/i18n-editor.ts",
