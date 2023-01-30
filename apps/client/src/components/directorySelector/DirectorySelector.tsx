@@ -1,7 +1,5 @@
 import { FileExplorer } from '@components/directorySelector/components/fileExplorer';
 import { Button } from 'primereact/button';
-import 'primereact/resources/primereact.css';
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import useDirectorySelector from '@components/directorySelector/useDirectorySelector';
 import { PathChangeEvent } from '@components/directorySelector/defines';
 import { InputText } from 'primereact/inputtext';

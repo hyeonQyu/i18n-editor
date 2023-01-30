@@ -1,5 +1,4 @@
 import { InputText } from 'primereact/inputtext';
-import 'primereact/resources/primereact.min.css';
 import { ChangeEventHandler } from 'react';
 
 export interface InputFilterProps {

@@ -1,5 +1,3 @@
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { forwardRef, RefObject } from 'react';
 import { BreadCrumb } from 'primereact/breadcrumb';

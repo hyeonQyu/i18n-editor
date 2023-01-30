@@ -1,5 +1,4 @@
 import { Dropdown, DropdownChangeParams } from 'primereact/dropdown';
-import 'primereact/resources/primereact.css';
 import useTranslationFileSelector from '@components/translationFileSelector/useTranslationFileSelector';
 import classNames from 'classnames';
 import { CustomEventHandler } from '@defines/event';

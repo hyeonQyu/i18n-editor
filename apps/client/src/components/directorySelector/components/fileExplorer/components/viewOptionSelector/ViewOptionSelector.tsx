@@ -1,7 +1,5 @@
 import { SelectButton, SelectButtonChangeParams } from 'primereact/selectbutton';
 import { VIEW_OPTIONS, ViewType } from '@components/directorySelector/defines';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
 import { SelectButtonTemplate } from '@components/selectButtonTemplate';
 import { CustomEventHandler } from '@defines/event';
 

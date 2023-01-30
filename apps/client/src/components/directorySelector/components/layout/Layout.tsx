@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react';
 import { Button } from 'primereact/button';
-import 'primereact/resources/primereact.css';
 import { ZIndex } from '@defines/zIndex';
 
 export interface LayoutProps extends PropsWithChildren {}

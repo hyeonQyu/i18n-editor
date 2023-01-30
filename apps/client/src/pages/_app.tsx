@@ -9,6 +9,9 @@ import { ToastContext } from '@contexts/toastContext';
 import { ConfirmDialog } from 'primereact/confirmdialog';
 import { Portal } from '@components/portal';
 import useApp from '@hooks/pages/useApp';
+import 'primeicons/primeicons.css';
+import 'primereact/resources/primereact.min.css';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { queryClient, toastRef } = useApp();
