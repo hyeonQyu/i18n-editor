@@ -4,6 +4,7 @@ import { TranslationFileSelector } from '@components/translationFileSelector';
 import TranslationFileEditor from '@components/translationFileEditor/TranslationFileEditor';
 import { LocaleDirectoryCreationDialog } from '@components/localeDirectoryCreationDialog';
 import { TranslationFileCreationDialog } from '@components/translationFileCreationDialog';
+import { HomeSkeleton } from '@components/page/home/homeSkeleton';
 
 export interface IndexProps {}
 
@@ -19,6 +20,7 @@ function Index(props: IndexProps) {
     localeDirectoryCreationDialogOpened,
     translationFileCreationDialogOpened,
     isTranslationFileNameDuplicate,
+    isLoadingGetConfig,
     inputNewTranslationFileName,
     tableContainerRef,
     handleDirectoryPathChange,
@@ -53,33 +55,39 @@ function Index(props: IndexProps) {
         onHide={handleCloseTranslationFileCreationDialog}
       />
 
-      <div className={'file-select-container'}>
-        <DirectorySelector path={directoryPath} invalid={hasDirectorySelectorError} onChange={handleDirectoryPathChange} />
+      {isLoadingGetConfig ? (
+        <HomeSkeleton />
+      ) : (
+        <>
+          <div className={'file-select-container'}>
+            <DirectorySelector path={directoryPath} invalid={hasDirectorySelectorError} onChange={handleDirectoryPathChange} />
 
-        <TranslationFileSelector
-          directoryPath={directoryPath}
-          file={translationFile}
-          files={translationFiles}
-          hasDirectorySelectorError={hasDirectorySelectorError}
-          onChange={handleTranslationFileChange}
-          onAddTranslationFileButtonClick={handleAddTranslationFileButtonClick}
-        />
-      </div>
+            <TranslationFileSelector
+              directoryPath={directoryPath}
+              file={translationFile}
+              files={translationFiles}
+              hasDirectorySelectorError={hasDirectorySelectorError}
+              onChange={handleTranslationFileChange}
+              onAddTranslationFileButtonClick={handleAddTranslationFileButtonClick}
+            />
+          </div>
 
-      <div className={'table-container'} ref={tableContainerRef}>
-        <TranslationFileEditor
-          columns={contentColumns}
-          rows={contentRows}
-          onChange={handleTranslationContentChange}
-          onAddColumn={onAddColumn}
-          onDeleteColumn={onDeleteColumn}
-          onAddRowAbove={onAddRowAbove}
-          onAddRowBelow={onAddRowBelow}
-          onAddRow={onAddRow}
-          onClearRowContent={onClearRowContent}
-          onDeleteRow={onDeleteRow}
-        />
-      </div>
+          <div className={'table-container'} ref={tableContainerRef}>
+            <TranslationFileEditor
+              columns={contentColumns}
+              rows={contentRows}
+              onChange={handleTranslationContentChange}
+              onAddColumn={onAddColumn}
+              onDeleteColumn={onDeleteColumn}
+              onAddRowAbove={onAddRowAbove}
+              onAddRowBelow={onAddRowBelow}
+              onAddRow={onAddRow}
+              onClearRowContent={onClearRowContent}
+              onDeleteRow={onDeleteRow}
+            />
+          </div>
+        </>
+      )}
 
       <style jsx>{`
         .file-select-container {

@@ -43,6 +43,7 @@ export interface IUseHome {
   localeDirectoryCreationDialogOpened: boolean;
   translationFileCreationDialogOpened: boolean;
   isTranslationFileNameDuplicate: boolean;
+  isLoadingGetConfig: boolean;
   inputNewTranslationFileName: IUseInput;
   tableContainerRef: MutableRefObject<HTMLDivElement | null>;
   handleDirectoryPathChange: CustomEventHandler<PathChangeEvent>;
@@ -126,7 +127,7 @@ function useHome(params: IUseHomeParams): IUseHome {
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const { toastRef } = useToastContext();
 
-  useQueryGetConfig({
+  const { isLoading: isLoadingGetConfig } = useQueryGetConfig({
     queryOption: {
       refetchOnWindowFocus: false,
       onSuccess({ data }) {
@@ -596,6 +597,7 @@ function useHome(params: IUseHomeParams): IUseHome {
     localeDirectoryCreationDialogOpened,
     translationFileCreationDialogOpened,
     isTranslationFileNameDuplicate,
+    isLoadingGetConfig,
     inputNewTranslationFileName,
     tableContainerRef,
     handleDirectoryPathChange,

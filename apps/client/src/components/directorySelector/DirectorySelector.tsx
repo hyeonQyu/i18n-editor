@@ -47,7 +47,13 @@ export function DirectorySelector(props: DirectorySelectorProps) {
         </>
 
         <span className={'p-float-label'}>
-          <InputText id={inputId} value={path} onChange={() => {}} onFocus={handleFocus} className={classNames(invalid && 'p-invalid')} />
+          <InputText
+            id={inputId}
+            value={path || ''}
+            onChange={() => {}}
+            onFocus={handleFocus}
+            className={classNames(invalid && 'p-invalid')}
+          />
           <label
             htmlFor={inputId}
             className={classNames(isFileExplorerOpened && 'opened', Boolean(path) && 'selected', invalid && 'invalid')}
