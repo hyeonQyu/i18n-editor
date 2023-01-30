@@ -6,7 +6,6 @@ import useQueryGetDirectory from '@hooks/queries/useQueryGetDirectory';
 import { DirectoryEntry } from 'i18n-editor-common';
 import { useToastContext } from '@contexts/toastContext';
 import { SelectButtonChangeParams } from 'primereact/selectbutton';
-import { confirmDialog } from 'primereact/confirmdialog';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { CustomEventHandler } from '@defines/event';
 
@@ -28,7 +27,7 @@ export interface IUseFileExplorer {
 }
 
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
-  const { ref, path: initialPath, onChange, onHide, opened } = params;
+  const { ref, path: initialPath, onChange } = params;
 
   const [path, setPath] = useState<string>(initialPath || '');
 
@@ -136,13 +135,6 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   };
 
   useEffect(() => {
-    history.pushState(null, '', '/');
-    return () => {
-      history.back();
-    };
-  }, []);
-
-  useEffect(() => {
     setPath(initialPath || '');
   }, [initialPath]);
 
@@ -155,37 +147,6 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
     if (!allEntries) return;
     setEntries(allEntries.filter(({ name }) => name.toLowerCase().includes(filterKeyword.toLowerCase())));
   }, [allEntries, filterKeyword]);
-
-  useEffect(() => {
-    const preventPopState = () => {
-      if (!opened) {
-        return history.back();
-      }
-
-      history.pushState(null, '', '/');
-
-      confirmDialog({
-        header: '페이지에서 나가시겠어요?',
-        message: '저장하지 않은 변경사항은 폐기됩니다',
-        icon: 'pi pi-info-circle',
-        acceptClassName: 'p-button-danger',
-        draggable: false,
-        acceptLabel: '네, 나갈래요',
-        rejectLabel: '아니요',
-        acceptIcon: 'pi pi-check',
-        rejectIcon: 'pi pi-times',
-        accept() {
-          history.go(-2);
-          onHide();
-        },
-      });
-    };
-
-    window.addEventListener('popstate', preventPopState);
-    return () => {
-      window.removeEventListener('popstate', preventPopState);
-    };
-  }, [opened, onHide]);
 
   const breadcrumbItemLabels: string[] = path.split('/');
   const breadcrumbItems: MenuItem[] = breadcrumbItemLabels.map((label, i) => ({
