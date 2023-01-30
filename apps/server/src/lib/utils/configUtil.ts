@@ -11,7 +11,7 @@ export namespace ConfigUtil {
     configMeta.path =
       env === 'production'
         ? `${process.cwd()}/node_modules/i18n-editor/i18n-editor-config.json`
-        : `${process.cwd()}/i18n-editor-config.json`;
+        : `${process.cwd()}/../../i18n-editor-config.json`;
   }
 
   export function read(): Config {
