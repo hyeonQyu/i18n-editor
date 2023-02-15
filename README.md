@@ -149,5 +149,6 @@ Locale 디렉토리 하위에 있는 **언어코드명 디렉토리가 파일 �
 # Features to be added
 
 - 행 순서 변경
+- 언어 다중 추가
 - 애플리케이션의 국제화 (다국어 지원)
 - CSV import, export
