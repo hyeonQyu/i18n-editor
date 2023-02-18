@@ -290,7 +290,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     globalFilterFields,
     isClearableRow,
     tableExtendDialogData,
-    multiSelectAddingLanguageCode: multiSelectAddingLanguageCode,
+    multiSelectAddingLanguageCode,
     inputAddingKey,
     filter,
     inputFilter,
