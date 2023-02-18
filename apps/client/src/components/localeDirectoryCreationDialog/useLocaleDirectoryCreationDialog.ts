@@ -1,13 +1,13 @@
 import { LocaleDirectoryCreationDialogProps } from '@components/localeDirectoryCreationDialog';
 import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
-import useDropdown, { IUseDropdown } from '@hooks/common/useDropdown';
 import { LanguageCode } from 'i18n-editor-common';
 import useInput, { IUseInput } from '@hooks/common/useInput';
+import useMultiSelect, { UseMultiSelect } from '@hooks/common/useMultiSelect';
 
 export interface IUseLocaleDirectoryCreationDialogParams extends LocaleDirectoryCreationDialogProps {}
 
 export interface IUseLocaleDirectoryCreationDialog {
-  dropdownLanguageCode: IUseDropdown;
+  multiSelectLanguageCode: UseMultiSelect;
   inputFileName: IUseInput;
   inputDisabled: boolean;
   creationDisabled: boolean;
@@ -18,12 +18,12 @@ export interface IUseLocaleDirectoryCreationDialog {
 function useLocaleDirectoryCreationDialog(params: IUseLocaleDirectoryCreationDialogParams): IUseLocaleDirectoryCreationDialog {
   const { visible, onCreate } = params;
 
-  const dropdownLanguageCode = useDropdown<LanguageCode>({});
+  const multiSelectLanguageCode = useMultiSelect<LanguageCode>({});
   const inputFileName = useInput({});
 
   const createDirectory = () => {
     onCreate({
-      directoryName: dropdownLanguageCode.value,
+      directoryNames: multiSelectLanguageCode.value,
       fileName: inputFileName.value,
     });
   };
@@ -39,16 +39,16 @@ function useLocaleDirectoryCreationDialog(params: IUseLocaleDirectoryCreationDia
 
   useEffect(() => {
     if (!visible) {
-      dropdownLanguageCode.clear();
+      multiSelectLanguageCode.clear();
       inputFileName.clear();
     }
   }, [visible]);
 
-  const inputDisabled = !dropdownLanguageCode.value;
-  const creationDisabled = !(dropdownLanguageCode.value && inputFileName.value);
+  const inputDisabled = !multiSelectLanguageCode.value;
+  const creationDisabled = !(multiSelectLanguageCode.value && inputFileName.value);
 
   return {
-    dropdownLanguageCode,
+    multiSelectLanguageCode,
     inputFileName,
     inputDisabled,
     creationDisabled,

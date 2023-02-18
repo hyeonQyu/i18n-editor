@@ -20,12 +20,13 @@ export function DropdownLanguageOptionTemplate(props: DropdownLanguageOptionTemp
         }
 
         .code {
-          width: 20%;
+          width: 25%;
           font-weight: bold;
+          text-align: center;
         }
 
         .name {
-          width: 80%;
+          width: 65%;
           font-size: 0.8rem;
         }
       `}</style>

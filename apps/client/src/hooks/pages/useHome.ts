@@ -234,13 +234,13 @@ function useHome(params: IUseHomeParams): IUseHome {
   const handleCreateLocaleDirectory: CustomEventHandler<CreateDirectoryEvent> = (e) => {
     if (!e) return;
 
-    const { fileName, directoryName } = e;
+    const { fileName, directoryNames } = e;
 
     mutatePostDirectory(
       {
         path: directoryPath!,
         fileName: `${fileName}.json`,
-        directoryName,
+        directoryNames,
       },
       {
         onSettled() {

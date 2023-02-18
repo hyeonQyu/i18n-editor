@@ -1,6 +1,6 @@
 import { Dialog } from 'primereact/dialog';
 import useLocaleDirectoryCreationDialog from '@components/localeDirectoryCreationDialog/useLocaleDirectoryCreationDialog';
-import { LanguageCodeDropdown } from '@components/languageCodeDropdown';
+import { LanguageCodeMultiSelect } from '@components/languageCodeMultiSelect';
 import { CustomConfirmDialogFooter } from '@components/customConfirmDialogFooter';
 import { InputText } from 'primereact/inputtext';
 import classNames from 'classnames';
@@ -16,7 +16,7 @@ const inputFileNameId = 'new-file';
 
 export function LocaleDirectoryCreationDialog(props: LocaleDirectoryCreationDialogProps) {
   const { visible, onHide } = props;
-  const { dropdownLanguageCode, inputFileName, inputDisabled, creationDisabled, handleCreateButtonClick, handleFormSubmit } =
+  const { multiSelectLanguageCode, inputFileName, inputDisabled, creationDisabled, handleCreateButtonClick, handleFormSubmit } =
     useLocaleDirectoryCreationDialog(props);
 
   return (
@@ -39,7 +39,7 @@ export function LocaleDirectoryCreationDialog(props: LocaleDirectoryCreationDial
       >
         <form onSubmit={handleFormSubmit} className={'locale-directory-creation'}>
           <span className={'p-float-label'}>
-            <LanguageCodeDropdown dropdownLanguageCode={dropdownLanguageCode} />
+            <LanguageCodeMultiSelect multiSelectLanguageCode={multiSelectLanguageCode} />
             <label>새로 생성할 디렉토리의 이름을 선택하세요</label>
           </span>
 

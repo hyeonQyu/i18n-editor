@@ -27,7 +27,7 @@ export interface TranslationTableColumnAddEvent extends TranslationTableColumnEd
 export interface TranslationTableColumnDeleteEvent extends TranslationTableColumnEditEvent {}
 
 export interface CreateDirectoryEvent {
-  directoryName: LanguageCode;
+  directoryNames: LanguageCode[];
   fileName: string;
 }
 

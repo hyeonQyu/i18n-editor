@@ -14,7 +14,7 @@ import { ColumnHeaderKey, LanguageCode, RowData } from 'i18n-editor-common';
 import { DialogPositionType } from 'primereact/dialog';
 import useInput, { IUseInput } from '@hooks/common/useInput';
 import { DataTableFilterMeta } from 'primereact/datatable';
-import useDropdown, { IUseDropdown } from '@hooks/common/useDropdown';
+import useDropdown, { UseDropdown } from '@hooks/common/useDropdown';
 
 export interface IUseTranslationFileEditorParams extends TranslationFileEditorProps {}
 
@@ -26,7 +26,7 @@ export interface IUseTranslationFileEditor {
   selectedRow: RowData | undefined;
   globalFilterFields: string[];
   isClearableRow: boolean;
-  dropdownAddingLanguageCode: IUseDropdown;
+  dropdownAddingLanguageCode: UseDropdown;
   inputAddingKey: IUseInput;
   tableExtendDialogData: TableExtendDialogData;
   filter: DataTableFilterMeta;

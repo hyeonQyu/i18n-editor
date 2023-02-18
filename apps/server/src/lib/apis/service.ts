@@ -80,15 +80,17 @@ export namespace Service {
    */
   export function postDirectory(req: PostDirectoryReq): PostDirectoryRes {
     return doService<PostDirectoryRes>(() => {
-      const { path, directoryName, fileName } = req;
+      const { path, directoryNames, fileName } = req;
 
-      const directoryPath = `${path}/${directoryName}`;
-      FileSystemManager.createDirectoryWhenNotExist(directoryPath);
-      console.log(`directory: ${directoryPath}`);
+      directoryNames.forEach((directoryName) => {
+        const directoryPath = `${path}/${directoryName}`;
+        FileSystemManager.createDirectoryWhenNotExist(directoryPath);
+        console.log(`directory: ${directoryPath}`);
 
-      const filePath = `${directoryPath}/${fileName}`;
-      FileSystemManager.createFileWhenNotExist(filePath, '{}');
-      console.log(`file: ${filePath}`);
+        const filePath = `${directoryPath}/${fileName}`;
+        FileSystemManager.createFileWhenNotExist(filePath, '{}');
+        console.log(`file: ${filePath}`);
+      });
 
       return { status: 200, data: { fileName } };
     });

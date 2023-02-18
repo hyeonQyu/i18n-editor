@@ -4,7 +4,7 @@ import { useTranslationFileEditorContext } from '@components/translationFileEdit
 import classNames from 'classnames';
 import { COLOR } from '@defines/css';
 import useTableExtendDialog from '@components/translationFileEditor/components/tableExtendDialog/useTableExtendDialog';
-import { LanguageCodeDropdown } from '@components/languageCodeDropdown';
+import { LanguageCodeMultiSelect } from '@components/languageCodeMultiSelect';
 import { CustomConfirmDialogFooter } from '@components/customConfirmDialogFooter';
 
 const inputId = 'table-extend';
@@ -48,7 +48,7 @@ export function TableExtendDialog() {
               />
             )}
             {type === 'column' && (
-              <LanguageCodeDropdown dropdownLanguageCode={dropdownAddingLanguageCode} options={languageSelectOptions} />
+              <LanguageCodeMultiSelect multiSelectLanguageCode={dropdownAddingLanguageCode} options={languageSelectOptions} />
             )}
             <label htmlFor={inputId} className={classNames(invalid && 'invalid')}>
               {inputLabel}

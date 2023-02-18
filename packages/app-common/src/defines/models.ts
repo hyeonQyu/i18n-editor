@@ -23,7 +23,7 @@ export interface GetDirectoryRes
 
 export interface PostDirectoryReq {
   path: string;
-  directoryName: LanguageCode;
+  directoryNames: LanguageCode[];
   fileName: string;
 }
 
