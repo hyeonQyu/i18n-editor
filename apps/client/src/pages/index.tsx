@@ -106,25 +106,30 @@ function Index(props: IndexProps) {
           padding: 0 50px;
         }
         :global(.p-datatable-wrapper::-webkit-scrollbar),
-        :global(.p-dropdown-items-wrapper::-webkit-scrollbar) {
+        :global(.p-dropdown-items-wrapper::-webkit-scrollbar),
+        :global(.p-multiselect-items-wrapper::-webkit-scrollbar) {
           width: 8px;
           background-color: var(--surface-b);
         }
         :global(.p-datatable-wrapper::-webkit-scrollbar-thumb),
-        :global(.p-dropdown-items-wrapper::-webkit-scrollbar-thumb) {
+        :global(.p-dropdown-items-wrapper::-webkit-scrollbar-thumb),
+        :global(.p-multiselect-items-wrapper::-webkit-scrollbar-thumb) {
           background-color: var(--surface-400);
           border-radius: 10px;
         }
         :global(.p-datatable-wrapper::-webkit-scrollbar-thumb:hover),
-        :global(.p-dropdown-items-wrapper::-webkit-scrollbar-thumb:hover) {
+        :global(.p-dropdown-items-wrapper::-webkit-scrollbar-thumb:hover),
+        :global(.p-multiselect-items-wrapper::-webkit-scrollbar-thumb:hover) {
           background-color: var(--surface-500);
         }
         :global(.p-datatable-wrapper::-webkit-scrollbar-thumb:active),
-        :global(.p-dropdown-items-wrapper::-webkit-scrollbar-thumb:active) {
+        :global(.p-dropdown-items-wrapper::-webkit-scrollbar-thumb:active),
+        :global(.p-multiselect-items-wrapper::-webkit-scrollbar-thumb:active) {
           background-color: var(--surface-600);
         }
         :global(.p-datatable-wrapper::-webkit-scrollbar-track),
-        :global(.p-dropdown-items-wrapper::-webkit-scrollbar-track) {
+        :global(.p-dropdown-items-wrapper::-webkit-scrollbar-track),
+        :global(.p-multiselect-items-wrapper::-webkit-scrollbar-track) {
           background: none;
         }
       `}</style>
