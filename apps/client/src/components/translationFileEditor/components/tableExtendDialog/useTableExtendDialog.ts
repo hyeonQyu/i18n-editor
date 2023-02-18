@@ -16,19 +16,24 @@ function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExt
   const {} = params;
   const {
     columns = [],
-    tableExtendDialogData: { type, visible, onAdd },
-    dropdownAddingLanguageCode,
+    tableExtendDialogData: { type, visible, onAddKey, onAddLanguageCodes },
+    multiSelectAddingLanguageCode,
     inputAddingKey,
   } = useTranslationFileEditorContext();
 
   const value = {
     row: inputAddingKey.value,
-    column: dropdownAddingLanguageCode.value,
+    column: multiSelectAddingLanguageCode.value,
   }[type];
 
   const clear = {
     row: inputAddingKey.clear,
-    column: dropdownAddingLanguageCode.clear,
+    column: multiSelectAddingLanguageCode.clear,
+  }[type];
+
+  const onAdd = {
+    row: onAddKey,
+    column: onAddLanguageCodes,
   }[type];
 
   const handleClickAdd = () => {

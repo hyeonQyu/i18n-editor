@@ -14,7 +14,7 @@ import { ColumnHeaderKey, LanguageCode, RowData } from 'i18n-editor-common';
 import { DialogPositionType } from 'primereact/dialog';
 import useInput, { IUseInput } from '@hooks/common/useInput';
 import { DataTableFilterMeta } from 'primereact/datatable';
-import useDropdown, { UseDropdown } from '@hooks/common/useDropdown';
+import useMultiSelect, { UseMultiSelect } from '@hooks/common/useMultiSelect';
 
 export interface IUseTranslationFileEditorParams extends TranslationFileEditorProps {}
 
@@ -26,7 +26,7 @@ export interface IUseTranslationFileEditor {
   selectedRow: RowData | undefined;
   globalFilterFields: string[];
   isClearableRow: boolean;
-  dropdownAddingLanguageCode: UseDropdown;
+  multiSelectAddingLanguageCode: UseMultiSelect;
   inputAddingKey: IUseInput;
   tableExtendDialogData: TableExtendDialogData;
   filter: DataTableFilterMeta;
@@ -69,7 +69,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     ...INITIAL_TABLE_EXTEND_DIALOG_DATA,
   });
 
-  const dropdownAddingLanguageCode = useDropdown({});
+  const multiSelectAddingLanguageCode = useMultiSelect({});
 
   const inputAddingKey = useInput({
     onChangeValue() {
@@ -220,8 +220,8 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     setTableExtendDialogData((prev) => ({
       ...prev,
       ...commonAddColumnDialogProps(),
-      onAdd(language) {
-        onAddColumn({ languageCode: language as LanguageCode });
+      onAddLanguageCodes(languageCodes) {
+        onAddColumn({ languageCodes: languageCodes as LanguageCode[] });
         hideTableExtendDialog();
       },
     }));
@@ -235,7 +235,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     setTableExtendDialogData((prev) => ({
       ...prev,
       ...commonAddRowDialogProps(e!),
-      onAdd(key) {
+      onAddKey(key) {
         if (checkInvalidRowAndAlert(key)) return;
 
         onAddRowAbove({
@@ -256,7 +256,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     setTableExtendDialogData((prev) => ({
       ...prev,
       ...commonAddRowDialogProps(e!),
-      onAdd(key) {
+      onAddKey(key) {
         if (checkInvalidRowAndAlert(key)) return;
 
         onAddRowBelow({
@@ -290,7 +290,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     globalFilterFields,
     isClearableRow,
     tableExtendDialogData,
-    dropdownAddingLanguageCode,
+    multiSelectAddingLanguageCode: multiSelectAddingLanguageCode,
     inputAddingKey,
     filter,
     inputFilter,

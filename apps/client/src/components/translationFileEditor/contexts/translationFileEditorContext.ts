@@ -11,7 +11,7 @@ export interface ITranslationFileEditorContext
       | 'mouseHoveredRowIndex'
       | 'isClearableRow'
       | 'tableExtendDialogData'
-      | 'dropdownAddingLanguageCode'
+      | 'multiSelectAddingLanguageCode'
       | 'inputAddingKey'
       | 'globalFilterFields'
       | 'selectedRow'
@@ -38,7 +38,7 @@ export const TranslationFileEditorContext = React.createContext<ITranslationFile
   mouseHoveredRowIndex: undefined,
   isClearableRow: false,
   tableExtendDialogData: INITIAL_TABLE_EXTEND_DIALOG_DATA,
-  dropdownAddingLanguageCode: { value: '', onChange() {}, clear() {} },
+  multiSelectAddingLanguageCode: { value: '', onChange() {}, clear() {} },
   inputAddingKey: { value: '', onChange() {}, changeValue() {}, clear() {}, inputRef: createRef() },
   globalFilterFields: [],
   selectedRow: undefined,

@@ -351,13 +351,13 @@ function useHome(params: IUseHomeParams): IUseHome {
   const onAddColumn: CustomEventHandler<TranslationTableColumnAddEvent> = (e) => {
     if (!e) return;
 
-    const { languageCode } = e;
+    const { languageCodes } = e;
 
     mutatePostContentColumn(
       {
         path: directoryPath!,
         fileName: translationFile!,
-        languageCode,
+        languageCodes,
       },
       {
         onSuccess({ data }) {

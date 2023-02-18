@@ -9,6 +9,7 @@ export interface TableExtendDialogData {
   position: DialogPositionType;
   inputLabel: string;
   invalid: boolean;
-  onAdd: (key: string) => void;
+  onAddKey: (key: string) => void;
+  onAddLanguageCodes: (languageCodes: string[]) => void;
   onHide: () => void;
 }

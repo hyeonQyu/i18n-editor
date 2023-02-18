@@ -9,7 +9,7 @@ export const INITIAL_TABLE_EXTEND_DIALOG_DATA: TableExtendDialogData = {
   position: 'left',
   inputLabel: '',
   invalid: false,
-  onAdd() {},
+  onAddKey() {},
   onHide() {},
 };
 

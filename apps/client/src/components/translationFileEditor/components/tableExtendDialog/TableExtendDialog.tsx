@@ -11,8 +11,8 @@ const inputId = 'table-extend';
 
 export function TableExtendDialog() {
   const {
-    tableExtendDialogData: { type, visible, inputLabel, invalid, onAdd, onHide, ...rest },
-    dropdownAddingLanguageCode,
+    tableExtendDialogData: { type, visible, inputLabel, invalid, onAddKey, onHide, ...rest },
+    multiSelectAddingLanguageCode,
     inputAddingKey,
   } = useTranslationFileEditorContext();
 
@@ -48,7 +48,7 @@ export function TableExtendDialog() {
               />
             )}
             {type === 'column' && (
-              <LanguageCodeMultiSelect multiSelectLanguageCode={dropdownAddingLanguageCode} options={languageSelectOptions} />
+              <LanguageCodeMultiSelect multiSelectLanguageCode={multiSelectAddingLanguageCode} options={languageSelectOptions} />
             )}
             <label htmlFor={inputId} className={classNames(invalid && 'invalid')}>
               {inputLabel}

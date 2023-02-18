@@ -18,13 +18,13 @@ export interface TranslationTableDeleteRowEvent extends TranslationTableRowEditE
   position: DialogPositionType;
 }
 
-export interface TranslationTableColumnEditEvent {
-  languageCode: LanguageCode;
+export interface TranslationTableColumnAddEvent {
+  languageCodes: LanguageCode[];
 }
 
-export interface TranslationTableColumnAddEvent extends TranslationTableColumnEditEvent {}
-
-export interface TranslationTableColumnDeleteEvent extends TranslationTableColumnEditEvent {}
+export interface TranslationTableColumnDeleteEvent {
+  languageCode: LanguageCode;
+}
 
 export interface CreateDirectoryEvent {
   directoryNames: LanguageCode[];

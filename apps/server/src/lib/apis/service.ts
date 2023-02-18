@@ -292,18 +292,20 @@ export namespace Service {
    */
   export function postContentColumn(req: PostContentColumnReq): PostContentColumnRes {
     return doService<PostContentColumnRes>(() => {
-      const { path, fileName, languageCode } = req;
+      const { path, fileName, languageCodes } = req;
 
-      const directoryPath = `${path}/${languageCode}`;
-      if (fs.existsSync(directoryPath)) {
-        return { status: 999, errorMessage: `(${languageCode}) is Duplicated` };
-      }
-      fs.mkdirSync(directoryPath);
-      console.log(`directory: ${directoryPath}`);
+      languageCodes.forEach((languageCode) => {
+        const directoryPath = `${path}/${languageCode}`;
+        if (fs.existsSync(directoryPath)) {
+          return { status: 999, errorMessage: `(${languageCode}) is Duplicated` };
+        }
+        fs.mkdirSync(directoryPath);
+        console.log(`directory: ${directoryPath}`);
 
-      const filePath = `${directoryPath}/${fileName}`;
-      FileSystemManager.createFileWhenNotExist(filePath, '{}');
-      console.log(`file: ${filePath}`);
+        const filePath = `${directoryPath}/${fileName}`;
+        FileSystemManager.createFileWhenNotExist(filePath, '{}');
+        console.log(`file: ${filePath}`);
+      });
 
       return getContent({ path, fileName });
     });
