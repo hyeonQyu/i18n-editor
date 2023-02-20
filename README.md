@@ -26,29 +26,29 @@ i18n-editor를 사용하여 여러개로 분리되어 있는 다국어 `JSON` �
 ## Installation
 npm
 ```bash
-$ npm install -D i18n-editor
+npm install -D i18n-editor
 ```
 
 yarn
 ```bash
-$ yarn add -D i18n-editor
+yarn add -D i18n-editor
 ```
 
 ## Run
 
-Terminal에 `npx i18n-editor` 명령어를 입력하여 애플리케이션을 실행시킬 수 있습니다. 이때, 포트 번호를 옵션으로 지정할 수 있습니다.
+Terminal에 `i18n-editor` 명령어를 입력하여 애플리케이션을 실행시킬 수 있습니다. 이때, 포트 번호를 옵션으로 지정할 수 있습니다.
 
 기본 옵션으로 실행 (4848번 포트 사용)
 ```bash
-$ npx i18n-editor
+i18n-editor
 ```
 
 실행 포트 옵션 (9000번 포트 사용)
 ```bash
-$ npx i18n-eidtor -p 9000
+i18n-eidtor -p 9000
 ```
 ```bash
-$ npx i18n-editor --port 9000
+i18n-editor --port 9000
 ```
 
 명령어를 실행하면 브라우저 창이 새로 열리면서 애플리케이션이 실행됩니다.
