@@ -1,6 +1,6 @@
 {
   "name": "i18n-editor",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": true,
   "workspaces": {
     "packages": [
@@ -39,6 +39,13 @@
       "type": "MIT",
       "url": "https://www.opensource.org/licenses/MIT"
     }
+  ],
+  "keywords": [
+    "i18n",
+    "translation",
+    "globalization",
+    "international",
+    "internationalization"
   ],
   "bugs": {
     "url": "https://github.com/hyeonQyu/i18n-editor/issues"

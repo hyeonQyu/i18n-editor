@@ -21,7 +21,7 @@ const copyPackageJson = () => {
   const root = packageJsonToObj(path.join(__dirname, '/package.json'));
   const server = packageJsonToObj(path.join(__dirname, '/apps/server/package.json'));
 
-  const { name, version, author, licenses, bugs, homepage } = root;
+  const { name, version, author, licenses, keywords, bugs, homepage } = root;
 
   const packageConfig = {
     ...server,
@@ -29,6 +29,7 @@ const copyPackageJson = () => {
     version,
     author,
     licenses,
+    keywords,
     bugs,
     homepage,
     scripts: {},
