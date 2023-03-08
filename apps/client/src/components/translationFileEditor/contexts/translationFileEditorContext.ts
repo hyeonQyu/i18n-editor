@@ -6,6 +6,7 @@ import { TranslationFileEditorProps } from '@components/translationFileEditor';
 export interface ITranslationFileEditorContext
   extends Pick<
       IUseTranslationFileEditor,
+      | 'dataTableRef'
       | 'rowMenuRef'
       | 'columnMenuRef'
       | 'mouseHoveredRowIndex'
@@ -23,6 +24,7 @@ export interface ITranslationFileEditorContext
       | 'onTableMoreOptionsRowButtonClick'
       | 'onAddNewTranslationKey'
       | 'handleTableMouseLeave'
+      | 'handleCellEditComplete'
       | 'handleAddColumnClick'
       | 'handleColumnMenuClickDeleteColumn'
       | 'handleRowMenuClickAddRowAbove'
@@ -33,6 +35,7 @@ export interface ITranslationFileEditorContext
     Pick<TranslationFileEditorProps, 'rows' | 'columns' | 'onChange'> {}
 
 export const TranslationFileEditorContext = React.createContext<ITranslationFileEditorContext>({
+  dataTableRef: undefined,
   rowMenuRef: undefined,
   columnMenuRef: undefined,
   mouseHoveredRowIndex: undefined,
@@ -51,6 +54,7 @@ export const TranslationFileEditorContext = React.createContext<ITranslationFile
   onTableMoreOptionsRowButtonClick() {},
   onAddNewTranslationKey() {},
   handleTableMouseLeave() {},
+  handleCellEditComplete() {},
   handleAddColumnClick() {},
   handleColumnMenuClickDeleteColumn() {},
   handleRowMenuClickAddRowAbove() {},

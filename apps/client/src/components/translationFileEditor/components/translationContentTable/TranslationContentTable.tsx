@@ -13,18 +13,20 @@ export interface TranslationContentTableProps {}
 export function TranslationContentTable(props: TranslationContentTableProps) {
   const {} = props;
   const {
+    dataTableRef,
     selectedRow,
     globalFilterFields,
     filter,
     handleTableMouseLeave,
+    handleCellEditComplete,
     rows = [],
     columns = [],
-    onChange,
   } = useTranslationFileEditorContext();
 
   return (
     <>
       <DataTable
+        ref={dataTableRef}
         value={rows}
         header={TableHeader}
         editMode={'cell'}
@@ -46,7 +48,7 @@ export function TranslationContentTable(props: TranslationContentTableProps) {
             field={header}
             header={() => <ColumnHeader header={header} />}
             editor={(option) => <CellEditor {...option} />}
-            onCellEditComplete={onChange}
+            onCellEditComplete={handleCellEditComplete}
             body={(row) => <CellViewer rowData={row} field={header} />}
             className={classNames(header === 'key' ? 'key' : 'translation')}
           />

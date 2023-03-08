@@ -7,7 +7,7 @@ export interface CellEditorProps extends ColumnEditorOptions {}
 
 export function CellEditor(props: CellEditorProps) {
   const { value, field, rowData } = props;
-  const { handleClick, handleFocus, handleChange, handleMouseEnter } = useCellEditor(props);
+  const { handleClick, handleFocus, handleChange, handleMouseEnter, handleKeyDown } = useCellEditor(props);
 
   if (field === 'key') {
     return <CellViewer rowData={rowData} field={field} />;
@@ -22,6 +22,7 @@ export function CellEditor(props: CellEditorProps) {
         onFocus={handleFocus}
         onChange={handleChange}
         onMouseEnter={handleMouseEnter}
+        onKeyDown={handleKeyDown}
         placeholder={'번역 값을 입력하세요'}
         autoResize
       />

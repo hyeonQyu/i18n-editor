@@ -1,5 +1,5 @@
 import { TranslationFileEditorProps } from '@components/translationFileEditor/TranslationFileEditor';
-import { MouseEventHandler, RefObject, SyntheticEvent, useRef, useState } from 'react';
+import { KeyboardEvent, MouseEventHandler, RefObject, SyntheticEvent, useRef, useState } from 'react';
 import { CustomEventHandler } from '@defines/event';
 import {
   INITIAL_TABLE_EXTEND_DIALOG_DATA,
@@ -13,12 +13,14 @@ import { Menu } from 'primereact/menu';
 import { ColumnHeaderKey, LanguageCode, RowData } from 'i18n-editor-common';
 import { DialogPositionType } from 'primereact/dialog';
 import useInput, { IUseInput } from '@hooks/common/useInput';
-import { DataTableFilterMeta } from 'primereact/datatable';
+import { DataTable, DataTableFilterMeta } from 'primereact/datatable';
 import useMultiSelect, { UseMultiSelect } from '@hooks/common/useMultiSelect';
+import { ColumnEventParams } from 'primereact/column';
 
 export interface IUseTranslationFileEditorParams extends TranslationFileEditorProps {}
 
 export interface IUseTranslationFileEditor {
+  dataTableRef: RefObject<DataTable> | undefined;
   rowMenuRef: RefObject<Menu> | undefined;
   columnMenuRef: RefObject<Menu> | undefined;
   mouseHoveredRowIndex: number | undefined;
@@ -32,6 +34,7 @@ export interface IUseTranslationFileEditor {
   filter: DataTableFilterMeta;
   inputFilter: IUseInput;
   handleTableMouseLeave: MouseEventHandler;
+  handleCellEditComplete: CustomEventHandler<ColumnEventParams>;
   handleAddColumnClick: MouseEventHandler<HTMLButtonElement>;
   handleColumnMenuClickDeleteColumn: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent>;
@@ -49,6 +52,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   const {
     rows,
     columns = [],
+    onChange,
     onAddColumn,
     onDeleteColumn,
     onAddRowAbove,
@@ -58,6 +62,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     onDeleteRow,
   } = params;
 
+  const dataTableRef = useRef<DataTable>(null);
   const rowMenuRef = useRef<Menu>(null);
   const columnMenuRef = useRef<Menu>(null);
 
@@ -104,6 +109,32 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
 
   const handleTableMouseLeave: MouseEventHandler = () => {
     setMouseHoveredRowIndex(undefined);
+  };
+
+  const handleCellEditComplete: CustomEventHandler<ColumnEventParams> = (e) => {
+    if (!e) return;
+
+    const { originalEvent } = e;
+    const { key, shiftKey, ctrlKey, altKey } = originalEvent as KeyboardEvent;
+
+    onChange(e);
+
+    // 엔터 키 입력 시 다음 행에 있는 셀에 focus
+    if (key === 'Enter' && !shiftKey && !ctrlKey && !altKey) {
+      // @ts-ignore
+      const { rowIndex, cellIndex, props } = e;
+
+      const rowElements = dataTableRef.current?.getTable().querySelectorAll('tbody > tr');
+      const nextRowElement = rowElements![rowIndex + 1];
+
+      if (!nextRowElement) return;
+
+      const cellElements = nextRowElement.querySelectorAll('td');
+      const nextCellElement = cellElements![cellIndex];
+
+      nextCellElement.click();
+      setEditRowIndex(props.value[rowIndex + 1].index);
+    }
   };
 
   const onCellClick: CustomEventHandler<TableCellEvent> = (e) => {
@@ -282,6 +313,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   };
 
   return {
+    dataTableRef,
     rowMenuRef,
     columnMenuRef,
     mouseHoveredRowIndex,
@@ -295,6 +327,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     filter,
     inputFilter,
     handleTableMouseLeave,
+    handleCellEditComplete,
     handleAddColumnClick,
     handleColumnMenuClickDeleteColumn,
     handleRowMenuClickAddRowAbove,
