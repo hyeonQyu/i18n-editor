@@ -38,6 +38,7 @@ export function CellViewer(props: CellViewerProps) {
           height: 100%;
           word-break: break-all;
           line-height: 1.4;
+          font-weight: ${isKey ? 'bold' : 'normal'};
         }
 
         .cell :global(button.row-options) {
