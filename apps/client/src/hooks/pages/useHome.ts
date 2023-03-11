@@ -431,7 +431,7 @@ function useHome(params: IUseHomeParams): IUseHome {
         row: { index, key },
       },
       {
-        onSuccess() {
+        onSuccess({ data }) {
           setContentRows((prev) => getNewRowAddedContentRows(prev!, contentColumns!, index, key));
 
           toastRef.current?.show({
@@ -440,7 +440,7 @@ function useHome(params: IUseHomeParams): IUseHome {
             life: 3000,
           });
 
-          onSuccess?.(index);
+          onSuccess?.(data!.row);
         },
       },
     );
@@ -459,7 +459,7 @@ function useHome(params: IUseHomeParams): IUseHome {
         row: { index: rowIndex, key },
       },
       {
-        onSuccess() {
+        onSuccess({ data }) {
           setContentRows((prev) => getNewRowAddedContentRows(prev!, contentColumns!, index + 1, key));
 
           toastRef.current?.show({
@@ -468,7 +468,7 @@ function useHome(params: IUseHomeParams): IUseHome {
             life: 3000,
           });
 
-          onSuccess?.(rowIndex);
+          onSuccess?.(data!.row);
         },
       },
     );
@@ -487,7 +487,7 @@ function useHome(params: IUseHomeParams): IUseHome {
         row: { index, key },
       },
       {
-        onSuccess() {
+        onSuccess({ data }) {
           setContentRows((prev) => [...prev!, getNewContentRow(contentColumns!, index, key)]);
 
           toastRef.current?.show({
@@ -496,7 +496,7 @@ function useHome(params: IUseHomeParams): IUseHome {
             life: 3000,
           });
 
-          onSuccess?.(index);
+          onSuccess?.(data!.row);
         },
       },
     );

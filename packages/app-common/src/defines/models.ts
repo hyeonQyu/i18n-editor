@@ -79,7 +79,10 @@ export interface PostContentRowReq {
   row: RowData;
 }
 
-export interface PostContentRowRes extends CommonRes {}
+export interface PostContentRowRes
+  extends CommonRes<{
+    row: RowData;
+  }> {}
 
 export interface DeleteContentRowReq {
   path: string;

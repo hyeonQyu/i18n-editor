@@ -137,6 +137,12 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     }
   };
 
+  const handleAddRowSuccess = ({ index, key }: RowData) => {
+    setEditRowIndex(index);
+    if (key.toLowerCase().includes(inputFilter.value.toLowerCase())) return;
+    inputFilter.clear();
+  };
+
   const onCellClick: CustomEventHandler<TableCellEvent> = (e) => {
     if (!e) return;
     const { rowIndex } = e;
@@ -177,10 +183,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
 
     onAddRow({
       key,
-      onSuccess(index) {
-        setEditRowIndex(index);
-        inputFilter.clear();
-      },
+      onSuccess: handleAddRowSuccess,
     });
   };
 
@@ -272,10 +275,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
         onAddRowAbove({
           index: editRowIndex!,
           key,
-          onSuccess(index) {
-            setEditRowIndex(index);
-            inputFilter.clear();
-          },
+          onSuccess: handleAddRowSuccess,
         });
 
         hideTableExtendDialog();
@@ -293,10 +293,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
         onAddRowBelow({
           index: editRowIndex!,
           key,
-          onSuccess(index) {
-            setEditRowIndex(index);
-            inputFilter.clear();
-          },
+          onSuccess: handleAddRowSuccess,
         });
 
         hideTableExtendDialog();

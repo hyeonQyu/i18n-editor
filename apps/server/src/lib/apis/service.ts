@@ -250,7 +250,7 @@ export namespace Service {
       ContentUtil.writeTranslationFilesByChangedRows(translationFiles, newRows);
       cache.lastReadRows = newRows;
 
-      return { status: 200 };
+      return { status: 200, data: { row } };
     });
   }
 
