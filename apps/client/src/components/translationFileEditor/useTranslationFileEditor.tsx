@@ -16,6 +16,7 @@ import useInput, { IUseInput } from '@hooks/common/useInput';
 import { DataTable, DataTableFilterMeta } from 'primereact/datatable';
 import useMultiSelect, { UseMultiSelect } from '@hooks/common/useMultiSelect';
 import { ColumnEventParams } from 'primereact/column';
+import { useToastContext } from '@contexts/toastContext';
 
 export interface IUseTranslationFileEditorParams extends TranslationFileEditorProps {}
 
@@ -37,6 +38,7 @@ export interface IUseTranslationFileEditor {
   handleCellEditComplete: CustomEventHandler<ColumnEventParams>;
   handleAddColumnClick: MouseEventHandler<HTMLButtonElement>;
   handleColumnMenuClickDeleteColumn: CustomEventHandler<SyntheticEvent>;
+  handleRowMenuClickCopyTranslationKey: CustomEventHandler;
   handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickAddRowBelow: CustomEventHandler<SyntheticEvent>;
   handleRowMenuClickClearRowContent: CustomEventHandler<SyntheticEvent>;
@@ -65,6 +67,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   const dataTableRef = useRef<DataTable>(null);
   const rowMenuRef = useRef<Menu>(null);
   const columnMenuRef = useRef<Menu>(null);
+  const { toastRef } = useToastContext();
 
   const [mouseHoveredRowIndex, setMouseHoveredRowIndex] = useState<number>();
   const [editRowIndex, setEditRowIndex] = useState<number>();
@@ -265,6 +268,14 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     onDeleteColumn({ languageCode: editColumnHeaderKey as LanguageCode });
   };
 
+  const handleRowMenuClickCopyTranslationKey: CustomEventHandler = async () => {
+    await navigator.clipboard.writeText(rows![editRowIndex!].key);
+    toastRef.current?.show({
+      severity: 'info',
+      detail: '클립보드에 복사되었어요',
+    });
+  };
+
   const handleRowMenuClickAddRowAbove: CustomEventHandler<SyntheticEvent> = (e) => {
     setTableExtendDialogData((prev) => ({
       ...prev,
@@ -327,6 +338,7 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
     handleCellEditComplete,
     handleAddColumnClick,
     handleColumnMenuClickDeleteColumn,
+    handleRowMenuClickCopyTranslationKey,
     handleRowMenuClickAddRowAbove,
     handleRowMenuClickAddRowBelow,
     handleRowMenuClickClearRowContent,

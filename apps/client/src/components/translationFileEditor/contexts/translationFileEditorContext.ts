@@ -27,6 +27,7 @@ export interface ITranslationFileEditorContext
       | 'handleCellEditComplete'
       | 'handleAddColumnClick'
       | 'handleColumnMenuClickDeleteColumn'
+      | 'handleRowMenuClickCopyTranslationKey'
       | 'handleRowMenuClickAddRowAbove'
       | 'handleRowMenuClickAddRowBelow'
       | 'handleRowMenuClickClearRowContent'
@@ -57,6 +58,7 @@ export const TranslationFileEditorContext = React.createContext<ITranslationFile
   handleCellEditComplete() {},
   handleAddColumnClick() {},
   handleColumnMenuClickDeleteColumn() {},
+  handleRowMenuClickCopyTranslationKey() {},
   handleRowMenuClickAddRowAbove() {},
   handleRowMenuClickAddRowBelow() {},
   handleRowMenuClickClearRowContent() {},

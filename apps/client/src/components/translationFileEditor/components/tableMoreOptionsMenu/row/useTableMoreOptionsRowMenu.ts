@@ -11,6 +11,7 @@ function useTableMoreOptionsRowMenu(params: IUseTableMoreOptionsRowMenuParams): 
   const {} = params;
   const {
     isClearableRow,
+    handleRowMenuClickCopyTranslationKey,
     handleRowMenuClickAddRowAbove,
     handleRowMenuClickAddRowBelow,
     handleRowMenuClickClearRowContent,
@@ -18,6 +19,13 @@ function useTableMoreOptionsRowMenu(params: IUseTableMoreOptionsRowMenuParams): 
   } = useTranslationFileEditorContext();
 
   const items: MenuItem[] = [
+    {
+      label: '번역 key 값 복사',
+      icon: 'pi pi-clone',
+      command() {
+        handleRowMenuClickCopyTranslationKey();
+      },
+    },
     {
       label: '위쪽에 새 번역 추가',
       icon: 'pi pi-arrow-up',
