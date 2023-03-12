@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
-  exportPathMap: () => ({
-    '/': { page: '/' },
-  }),
   images: {
     loader: 'akamai',
     path: '/',

@@ -10,6 +10,7 @@ export const INITIAL_TABLE_EXTEND_DIALOG_DATA: TableExtendDialogData = {
   inputLabel: '',
   invalid: false,
   onAddKey() {},
+  onAddLanguageCodes() {},
   onHide() {},
 };
 

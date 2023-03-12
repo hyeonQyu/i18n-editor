@@ -5,8 +5,8 @@ import { CellViewer } from '@components/translationFileEditor/components/transla
 import classNames from 'classnames';
 import { DataTable } from 'primereact/datatable';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
-import TableHeader from '@components/translationFileEditor/components/translationContentTable/components/tableHeader/TableHeader';
 import { NewTranslationAdder } from '@components/translationFileEditor/components/translationContentTable/components/newTranslationAdder';
+import { TableHeader } from '@components/translationFileEditor/components/translationContentTable/components/tableHeader';
 
 export interface TranslationContentTableProps {}
 

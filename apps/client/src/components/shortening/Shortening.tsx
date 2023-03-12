@@ -34,5 +34,3 @@ export function Shortening(props: ShorteningProps) {
     </>
   );
 }
-
-export default Shortening;

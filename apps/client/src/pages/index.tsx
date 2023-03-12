@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { DirectorySelector } from '@components/directorySelector';
 import useHome from '@hooks/pages/useHome';
 import { TranslationFileSelector } from '@components/translationFileSelector';
-import TranslationFileEditor from '@components/translationFileEditor/TranslationFileEditor';
+import { TranslationFileEditor } from '@components/translationFileEditor';
 import { LocaleDirectoryCreationDialog } from '@components/localeDirectoryCreationDialog';
 import { TranslationFileCreationDialog } from '@components/translationFileCreationDialog';
 import { HomeSkeleton } from '@components/page/home/homeSkeleton';

@@ -28,7 +28,7 @@ export interface TranslationFileEditorProps {
   onDeleteRow: CustomEventHandler<TranslationTableDeleteRowEvent>;
 }
 
-function TranslationFileEditor(props: TranslationFileEditorProps) {
+export function TranslationFileEditor(props: TranslationFileEditorProps) {
   const { rows, columns } = props;
 
   return (
@@ -51,5 +51,3 @@ function TranslationFileEditor(props: TranslationFileEditorProps) {
     </>
   );
 }
-
-export default TranslationFileEditor;
