@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { DirectorySelector } from '@components/directorySelector';
 import useHome from '@hooks/pages/useHome';
 import { TranslationFileSelector } from '@components/translationFileSelector';
@@ -42,6 +43,10 @@ function Index(props: IndexProps) {
 
   return (
     <>
+      <Head>
+        <title>i18n-editor</title>
+      </Head>
+
       <LocaleDirectoryCreationDialog
         visible={localeDirectoryCreationDialogOpened}
         onCreate={handleCreateLocaleDirectory}
