@@ -46,6 +46,7 @@ export function TranslationFileCreationDialog(props: TranslationFileCreationDial
               value={inputTranslationFileName.value}
               onChange={inputTranslationFileName.onChange}
               className={classNames(isDuplicate && 'p-invalid')}
+              autoFocus
             />
             <span className={'json'}>.json</span>
             <label htmlFor={inputFileNameId} className={classNames(isDuplicate && 'invalid')}>
