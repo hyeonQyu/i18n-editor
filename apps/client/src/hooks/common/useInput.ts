@@ -1,4 +1,4 @@
-import { ChangeEventHandler, MutableRefObject, useEffect, useRef, useState } from 'react';
+import { ChangeEventHandler, MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 export interface IUseInputParams {
   initialValue?: string;
@@ -29,26 +29,29 @@ function useInput(params: IUseInputParams): IUseInput {
     }
   }, [autoFocus]);
 
-  const changeValue = (value: string) => {
+  const changeValue = useCallback((value: string) => {
     setValue(value);
-  };
+  }, []);
 
-  const onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
-    const { value: targetValue } = e.target;
-    if (validator(targetValue)) {
-      setValue(targetValue);
-    }
-  };
+  const onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = useCallback(
+    (e) => {
+      const { value: targetValue } = e.target;
+      if (validator(targetValue)) {
+        setValue(targetValue);
+      }
+    },
+    [validator],
+  );
 
-  const clear = () => {
+  const clear = useCallback(() => {
     if (onBeforeClear()) {
       setValue('');
     }
-  };
+  }, [onBeforeClear]);
 
   useEffect(() => {
     onChangeValue(value);
-  }, [value]);
+  }, [value, onChangeValue]);
 
   return {
     value,
