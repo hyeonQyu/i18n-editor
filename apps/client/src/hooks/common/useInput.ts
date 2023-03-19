@@ -51,7 +51,7 @@ function useInput(params: IUseInputParams): IUseInput {
 
   useEffect(() => {
     onChangeValue(value);
-  }, [value, onChangeValue]);
+  }, [value]);
 
   return {
     value,
