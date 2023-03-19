@@ -7,6 +7,11 @@ export const localeDirectoryPathState = atom<string | undefined>({
   default: undefined,
 });
 
+export const localeDirectoryCreationDialogOpenedState = atom<boolean>({
+  key: 'localeDirectoryCreationDialogOpened',
+  default: false,
+});
+
 export const translationFileNameState = atom<string | undefined>({
   key: 'translationFileName',
   default: undefined,
