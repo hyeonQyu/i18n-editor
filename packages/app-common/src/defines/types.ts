@@ -15,9 +15,7 @@ export interface ColumnData {
   header: ColumnHeaderKey;
 }
 
-export type RowData = { index: number; key: string } & {
-  [languageCode in LanguageCode]?: string;
-};
+export type RowData = { index: number; key: string } & Partial<Record<LanguageCode, string>>;
 
 export interface CellData {
   locale: string;
