@@ -26,7 +26,12 @@ export interface IUseFileExplorer {
   onEntryClick: CustomEventHandler<DirectoryEntry>;
 }
 
-function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
+/**
+ * TODO 삭제
+ * @deprecated
+ * @param params
+ */
+function useFileExplorerBefore(params: IUseFileExplorerParams): IUseFileExplorer {
   const { ref, path: initialPath, onChange } = params;
 
   const [path, setPath] = useState<string>(initialPath || '');
@@ -174,4 +179,4 @@ function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   };
 }
 
-export default useFileExplorer;
+export default useFileExplorerBefore;

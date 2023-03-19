@@ -3,24 +3,28 @@ import { forwardRef, RefObject } from 'react';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { MenuItem } from 'primereact/menuitem';
 import { PrimeIcons } from 'primereact/api';
-import useFileExplorer from '@components/directorySelector/components/fileExplorer/useFileExplorer';
+import useFileExplorerBefore from '@components/directorySelector/components/fileExplorer/useFileExplorerBefore';
 import { Entry } from '@components/directorySelector/components/fileExplorer/components/entry';
 import useViewOption from '@components/directorySelector/components/fileExplorer/hooks/useViewOption';
 import { ViewOptionSelector } from '@components/directorySelector/components/fileExplorer/components/viewOptionSelector';
 import classNames from 'classnames';
 import { MovePathButton } from '@components/directorySelector/components/fileExplorer/components/movePathButton';
 import { Button } from 'primereact/button';
-import { DirectorySelectorProps } from '@components/directorySelector';
 import { InputFilter } from '@components/directorySelector/components/fileExplorer/components/inputFilter';
 import { CustomEventHandler } from '@defines/event';
+import { DirectorySelectorBeforeProps } from '@components/directorySelector';
 
-export interface FileExplorerProps extends Pick<DirectorySelectorProps, 'path' | 'onChange'> {
+export interface FileExplorerProps extends Pick<DirectorySelectorBeforeProps, 'path' | 'onChange'> {
   onShow: CustomEventHandler;
   onHide: CustomEventHandler;
   opened: boolean;
 }
 
-export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, ref) => {
+/**
+ * TODO 삭제
+ * @deprecated
+ */
+export const FileExplorerBefore = forwardRef<OverlayPanel, FileExplorerProps>((props, ref) => {
   const { onShow, onHide } = props;
 
   const home: MenuItem = {
@@ -38,7 +42,7 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
     handleSelectButtonClick,
     handleFilterKeywordChange,
     onEntryClick,
-  } = useFileExplorer({ ...props, ref: ref as RefObject<OverlayPanel> });
+  } = useFileExplorerBefore({ ...props, ref: ref as RefObject<OverlayPanel> });
   const { viewType, handleViewTypeChange } = useViewOption({});
 
   return (
@@ -138,4 +142,4 @@ export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, 
   );
 });
 
-FileExplorer.displayName = 'FileExplorer';
+FileExplorerBefore.displayName = 'FileExplorer';

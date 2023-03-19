@@ -1,13 +1,13 @@
 import { FocusEventHandler, MouseEventHandler, RefObject, useRef, useState } from 'react';
 import { OverlayPanel } from 'primereact/overlaypanel';
-import { DirectorySelectorProps } from '@components/directorySelector/DirectorySelectorBefore';
+import { DirectorySelectorBeforeProps } from '@components/directorySelector/DirectorySelectorBefore';
 import { useToastContext } from '@contexts/toastContext';
 import { CustomEventHandler } from '@defines/event';
 import useQueryGetNativeFileExplorer from '@hooks/queries/useQueryGetNativeFileExplorer';
 import { Menu } from 'primereact/menu';
 import { MenuItem } from 'primereact/menuitem';
 
-export interface IUseDirectorySelectorParams extends DirectorySelectorProps {}
+export interface IUseDirectorySelectorParams extends DirectorySelectorBeforeProps {}
 
 export interface IUseDirectorySelector {
   fileExplorerRef: RefObject<OverlayPanel>;

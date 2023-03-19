@@ -1,4 +1,4 @@
-import { FileExplorer } from '@components/directorySelector/components/fileExplorer';
+import { FileExplorerBefore } from '@components/directorySelector/components/fileExplorer';
 import { Button } from 'primereact/button';
 import useDirectorySelectorBefore from '@components/directorySelector/useDirectorySelectorBefore';
 import { PathChangeEvent } from '@components/directorySelector/defines';
@@ -8,7 +8,7 @@ import { COLOR } from '@defines/css';
 import { CustomEventHandler } from '@defines/event';
 import { Menu } from 'primereact/menu';
 
-export interface DirectorySelectorProps {
+export interface DirectorySelectorBeforeProps {
   path: string | undefined;
   invalid: boolean;
   onChange: CustomEventHandler<PathChangeEvent>;
@@ -22,7 +22,7 @@ const inputId = 'locale-directory';
  * @param props
  * @constructor
  */
-export function DirectorySelectorBefore(props: DirectorySelectorProps) {
+export function DirectorySelectorBefore(props: DirectorySelectorBeforeProps) {
   const { path, invalid, onChange } = props;
 
   const {
@@ -42,7 +42,7 @@ export function DirectorySelectorBefore(props: DirectorySelectorProps) {
       <div className={'directory-selector p-inputgroup'}>
         <Button icon={'pi pi-search'} className={'p-button'} onClick={handleSelectClick} />
         <>
-          <FileExplorer
+          <FileExplorerBefore
             ref={fileExplorerRef}
             path={path}
             opened={isFileExplorerOpened}
