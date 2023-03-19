@@ -26,7 +26,7 @@ import {
 } from 'i18n-editor-common';
 import { AxiosInstanceProps } from '@defines/axios';
 
-export namespace HomeApi {
+export namespace Api {
   let client: AxiosInstance;
 
   export function createAxiosInstance({ port, responseInterceptor }: AxiosInstanceProps) {

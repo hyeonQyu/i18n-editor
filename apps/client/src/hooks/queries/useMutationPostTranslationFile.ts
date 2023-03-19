@@ -1,7 +1,7 @@
 import { MUTATION_KEY, UseMutationParams } from '@defines/reactQuery';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { HomeApi } from '@apis/homeApi';
+import { Api } from '@apis/api';
 import { PostTranslationFileReq, PostTranslationFileRes } from 'i18n-editor-common';
 
 type Request = PostTranslationFileReq;
@@ -17,7 +17,7 @@ function useMutationPostTranslationFile(params: UseMutationPostTranslationFilePa
 
   return useMutation({
     mutationKey: MUTATION_KEY.content.postTranslationFile(),
-    mutationFn: HomeApi.postTranslationFile,
+    mutationFn: Api.postTranslationFile,
     ...mutationOption,
   });
 }

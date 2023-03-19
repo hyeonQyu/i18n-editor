@@ -2,7 +2,7 @@ import { MUTATION_KEY, UseMutationParams } from '@defines/reactQuery';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { PostDirectoryReq, PostDirectoryRes } from 'i18n-editor-common';
-import { HomeApi } from '@apis/homeApi';
+import { Api } from '@apis/api';
 
 type Request = PostDirectoryReq;
 
@@ -17,7 +17,7 @@ function useMutationPostDirectory(params: UseMutationPostDirectoryParams): UseMu
 
   return useMutation({
     mutationKey: MUTATION_KEY.content.postDirectory(),
-    mutationFn: HomeApi.postDirectory,
+    mutationFn: Api.postDirectory,
     ...mutationOption,
   });
 }

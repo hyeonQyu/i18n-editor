@@ -2,7 +2,7 @@ import { MUTATION_KEY, UseMutationParams } from '@defines/reactQuery';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { PostContentRowReq, PostContentRowRes } from 'i18n-editor-common';
-import { HomeApi } from '@apis/homeApi';
+import { Api } from '@apis/api';
 
 type Request = PostContentRowReq;
 
@@ -17,7 +17,7 @@ function useMutationPostContentRow(params: UseMutationPostContentRowParams): Use
 
   return useMutation({
     mutationKey: MUTATION_KEY.content.postContentRow(),
-    mutationFn: HomeApi.postContentRow,
+    mutationFn: Api.postContentRow,
     ...mutationOption,
   });
 }

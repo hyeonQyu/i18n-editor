@@ -2,7 +2,7 @@ import { QUERY_KEY, UseQueryParams } from '@defines/reactQuery';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { GetDirectoryReq, GetDirectoryRes } from 'i18n-editor-common';
-import { HomeApi } from '@apis/homeApi';
+import { Api } from '@apis/api';
 
 type Request = GetDirectoryReq;
 
@@ -17,7 +17,7 @@ function useQueryGetDirectory(params: UseQueryGetDirectoryParams): UseQueryGetDi
 
   return useQuery({
     queryKey: QUERY_KEY.directory.getDirectory(req.path ?? ''),
-    queryFn: () => HomeApi.getDirectory(req),
+    queryFn: () => Api.getDirectory(req),
     ...queryOption,
   });
 }

@@ -2,7 +2,7 @@ import { MUTATION_KEY, UseMutationParams } from '@defines/reactQuery';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { DeleteContentColumnReq, DeleteContentColumnRes } from 'i18n-editor-common';
-import { HomeApi } from '@apis/homeApi';
+import { Api } from '@apis/api';
 
 type Request = DeleteContentColumnReq;
 
@@ -17,7 +17,7 @@ function useMutationDeleteContentColumn(params: UseMutationDeleteContentColumnPa
 
   return useMutation({
     mutationKey: MUTATION_KEY.content.deleteContentColumn(),
-    mutationFn: HomeApi.deleteContentColumn,
+    mutationFn: Api.deleteContentColumn,
     ...mutationOption,
   });
 }

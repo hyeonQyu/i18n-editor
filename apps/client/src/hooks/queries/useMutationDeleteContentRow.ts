@@ -2,7 +2,7 @@ import { MUTATION_KEY, UseMutationParams } from '@defines/reactQuery';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { DeleteContentRowReq, DeleteContentRowRes } from 'i18n-editor-common';
-import { HomeApi } from '@apis/homeApi';
+import { Api } from '@apis/api';
 
 type Request = DeleteContentRowReq;
 
@@ -17,7 +17,7 @@ function useMutationDeleteContentRow(params: UseMutationDeleteContentRowParams):
 
   return useMutation({
     mutationKey: MUTATION_KEY.content.deleteContentRow(),
-    mutationFn: HomeApi.deleteContentRow,
+    mutationFn: Api.deleteContentRow,
     ...mutationOption,
   });
 }

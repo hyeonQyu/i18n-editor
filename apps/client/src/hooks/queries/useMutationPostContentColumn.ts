@@ -2,7 +2,7 @@ import { MUTATION_KEY, UseMutationParams } from '@defines/reactQuery';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { PostContentColumnReq, PostContentColumnRes } from 'i18n-editor-common';
-import { HomeApi } from '@apis/homeApi';
+import { Api } from '@apis/api';
 
 type Request = PostContentColumnReq;
 
@@ -17,7 +17,7 @@ function useMutationPostContentColumn(params: UseMutationPostContentColumnParams
 
   return useMutation({
     mutationKey: MUTATION_KEY.content.postContentColumn(),
-    mutationFn: HomeApi.postContentColumn,
+    mutationFn: Api.postContentColumn,
     ...mutationOption,
   });
 }

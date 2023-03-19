@@ -2,7 +2,7 @@ import { QUERY_KEY, UseQueryParams } from '@defines/reactQuery';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { GetConfigRes } from 'i18n-editor-common';
-import { HomeApi } from '@apis/homeApi';
+import { Api } from '@apis/api';
 
 type Request = void;
 
@@ -17,7 +17,7 @@ function useQueryGetConfig(params: UseQueryGetConfigParams): UseQueryGetConfig {
 
   return useQuery({
     queryKey: QUERY_KEY.config.getConfig(),
-    queryFn: HomeApi.getConfig,
+    queryFn: Api.getConfig,
     ...queryOption,
   });
 }

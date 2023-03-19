@@ -1,6 +1,6 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
 import { Toast } from 'primereact/toast';
-import { HomeApi } from '@apis/homeApi';
+import { Api } from '@apis/api';
 import { DefaultConfig, ErrorMessage } from 'i18n-editor-common';
 import { QueryClient } from '@tanstack/react-query';
 
@@ -23,7 +23,7 @@ export default function useApp(): UseApp {
   useEffect(() => {
     const portString = document.getElementById('port')?.getAttribute('value');
 
-    HomeApi.createAxiosInstance({
+    Api.createAxiosInstance({
       port: portString ? Number(portString) : DefaultConfig.PORT,
       responseInterceptor: {
         onFulfilled: (response) => response,
