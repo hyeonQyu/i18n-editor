@@ -16,8 +16,8 @@ import {
   PostContentColumnRes,
   DeleteContentColumnReq,
   DeleteContentColumnRes,
-  GetFileExplorerReq,
-  GetFileExplorerRes,
+  GetNativeFileExplorerReq,
+  GetNativeFileExplorerRes,
   CommonRes,
   ErrorMessage,
   PostDirectoryReq,
@@ -100,8 +100,8 @@ export namespace Service {
    * 파일 탐색기 열기
    * @param req
    */
-  export function getFileExplorer(req: GetFileExplorerReq): GetFileExplorerRes {
-    return doService<GetFileExplorerRes>(() => {
+  export function getNativeFileExplorer(req: GetNativeFileExplorerReq): GetNativeFileExplorerRes {
+    return doService<GetNativeFileExplorerRes>(() => {
       const { path } = req;
 
       childProcess.execSync(`start "" "${path}"`);

@@ -3,7 +3,7 @@ import { OverlayPanel } from 'primereact/overlaypanel';
 import { DirectorySelectorProps } from '@components/directorySelector/DirectorySelector';
 import { useToastContext } from '@contexts/toastContext';
 import { CustomEventHandler } from '@defines/event';
-import useQueryGetFileExplorer from '@hooks/queries/useQueryGetFileExplorer';
+import useQueryGetNativeFileExplorer from '@hooks/queries/useQueryGetNativeFileExplorer';
 import { Menu } from 'primereact/menu';
 import { MenuItem } from 'primereact/menuitem';
 
@@ -30,7 +30,7 @@ function useDirectorySelector(params: IUseDirectorySelectorParams): IUseDirector
 
   const [isFileExplorerOpened, setIsFileExplorerOpened] = useState(false);
 
-  const { refetch: refetchGetFileExplorer } = useQueryGetFileExplorer({
+  const { refetch: refetchGetFileExplorer } = useQueryGetNativeFileExplorer({
     req: { path: path || '' },
     queryOption: {
       enabled: false,

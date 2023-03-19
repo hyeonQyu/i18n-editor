@@ -32,11 +32,11 @@ export interface PostDirectoryRes
     fileName: string;
   }> {}
 
-export interface GetFileExplorerReq {
+export interface GetNativeFileExplorerReq {
   path: string;
 }
 
-export interface GetFileExplorerRes extends CommonRes {}
+export interface GetNativeFileExplorerRes extends CommonRes {}
 
 export interface GetTranslationFileReq {
   path: string;

@@ -16,8 +16,8 @@ import {
   PostContentColumnRes,
   DeleteContentColumnReq,
   DeleteContentColumnRes,
-  GetFileExplorerReq,
-  GetFileExplorerRes,
+  GetNativeFileExplorerReq,
+  GetNativeFileExplorerRes,
   PostDirectoryReq,
   PostDirectoryRes,
   PostTranslationFileReq,
@@ -44,8 +44,8 @@ export namespace Controller {
       res.status(response.status).send(response);
     });
 
-    doCommonResponse<void, GetFileExplorerReq, GetFileExplorerRes>(app, '/file-explorer', 'get', (req, res) => {
-      const response = Service.getFileExplorer(req.query);
+    doCommonResponse<void, GetNativeFileExplorerReq, GetNativeFileExplorerRes>(app, '/native/file-explorer', 'get', (req, res) => {
+      const response = Service.getNativeFileExplorer(req.query);
       res.status(response.status).send(response);
     });
 

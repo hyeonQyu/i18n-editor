@@ -9,8 +9,8 @@ import {
   GetContentRes,
   GetDirectoryReq,
   GetDirectoryRes,
-  GetFileExplorerReq,
-  GetFileExplorerRes,
+  GetNativeFileExplorerReq,
+  GetNativeFileExplorerRes,
   GetTranslationFileReq,
   GetTranslationFileRes,
   PatchContentReq,
@@ -65,8 +65,8 @@ export namespace HomeApi {
    * 파일 탐색기 열기
    * @param req
    */
-  export async function getFileExplorer(req: GetFileExplorerReq): Promise<GetFileExplorerRes> {
-    return (await client.get('/file-explorer', { params: req })).data;
+  export async function getNativeFileExplorer(req: GetNativeFileExplorerReq): Promise<GetNativeFileExplorerRes> {
+    return (await client.get('/native/file-explorer', { params: req })).data;
   }
 
   /**
