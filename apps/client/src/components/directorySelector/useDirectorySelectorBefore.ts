@@ -1,6 +1,6 @@
 import { FocusEventHandler, MouseEventHandler, RefObject, useRef, useState } from 'react';
 import { OverlayPanel } from 'primereact/overlaypanel';
-import { DirectorySelectorProps } from '@components/directorySelector/DirectorySelector';
+import { DirectorySelectorProps } from '@components/directorySelector/DirectorySelectorBefore';
 import { useToastContext } from '@contexts/toastContext';
 import { CustomEventHandler } from '@defines/event';
 import useQueryGetNativeFileExplorer from '@hooks/queries/useQueryGetNativeFileExplorer';
@@ -21,7 +21,12 @@ export interface IUseDirectorySelector {
   handleFileExplorerHide: CustomEventHandler;
 }
 
-function useDirectorySelector(params: IUseDirectorySelectorParams): IUseDirectorySelector {
+/**
+ * TODO 삭제
+ * @deprecated
+ * @param params
+ */
+function useDirectorySelectorBefore(params: IUseDirectorySelectorParams): IUseDirectorySelector {
   const { path } = params;
 
   const fileExplorerRef = useRef<OverlayPanel>(null);
@@ -91,4 +96,4 @@ function useDirectorySelector(params: IUseDirectorySelectorParams): IUseDirector
   };
 }
 
-export default useDirectorySelector;
+export default useDirectorySelectorBefore;
