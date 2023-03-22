@@ -13,6 +13,12 @@ export default function useApp(): UseApp {
   const queryClient = new QueryClient();
   const toastRef = useRef<Toast>(null);
 
+  queryClient.setDefaultOptions({
+    queries: {
+      retry: false,
+    },
+  });
+
   const showError = (message: string) =>
     toastRef.current?.show({
       severity: 'error',
