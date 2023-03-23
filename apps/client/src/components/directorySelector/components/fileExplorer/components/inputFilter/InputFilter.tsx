@@ -1,5 +1,5 @@
 import { InputText } from 'primereact/inputtext';
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, memo } from 'react';
 
 export interface InputFilterProps {
   keyword: string;
@@ -7,7 +7,7 @@ export interface InputFilterProps {
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-export function InputFilter(props: InputFilterProps) {
+function InputFilter(props: InputFilterProps) {
   const { keyword, placeholder, onChange } = props;
 
   return (
@@ -34,3 +34,5 @@ export function InputFilter(props: InputFilterProps) {
     </>
   );
 }
+
+export default memo(InputFilter);
