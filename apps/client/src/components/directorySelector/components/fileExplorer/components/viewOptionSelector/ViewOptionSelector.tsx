@@ -2,13 +2,14 @@ import { SelectButton, SelectButtonChangeParams } from 'primereact/selectbutton'
 import { VIEW_OPTIONS, ViewType } from '@components/directorySelector/defines';
 import { SelectButtonTemplate } from '@components/selectButtonTemplate';
 import { CustomEventHandler } from '@defines/event';
+import { memo } from 'react';
 
 export interface ViewOptionSelectorProps {
   value: ViewType;
   onChange: CustomEventHandler<SelectButtonChangeParams>;
 }
 
-export function ViewOptionSelector(props: ViewOptionSelectorProps) {
+function ViewOptionSelector(props: ViewOptionSelectorProps) {
   const { value, onChange } = props;
 
   return (
@@ -19,3 +20,5 @@ export function ViewOptionSelector(props: ViewOptionSelectorProps) {
     </>
   );
 }
+
+export default memo(ViewOptionSelector);
