@@ -10,7 +10,7 @@ export interface MovePathButtonProps {
   forwardStack: string[];
 }
 
-export function MovePathButton(props: MovePathButtonProps) {
+function MovePathButton(props: MovePathButtonProps) {
   const { onChange } = props;
   const { getOptionDisabled } = useMovePathButton(props);
 
@@ -37,3 +37,5 @@ export function MovePathButton(props: MovePathButtonProps) {
     </>
   );
 }
+
+export default MovePathButton;
