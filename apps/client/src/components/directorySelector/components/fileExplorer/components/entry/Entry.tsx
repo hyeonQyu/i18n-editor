@@ -11,7 +11,7 @@ export interface EntryProps {
   onClick: CustomEventHandler<DirectoryEntry>;
 }
 
-export function Entry(props: EntryProps) {
+function Entry(props: EntryProps) {
   const { entry, viewType } = props;
   const { name, type } = entry;
 
@@ -77,3 +77,5 @@ export function Entry(props: EntryProps) {
     </>
   );
 }
+
+export default Entry;
