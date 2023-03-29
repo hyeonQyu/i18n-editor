@@ -1,24 +1,19 @@
-import { SelectButton, SelectButtonChangeParams } from 'primereact/selectbutton';
+import { SelectButton } from 'primereact/selectbutton';
 import { SelectButtonTemplate } from '@components/selectButtonTemplate';
 import { MOVE_PATH_OPTIONS } from '@components/directorySelector/defines';
 import useMovePathButton from '@components/directorySelector/components/fileExplorer/components/movePathButton/useMovePathButton';
-import { CustomEventHandler } from '@defines/event';
 
-export interface MovePathButtonProps {
-  onChange: CustomEventHandler<SelectButtonChangeParams>;
-  backwardStack: string[];
-  forwardStack: string[];
-}
+export interface MovePathButtonProps {}
 
 function MovePathButton(props: MovePathButtonProps) {
-  const { onChange } = props;
-  const { getOptionDisabled } = useMovePathButton(props);
+  const {} = props;
+  const { handleChange, getOptionDisabled } = useMovePathButton();
 
   return (
     <>
       <SelectButton
         options={MOVE_PATH_OPTIONS}
-        onChange={onChange}
+        onChange={handleChange}
         unselectable={false}
         itemTemplate={SelectButtonTemplate}
         optionDisabled={getOptionDisabled}

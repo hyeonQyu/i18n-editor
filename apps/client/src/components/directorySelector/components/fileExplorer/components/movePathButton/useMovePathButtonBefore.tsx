@@ -1,4 +1,4 @@
-import { MovePathButtonProps } from '@components/directorySelector/components/fileExplorer/components/movePathButton';
+import { MovePathButtonProps } from '@components/directorySelector/components/fileExplorer/components/movePathButton/MovePathButtonBefore';
 import { SelectButtonTemplateOption } from '@defines/selectButtonTemplate';
 import { MoveDirection } from '@components/directorySelector/defines';
 
@@ -8,7 +8,12 @@ export interface IUseMovePathButton {
   getOptionDisabled: (option: SelectButtonTemplateOption<MoveDirection>) => boolean;
 }
 
-function useMovePathButton(params: IUseMovePathButtonParams): IUseMovePathButton {
+/**
+ * @deprecated
+ * TODO 삭제
+ * @param params
+ */
+function useMovePathButtonBefore(params: IUseMovePathButtonParams): IUseMovePathButton {
   const { backwardStack, forwardStack } = params;
 
   const getOptionDisabled = (option: SelectButtonTemplateOption<MoveDirection>): boolean => {
@@ -29,4 +34,4 @@ function useMovePathButton(params: IUseMovePathButtonParams): IUseMovePathButton
   };
 }
 
-export default useMovePathButton;
+export default useMovePathButtonBefore;
