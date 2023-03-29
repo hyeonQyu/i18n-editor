@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
 import { ColumnData, RowData } from 'i18n-editor-common';
-import { TranslationContentSelector } from '@stores/defines/storeTypes';
+import { TranslationContentSelector } from '@stores/defines/types';
 
 export const localeDirectoryPathState = atom<string | undefined>({
   key: 'localeDirectoryPath',
