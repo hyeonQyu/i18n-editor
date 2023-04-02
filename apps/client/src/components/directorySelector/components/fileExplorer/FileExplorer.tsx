@@ -1,69 +1,48 @@
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { forwardRef, RefObject } from 'react';
+import { MovePathButton } from '@components/directorySelector/components/fileExplorer/components/movePathButton';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import { MenuItem } from 'primereact/menuitem';
-import { PrimeIcons } from 'primereact/api';
-import useFileExplorerBefore from '@components/directorySelector/components/fileExplorer/useFileExplorerBefore';
-import { EntryBefore } from '@components/directorySelector/components/fileExplorer/components/entry';
-import useViewOption from '@components/directorySelector/components/fileExplorer/hooks/useViewOption';
-import { ViewOptionSelectorBefore } from '@components/directorySelector/components/fileExplorer/components/viewOptionSelector';
-import classNames from 'classnames';
-import { Button } from 'primereact/button';
-import { InputFilterBefore } from '@components/directorySelector/components/fileExplorer/components/inputFilter';
+import { InputFilter } from '@components/directorySelector/components/fileExplorer/components/inputFilter';
 import { CustomEventHandler } from '@defines/event';
-import { DirectorySelectorBeforeProps } from '@components/directorySelector';
-import MovePathButtonBefore from '@components/directorySelector/components/fileExplorer/components/movePathButton/MovePathButtonBefore';
+import useFileExplorerBreadcrumb from '@components/directorySelector/components/fileExplorer/hooks/useFileExplorerBreadcrumb';
+import classNames from 'classnames';
+import useFileExplorerEntries from '@components/directorySelector/components/fileExplorer/hooks/useFileExplorerEntries';
+import { Entry } from '@components/directorySelector/components/fileExplorer/components/entry';
+import { ViewOptionSelector } from '@components/directorySelector/components/fileExplorer/components/viewOptionSelector';
+import { Button } from 'primereact/button';
+import useFileExplorerSelectDirectory from '@components/directorySelector/components/fileExplorer/hooks/useFileExplorerSelectDirectory';
 
-export interface FileExplorerProps extends Pick<DirectorySelectorBeforeProps, 'path' | 'onChange'> {
+export interface FileExplorerProps {
   onShow: CustomEventHandler;
   onHide: CustomEventHandler;
-  opened: boolean;
 }
 
-/**
- * TODO 삭제
- * @deprecated
- */
-export const FileExplorerBefore = forwardRef<OverlayPanel, FileExplorerProps>((props, ref) => {
+// eslint-disable-next-line react/display-name
+const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, ref) => {
   const { onShow, onHide } = props;
-
-  const home: MenuItem = {
-    icon: PrimeIcons.USER,
-  };
-
-  const {
-    breadcrumbItems,
-    entries,
-    backwardStack,
-    forwardStack,
-    filterKeyword,
-    filterPlaceholder,
-    handleMovePathButtonClick,
-    handleSelectButtonClick,
-    handleFilterKeywordChange,
-    onEntryClick,
-  } = useFileExplorerBefore({ ...props, ref: ref as RefObject<OverlayPanel> });
-  const { viewType, handleViewTypeChange } = useViewOption({});
+  const { home, breadcrumbItems } = useFileExplorerBreadcrumb();
+  const { entries } = useFileExplorerEntries();
+  const { handleSelectButtonClick } = useFileExplorerSelectDirectory({ ref: ref as RefObject<OverlayPanel> });
 
   return (
     <>
       <OverlayPanel ref={ref} onShow={onShow} onHide={onHide} className={'file-explorer'} dismissable={false} showCloseIcon>
         <div className={'header'}>
-          <MovePathButtonBefore onChange={handleMovePathButtonClick} backwardStack={backwardStack} forwardStack={forwardStack} />
+          <MovePathButton />
           <BreadCrumb home={home} model={breadcrumbItems} />
-          <InputFilterBefore keyword={filterKeyword} placeholder={filterPlaceholder} onChange={handleFilterKeywordChange} />
+          <InputFilter />
         </div>
 
         <div className={'body'}>
-          <div className={classNames('entries', viewType)}>
+          <div className={classNames('entries')}>
             {entries.map((entry) => (
-              <EntryBefore key={entry.name} entry={entry} viewType={viewType} onClick={onEntryClick} />
+              <Entry key={entry.name} entry={entry} />
             ))}
           </div>
         </div>
 
         <div className={'footer'}>
-          <ViewOptionSelectorBefore value={viewType} onChange={handleViewTypeChange} />
+          <ViewOptionSelector />
           <Button label={'현재 디렉토리 선택'} onClick={handleSelectButtonClick} className={'select'} />
         </div>
       </OverlayPanel>
@@ -142,4 +121,4 @@ export const FileExplorerBefore = forwardRef<OverlayPanel, FileExplorerProps>((p
   );
 });
 
-FileExplorerBefore.displayName = 'FileExplorer';
+export default FileExplorer;
