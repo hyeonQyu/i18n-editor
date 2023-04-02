@@ -1,20 +1,19 @@
 import { InputText } from 'primereact/inputtext';
-import { ChangeEventHandler, memo } from 'react';
+import useInputFilter, {
+  UseInputFilterParams,
+} from '@components/directorySelector/components/fileExplorer/components/inputFilter/useInputFilter';
 
-export interface InputFilterProps {
-  keyword: string;
-  placeholder: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-}
+export interface InputFilterProps extends UseInputFilterParams {}
 
 function InputFilter(props: InputFilterProps) {
-  const { keyword, placeholder, onChange } = props;
+  const {} = props;
+  const { filterKeyword, placeholder, handleKeywordChange } = useInputFilter(props);
 
   return (
     <>
       <span className={'p-input-icon-left'}>
         <i className={'filter-icon pi pi-search'} />
-        <InputText value={keyword} placeholder={placeholder} onChange={onChange} className={'filter'} />
+        <InputText value={filterKeyword} placeholder={placeholder} onChange={handleKeywordChange} className={'filter'} />
       </span>
 
       <style jsx>{`
@@ -35,4 +34,4 @@ function InputFilter(props: InputFilterProps) {
   );
 }
 
-export default memo(InputFilter);
+export default InputFilter;
