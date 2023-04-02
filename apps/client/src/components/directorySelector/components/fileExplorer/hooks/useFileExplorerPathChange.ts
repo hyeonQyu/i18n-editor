@@ -1,5 +1,6 @@
 import { useSetRecoilState } from 'recoil';
 import { fileExplorerStates } from '@components/directorySelector/components/fileExplorer/stores/store';
+import { useCallback } from 'react';
 
 export interface UseFileExplorerPathChange {
   changePathForward: (path: string | ((prevPath: string) => string), clearForwardStack?: boolean) => void;
@@ -17,7 +18,7 @@ export default function useFileExplorerPathChange(): UseFileExplorerPathChange {
    * @param path 새 경로 혹은 새 경로를 반환하는 함수
    * @param clearForwardStack forwardStack clear 여부
    */
-  const changePathForward = (path: string | ((prevPath: string) => string), clearForwardStack?: boolean) => {
+  const changePathForward = useCallback((path: string | ((prevPath: string) => string), clearForwardStack?: boolean) => {
     setPath((prev) => {
       setBackwardStack((stack) => [...stack, prev]);
 
@@ -29,20 +30,20 @@ export default function useFileExplorerPathChange(): UseFileExplorerPathChange {
 
       return typeof path === 'function' ? path(prev) : path;
     });
-  };
+  }, []);
 
   /**
    * 뒤로 이동
    * @param path
    */
-  const changePathBackward = (path: string | ((prevPath: string) => string)) => {
+  const changePathBackward = useCallback((path: string | ((prevPath: string) => string)) => {
     setPath((prev) => {
       setForwardStack((stack) => [...stack, prev]);
       setBackwardStack((stack) => stack.slice(0, stack.length - 1));
 
       return typeof path === 'function' ? path(prev) : path;
     });
-  };
+  }, []);
 
   return {
     changePathForward,
