@@ -1,23 +1,21 @@
 import { DirectoryEntry } from 'i18n-editor-common';
-import classNames from 'classnames';
-import { ICON_BY_DIRECTORY_ENTRY_TYPE } from '@components/directorySelector/defines';
+import { ICON_BY_DIRECTORY_ENTRY_TYPE, ViewType } from '@components/directorySelector/defines';
 import { Shortening } from '@components/shortening';
-import { useRecoilValue } from 'recoil';
-import { fileExplorerStates } from '@components/directorySelector/components/fileExplorer/stores/store';
-import useEntry from '@components/directorySelector/components/fileExplorer/components/entry/useEntry';
+import classNames from 'classnames';
+import useEntryBefore from '@components/directorySelector/components/fileExplorer/components/entry/useEntryBefore';
+import { CustomEventHandler } from '@defines/event';
 
-export interface EntryProps {
+export interface EntryBeforeProps {
   entry: DirectoryEntry;
+  viewType: ViewType;
+  onClick: CustomEventHandler<DirectoryEntry>;
 }
 
-function Entry(props: EntryProps) {
-  const {
-    entry: { name, type },
-  } = props;
+function EntryBefore(props: EntryBeforeProps) {
+  const { entry, viewType } = props;
+  const { name, type } = entry;
 
-  const { handleClick } = useEntry(props);
-
-  const viewType = useRecoilValue(fileExplorerStates.viewType);
+  const { handleClick } = useEntryBefore(props);
 
   return (
     <>
@@ -80,4 +78,4 @@ function Entry(props: EntryProps) {
   );
 }
 
-export default Entry;
+export default EntryBefore;

@@ -1,22 +1,36 @@
 import { EntryProps } from '@components/directorySelector/components/fileExplorer/components/entry/Entry';
+import useFileExplorerPathChange from '@components/directorySelector/components/fileExplorer/hooks/useFileExplorerPathChange';
+import { useToastContext } from '@contexts/toastContext';
 import { MouseEventHandler } from 'react';
 
-export interface IUseEntryParams extends EntryProps {}
+export interface UseEntryParams extends EntryProps {}
 
-export interface IUseEntry {
-  handleClick: MouseEventHandler<HTMLDivElement>;
+export interface UseEntry {
+  handleClick: MouseEventHandler;
 }
 
-function useEntry(params: IUseEntryParams): IUseEntry {
-  const { entry, onClick } = params;
+export default function useEntry(params: UseEntryParams): UseEntry {
+  const {
+    entry: { name, type },
+  } = params;
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = () => {
-    onClick(entry);
+  const { toastRef } = useToastContext();
+
+  const { changePathForward } = useFileExplorerPathChange();
+
+  const handleClick: MouseEventHandler = () => {
+    if (type !== 'directory') {
+      return toastRef.current?.show({
+        severity: 'warn',
+        detail: '폴더만 선택할 수 있어요',
+        life: 3000,
+      });
+    }
+
+    changePathForward((path) => `${path}/${name}`, true);
   };
 
   return {
     handleClick,
   };
 }
-
-export default useEntry;
