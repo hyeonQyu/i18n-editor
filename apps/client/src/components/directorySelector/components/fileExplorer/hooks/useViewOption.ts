@@ -10,6 +10,10 @@ export interface IUseViewOption {
   handleViewTypeChange: CustomEventHandler<SelectButtonChangeParams>;
 }
 
+/**
+ * @deprecated TODO 삭제
+ * @param params
+ */
 function useViewOption(params: IUseViewOptionParams): IUseViewOption {
   const {} = params;
 
