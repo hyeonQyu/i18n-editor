@@ -1,24 +1,27 @@
-import { SelectButton, SelectButtonChangeParams } from 'primereact/selectbutton';
-import { VIEW_OPTIONS, ViewType } from '@components/directorySelector/defines';
+import { SelectButton } from 'primereact/selectbutton';
+import { VIEW_OPTIONS } from '@components/directorySelector/defines';
 import { SelectButtonTemplate } from '@components/selectButtonTemplate';
-import { CustomEventHandler } from '@defines/event';
-import { memo } from 'react';
+import useViewOptionSelector from '@components/directorySelector/components/fileExplorer/components/viewOptionSelector/useViewOptionSelector';
 
-export interface ViewOptionSelectorProps {
-  value: ViewType;
-  onChange: CustomEventHandler<SelectButtonChangeParams>;
-}
+export interface ViewOptionSelectorProps {}
 
 function ViewOptionSelector(props: ViewOptionSelectorProps) {
-  const { value, onChange } = props;
+  const {} = props;
+  const { viewType, handleChange } = useViewOptionSelector(props);
 
   return (
     <>
-      <SelectButton value={value} options={VIEW_OPTIONS} onChange={onChange} itemTemplate={SelectButtonTemplate} unselectable={false} />
+      <SelectButton
+        value={viewType}
+        options={VIEW_OPTIONS}
+        onChange={handleChange}
+        itemTemplate={SelectButtonTemplate}
+        unselectable={false}
+      />
 
       <style jsx>{``}</style>
     </>
   );
 }
 
-export default memo(ViewOptionSelector);
+export default ViewOptionSelector;
