@@ -1,70 +1,61 @@
-import { FileExplorer } from '@components/directorySelector/components/fileExplorer';
 import { Button } from 'primereact/button';
-import useDirectorySelector from '@components/directorySelector/useDirectorySelector';
-import { PathChangeEvent } from '@components/directorySelector/defines';
 import { InputText } from 'primereact/inputtext';
 import classNames from 'classnames';
-import { COLOR } from '@defines/css';
-import { CustomEventHandler } from '@defines/event';
 import { Menu } from 'primereact/menu';
+import useDirectorySelector from '@components/directorySelector/useDirectorySelector';
+import { COLOR } from '@defines/css';
+import { useRecoilValue } from 'recoil';
+import { localeDirectoryPathState } from '@stores/store';
+import { FileExplorer } from '@components/directorySelector/components/fileExplorer';
 
-export interface DirectorySelectorProps {
-  path: string | undefined;
-  invalid: boolean;
-  onChange: CustomEventHandler<PathChangeEvent>;
-}
+export interface DirectorySelectorProps {}
 
-const inputId = 'locale-directory';
+const INPUT_ID = 'input-locale-directory';
 
-export function DirectorySelector(props: DirectorySelectorProps) {
-  const { path, invalid, onChange } = props;
+function DirectorySelector(props: DirectorySelectorProps) {
+  const {} = props;
 
+  const localeDirectoryPath = useRecoilValue(localeDirectoryPathState);
   const {
     fileExplorerRef,
     menuRef,
     isFileExplorerOpened,
     menuItems,
-    handleSelectClick,
-    handleFocus,
+    invalid,
+    handleOpenFileExplorerButtonClick,
+    handleInputChange,
+    handleInputFocus,
     handleMenuClick,
     handleFileExplorerShow,
     handleFileExplorerHide,
-  } = useDirectorySelector(props);
+  } = useDirectorySelector();
 
   return (
     <>
       <div className={'directory-selector p-inputgroup'}>
-        <Button icon={'pi pi-search'} className={'p-button'} onClick={handleSelectClick} />
-        <>
-          <FileExplorer
-            ref={fileExplorerRef}
-            path={path}
-            opened={isFileExplorerOpened}
-            onChange={onChange}
-            onShow={handleFileExplorerShow}
-            onHide={handleFileExplorerHide}
-          />
-        </>
+        <Button icon={'pi pi-search'} className={'p-button'} onClick={handleOpenFileExplorerButtonClick} />
 
         <span className={'p-float-label'}>
           <InputText
-            id={inputId}
-            value={path || ''}
-            onChange={() => {}}
-            onFocus={handleFocus}
+            id={INPUT_ID}
+            value={localeDirectoryPath || ''}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
             className={classNames(invalid && 'p-invalid')}
           />
           <label
-            htmlFor={inputId}
-            className={classNames(isFileExplorerOpened && 'opened', Boolean(path) && 'selected', invalid && 'invalid')}
+            htmlFor={INPUT_ID}
+            className={classNames(isFileExplorerOpened && 'opened', Boolean(localeDirectoryPath) && 'selected', invalid && 'invalid')}
           >
             Locale 디렉토리를 선택하세요
           </label>
         </span>
 
-        <Button icon={'pi pi-bars'} className={'p-button p-button-outlined'} onClick={handleMenuClick} disabled={!path} />
+        <Button icon={'pi pi-bars'} className={'p-button p-button-outlined'} onClick={handleMenuClick} disabled={!localeDirectoryPath} />
         <Menu ref={menuRef} model={menuItems} popup />
       </div>
+
+      <FileExplorer ref={fileExplorerRef} onShow={handleFileExplorerShow} onHide={handleFileExplorerHide} />
 
       <style jsx>{`
         .directory-selector {
@@ -85,3 +76,5 @@ export function DirectorySelector(props: DirectorySelectorProps) {
     </>
   );
 }
+
+export default DirectorySelector;

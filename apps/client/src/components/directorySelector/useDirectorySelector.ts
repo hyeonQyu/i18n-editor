@@ -1,13 +1,13 @@
 import { useToastContext } from '@contexts/toastContext';
-import { FocusEventHandler, MouseEventHandler, RefObject, useRef, useState } from 'react';
+import { ChangeEventHandler, FocusEventHandler, MouseEventHandler, RefObject, useRef, useState } from 'react';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { Menu } from 'primereact/menu';
-import useLocaleDirectoryPath from '@hooks/stores/useLocaleDirectoryPath';
 import useQueryGetNativeFileExplorer from '@hooks/queries/useQueryGetNativeFileExplorer';
 import { CustomEventHandler } from '@defines/event';
 import { MenuItem } from 'primereact/menuitem';
 import useQueryGetTranslationFile from '@hooks/queries/useQueryGetTranslationFile';
-import useLocaleDirectoryCreationDialogOpened from '@hooks/stores/useLocaleDirectoryCreationDialogOpened';
+import { useRecoilValue } from 'recoil';
+import { localeDirectoryCreationDialogOpenedState, localeDirectoryPathState } from '@stores/store';
 
 export interface UseDirectorySelector {
   fileExplorerRef: RefObject<OverlayPanel>;
@@ -16,6 +16,7 @@ export interface UseDirectorySelector {
   menuItems: MenuItem[];
   invalid: boolean;
   handleOpenFileExplorerButtonClick: MouseEventHandler<HTMLButtonElement>;
+  handleInputChange: ChangeEventHandler<HTMLInputElement>;
   handleInputFocus: FocusEventHandler<HTMLInputElement>;
   handleMenuClick: MouseEventHandler<HTMLButtonElement>;
   handleFileExplorerShow: CustomEventHandler;
@@ -27,8 +28,8 @@ export default function useDirectorySelector(): UseDirectorySelector {
   const fileExplorerRef = useRef<OverlayPanel>(null);
   const menuRef = useRef<Menu>(null);
 
-  const { localeDirectoryPath } = useLocaleDirectoryPath();
-  const { localeDirectoryCreationDialogOpened } = useLocaleDirectoryCreationDialogOpened();
+  const localeDirectoryPath = useRecoilValue(localeDirectoryPathState);
+  const localeDirectoryCreationDialogOpened = useRecoilValue(localeDirectoryCreationDialogOpenedState);
 
   const [isFileExplorerOpened, setIsFileExplorerOpened] = useState(false);
 
@@ -57,6 +58,8 @@ export default function useDirectorySelector(): UseDirectorySelector {
   const handleOpenFileExplorerButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     fileExplorerRef.current?.toggle(e);
   };
+
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = () => {};
 
   const handleInputFocus: FocusEventHandler<HTMLInputElement> = (e) => {
     e.target.blur();
@@ -102,6 +105,7 @@ export default function useDirectorySelector(): UseDirectorySelector {
     menuItems,
     invalid,
     handleOpenFileExplorerButtonClick,
+    handleInputChange,
     handleInputFocus,
     handleMenuClick,
     handleFileExplorerShow,
