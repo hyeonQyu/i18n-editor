@@ -2,7 +2,7 @@ import { Skeleton } from 'primereact/skeleton';
 
 export interface HomeSkeletonProps {}
 
-export function HomeSkeleton(props: HomeSkeletonProps) {
+function HomeSkeleton(props: HomeSkeletonProps) {
   const {} = props;
 
   return (
@@ -38,3 +38,5 @@ export function HomeSkeleton(props: HomeSkeletonProps) {
     </>
   );
 }
+
+export default HomeSkeleton;
