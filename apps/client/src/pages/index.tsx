@@ -3,7 +3,7 @@ import { DirectorySelectorBefore } from '@components/directorySelector';
 import useHome from '@hooks/pages/useHome';
 import { TranslationFileSelector } from '@components/translationFileSelector';
 import { TranslationFileEditor } from '@components/translationFileEditor';
-import { LocaleDirectoryCreationDialog } from '@components/localeDirectoryCreationDialog';
+import { LocaleDirectoryCreationDialogBefore } from '@components/localeDirectoryCreationDialog';
 import { TranslationFileCreationDialog } from '@components/translationFileCreationDialog';
 import { HomeSkeleton } from '@components/page/home/homeSkeleton';
 
@@ -47,7 +47,7 @@ function Index(props: IndexProps) {
         <title>i18n-editor</title>
       </Head>
 
-      <LocaleDirectoryCreationDialog
+      <LocaleDirectoryCreationDialogBefore
         visible={localeDirectoryCreationDialogOpened}
         onCreate={handleCreateLocaleDirectory}
         onHide={handleCloseLocaleDirectoryCreationDialog}

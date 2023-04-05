@@ -1,32 +1,34 @@
-import useLocaleDirectoryCreationDialog from '@components/localeDirectoryCreationDialog/useLocaleDirectoryCreationDialog';
 import { Dialog } from 'primereact/dialog';
+import useLocaleDirectoryCreationDialogBefore from '@components/localeDirectoryCreationDialog/useLocaleDirectoryCreationDialogBefore';
 import { LanguageCodeMultiSelect } from '@components/languageCodeMultiSelect';
-import classNames from 'classnames';
-import { InputText } from 'primereact/inputtext';
 import { CustomConfirmDialogFooter } from '@components/customConfirmDialogFooter';
+import { InputText } from 'primereact/inputtext';
+import classNames from 'classnames';
+import { CreateDirectoryEvent, CustomEventHandler } from '@defines/event';
 
-export interface LocaleDirectoryCreationDialogProps {}
+export interface LocaleDirectoryCreationDialogBeforeProps {
+  visible: boolean;
+  onCreate: CustomEventHandler<CreateDirectoryEvent>;
+  onHide: () => void;
+}
 
-const INPUT_FILE_NAME_ID = 'new-file';
+const inputFileNameId = 'new-file';
 
-function LocaleDirectoryCreationDialog(props: LocaleDirectoryCreationDialogProps) {
-  const {} = props;
-  const {
-    visible,
-    multiSelectLanguageCode,
-    inputFileName,
-    inputDisabled,
-    creationDisabled,
-    handleCreateButtonClick,
-    handleCloseButtonClick,
-    handleFormSubmit,
-  } = useLocaleDirectoryCreationDialog(props);
+/**
+ * @deprecated TODO 삭제
+ * @param props
+ * @constructor
+ */
+export function LocaleDirectoryCreationDialogBefore(props: LocaleDirectoryCreationDialogBeforeProps) {
+  const { visible, onHide } = props;
+  const { multiSelectLanguageCode, inputFileName, inputDisabled, creationDisabled, handleCreateButtonClick, handleFormSubmit } =
+    useLocaleDirectoryCreationDialogBefore(props);
 
   return (
     <>
       <Dialog
         visible={visible}
-        onHide={handleCloseButtonClick}
+        onHide={onHide}
         draggable={false}
         position={'top'}
         header={'새로운 디렉토리 생성'}
@@ -36,7 +38,7 @@ function LocaleDirectoryCreationDialog(props: LocaleDirectoryCreationDialogProps
             noLabel={'취소'}
             yesDisabled={creationDisabled}
             onYesClick={handleCreateButtonClick}
-            onNoClick={handleCloseButtonClick}
+            onNoClick={onHide}
           />
         }
       >
@@ -47,9 +49,9 @@ function LocaleDirectoryCreationDialog(props: LocaleDirectoryCreationDialogProps
           </span>
 
           <span className={classNames('p-float-label', 'file-name-container')}>
-            <InputText id={INPUT_FILE_NAME_ID} value={inputFileName.value} onChange={inputFileName.onChange} disabled={inputDisabled} />
+            <InputText id={inputFileNameId} value={inputFileName.value} onChange={inputFileName.onChange} disabled={inputDisabled} />
             <span className={'json'}>.json</span>
-            <label htmlFor={INPUT_FILE_NAME_ID}>함께 생성할 번역 파일 이름을 입력하세요</label>
+            <label htmlFor={inputFileNameId}>함께 생성할 번역 파일 이름을 입력하세요</label>
           </span>
         </form>
       </Dialog>
@@ -75,5 +77,3 @@ function LocaleDirectoryCreationDialog(props: LocaleDirectoryCreationDialogProps
     </>
   );
 }
-
-export default LocaleDirectoryCreationDialog;

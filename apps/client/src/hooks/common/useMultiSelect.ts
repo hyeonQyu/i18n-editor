@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { CustomEventHandler } from '@defines/event';
 import { MultiSelectChangeParams, MultiSelectProps } from 'primereact/multiselect';
 
@@ -18,7 +18,7 @@ export default function useMultiSelect<T extends string = string>(params: UseMul
     setValue(e?.value);
   };
 
-  const clear = () => setValue(undefined);
+  const clear = useCallback(() => setValue(undefined), []);
 
   return {
     value,
