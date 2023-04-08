@@ -4,7 +4,7 @@ import useHome from '@hooks/pages/useHome';
 import { TranslationFileSelectorBefore } from '@components/translationFileSelector';
 import { TranslationFileEditor } from '@components/translationFileEditor';
 import { LocaleDirectoryCreationDialogBefore } from '@components/localeDirectoryCreationDialog';
-import { TranslationFileCreationDialog } from '@components/translationFileCreationDialog';
+import { TranslationFileCreationDialogBefore } from '@components/translationFileCreationDialog';
 import { HomeSkeleton } from '@components/page/home/homeSkeleton';
 
 export interface IndexProps {}
@@ -52,7 +52,7 @@ function Index(props: IndexProps) {
         onCreate={handleCreateLocaleDirectory}
         onHide={handleCloseLocaleDirectoryCreationDialog}
       />
-      <TranslationFileCreationDialog
+      <TranslationFileCreationDialogBefore
         visible={translationFileCreationDialogOpened}
         isDuplicate={isTranslationFileNameDuplicate}
         inputTranslationFileName={inputNewTranslationFileName}

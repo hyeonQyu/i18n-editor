@@ -1,1 +1,1 @@
-export * from './TranslationFileCreationDialog';
+export * from './TranslationFileCreationDialogBefore';

@@ -2,12 +2,12 @@ import { CreateTranslationFileEvent, CustomEventHandler } from '@defines/event';
 import { Dialog } from 'primereact/dialog';
 import classNames from 'classnames';
 import { InputText } from 'primereact/inputtext';
-import useTranslationFileCreationDialog from '@components/translationFileCreationDialog/useTranslationFileCreationDialog';
+import useTranslationFileCreationDialogBefore from '@components/translationFileCreationDialog/useTranslationFileCreationDialogBefore';
 import { CustomConfirmDialogFooter } from '@components/customConfirmDialogFooter';
 import { COLOR } from '@defines/css';
 import { IUseInput } from '@hooks/common/useInput';
 
-export interface TranslationFileCreationDialogProps {
+export interface TranslationFileCreationDialogBeforeProps {
   visible: boolean;
   isDuplicate: boolean;
   inputTranslationFileName: IUseInput;
@@ -17,9 +17,14 @@ export interface TranslationFileCreationDialogProps {
 
 const inputFileNameId = 'new-translation-file';
 
-export function TranslationFileCreationDialog(props: TranslationFileCreationDialogProps) {
+/**
+ * @deprecated TODO 제거
+ * @param props
+ * @constructor
+ */
+export function TranslationFileCreationDialogBefore(props: TranslationFileCreationDialogBeforeProps) {
   const { visible, isDuplicate, inputTranslationFileName, onHide } = props;
-  const { creationDisabled, labelMessage, handleCreateButtonClick, handleFormSubmit } = useTranslationFileCreationDialog(props);
+  const { creationDisabled, labelMessage, handleCreateButtonClick, handleFormSubmit } = useTranslationFileCreationDialogBefore(props);
 
   return (
     <>
