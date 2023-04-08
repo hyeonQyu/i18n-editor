@@ -1,4 +1,4 @@
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { fileExplorerStates } from '@components/directorySelector/components/fileExplorer/stores/store';
 import { useCallback } from 'react';
 
@@ -8,7 +8,7 @@ export interface UseFileExplorerPathChange {
 }
 
 export default function useFileExplorerPathChange(): UseFileExplorerPathChange {
-  const setPath = useSetRecoilState(fileExplorerStates.path);
+  const [prevPath, setPath] = useRecoilState(fileExplorerStates.path);
 
   const setForwardStack = useSetRecoilState(fileExplorerStates.forwardStack);
   const setBackwardStack = useSetRecoilState(fileExplorerStates.backwardStack);
@@ -18,32 +18,31 @@ export default function useFileExplorerPathChange(): UseFileExplorerPathChange {
    * @param path 새 경로 혹은 새 경로를 반환하는 함수
    * @param clearForwardStack forwardStack clear 여부
    */
-  const changePathForward = useCallback((path: string | ((prevPath: string) => string), clearForwardStack?: boolean) => {
-    setPath((prev) => {
-      setBackwardStack((stack) => [...stack, prev]);
-
+  const changePathForward = useCallback(
+    (path: string | ((prevPath: string) => string), clearForwardStack?: boolean) => {
+      setPath(typeof path === 'function' ? path(prevPath) : path);
+      setBackwardStack((stack) => [...stack, prevPath]);
       if (clearForwardStack) {
         setForwardStack([]);
       } else {
         setForwardStack((stack) => stack.slice(0, stack.length - 1));
       }
-
-      return typeof path === 'function' ? path(prev) : path;
-    });
-  }, []);
+    },
+    [prevPath],
+  );
 
   /**
    * 뒤로 이동
    * @param path
    */
-  const changePathBackward = useCallback((path: string | ((prevPath: string) => string)) => {
-    setPath((prev) => {
-      setForwardStack((stack) => [...stack, prev]);
+  const changePathBackward = useCallback(
+    (path: string | ((prevPath: string) => string)) => {
+      setPath(typeof path === 'function' ? path(prevPath) : path);
+      setForwardStack((stack) => [...stack, prevPath]);
       setBackwardStack((stack) => stack.slice(0, stack.length - 1));
-
-      return typeof path === 'function' ? path(prev) : path;
-    });
-  }, []);
+    },
+    [prevPath],
+  );
 
   return {
     changePathForward,
