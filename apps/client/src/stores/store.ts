@@ -2,6 +2,11 @@ import { atom, selector } from 'recoil';
 import { ColumnData, RowData } from 'i18n-editor-common';
 import { TranslationContentSelector } from '@stores/defines/types';
 
+export const axiosInstanceCreatedState = atom<boolean>({
+  key: 'axiosInstanceCreated',
+  default: false,
+});
+
 export const localeDirectoryPathState = atom<string | undefined>({
   key: 'localeDirectoryPath',
   default: undefined,

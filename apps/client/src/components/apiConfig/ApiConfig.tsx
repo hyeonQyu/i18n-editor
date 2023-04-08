@@ -1,17 +1,21 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
-import { Toast } from 'primereact/toast';
+import { ReactNode, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useSetRecoilState } from 'recoil';
+import { axiosInstanceCreatedState } from '@stores/store';
 import { Api } from '@apis/api';
 import { DefaultConfig, ErrorMessage } from 'i18n-editor-common';
-import { QueryClient } from '@tanstack/react-query';
+import { useToastContext } from '@contexts/toastContext';
 
-export interface UseApp {
-  queryClient: QueryClient;
-  toastRef: MutableRefObject<Toast | null>;
+export interface ApiConfigProps {
+  children: ReactNode | ReactNode[];
 }
 
-export default function useApp(): UseApp {
-  const queryClient = new QueryClient();
-  const toastRef = useRef<Toast>(null);
+function ApiConfig(props: ApiConfigProps) {
+  const { children } = props;
+
+  const queryClient = useQueryClient();
+  const { toastRef } = useToastContext();
+  const setAxiosInstanceCreated = useSetRecoilState(axiosInstanceCreatedState);
 
   queryClient.setDefaultOptions({
     queries: {
@@ -59,10 +63,11 @@ export default function useApp(): UseApp {
         },
       },
     });
+
+    setAxiosInstanceCreated(true);
   }, []);
 
-  return {
-    queryClient,
-    toastRef,
-  };
+  return <>{children}</>;
 }
+
+export default ApiConfig;
