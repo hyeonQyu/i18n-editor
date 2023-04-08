@@ -1,11 +1,11 @@
-import { TranslationFileSelectorProps } from '@components/translationFileSelector/TranslationFileSelector';
+import { TranslationFileSelectorBeforeProps } from '@components/translationFileSelector/TranslationFileSelectorBefore';
 import { SelectItem } from 'primereact/selectitem';
 import { useState } from 'react';
 import { CustomEventHandler } from '@defines/event';
 
-export interface IUseTranslationFileSelectorParams extends TranslationFileSelectorProps {}
+export interface IUseTranslationFileSelectorBeforeParams extends TranslationFileSelectorBeforeProps {}
 
-export interface IUseTranslationFileSelector {
+export interface IUseTranslationFileSelectorBefore {
   options: SelectItem[];
   disabled: boolean;
   opened: boolean;
@@ -14,7 +14,11 @@ export interface IUseTranslationFileSelector {
   handleHide: CustomEventHandler;
 }
 
-function useTranslationFileSelector(params: IUseTranslationFileSelectorParams): IUseTranslationFileSelector {
+/**
+ * @deprecated TODO 삭제
+ * @param params
+ */
+function useTranslationFileSelectorBefore(params: IUseTranslationFileSelectorBeforeParams): IUseTranslationFileSelectorBefore {
   const { directoryPath, files, hasDirectorySelectorError } = params;
 
   const [opened, setOpened] = useState(false);
@@ -45,4 +49,4 @@ function useTranslationFileSelector(params: IUseTranslationFileSelectorParams): 
   };
 }
 
-export default useTranslationFileSelector;
+export default useTranslationFileSelectorBefore;

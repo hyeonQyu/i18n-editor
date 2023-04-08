@@ -1,1 +1,1 @@
-export * from './TranslationFileSelector';
+export * from './TranslationFileSelectorBefore';

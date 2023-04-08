@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { DirectorySelectorBefore } from '@components/directorySelector';
 import useHome from '@hooks/pages/useHome';
-import { TranslationFileSelector } from '@components/translationFileSelector';
+import { TranslationFileSelectorBefore } from '@components/translationFileSelector';
 import { TranslationFileEditor } from '@components/translationFileEditor';
 import { LocaleDirectoryCreationDialogBefore } from '@components/localeDirectoryCreationDialog';
 import { TranslationFileCreationDialog } from '@components/translationFileCreationDialog';
@@ -67,7 +67,7 @@ function Index(props: IndexProps) {
           <div className={'file-select-container'}>
             <DirectorySelectorBefore path={directoryPath} invalid={hasDirectorySelectorError} onChange={handleDirectoryPathChange} />
 
-            <TranslationFileSelector
+            <TranslationFileSelectorBefore
               directoryPath={directoryPath}
               file={translationFile}
               files={translationFiles}

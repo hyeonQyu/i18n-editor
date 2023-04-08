@@ -1,11 +1,11 @@
 import { Dropdown, DropdownChangeParams } from 'primereact/dropdown';
-import useTranslationFileSelector from '@components/translationFileSelector/useTranslationFileSelector';
+import useTranslationFileSelectorBefore from '@components/translationFileSelector/useTranslationFileSelectorBefore';
 import classNames from 'classnames';
 import { CustomEventHandler } from '@defines/event';
 import { Button } from 'primereact/button';
 import { MouseEventHandler } from 'react';
 
-export interface TranslationFileSelectorProps {
+export interface TranslationFileSelectorBeforeProps {
   directoryPath: string | undefined;
   file?: string;
   files: string[];
@@ -16,9 +16,14 @@ export interface TranslationFileSelectorProps {
 
 const selectId = 'translation-file';
 
-export function TranslationFileSelector(props: TranslationFileSelectorProps) {
+/**
+ * @deprecated TODO 삭제
+ * @param props
+ * @constructor
+ */
+export function TranslationFileSelectorBefore(props: TranslationFileSelectorBeforeProps) {
   const { file, onChange, onAddTranslationFileButtonClick } = props;
-  const { options, disabled, opened, tooltipMessage, handleShow, handleHide } = useTranslationFileSelector(props);
+  const { options, disabled, opened, tooltipMessage, handleShow, handleHide } = useTranslationFileSelectorBefore(props);
 
   return (
     <>
