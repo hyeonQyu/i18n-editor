@@ -11,6 +11,8 @@ import { Entry } from '@components/directorySelector/components/fileExplorer/com
 import { ViewOptionSelector } from '@components/directorySelector/components/fileExplorer/components/viewOptionSelector';
 import { Button } from 'primereact/button';
 import useFileExplorerSelectDirectory from '@components/directorySelector/components/fileExplorer/hooks/useFileExplorerSelectDirectory';
+import { useRecoilValue } from 'recoil';
+import { fileExplorerStates } from '@components/directorySelector/components/fileExplorer/stores/store';
 
 export interface FileExplorerProps {
   onShow: CustomEventHandler;
@@ -20,6 +22,7 @@ export interface FileExplorerProps {
 // eslint-disable-next-line react/display-name
 const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, ref) => {
   const { onShow, onHide } = props;
+  const viewType = useRecoilValue(fileExplorerStates.viewType);
   const { home, breadcrumbItems } = useFileExplorerBreadcrumb();
   const { entries } = useFileExplorerEntries();
   const { handleSelectButtonClick } = useFileExplorerSelectDirectory({ ref: ref as RefObject<OverlayPanel> });
@@ -34,7 +37,7 @@ const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, ref) =>
         </div>
 
         <div className={'body'}>
-          <div className={classNames('entries')}>
+          <div className={classNames('entries', viewType)}>
             {entries.map((entry) => (
               <Entry key={entry.name} entry={entry} />
             ))}
