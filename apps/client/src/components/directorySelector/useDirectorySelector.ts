@@ -6,15 +6,19 @@ import useQueryGetNativeFileExplorer from '@hooks/queries/useQueryGetNativeFileE
 import { CustomEventHandler } from '@defines/event';
 import { MenuItem } from 'primereact/menuitem';
 import useQueryGetTranslationFile from '@hooks/queries/useQueryGetTranslationFile';
-import { useRecoilValue } from 'recoil';
-import { localeDirectoryCreationDialogOpenedState, localeDirectoryPathState } from '@stores/store';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  hasDirectorySelectorErrorState,
+  localeDirectoryCreationDialogOpenedState,
+  localeDirectoryPathState,
+  translationFileNameState,
+} from '@stores/store';
 
 export interface UseDirectorySelector {
   fileExplorerRef: RefObject<OverlayPanel>;
   menuRef: RefObject<Menu>;
   isFileExplorerOpened: boolean;
   menuItems: MenuItem[];
-  invalid: boolean;
   handleOpenFileExplorerButtonClick: MouseEventHandler<HTMLButtonElement>;
   handleInputChange: ChangeEventHandler<HTMLInputElement>;
   handleInputFocus: FocusEventHandler<HTMLInputElement>;
@@ -31,6 +35,9 @@ export default function useDirectorySelector(): UseDirectorySelector {
   const localeDirectoryPath = useRecoilValue(localeDirectoryPathState);
   const localeDirectoryCreationDialogOpened = useRecoilValue(localeDirectoryCreationDialogOpenedState);
 
+  const setTranslationFileNames = useSetRecoilState(translationFileNameState);
+  const setHasDirectorySelectorError = useSetRecoilState(hasDirectorySelectorErrorState);
+
   const [isFileExplorerOpened, setIsFileExplorerOpened] = useState(false);
 
   // OS 파일 탐색기에서 locale directory 열기
@@ -44,15 +51,22 @@ export default function useDirectorySelector(): UseDirectorySelector {
   });
 
   // 번역 파일 목록 조회
-  const { error: errorGetTranslationFile } = useQueryGetTranslationFile({
+  useQueryGetTranslationFile({
     req: {
       path: localeDirectoryPath!,
     },
     queryOption: {
       enabled: Boolean(localeDirectoryPath) && !localeDirectoryCreationDialogOpened,
+      onSuccess({ data }) {
+        setHasDirectorySelectorError(false);
+        setTranslationFileNames(data?.files);
+      },
+      onError() {
+        setHasDirectorySelectorError(true);
+        setTranslationFileNames(undefined);
+      },
     },
   });
-  const invalid = Boolean(errorGetTranslationFile);
 
   // i18n-editor 파일 탐색기 열기 버튼 클릭
   const handleOpenFileExplorerButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -103,7 +117,6 @@ export default function useDirectorySelector(): UseDirectorySelector {
     menuRef,
     isFileExplorerOpened,
     menuItems,
-    invalid,
     handleOpenFileExplorerButtonClick,
     handleInputChange,
     handleInputFocus,

@@ -5,7 +5,7 @@ import { Menu } from 'primereact/menu';
 import useDirectorySelector from '@components/directorySelector/useDirectorySelector';
 import { COLOR } from '@defines/css';
 import { useRecoilValue } from 'recoil';
-import { localeDirectoryPathState } from '@stores/store';
+import { hasDirectorySelectorErrorState, localeDirectoryPathState } from '@stores/store';
 import { FileExplorer } from '@components/directorySelector/components/fileExplorer';
 
 export interface DirectorySelectorProps {}
@@ -16,12 +16,12 @@ function DirectorySelector(props: DirectorySelectorProps) {
   const {} = props;
 
   const localeDirectoryPath = useRecoilValue(localeDirectoryPathState);
+  const hasDirectorySelectorError = useRecoilValue(hasDirectorySelectorErrorState);
   const {
     fileExplorerRef,
     menuRef,
     isFileExplorerOpened,
     menuItems,
-    invalid,
     handleOpenFileExplorerButtonClick,
     handleInputChange,
     handleInputFocus,
@@ -41,11 +41,15 @@ function DirectorySelector(props: DirectorySelectorProps) {
             value={localeDirectoryPath || ''}
             onChange={handleInputChange}
             onFocus={handleInputFocus}
-            className={classNames(invalid && 'p-invalid')}
+            className={classNames(hasDirectorySelectorError && 'p-invalid')}
           />
           <label
             htmlFor={INPUT_ID}
-            className={classNames(isFileExplorerOpened && 'opened', Boolean(localeDirectoryPath) && 'selected', invalid && 'invalid')}
+            className={classNames(
+              isFileExplorerOpened && 'opened',
+              Boolean(localeDirectoryPath) && 'selected',
+              hasDirectorySelectorError && 'invalid',
+            )}
           >
             Locale 디렉토리를 선택하세요
           </label>
