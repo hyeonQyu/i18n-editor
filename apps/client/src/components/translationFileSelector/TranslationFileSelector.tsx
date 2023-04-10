@@ -2,6 +2,7 @@ import { Button } from 'primereact/button';
 import useTranslationFileSelector from '@components/translationFileSelector/useTranslationFileSelector';
 import { Dropdown } from 'primereact/dropdown';
 import classNames from 'classnames';
+import { TranslationFileCreationDialog } from '@components/translationFileCreationDialog';
 
 export interface TranslationFileSelectorProps {}
 
@@ -48,6 +49,8 @@ function TranslationFileSelector(props: TranslationFileSelectorProps) {
           </label>
         </div>
       </div>
+
+      <TranslationFileCreationDialog />
 
       <style jsx>{`
         .translation-file-selector :global(.dropdown) {
