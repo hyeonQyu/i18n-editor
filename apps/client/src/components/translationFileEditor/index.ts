@@ -1,1 +1,1 @@
-export * from './TranslationFileEditor';
+export * from './TranslationFileEditorBefore';

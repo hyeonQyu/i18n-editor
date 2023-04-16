@@ -1,4 +1,4 @@
-import { TranslationFileEditorProps } from '@components/translationFileEditor/TranslationFileEditor';
+import { TranslationFileEditorProps } from '@components/translationFileEditor/TranslationFileEditorBefore';
 import { KeyboardEvent, MouseEventHandler, RefObject, SyntheticEvent, useRef, useState } from 'react';
 import { CustomEventHandler } from '@defines/event';
 import {
@@ -50,7 +50,11 @@ export interface IUseTranslationFileEditor {
   onAddNewTranslationKey: CustomEventHandler<string>;
 }
 
-function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUseTranslationFileEditor {
+/**
+ * @deprecated TODO 삭제
+ * @param params
+ */
+function useTranslationFileEditorBefore(params: IUseTranslationFileEditorParams): IUseTranslationFileEditor {
   const {
     rows,
     columns = [],
@@ -351,4 +355,4 @@ function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUse
   };
 }
 
-export default useTranslationFileEditor;
+export default useTranslationFileEditorBefore;

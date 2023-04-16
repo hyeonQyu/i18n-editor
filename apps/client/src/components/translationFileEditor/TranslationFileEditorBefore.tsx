@@ -1,6 +1,6 @@
 import { ColumnData, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
-import useTranslationFileEditor from '@components/translationFileEditor/useTranslationFileEditor';
+import useTranslationFileEditorBefore from '@components/translationFileEditor/useTranslationFileEditorBefore';
 import {
   CustomEventHandler,
   TranslationTableRowAddEvent,
@@ -28,12 +28,17 @@ export interface TranslationFileEditorProps {
   onDeleteRow: CustomEventHandler<TranslationTableDeleteRowEvent>;
 }
 
-export function TranslationFileEditor(props: TranslationFileEditorProps) {
+/**
+ * @deprecated TODO 삭제
+ * @param props
+ * @constructor
+ */
+export function TranslationFileEditorBefore(props: TranslationFileEditorProps) {
   const { rows, columns } = props;
 
   return (
     <>
-      <TranslationFileEditorContext.Provider value={{ ...useTranslationFileEditor(props), ...props }}>
+      <TranslationFileEditorContext.Provider value={{ ...useTranslationFileEditorBefore(props), ...props }}>
         {rows && columns && (
           <>
             <>

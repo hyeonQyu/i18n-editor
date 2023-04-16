@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { DirectorySelectorBefore } from '@components/directorySelector';
 import useHome from '@hooks/pages/useHome';
 import { TranslationFileSelectorBefore } from '@components/translationFileSelector';
-import { TranslationFileEditor } from '@components/translationFileEditor';
+import { TranslationFileEditorBefore } from '@components/translationFileEditor';
 import { LocaleDirectoryCreationDialogBefore } from '@components/localeDirectoryCreationDialog';
 import { TranslationFileCreationDialogBefore } from '@components/translationFileCreationDialog';
 import { HomeSkeleton } from '@components/page/home/homeSkeleton';
@@ -78,7 +78,7 @@ function Index(props: IndexProps) {
           </div>
 
           <div className={'table-container'} ref={tableContainerRef}>
-            <TranslationFileEditor
+            <TranslationFileEditorBefore
               columns={contentColumns}
               rows={contentRows}
               onChange={handleTranslationContentChange}

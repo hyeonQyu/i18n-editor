@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { IUseTranslationFileEditor } from '@components/translationFileEditor/useTranslationFileEditor';
+import { IUseTranslationFileEditor } from '@components/translationFileEditor/useTranslationFileEditorBefore';
 import { INITIAL_TABLE_EXTEND_DIALOG_DATA } from '@components/translationFileEditor/defines';
 import { TranslationFileEditorProps } from '@components/translationFileEditor';
 
