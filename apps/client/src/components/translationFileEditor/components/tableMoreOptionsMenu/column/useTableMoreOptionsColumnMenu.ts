@@ -1,5 +1,5 @@
 import { MenuItem } from 'primereact/menuitem';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 
 export interface IUseTableMoreOptionsColumnMenuParams {}
 
@@ -9,7 +9,7 @@ export interface IUseTableMoreOptionsColumnMenu {
 
 function useTableMoreOptionsColumnMenu(params: IUseTableMoreOptionsColumnMenuParams): IUseTableMoreOptionsColumnMenu {
   const {} = params;
-  const { handleColumnMenuClickDeleteColumn } = useTranslationFileEditorContext();
+  const { handleColumnMenuClickDeleteColumn } = useTranslationFileEditorContextBefore();
 
   const items: MenuItem[] = [
     {

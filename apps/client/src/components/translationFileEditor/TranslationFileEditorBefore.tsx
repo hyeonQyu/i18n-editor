@@ -9,7 +9,7 @@ import {
   TranslationTableColumnAddEvent,
   TranslationTableNewRowAddEvent,
 } from '@defines/event';
-import { TranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { TranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 import { TableMoreOptionsRowMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row';
 import { TableExtendDialog } from '@components/translationFileEditor/components/tableExtendDialog';
 import { TableMoreOptionsColumnMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/column';
@@ -38,7 +38,7 @@ export function TranslationFileEditorBefore(props: TranslationFileEditorProps) {
 
   return (
     <>
-      <TranslationFileEditorContext.Provider value={{ ...useTranslationFileEditorBefore(props), ...props }}>
+      <TranslationFileEditorContextBefore.Provider value={{ ...useTranslationFileEditorBefore(props), ...props }}>
         {rows && columns && (
           <>
             <>
@@ -50,7 +50,7 @@ export function TranslationFileEditorBefore(props: TranslationFileEditorProps) {
             <TranslationContentTable />
           </>
         )}
-      </TranslationFileEditorContext.Provider>
+      </TranslationFileEditorContextBefore.Provider>
 
       <style jsx>{``}</style>
     </>

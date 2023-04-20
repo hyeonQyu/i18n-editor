@@ -4,7 +4,7 @@ import { CellEditor } from '@components/translationFileEditor/components/transla
 import { CellViewer } from '@components/translationFileEditor/components/translationContentTable/components/cellViewer';
 import classNames from 'classnames';
 import { DataTable } from 'primereact/datatable';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 import { NewTranslationAdder } from '@components/translationFileEditor/components/translationContentTable/components/newTranslationAdder';
 import { TableHeader } from '@components/translationFileEditor/components/translationContentTable/components/tableHeader';
 
@@ -21,7 +21,7 @@ export function TranslationContentTable(props: TranslationContentTableProps) {
     handleCellEditComplete,
     rows = [],
     columns = [],
-  } = useTranslationFileEditorContext();
+  } = useTranslationFileEditorContextBefore();
 
   return (
     <>

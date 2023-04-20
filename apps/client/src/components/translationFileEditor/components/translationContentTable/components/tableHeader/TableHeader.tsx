@@ -1,13 +1,13 @@
 import { Button } from 'primereact/button';
 import { DataTableHeaderTemplateOptions } from 'primereact/datatable';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 import { InputText } from 'primereact/inputtext';
 
 export interface TableHeaderProps extends DataTableHeaderTemplateOptions {}
 
 export function TableHeader(props: TableHeaderProps) {
   const {} = props;
-  const { inputFilter, handleAddColumnClick } = useTranslationFileEditorContext();
+  const { inputFilter, handleAddColumnClick } = useTranslationFileEditorContextBefore();
 
   return (
     <>

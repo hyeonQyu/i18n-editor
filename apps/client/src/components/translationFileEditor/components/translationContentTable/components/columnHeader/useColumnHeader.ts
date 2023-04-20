@@ -1,6 +1,6 @@
 import { ColumnHeaderProps } from '@components/translationFileEditor/components/translationContentTable/components/columnHeader';
 import { MouseEventHandler, useState } from 'react';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 
 export interface IUseColumnHeaderParams extends ColumnHeaderProps {}
 
@@ -14,7 +14,7 @@ export interface IUseColumnHeader {
 function useColumnHeader(params: IUseColumnHeaderParams): IUseColumnHeader {
   const { header } = params;
   const [isHovered, setIsHovered] = useState(false);
-  const { onTableMoreOptionsColumnButtonClick } = useTranslationFileEditorContext();
+  const { onTableMoreOptionsColumnButtonClick } = useTranslationFileEditorContextBefore();
 
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = () => {
     setIsHovered(true);

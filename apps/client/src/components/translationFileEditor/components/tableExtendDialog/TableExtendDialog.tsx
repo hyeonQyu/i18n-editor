@@ -1,6 +1,6 @@
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 import classNames from 'classnames';
 import { COLOR } from '@defines/css';
 import useTableExtendDialog from '@components/translationFileEditor/components/tableExtendDialog/useTableExtendDialog';
@@ -14,7 +14,7 @@ export function TableExtendDialog() {
     tableExtendDialogData: { type, visible, inputLabel, invalid, onAddKey, onHide, ...rest },
     multiSelectAddingLanguageCode,
     inputAddingKey,
-  } = useTranslationFileEditorContext();
+  } = useTranslationFileEditorContextBefore();
 
   const { disabledYes, languageSelectOptions, handleClickAdd, handleFormSubmit } = useTableExtendDialog({});
 

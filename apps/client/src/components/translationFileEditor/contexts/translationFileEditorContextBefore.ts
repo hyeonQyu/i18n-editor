@@ -3,7 +3,7 @@ import { IUseTranslationFileEditor } from '@components/translationFileEditor/use
 import { INITIAL_TABLE_EXTEND_DIALOG_DATA } from '@components/translationFileEditor/defines';
 import { TranslationFileEditorProps } from '@components/translationFileEditor';
 
-export interface ITranslationFileEditorContext
+export interface ITranslationFileEditorContextBefore
   extends Pick<
       IUseTranslationFileEditor,
       | 'dataTableRef'
@@ -35,7 +35,10 @@ export interface ITranslationFileEditorContext
     >,
     Pick<TranslationFileEditorProps, 'rows' | 'columns' | 'onChange'> {}
 
-export const TranslationFileEditorContext = React.createContext<ITranslationFileEditorContext>({
+/**
+ * @deprecated TODO 삭제
+ */
+export const TranslationFileEditorContextBefore = React.createContext<ITranslationFileEditorContextBefore>({
   dataTableRef: undefined,
   rowMenuRef: undefined,
   columnMenuRef: undefined,
@@ -65,4 +68,4 @@ export const TranslationFileEditorContext = React.createContext<ITranslationFile
   handleRowMenuClickDeleteRow() {},
 });
 
-export const useTranslationFileEditorContext = () => React.useContext(TranslationFileEditorContext);
+export const useTranslationFileEditorContextBefore = () => React.useContext(TranslationFileEditorContextBefore);

@@ -1,5 +1,5 @@
 import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 import { LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defines';
 import { SelectItem } from 'primereact/selectitem';
 
@@ -19,7 +19,7 @@ function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExt
     tableExtendDialogData: { type, visible, onAddKey, onAddLanguageCodes },
     multiSelectAddingLanguageCode,
     inputAddingKey,
-  } = useTranslationFileEditorContext();
+  } = useTranslationFileEditorContextBefore();
 
   const value = {
     row: inputAddingKey.value,

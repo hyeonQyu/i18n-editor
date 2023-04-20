@@ -1,4 +1,4 @@
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 import useInput, { IUseInput } from '@hooks/common/useInput';
 import { FormEventHandler } from 'react';
 
@@ -12,7 +12,7 @@ export interface IUseNewTranslationAdder {
 
 function useNewTranslationAdder(params: IUseNewTranslationAdderParams): IUseNewTranslationAdder {
   const {} = params;
-  const { rows, inputFilter, onAddNewTranslationKey } = useTranslationFileEditorContext();
+  const { rows, inputFilter, onAddNewTranslationKey } = useTranslationFileEditorContextBefore();
   const inputTranslationKey = useInput({});
 
   const isFiltered = Boolean(inputFilter.value && rows?.length);

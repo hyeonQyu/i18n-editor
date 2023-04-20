@@ -1,5 +1,5 @@
 import { CellViewerProps } from '@components/translationFileEditor/components/translationContentTable/components/cellViewer';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 import { MouseEventHandler } from 'react';
 
 export interface IUseCellViewerParams extends CellViewerProps {}
@@ -17,7 +17,7 @@ function useCellViewer(params: IUseCellViewerParams): IUseCellViewer {
     rowData: { index },
     field,
   } = params;
-  const { mouseHoveredRowIndex, onCellClick, onCellMouseEnter, onTableMoreOptionsRowButtonClick } = useTranslationFileEditorContext();
+  const { mouseHoveredRowIndex, onCellClick, onCellMouseEnter, onTableMoreOptionsRowButtonClick } = useTranslationFileEditorContextBefore();
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
     onCellClick({ rowIndex: index, event: e });

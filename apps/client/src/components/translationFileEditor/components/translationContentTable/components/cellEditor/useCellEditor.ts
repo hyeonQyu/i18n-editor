@@ -1,6 +1,6 @@
 import { FocusEventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
 import { ColumnEditorOptions } from 'primereact/column';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 
 export interface IUseCellEditorParams extends ColumnEditorOptions {}
 
@@ -14,7 +14,7 @@ export interface IUseCellEditor {
 
 function useCellEditor(params: IUseCellEditorParams): IUseCellEditor {
   const { rowData, editorCallback } = params;
-  const { onCellClick, onCellMouseEnter } = useTranslationFileEditorContext();
+  const { onCellClick, onCellMouseEnter } = useTranslationFileEditorContextBefore();
 
   const handleClick: MouseEventHandler<HTMLTextAreaElement> = (e) => {
     onCellClick({ rowIndex: rowData?.index, event: e });

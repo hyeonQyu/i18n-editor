@@ -1,12 +1,12 @@
 import useTableMoreOptionsColumnMenu from '@components/translationFileEditor/components/tableMoreOptionsMenu/column/useTableMoreOptionsColumnMenu';
 import { Menu } from 'primereact/menu';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 
 export interface TableMoreOptionsColumnMenuProps {}
 
 export function TableMoreOptionsColumnMenu(props: TableMoreOptionsColumnMenuProps) {
   const {} = props;
-  const { columnMenuRef } = useTranslationFileEditorContext();
+  const { columnMenuRef } = useTranslationFileEditorContextBefore();
   const { items } = useTableMoreOptionsColumnMenu({});
 
   return (

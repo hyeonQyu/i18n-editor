@@ -1,5 +1,5 @@
 import { MenuItem } from 'primereact/menuitem';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 
 export interface IUseTableMoreOptionsRowMenuParams {}
 
@@ -16,7 +16,7 @@ function useTableMoreOptionsRowMenu(params: IUseTableMoreOptionsRowMenuParams): 
     handleRowMenuClickAddRowBelow,
     handleRowMenuClickClearRowContent,
     handleRowMenuClickDeleteRow,
-  } = useTranslationFileEditorContext();
+  } = useTranslationFileEditorContextBefore();
 
   const items: MenuItem[] = [
     {
