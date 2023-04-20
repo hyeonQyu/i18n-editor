@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { DataTable } from 'primereact/datatable';
 import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 import { NewTranslationAdder } from '@components/translationFileEditor/components/translationContentTable/components/newTranslationAdder';
-import { TableHeader } from '@components/translationFileEditor/components/translationContentTable/components/tableHeader';
+import { TableHeaderBefore } from '@components/translationFileEditor/components/translationContentTable/components/tableHeader';
 
 export interface TranslationContentTableProps {}
 
@@ -33,7 +33,7 @@ export function TranslationContentTableBefore(props: TranslationContentTableProp
       <DataTable
         ref={dataTableRef}
         value={rows}
-        header={TableHeader}
+        header={TableHeaderBefore}
         editMode={'cell'}
         selectionMode={'single'}
         responsiveLayout={'scroll'}

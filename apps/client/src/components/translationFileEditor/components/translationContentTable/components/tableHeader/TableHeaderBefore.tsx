@@ -3,9 +3,14 @@ import { DataTableHeaderTemplateOptions } from 'primereact/datatable';
 import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 import { InputText } from 'primereact/inputtext';
 
-export interface TableHeaderProps extends DataTableHeaderTemplateOptions {}
+export interface TableHeaderBeforeProps extends DataTableHeaderTemplateOptions {}
 
-export function TableHeader(props: TableHeaderProps) {
+/**
+ * @deprecated TODO 삭제
+ * @param props
+ * @constructor
+ */
+export function TableHeaderBefore(props: TableHeaderBeforeProps) {
   const {} = props;
   const { inputFilter, handleAddColumnClick } = useTranslationFileEditorContextBefore();
 
