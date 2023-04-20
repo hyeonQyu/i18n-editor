@@ -1,1 +1,1 @@
-export * from './TranslationContentTable';
+export * from './TranslationContentTableBefore';

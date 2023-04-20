@@ -10,7 +10,12 @@ import { TableHeader } from '@components/translationFileEditor/components/transl
 
 export interface TranslationContentTableProps {}
 
-export function TranslationContentTable(props: TranslationContentTableProps) {
+/**
+ * @deprecated TODO 삭제 예정
+ * @param props
+ * @constructor
+ */
+export function TranslationContentTableBefore(props: TranslationContentTableProps) {
   const {} = props;
   const {
     dataTableRef,

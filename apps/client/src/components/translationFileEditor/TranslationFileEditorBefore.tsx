@@ -13,7 +13,7 @@ import { TranslationFileEditorContextBefore } from '@components/translationFileE
 import { TableMoreOptionsRowMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row';
 import { TableExtendDialog } from '@components/translationFileEditor/components/tableExtendDialog';
 import { TableMoreOptionsColumnMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/column';
-import { TranslationContentTable } from '@components/translationFileEditor/components/translationContentTable';
+import { TranslationContentTableBefore } from '@components/translationFileEditor/components/translationContentTable';
 
 export interface TranslationFileEditorProps {
   columns?: ColumnData[];
@@ -47,7 +47,7 @@ export function TranslationFileEditorBefore(props: TranslationFileEditorProps) {
               <TableExtendDialog />
             </>
 
-            <TranslationContentTable />
+            <TranslationContentTableBefore />
           </>
         )}
       </TranslationFileEditorContextBefore.Provider>
