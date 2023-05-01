@@ -22,10 +22,10 @@ export const translationFileNamesState = atom<string[] | undefined>({
   default: undefined,
 });
 
-// export const translationFileNameState = atom<string>({
-//   key: 'translationFileName',
-//   default: undefined,
-// });
+export const translationFileNameState = atom<string | undefined>({
+  key: 'translationFileName',
+  default: undefined,
+});
 
 export const hasDirectorySelectorErrorState = atom<boolean>({
   key: 'hasDirectorySelectorError',
