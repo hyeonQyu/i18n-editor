@@ -1,19 +1,13 @@
-import { useSetRecoilState } from 'recoil';
-import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
 import { Button } from 'primereact/button';
 import useTableHeader from '@components/translationFileEditor/components/translationContentTable/components/tableHeader/useTableHeader';
 import { InputText } from 'primereact/inputtext';
-import useInput from '@hooks/common/useInput';
 import { DataTableHeaderTemplateOptions } from 'primereact/datatable';
+import useInputFilter from '@components/translationFileEditor/hooks/useInputFilter';
 
 export interface TableHeaderProps extends DataTableHeaderTemplateOptions {}
 
 function TableHeader(props: TableHeaderProps) {
-  const setFilterSelector = useSetRecoilState(translationFileEditorStates.filterSelector);
-
-  const inputFilter = useInput({
-    onChangeValue: setFilterSelector,
-  });
+  const inputFilter = useInputFilter({});
 
   const { handleAddColumnClick } = useTableHeader(props);
 
