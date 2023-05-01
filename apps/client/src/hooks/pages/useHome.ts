@@ -188,14 +188,15 @@ function useHome(params: IUseHomeParams): IUseHome {
     setContentColumns(columns);
     setContentRows(rows);
 
-    if (scrollToTable && columns && rows) {
-      setTimeout(() => {
-        tableContainerRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-      }, 0);
-    }
+    // 스크롤 기능 임시 해제, TODO 설정에서 변경하도록 수정 예정
+    // if (scrollToTable && columns && rows) {
+    //   setTimeout(() => {
+    //     tableContainerRef.current?.scrollIntoView({
+    //       behavior: 'smooth',
+    //       block: 'start',
+    //     });
+    //   }, 0);
+    // }
   };
 
   useQueryGetContent({
