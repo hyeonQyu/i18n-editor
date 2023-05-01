@@ -11,7 +11,7 @@ import {
   hasDirectorySelectorErrorState,
   localeDirectoryCreationDialogOpenedState,
   localeDirectoryPathState,
-  translationFileNameState,
+  translationFileNamesState,
 } from '@stores/store';
 
 export interface UseDirectorySelector {
@@ -35,7 +35,7 @@ export default function useDirectorySelector(): UseDirectorySelector {
   const localeDirectoryPath = useRecoilValue(localeDirectoryPathState);
   const localeDirectoryCreationDialogOpened = useRecoilValue(localeDirectoryCreationDialogOpenedState);
 
-  const setTranslationFileNames = useSetRecoilState(translationFileNameState);
+  const setTranslationFileNames = useSetRecoilState(translationFileNamesState);
   const setHasDirectorySelectorError = useSetRecoilState(hasDirectorySelectorErrorState);
 
   const [isFileExplorerOpened, setIsFileExplorerOpened] = useState(false);

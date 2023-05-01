@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SelectItem } from 'primereact/selectitem';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { hasDirectorySelectorErrorState, localeDirectoryPathState, translationFileNameState } from '@stores/store';
+import { hasDirectorySelectorErrorState, localeDirectoryPathState, translationFileNamesState } from '@stores/store';
 import { translationFileSelectorStates } from '@components/translationFileSelector/stores/store';
 import { TranslationFileSelectorProps } from '@components/translationFileSelector/TranslationFileSelector';
 import { CustomEventHandler } from '@defines/event';
@@ -26,7 +26,7 @@ export default function useTranslationFileSelector(params: UseTranslationFileSel
 
   const localeDirectoryPath = useRecoilValue(localeDirectoryPathState);
   const hasDirectorySelectorError = useRecoilValue(hasDirectorySelectorErrorState);
-  const translationFileNames = useRecoilValue(translationFileNameState);
+  const translationFileNames = useRecoilValue(translationFileNamesState);
   const setTranslationFileCreationDialogOpened = useSetRecoilState(translationFileSelectorStates.translationFileCreationDialogOpened);
 
   const [translationFileName, setTranslationFileName] = useState<string>();

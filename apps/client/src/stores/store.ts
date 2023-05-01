@@ -17,10 +17,15 @@ export const localeDirectoryCreationDialogOpenedState = atom<boolean>({
   default: false,
 });
 
-export const translationFileNameState = atom<string[] | undefined>({
+export const translationFileNamesState = atom<string[] | undefined>({
   key: 'translationFileNames',
   default: undefined,
 });
+
+// export const translationFileNameState = atom<string>({
+//   key: 'translationFileName',
+//   default: undefined,
+// });
 
 export const hasDirectorySelectorErrorState = atom<boolean>({
   key: 'hasDirectorySelectorError',
