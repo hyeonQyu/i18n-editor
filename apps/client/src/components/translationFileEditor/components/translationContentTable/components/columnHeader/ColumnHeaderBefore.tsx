@@ -1,14 +1,20 @@
-import { ColumnHeaderKey } from 'i18n-editor-common';
-import useColumnHeader from '@components/translationFileEditor/components/translationContentTable/components/columnHeader/useColumnHeader';
 import { Button } from 'primereact/button';
+import { ColumnHeaderKey } from 'i18n-editor-common';
+import useColumnHeaderBefore from '@components/translationFileEditor/components/translationContentTable/components/columnHeader/useColumnHeaderBefore';
 
-export interface ColumnHeaderProps {
+export interface ColumnHeaderBeforeProps {
   header: ColumnHeaderKey;
 }
 
-function ColumnHeader(props: ColumnHeaderProps) {
+/**
+ * @deprecated TODO 삭제
+ * @param props
+ * @constructor
+ */
+export function ColumnHeaderBefore(props: ColumnHeaderBeforeProps) {
   const { header } = props;
-  const { isShowColumnOptionButton, handleMouseEnter, handleMouseLeave, handleTableMoreOptionColumnButtonClick } = useColumnHeader(props);
+  const { isShowColumnOptionButton, handleMouseEnter, handleMouseLeave, handleTableMoreOptionColumnButtonClick } =
+    useColumnHeaderBefore(props);
 
   return (
     <>
@@ -44,5 +50,3 @@ function ColumnHeader(props: ColumnHeaderProps) {
     </>
   );
 }
-
-export default ColumnHeader;

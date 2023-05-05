@@ -1,6 +1,8 @@
 import { atom, selector } from 'recoil';
 import { ColumnData, ColumnHeaderKey, RowData } from 'i18n-editor-common';
 import { DataTableFilterMeta } from 'primereact/datatable';
+import { createRef, RefObject } from 'react';
+import { Menu } from 'primereact/menu';
 
 const getKey = (key: string) => `translationFileEditor_${key}`;
 
@@ -62,6 +64,11 @@ const filterSelector = selector<string>({
   },
 });
 
+const columnMenuRef = atom<RefObject<Menu>>({
+  key: getKey('columnMenuRef'),
+  default: createRef<Menu>(),
+});
+
 export const translationFileEditorStates = {
   rows,
   columns,
@@ -71,4 +78,5 @@ export const translationFileEditorStates = {
   filterValue: filterValue,
   filter,
   filterSelector,
+  columnMenuRef,
 };

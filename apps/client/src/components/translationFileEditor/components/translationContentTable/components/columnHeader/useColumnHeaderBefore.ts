@@ -1,22 +1,24 @@
-import { ColumnHeaderProps } from '@components/translationFileEditor/components/translationContentTable/components/columnHeader';
+import { ColumnHeaderBeforeProps } from '@components/translationFileEditor/components/translationContentTable/components/columnHeader';
 import { MouseEventHandler, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 
-export interface UseColumnHeaderParams extends ColumnHeaderProps {}
+export interface IUseColumnHeaderParams extends ColumnHeaderBeforeProps {}
 
-export interface UseColumnHeader {
+export interface IUseColumnHeader {
   isShowColumnOptionButton: boolean;
   handleMouseEnter: MouseEventHandler<HTMLDivElement>;
   handleMouseLeave: MouseEventHandler<HTMLDivElement>;
   handleTableMoreOptionColumnButtonClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function useColumnHeader(params: UseColumnHeaderParams): UseColumnHeader {
+/**
+ * @deprecated TODO 삭제
+ * @param params
+ */
+function useColumnHeaderBefore(params: IUseColumnHeaderParams): IUseColumnHeader {
   const { header } = params;
-  const columnMenuRef = useRecoilValue(translationFileEditorStates.columnMenuRef);
-  const setEditColumnHeaderKey = useSetRecoilState(translationFileEditorStates.editColumnHeaderKey);
   const [isHovered, setIsHovered] = useState(false);
+  const { onTableMoreOptionsColumnButtonClick } = useTranslationFileEditorContextBefore();
 
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = () => {
     setIsHovered(true);
@@ -27,8 +29,7 @@ export default function useColumnHeader(params: UseColumnHeaderParams): UseColum
   };
 
   const handleTableMoreOptionColumnButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    columnMenuRef.current?.toggle(e);
-    setEditColumnHeaderKey(header);
+    onTableMoreOptionsColumnButtonClick({ columnHeaderKey: header, event: e });
   };
 
   const isShowColumnOptionButton = isHovered && !(header === 'key' || header === 'index');
@@ -40,3 +41,5 @@ export default function useColumnHeader(params: UseColumnHeaderParams): UseColum
     handleTableMoreOptionColumnButtonClick,
   };
 }
+
+export default useColumnHeaderBefore;
