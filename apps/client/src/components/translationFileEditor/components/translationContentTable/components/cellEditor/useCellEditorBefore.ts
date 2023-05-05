@@ -1,11 +1,10 @@
-import { CellEditorProps } from '@components/translationFileEditor/components/translationContentTable/components/cellEditor';
 import { FocusEventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
+import { ColumnEditorOptions } from 'primereact/column';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 
-export interface UseCellEditorParams extends CellEditorProps {}
+export interface IUseCellEditorParams extends ColumnEditorOptions {}
 
-export interface UseCellEditor {
+export interface IUseCellEditor {
   handleClick: MouseEventHandler<HTMLTextAreaElement>;
   handleFocus: FocusEventHandler<HTMLTextAreaElement>;
   handleChange: FocusEventHandler<HTMLTextAreaElement>;
@@ -13,14 +12,16 @@ export interface UseCellEditor {
   handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement>;
 }
 
-export default function useCellEditor(params: UseCellEditorParams): UseCellEditor {
+/**
+ * @deprecated TODO 삭제
+ * @param params
+ */
+function useCellEditorBefore(params: IUseCellEditorParams): IUseCellEditor {
   const { rowData, editorCallback } = params;
-  const [editRowIndex, setEditRowIndex] = useRecoilState(translationFileEditorStates.editRowIndex);
-  const rowMenuRef = useRecoilValue(translationFileEditorStates.rowMenuRef);
-  const setMouseHoveredRowIndex = useSetRecoilState(translationFileEditorStates.mouseHoveredRowIndex);
+  const { onCellClick, onCellMouseEnter } = useTranslationFileEditorContextBefore();
 
-  const handleClick: MouseEventHandler<HTMLTextAreaElement> = () => {
-    setEditRowIndex(rowData.index);
+  const handleClick: MouseEventHandler<HTMLTextAreaElement> = (e) => {
+    onCellClick({ rowIndex: rowData?.index, event: e });
   };
 
   const handleFocus: FocusEventHandler<HTMLTextAreaElement> = (e) => {
@@ -35,13 +36,7 @@ export default function useCellEditor(params: UseCellEditorParams): UseCellEdito
   };
 
   const handleMouseEnter: MouseEventHandler<HTMLTextAreaElement> = (e) => {
-    const { index } = rowData;
-
-    if (index !== editRowIndex) {
-      rowMenuRef.current?.hide(e);
-    }
-
-    setMouseHoveredRowIndex(index);
+    onCellMouseEnter({ rowIndex: rowData?.index, event: e });
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
@@ -58,3 +53,5 @@ export default function useCellEditor(params: UseCellEditorParams): UseCellEdito
     handleKeyDown,
   };
 }
+
+export default useCellEditorBefore;

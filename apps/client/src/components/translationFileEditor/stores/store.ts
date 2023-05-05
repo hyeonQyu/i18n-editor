@@ -64,6 +64,11 @@ const filterSelector = selector<string>({
   },
 });
 
+const rowMenuRef = atom<RefObject<Menu>>({
+  key: getKey('rowMenuRef'),
+  default: createRef<Menu>(),
+});
+
 const columnMenuRef = atom<RefObject<Menu>>({
   key: getKey('columnMenuRef'),
   default: createRef<Menu>(),
@@ -78,5 +83,6 @@ export const translationFileEditorStates = {
   filterValue: filterValue,
   filter,
   filterSelector,
+  rowMenuRef,
   columnMenuRef,
 };

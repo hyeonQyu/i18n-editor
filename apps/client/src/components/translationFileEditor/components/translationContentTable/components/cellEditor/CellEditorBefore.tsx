@@ -1,14 +1,18 @@
 import { ColumnEditorOptions } from 'primereact/column';
-import useCellEditor from '@components/translationFileEditor/components/translationContentTable/components/cellEditor/useCellEditor';
-import { CellViewerBefore } from '@components/translationFileEditor/components/translationContentTable/components/cellViewer';
 import { InputTextarea } from 'primereact/inputtextarea';
+import useCellEditorBefore from '@components/translationFileEditor/components/translationContentTable/components/cellEditor/useCellEditorBefore';
+import { CellViewerBefore } from '@components/translationFileEditor/components/translationContentTable/components/cellViewer';
 
-export interface CellEditorProps extends ColumnEditorOptions {}
+export interface CellEditorBeforeProps extends ColumnEditorOptions {}
 
-function CellEditor(props: CellEditorProps) {
-  const {} = props;
+/**
+ * @deprecated TODO 삭제
+ * @param props
+ * @constructor
+ */
+export function CellEditorBefore(props: CellEditorBeforeProps) {
   const { value, field, rowData } = props;
-  const { handleClick, handleFocus, handleChange, handleMouseEnter, handleKeyDown } = useCellEditor(props);
+  const { handleClick, handleFocus, handleChange, handleMouseEnter, handleKeyDown } = useCellEditorBefore(props);
 
   if (field === 'key') {
     return <CellViewerBefore rowData={rowData} field={field} />;
@@ -39,5 +43,3 @@ function CellEditor(props: CellEditorProps) {
     </>
   );
 }
-
-export default CellEditor;
