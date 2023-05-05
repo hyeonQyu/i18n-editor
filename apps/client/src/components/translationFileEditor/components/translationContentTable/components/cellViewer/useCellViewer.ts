@@ -1,10 +1,11 @@
-import { CellViewerProps } from '@components/translationFileEditor/components/translationContentTable/components/cellViewer';
-import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 import { MouseEventHandler } from 'react';
+import { CellViewerProps } from '@components/translationFileEditor/components/translationContentTable/components/cellViewer';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
 
-export interface IUseCellViewerParams extends CellViewerProps {}
+export interface UseCellViewerParams extends CellViewerProps {}
 
-export interface IUseCellViewer {
+export interface UseCellViewer {
   isKey: boolean;
   isShowTableOptionsButton: boolean;
   handleClick: MouseEventHandler<HTMLDivElement>;
@@ -12,23 +13,30 @@ export interface IUseCellViewer {
   handleTableMoreOptionRowButtonClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-function useCellViewer(params: IUseCellViewerParams): IUseCellViewer {
+export default function useCellViewer(params: UseCellViewerParams): UseCellViewer {
   const {
     rowData: { index },
     field,
   } = params;
-  const { mouseHoveredRowIndex, onCellClick, onCellMouseEnter, onTableMoreOptionsRowButtonClick } = useTranslationFileEditorContextBefore();
+  const [editRowIndex, setEditRowIndex] = useRecoilState(translationFileEditorStates.editRowIndex);
+  const rowMenuRef = useRecoilValue(translationFileEditorStates.rowMenuRef);
+  const [mouseHoveredRowIndex, setMouseHoveredRowIndex] = useRecoilState(translationFileEditorStates.mouseHoveredRowIndex);
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    onCellClick({ rowIndex: index, event: e });
+  const handleClick: MouseEventHandler<HTMLDivElement> = () => {
+    setEditRowIndex(index);
   };
 
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = (e) => {
-    onCellMouseEnter({ rowIndex: index, event: e });
+    if (index !== editRowIndex) {
+      rowMenuRef.current?.hide(e);
+    }
+
+    setMouseHoveredRowIndex(index);
   };
 
   const handleTableMoreOptionRowButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    onTableMoreOptionsRowButtonClick({ rowIndex: index, event: e });
+    rowMenuRef.current?.toggle(e);
+    setEditRowIndex(index);
   };
 
   const isHoveredRow = index === mouseHoveredRowIndex;
@@ -43,5 +51,3 @@ function useCellViewer(params: IUseCellViewerParams): IUseCellViewer {
     handleTableMoreOptionRowButtonClick,
   };
 }
-
-export default useCellViewer;

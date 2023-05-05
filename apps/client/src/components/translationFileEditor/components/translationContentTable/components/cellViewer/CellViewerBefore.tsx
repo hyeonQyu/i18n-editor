@@ -1,15 +1,21 @@
 import { LanguageCode, RowData } from 'i18n-editor-common';
-import useCellViewer from '@components/translationFileEditor/components/translationContentTable/components/cellViewer/useCellViewer';
+import useCellViewerBefore from '@components/translationFileEditor/components/translationContentTable/components/cellViewer/useCellViewerBefore';
 import { Button } from 'primereact/button';
 
-export interface CellViewerProps {
+export interface CellViewerBeforeProps {
   rowData: RowData;
   field: 'key' | 'index' | LanguageCode;
 }
 
-function CellViewer(props: CellViewerProps) {
+/**
+ * @deprecated TODO 삭제
+ * @param props
+ * @constructor
+ */
+export function CellViewerBefore(props: CellViewerBeforeProps) {
   const { rowData, field } = props;
-  const { isKey, isShowTableOptionsButton, handleClick, handleMouseEnter, handleTableMoreOptionRowButtonClick } = useCellViewer(props);
+  const { isKey, isShowTableOptionsButton, handleClick, handleMouseEnter, handleTableMoreOptionRowButtonClick } =
+    useCellViewerBefore(props);
 
   return (
     <>
@@ -53,5 +59,3 @@ function CellViewer(props: CellViewerProps) {
     </>
   );
 }
-
-export default CellViewer;
