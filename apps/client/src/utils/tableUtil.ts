@@ -1,4 +1,4 @@
-import { ColumnData, RowData } from 'i18n-editor-common';
+import { CellData, ColumnData, RowData } from 'i18n-editor-common';
 
 export const getNewContentRow = (columns: ColumnData[], index: number, key: string): RowData => {
   return columns!
@@ -25,3 +25,16 @@ export const getNewRowAddedContentRows = (rows: RowData[], columns: ColumnData[]
   getNewContentRow(columns, rowIndex, key),
   ...getRowsAfterWithPivot(rows, rowIndex),
 ];
+
+export const rowToCell = (row: RowData, getCell: (cell: CellData) => CellData = (cell) => cell): CellData[] => {
+  const { key } = row;
+  return Object.entries(row)
+    .filter(([prop]) => !(prop === 'index' || prop === 'key'))
+    .map(([locale, value]) =>
+      getCell({
+        locale,
+        key,
+        value: value as string,
+      }),
+    );
+};
