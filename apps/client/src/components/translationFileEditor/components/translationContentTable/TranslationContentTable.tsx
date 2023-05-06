@@ -1,39 +1,30 @@
-import { Column } from 'primereact/column';
-import { ColumnHeaderBefore } from '@components/translationFileEditor/components/translationContentTable/components/columnHeader';
-import { CellEditorBefore } from '@components/translationFileEditor/components/translationContentTable/components/cellEditor';
-import { CellViewerBefore } from '@components/translationFileEditor/components/translationContentTable/components/cellViewer';
-import classNames from 'classnames';
 import { DataTable } from 'primereact/datatable';
-import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
-import { NewTranslationAdderBefore } from '@components/translationFileEditor/components/translationContentTable/components/newTranslationAdder';
-import { TableHeaderBefore } from '@components/translationFileEditor/components/translationContentTable/components/tableHeader';
+import useTranslationContentTable from '@components/translationFileEditor/components/translationContentTable/useTranslationContentTable';
+import { useRecoilValue } from 'recoil';
+import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
+import TableHeader from '@components/translationFileEditor/components/translationContentTable/components/tableHeader/TableHeader';
+import { NewTranslationAdder } from '@components/translationFileEditor/components/translationContentTable/components/newTranslationAdder';
+import { Column } from 'primereact/column';
+import { ColumnHeader } from '@components/translationFileEditor/components/translationContentTable/components/columnHeader';
+import { CellEditor } from '@components/translationFileEditor/components/translationContentTable/components/cellEditor';
+import { CellViewer } from '@components/translationFileEditor/components/translationContentTable/components/cellViewer';
+import classNames from 'classnames';
 
 export interface TranslationContentTableProps {}
 
-/**
- * @deprecated TODO 삭제 예정
- * @param props
- * @constructor
- */
-export function TranslationContentTableBefore(props: TranslationContentTableProps) {
+function TranslationContentTable(props: TranslationContentTableProps) {
   const {} = props;
-  const {
-    dataTableRef,
-    selectedRow,
-    globalFilterFields,
-    filter,
-    handleTableMouseLeave,
-    handleCellEditComplete,
-    rows = [],
-    columns = [],
-  } = useTranslationFileEditorContextBefore();
+  const rows = useRecoilValue(translationFileEditorStates.rows);
+  const columns = useRecoilValue(translationFileEditorStates.columns);
+  const filter = useRecoilValue(translationFileEditorStates.filter);
+  const { dataTableRef, globalFilterFields, selectedRow, handleTableMouseLeave, handleCellEditComplete } = useTranslationContentTable({});
 
   return (
     <>
       <DataTable
         ref={dataTableRef}
         value={rows}
-        header={TableHeaderBefore}
+        header={TableHeader}
         editMode={'cell'}
         selectionMode={'single'}
         responsiveLayout={'scroll'}
@@ -44,17 +35,16 @@ export function TranslationContentTableBefore(props: TranslationContentTableProp
         onMouseLeave={handleTableMouseLeave}
         selection={selectedRow}
         filters={filter}
-        emptyMessage={<NewTranslationAdderBefore />}
-        className={'translation-file-editor'}
+        emptyMessage={<NewTranslationAdder />}
       >
         {columns.map(({ header }) => (
           <Column
             key={header}
             field={header}
-            header={() => <ColumnHeaderBefore header={header} />}
-            editor={(option) => <CellEditorBefore {...option} />}
+            header={() => <ColumnHeader header={header} />}
+            editor={(option) => <CellEditor {...option} />}
+            body={(row) => <CellViewer rowData={row} field={header} />}
             onCellEditComplete={handleCellEditComplete}
-            body={(row) => <CellViewerBefore rowData={row} field={header} />}
             className={classNames(header === 'key' ? 'key' : 'translation')}
           />
         ))}
@@ -105,3 +95,5 @@ export function TranslationContentTableBefore(props: TranslationContentTableProp
     </>
   );
 }
+
+export default TranslationContentTable;
