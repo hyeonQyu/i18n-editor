@@ -14,3 +14,14 @@ export const getNewContentRow = (columns: ColumnData[], index: number, key: stri
       },
     );
 };
+
+export const getRowsBeforePivot = (rows: RowData[], pivotIndex: number) => rows.slice(0, pivotIndex);
+
+export const getRowsAfterWithPivot = (rows: RowData[], pivotIndex: number) =>
+  rows.slice(pivotIndex).map((row) => ({ ...row, index: row.index + 1 }));
+
+export const getNewRowAddedContentRows = (rows: RowData[], columns: ColumnData[], rowIndex: number, key: string) => [
+  ...getRowsBeforePivot(rows, rowIndex),
+  getNewContentRow(columns, rowIndex, key),
+  ...getRowsAfterWithPivot(rows, rowIndex),
+];
