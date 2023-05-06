@@ -3,7 +3,7 @@ import { translationFileEditorStates } from '@components/translationFileEditor/s
 import { FormEventHandler } from 'react';
 import useInput, { IUseInput } from '@hooks/common/useInput';
 import { NewTranslationAdderProps } from '@components/translationFileEditor/components/translationContentTable/components/newTranslationAdder/NewTranslationAdder';
-import useAddRow from '@components/translationFileEditor/hooks/useAddRow';
+import useEditRow from '@components/translationFileEditor/hooks/useEditRow';
 
 export interface UseNewTranslationAdderParams extends NewTranslationAdderProps {}
 
@@ -23,7 +23,7 @@ export default function useNewTranslationAdder(params: UseNewTranslationAdderPar
 
   const isFiltered = Boolean(inputFilterValue && rows.length);
 
-  const { addRow } = useAddRow({});
+  const { addRow } = useEditRow({});
 
   const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();

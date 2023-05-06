@@ -3,6 +3,7 @@ import { ColumnData, ColumnHeaderKey, RowData } from 'i18n-editor-common';
 import { DataTableFilterMeta } from 'primereact/datatable';
 import { createRef, RefObject } from 'react';
 import { Menu } from 'primereact/menu';
+import { INITIAL_TABLE_EXTEND_DIALOG_DATA, TableExtendDialogData } from '@components/translationFileEditor/defines';
 
 const getKey = (key: string) => `translationFileEditor_${key}`;
 
@@ -74,6 +75,11 @@ const columnMenuRef = atom<RefObject<Menu>>({
   default: createRef<Menu>(),
 });
 
+const tableExtendDialogData = atom<TableExtendDialogData>({
+  key: getKey('tableExtendDialogData'),
+  default: INITIAL_TABLE_EXTEND_DIALOG_DATA,
+});
+
 export const translationFileEditorStates = {
   rows,
   columns,
@@ -85,4 +91,5 @@ export const translationFileEditorStates = {
   filterSelector,
   rowMenuRef,
   columnMenuRef,
+  tableExtendDialogData,
 };

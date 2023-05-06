@@ -10,7 +10,7 @@ import {
   TranslationTableNewRowAddEvent,
 } from '@defines/event';
 import { TranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
-import { TableMoreOptionsRowMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row';
+import { TableMoreOptionsRowMenuBefore } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row';
 import { TableExtendDialog } from '@components/translationFileEditor/components/tableExtendDialog';
 import { TableMoreOptionsColumnMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/column';
 import { TranslationContentTableBefore } from '@components/translationFileEditor/components/translationContentTable';
@@ -42,7 +42,7 @@ export function TranslationFileEditorBefore(props: TranslationFileEditorProps) {
         {rows && columns && (
           <>
             <>
-              <TableMoreOptionsRowMenu />
+              <TableMoreOptionsRowMenuBefore />
               <TableMoreOptionsColumnMenu />
               <TableExtendDialog />
             </>
