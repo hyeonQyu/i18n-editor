@@ -6,6 +6,7 @@ import { localeDirectoryPathState, translationFileNameState } from '@stores/stor
 import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
 import useInputFilter from '@components/translationFileEditor/hooks/useInputFilter';
 import useMutationPatchContent from '@hooks/queries/useMutationPatchContent';
+import useMutationDeleteContentRow from '@hooks/queries/useMutationDeleteContentRow';
 
 export interface UseEditRowParams {}
 
@@ -14,6 +15,7 @@ export interface UseEditRow {
   addRowAbove: (key: string) => void;
   addRowBelow: (key: string) => void;
   clearRow: () => void;
+  deleteRow: () => void;
 }
 
 export default function useEditRow(params: UseEditRowParams): UseEditRow {
@@ -33,6 +35,7 @@ export default function useEditRow(params: UseEditRowParams): UseEditRow {
 
   const { mutate: mutatePatchContent } = useMutationPatchContent({});
   const { mutate: mutatePostContentRow } = useMutationPostContentRow({});
+  const { mutate: mutateDeleteContentRow } = useMutationDeleteContentRow({});
 
   const addRowToIndex = (index: number, key: string) => {
     mutatePostContentRow(
@@ -97,10 +100,34 @@ export default function useEditRow(params: UseEditRowParams): UseEditRow {
     );
   };
 
+  const deleteRow = () => {
+    const index = editRowIndex!;
+
+    mutateDeleteContentRow(
+      {
+        path: localeDirectoryPath!,
+        fileName: translationFileName!,
+        key: rows[index].key,
+      },
+      {
+        onSuccess() {
+          setRows((prev) => [...prev!.slice(0, index), ...prev!.slice(index + 1).map((row) => ({ ...row, index: row.index - 1 }))]);
+
+          toastRef.current?.show({
+            severity: 'success',
+            detail: '행을 삭제했어요',
+            life: 3000,
+          });
+        },
+      },
+    );
+  };
+
   return {
     addRow,
     addRowAbove,
     addRowBelow,
     clearRow,
+    deleteRow,
   };
 }
