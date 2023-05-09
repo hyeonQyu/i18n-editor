@@ -2,11 +2,11 @@ import { LanguageCode } from 'i18n-editor-common';
 
 export interface DeleteColumnConfirmMessageTemplateProps {
   languageCode: LanguageCode;
-  translationFile: string;
+  translationFileName: string;
 }
 
-export function DeleteColumnConfirmMessageTemplate(props: DeleteColumnConfirmMessageTemplateProps) {
-  const { languageCode, translationFile } = props;
+function DeleteColumnConfirmMessageTemplate(props: DeleteColumnConfirmMessageTemplateProps) {
+  const { languageCode, translationFileName } = props;
 
   return (
     <>
@@ -19,7 +19,7 @@ export function DeleteColumnConfirmMessageTemplate(props: DeleteColumnConfirmMes
         <strong className={'warn'}>{languageCode} 디렉토리를 삭제</strong>
         <span>하며</span>
         <br />
-        <strong>{translationFile}을 제외한 모든 번역 파일</strong>
+        <strong>{translationFileName}을 제외한 모든 번역 파일</strong>
         <span>에서도</span>
         <br />
         <strong className={'warn'}>{languageCode}를 삭제</strong>
@@ -38,3 +38,5 @@ export function DeleteColumnConfirmMessageTemplate(props: DeleteColumnConfirmMes
     </>
   );
 }
+
+export default DeleteColumnConfirmMessageTemplate;

@@ -383,7 +383,7 @@ function useHome(params: IUseHomeParams): IUseHome {
 
     confirmDialog({
       header: '선택된 언어를 삭제하시겠어요?',
-      message: DeleteColumnConfirmMessageTemplate({ languageCode, translationFile: translationFile! }),
+      message: DeleteColumnConfirmMessageTemplate({ languageCode, translationFileName: translationFile! }),
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
       position: 'top',
