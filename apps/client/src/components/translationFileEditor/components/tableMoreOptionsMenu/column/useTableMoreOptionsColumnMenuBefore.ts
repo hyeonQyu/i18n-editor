@@ -7,7 +7,11 @@ export interface IUseTableMoreOptionsColumnMenu {
   items: MenuItem[];
 }
 
-function useTableMoreOptionsColumnMenu(params: IUseTableMoreOptionsColumnMenuParams): IUseTableMoreOptionsColumnMenu {
+/**
+ * @deprecated TODO 삭제
+ * @param params
+ */
+function useTableMoreOptionsColumnMenuBefore(params: IUseTableMoreOptionsColumnMenuParams): IUseTableMoreOptionsColumnMenu {
   const {} = params;
   const { handleColumnMenuClickDeleteColumn } = useTranslationFileEditorContextBefore();
 
@@ -26,4 +30,4 @@ function useTableMoreOptionsColumnMenu(params: IUseTableMoreOptionsColumnMenuPar
   };
 }
 
-export default useTableMoreOptionsColumnMenu;
+export default useTableMoreOptionsColumnMenuBefore;

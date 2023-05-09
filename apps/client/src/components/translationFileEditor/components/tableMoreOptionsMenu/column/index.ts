@@ -1,1 +1,1 @@
-export * from './TableMoreOptionsColumnMenu';
+export * from './TableMoreOptionsColumnMenuBefore';
