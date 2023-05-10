@@ -1,25 +1,42 @@
-import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
-import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
-import { LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defines';
 import { SelectItem } from 'primereact/selectitem';
+import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
+import { TableExtendDialogProps } from '@components/translationFileEditor/components/tableExtendDialog';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
+import useInput, { IUseInput } from '@hooks/common/useInput';
+import { LABELS_BY_TABLE_EXTEND_TYPE, LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defines';
+import useMultiSelect, { UseMultiSelect } from '@hooks/common/useMultiSelect';
 
-export interface IUseTableExtendDialogParams {}
+export interface UseTableExtendDialogParams extends TableExtendDialogProps {}
 
-export interface IUseTableExtendDialog {
+export interface UseTableExtendDialog {
   disabledYes: boolean;
   languageSelectOptions: SelectItem[];
+  inputAddingKey: IUseInput;
+  multiSelectAddingLanguageCode: UseMultiSelect;
   handleClickAdd: MouseEventHandler<HTMLButtonElement>;
   handleFormSubmit: FormEventHandler<HTMLFormElement>;
 }
 
-function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExtendDialog {
+export default function useTableExtendDialog(params: UseTableExtendDialogParams): UseTableExtendDialog {
   const {} = params;
-  const {
-    columns = [],
-    tableExtendDialogData: { type, visible, onAddKey, onAddLanguageCodes },
-    multiSelectAddingLanguageCode,
-    inputAddingKey,
-  } = useTranslationFileEditorContextBefore();
+
+  const [{ type, visible, onAddKey, onAddLanguageCodes }, setTableExtendDialogData] = useRecoilState(
+    translationFileEditorStates.tableExtendDialogData,
+  );
+  const columns = useRecoilValue(translationFileEditorStates.columns);
+
+  const inputAddingKey = useInput({
+    onChangeValue() {
+      setTableExtendDialogData((prev) => ({
+        ...prev,
+        invalid: false,
+        ...LABELS_BY_TABLE_EXTEND_TYPE[prev.type],
+      }));
+    },
+  });
+
+  const multiSelectAddingLanguageCode = useMultiSelect({});
 
   const value = {
     row: inputAddingKey.value,
@@ -66,9 +83,9 @@ function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExt
   return {
     disabledYes,
     languageSelectOptions,
+    inputAddingKey,
+    multiSelectAddingLanguageCode,
     handleFormSubmit,
     handleClickAdd,
   };
 }
-
-export default useTableExtendDialog;

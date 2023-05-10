@@ -1,26 +1,26 @@
-import { useRecoilValue } from 'recoil';
-import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
-import useTableExtendDialog from '@components/translationFileEditor/components/tableExtendDialog/useTableExtendDialog';
 import { Dialog } from 'primereact/dialog';
-import { CustomConfirmDialogFooter } from '@components/customConfirmDialogFooter';
 import { InputText } from 'primereact/inputtext';
+import { useTranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
 import classNames from 'classnames';
-import { LanguageCodeMultiSelect } from '@components/languageCodeMultiSelect';
 import { COLOR } from '@defines/css';
+import useTableExtendDialogBefore from '@components/translationFileEditor/components/tableExtendDialog/useTableExtendDialogBefore';
+import { LanguageCodeMultiSelect } from '@components/languageCodeMultiSelect';
+import { CustomConfirmDialogFooter } from '@components/customConfirmDialogFooter';
 
-export interface TableExtendDialogProps {}
+const inputId = 'table-extend';
 
-const INPUT_ID = 'table-extend';
+/**
+ * @deprecated TODO 삭제
+ * @constructor
+ */
+export function TableExtendDialogBefore() {
+  const {
+    tableExtendDialogData: { type, visible, inputLabel, invalid, onAddKey, onHide, ...rest },
+    multiSelectAddingLanguageCode,
+    inputAddingKey,
+  } = useTranslationFileEditorContextBefore();
 
-function TableExtendDialog(props: TableExtendDialogProps) {
-  const {} = props;
-
-  const { type, visible, inputLabel, invalid, onAddKey, onHide, ...rest } = useRecoilValue(
-    translationFileEditorStates.tableExtendDialogData,
-  );
-
-  const { disabledYes, languageSelectOptions, inputAddingKey, multiSelectAddingLanguageCode, handleClickAdd, handleFormSubmit } =
-    useTableExtendDialog(props);
+  const { disabledYes, languageSelectOptions, handleClickAdd, handleFormSubmit } = useTableExtendDialogBefore({});
 
   return (
     <>
@@ -44,7 +44,7 @@ function TableExtendDialog(props: TableExtendDialogProps) {
           <span className={'p-float-label'}>
             {type === 'row' && (
               <InputText
-                id={INPUT_ID}
+                id={inputId}
                 value={inputAddingKey.value}
                 onChange={inputAddingKey.onChange}
                 autoFocus
@@ -54,7 +54,7 @@ function TableExtendDialog(props: TableExtendDialogProps) {
             {type === 'column' && (
               <LanguageCodeMultiSelect multiSelectLanguageCode={multiSelectAddingLanguageCode} options={languageSelectOptions} />
             )}
-            <label htmlFor={INPUT_ID} className={classNames(invalid && 'invalid')}>
+            <label htmlFor={inputId} className={classNames(invalid && 'invalid')}>
               {inputLabel}
             </label>
           </span>
@@ -83,5 +83,3 @@ function TableExtendDialog(props: TableExtendDialogProps) {
     </>
   );
 }
-
-export default TableExtendDialog;
