@@ -10,10 +10,10 @@ import {
   TranslationTableNewRowAddEvent,
 } from '@defines/event';
 import { TranslationFileEditorContextBefore } from '@components/translationFileEditor/contexts/translationFileEditorContextBefore';
-import { TableMoreOptionsRowMenuBefore } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row';
-import { TableExtendDialog } from '@components/translationFileEditor/components/tableExtendDialog';
-import { TableMoreOptionsColumnMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/column';
-import { TranslationContentTableBefore } from '@components/translationFileEditor/components/translationContentTable';
+import { TableMoreOptionsRowMenuBefore } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row/TableMoreOptionsRowMenuBefore';
+import { TableExtendDialogBefore } from '@components/translationFileEditor/components/tableExtendDialog/TableExtendDialogBefore';
+import { TableMoreOptionsColumnMenuBefore } from '@components/translationFileEditor/components/tableMoreOptionsMenu/column/TableMoreOptionsColumnMenuBefore';
+import { TranslationContentTableBefore } from '@components/translationFileEditor/components/translationContentTable/TranslationContentTableBefore';
 
 export interface TranslationFileEditorProps {
   columns?: ColumnData[];
@@ -43,8 +43,8 @@ export function TranslationFileEditorBefore(props: TranslationFileEditorProps) {
           <>
             <>
               <TableMoreOptionsRowMenuBefore />
-              <TableMoreOptionsColumnMenu />
-              <TableExtendDialog />
+              <TableMoreOptionsColumnMenuBefore />
+              <TableExtendDialogBefore />
             </>
 
             <TranslationContentTableBefore />
