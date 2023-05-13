@@ -9,6 +9,7 @@
     ]
   },
   "scripts": {
+    "dev": "yarn watch:common | yarn dev:server | yarn dev:client",
     "dev:client": "yarn --cwd apps/client run dev",
     "dev:server": "yarn --cwd apps/server run dev",
     "watch:common": "yarn --cwd packages/app-common run watch",
