@@ -23,6 +23,7 @@ function MovePathButton(props: MovePathButtonProps) {
       <style jsx>{`
         :global(.move-path) {
           width: fit-content;
+          display: flex;
         }
 
         :global(.move-path .p-button) {
