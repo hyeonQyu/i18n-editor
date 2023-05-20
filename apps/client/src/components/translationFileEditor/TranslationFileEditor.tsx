@@ -4,12 +4,14 @@ import { TableMoreOptionsRowMenu } from '@components/translationFileEditor/compo
 import { TableMoreOptionsColumnMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/column';
 import { TableExtendDialog } from '@components/translationFileEditor/components/tableExtendDialog';
 import { TranslationContentTable } from '@components/translationFileEditor/components/translationContentTable';
+import useTranslationFileEditor from '@components/translationFileEditor/useTranslationFileEditor';
 
 export interface TranslationFileEditorProps {}
 
 function TranslationFileEditor(props: TranslationFileEditorProps) {
   const {} = props;
 
+  useTranslationFileEditor(props);
   const translationFileName = useRecoilValue(translationFileNameState);
 
   return (
