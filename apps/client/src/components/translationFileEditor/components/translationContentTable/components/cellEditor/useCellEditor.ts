@@ -1,7 +1,8 @@
 import { CellEditorProps } from '@components/translationFileEditor/components/translationContentTable/components/cellEditor';
 import { FocusEventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
+import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 
 export interface UseCellEditorParams extends CellEditorProps {}
 
@@ -15,8 +16,8 @@ export interface UseCellEditor {
 
 export default function useCellEditor(params: UseCellEditorParams): UseCellEditor {
   const { rowData, editorCallback } = params;
+  const { rowMenuRef } = useTranslationFileEditorContext();
   const [editRowIndex, setEditRowIndex] = useRecoilState(translationFileEditorStates.editRowIndex);
-  const rowMenuRef = useRecoilValue(translationFileEditorStates.rowMenuRef);
   const setMouseHoveredRowIndex = useSetRecoilState(translationFileEditorStates.mouseHoveredRowIndex);
 
   const handleClick: MouseEventHandler<HTMLTextAreaElement> = () => {

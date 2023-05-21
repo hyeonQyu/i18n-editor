@@ -1,7 +1,8 @@
 import { ColumnHeaderProps } from '@components/translationFileEditor/components/translationContentTable/components/columnHeader';
 import { MouseEventHandler, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
+import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 
 export interface UseColumnHeaderParams extends ColumnHeaderProps {}
 
@@ -14,7 +15,7 @@ export interface UseColumnHeader {
 
 export default function useColumnHeader(params: UseColumnHeaderParams): UseColumnHeader {
   const { header } = params;
-  const columnMenuRef = useRecoilValue(translationFileEditorStates.columnMenuRef);
+  const { columnMenuRef } = useTranslationFileEditorContext();
   const setEditColumnHeaderKey = useSetRecoilState(translationFileEditorStates.editColumnHeaderKey);
   const [isHovered, setIsHovered] = useState(false);
 

@@ -5,28 +5,35 @@ import { TableMoreOptionsColumnMenu } from '@components/translationFileEditor/co
 import { TableExtendDialog } from '@components/translationFileEditor/components/tableExtendDialog';
 import { TranslationContentTable } from '@components/translationFileEditor/components/translationContentTable';
 import useTranslationFileEditor from '@components/translationFileEditor/useTranslationFileEditor';
+import { useRef } from 'react';
+import { Menu } from 'primereact/menu';
+import { TranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 
 export interface TranslationFileEditorProps {}
 
 function TranslationFileEditor(props: TranslationFileEditorProps) {
   const {} = props;
 
-  useTranslationFileEditor(props);
   const translationFileName = useRecoilValue(translationFileNameState);
+
+  useTranslationFileEditor(props);
+
+  const rowMenuRef = useRef<Menu>(null);
+  const columnMenuRef = useRef<Menu>(null);
 
   return (
     <>
-      {translationFileName && (
-        <>
-          <>
+      <TranslationFileEditorContext.Provider value={{ rowMenuRef, columnMenuRef }}>
+        {translationFileName && (
+          <div className={'table-container'}>
             <TableMoreOptionsRowMenu />
             <TableMoreOptionsColumnMenu />
             <TableExtendDialog />
-          </>
 
-          <TranslationContentTable />
-        </>
-      )}
+            <TranslationContentTable />
+          </div>
+        )}
+      </TranslationFileEditorContext.Provider>
 
       <style jsx>{``}</style>
     </>

@@ -2,15 +2,18 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
 import { CustomEventHandler } from '@defines/event';
 import { useToastContext } from '@contexts/toastContext';
-import { SyntheticEvent } from 'react';
+import { RefObject, SyntheticEvent, useEffect } from 'react';
 import { LABELS_BY_TABLE_EXTEND_TYPE, TableExtendDialogData } from '@components/translationFileEditor/defines';
 import { DialogPositionType } from 'primereact/dialog';
 import useEditRow from '@components/translationFileEditor/hooks/useEditRow';
 import { confirmDialog } from 'primereact/confirmdialog';
+import { Menu } from 'primereact/menu';
+import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 
 export interface UseTableMoreOptionsRowMenuParams {}
 
 export interface UseTableMoreOptionsRowMenu {
+  rowMenuRef: RefObject<Menu> | undefined;
   isClearableRow: boolean;
   handleClickCopyTranslationKey: CustomEventHandler;
   handleClickAddRowAbove: CustomEventHandler<SyntheticEvent>;
@@ -28,6 +31,8 @@ export default function useTableMoreOptionsRowMenu(params: UseTableMoreOptionsRo
   const editRowIndex = useRecoilValue(translationFileEditorStates.editRowIndex);
   const setTableExtendDialogData = useSetRecoilState(translationFileEditorStates.tableExtendDialogData);
 
+  const { rowMenuRef } = useTranslationFileEditorContext();
+
   const { addRowAbove, addRowBelow, clearRow, deleteRow } = useEditRow({});
 
   const hasSelectedRow = rows && (editRowIndex || editRowIndex === 0);
@@ -38,6 +43,10 @@ export default function useTableMoreOptionsRowMenu(params: UseTableMoreOptionsRo
       rows[editRowIndex] &&
       Object.entries(rows[editRowIndex]).filter(([key, value]) => key !== 'key' && key !== 'index' && value).length,
   );
+
+  useEffect(() => {
+    // setRowMenuRef(rowMenuRef);
+  }, []);
 
   const getEditRowDialogPosition = (target: HTMLElement): DialogPositionType => {
     const { y } = target.getBoundingClientRect();
@@ -171,6 +180,7 @@ export default function useTableMoreOptionsRowMenu(params: UseTableMoreOptionsRo
   };
 
   return {
+    rowMenuRef,
     isClearableRow,
     handleClickCopyTranslationKey,
     handleClickAddRowAbove,

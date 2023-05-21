@@ -1,5 +1,3 @@
-import { useRecoilValue } from 'recoil';
-import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
 import useTableMoreOptionsRowMenu from '@components/translationFileEditor/components/tableMoreOptionsMenu/row/useTableMoreOptionsRowMenu';
 import { MenuItem } from 'primereact/menuitem';
 import { Menu } from 'primereact/menu';
@@ -8,8 +6,8 @@ export interface TableMoreOptionsRowMenuProps {}
 
 function TableMoreOptionsRowMenu(props: TableMoreOptionsRowMenuProps) {
   const {} = props;
-  const rowMenuRef = useRecoilValue(translationFileEditorStates.rowMenuRef);
   const {
+    rowMenuRef,
     isClearableRow,
     handleClickCopyTranslationKey,
     handleClickAddRowAbove,
@@ -56,6 +54,7 @@ function TableMoreOptionsRowMenu(props: TableMoreOptionsRowMenuProps) {
       },
     },
   ];
+
   return (
     <>
       <Menu ref={rowMenuRef} model={items} popup className={'row-menu'} />

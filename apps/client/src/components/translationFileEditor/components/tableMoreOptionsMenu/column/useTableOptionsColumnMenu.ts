@@ -1,6 +1,6 @@
 import { TableMoreOptionsColumnMenuProps } from '@components/translationFileEditor/components/tableMoreOptionsMenu/column';
 import { CustomEventHandler } from '@defines/event';
-import { SyntheticEvent } from 'react';
+import { RefObject, SyntheticEvent } from 'react';
 import useEditColumn from '@components/translationFileEditor/hooks/useEditColumn';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { DeleteColumnConfirmMessageTemplate } from '@components/page/home/deleteColumnConfirmMessageTemplate';
@@ -8,10 +8,13 @@ import { useRecoilValue } from 'recoil';
 import { translationFileEditorStates } from '@components/translationFileEditor/stores/store';
 import { translationFileNameState } from '@stores/store';
 import { LanguageCode } from 'i18n-editor-common';
+import { Menu } from 'primereact/menu';
+import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 
 export interface UseTableOptionsColumnMenuParams extends TableMoreOptionsColumnMenuProps {}
 
 export interface UseTableOptionsColumnMenu {
+  columnMenuRef: RefObject<Menu> | undefined;
   handleClickDeleteColumn: CustomEventHandler<SyntheticEvent>;
 }
 
@@ -22,6 +25,8 @@ export default function useTableOptionsColumnMenu(params: UseTableOptionsColumnM
 
   const translationFileName = useRecoilValue(translationFileNameState);
   const editColumnHeaderKey = useRecoilValue(translationFileEditorStates.editColumnHeaderKey);
+
+  const { columnMenuRef } = useTranslationFileEditorContext();
 
   /**
    * 현재 열 삭제
@@ -47,6 +52,7 @@ export default function useTableOptionsColumnMenu(params: UseTableOptionsColumnM
   };
 
   return {
+    columnMenuRef,
     handleClickDeleteColumn,
   };
 }
