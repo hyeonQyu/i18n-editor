@@ -18,12 +18,14 @@ function TableHeader(props: TableHeaderProps) {
           <Button label={'언어 추가'} icon={'pi pi-plus'} onClick={handleAddColumnClick} />
         </div>
 
-        <div className={'p-inputgroup'}>
-          <span className={'p-input-icon-left'}>
-            <i className={'pi pi-search'} />
-            <InputText placeholder={'검색'} value={inputFilter.value} onChange={inputFilter.onChange} className={'search'} />
-          </span>
-          <Button icon={'pi pi-times'} className={'p-button p-button-danger'} onClick={inputFilter.clear} />
+        <div>
+          <div className={'p-inputgroup'}>
+            <span className={'p-input-icon-left'}>
+              <i className={'pi pi-search'} />
+              <InputText placeholder={'검색'} value={inputFilter.value} onChange={inputFilter.onChange} className={'search'} />
+            </span>
+            <Button icon={'pi pi-times'} className={'p-button p-button-danger'} onClick={inputFilter.clear} />
+          </div>
         </div>
       </div>
 
