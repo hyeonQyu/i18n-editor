@@ -32,7 +32,35 @@ function NewTranslationAdder(props: NewTranslationAdderProps) {
         </form>
       )}
 
-      <style jsx>{``}</style>
+      <style jsx>{`
+        .empty {
+          width: 100%;
+          height: 46px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .add-key {
+          width: 100%;
+        }
+
+        .p-inputgroup {
+          width: 100%;
+          height: 100px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .p-float-label {
+          width: 70%;
+        }
+
+        .p-float-label :global(.input-translation-key) {
+          width: 100%;
+        }
+      `}</style>
     </>
   );
 }
