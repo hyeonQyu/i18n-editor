@@ -58,7 +58,7 @@ export namespace FileSystemManager {
    * @param jsonObject
    */
   export function writeFile<T = JsonObject>(filePath: string, jsonObject: T) {
-    fs.writeFileSync(filePath, JSON.stringify(jsonObject, null, 2));
+    fs.writeFileSync(filePath, JSON.stringify(jsonObject, null, 2).concat('\n'));
   }
 
   /**
