@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { getLeadingSlash } from '@utils/string';
+import { getLeadingSlash } from 'i18n-editor-common';
 
 abstract class BaseApi {
   private readonly _axiosInstance: AxiosInstance;

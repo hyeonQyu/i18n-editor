@@ -27,6 +27,9 @@ import {
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { Service } from './service';
 
+/**
+ * @deprecated
+ */
 export namespace Controller {
   export function response(app: any) {
     doCommonResponse<void, void, GetConfigRes>(app, '/config', 'get', (req, res) => {

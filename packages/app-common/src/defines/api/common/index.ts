@@ -1,7 +1,13 @@
 import { HttpStatusCode } from 'axios';
 
-export interface ResponseEntity<T> {
-  status: HttpStatusCode;
-  errorMessage: string;
-  data: T;
-}
+export type ResponseEntity<T> =
+  | {
+      status: HttpStatusCode.Ok;
+      errorMessage?: never | undefined;
+      data: T;
+    }
+  | {
+      status: Exclude<HttpStatusCode, HttpStatusCode.Ok>;
+      errorMessage: string;
+      data?: never;
+    };
