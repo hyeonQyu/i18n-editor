@@ -26,6 +26,9 @@ import {
 } from 'i18n-editor-common';
 import { AxiosInstanceProps } from '@defines/axios';
 
+/**
+ * @deprecated
+ */
 export namespace HomeApi {
   let client: AxiosInstance;
 

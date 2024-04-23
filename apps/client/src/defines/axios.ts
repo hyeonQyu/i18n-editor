@@ -1,5 +1,8 @@
 import { AxiosInterceptorOptions, AxiosResponse } from 'axios';
 
+/**
+ * @deprecated
+ */
 export interface AxiosInstanceProps {
   port: number;
   responseInterceptor?: {
