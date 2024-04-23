@@ -1,5 +1,10 @@
 import { LANGUAGE_CODES } from './constants';
 
+/**
+ * @deprecated 전체 제거 예정
+ */
+
+
 export interface DirectoryEntry {
   name: string;
   type: DirectoryEntryType;
