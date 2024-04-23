@@ -20,7 +20,7 @@
     "build-publish": "yarn build && yarn publish:dist"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.6.8",
     "i18n-editor-common": "0.1.0"
   },
   "devDependencies": {
