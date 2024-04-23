@@ -4,3 +4,7 @@ export * from './translation';
 export interface GetNamespaceRequest {}
 
 export interface GetNamespaceResponse {}
+
+export interface PostNamespaceRequest {}
+
+export interface PostNamespaceResponse {}
