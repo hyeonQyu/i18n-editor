@@ -9,8 +9,8 @@ export default class ConfigController extends BaseController {
     method: 'get',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.Ok,
-        data: {},
+        status: HttpStatusCode.NotImplemented,
+        errorMessage: 'Not implemented',
       };
     },
   };

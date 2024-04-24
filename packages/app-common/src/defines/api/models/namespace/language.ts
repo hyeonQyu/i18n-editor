@@ -1,7 +1,18 @@
-export interface PostNamespaceLanguageRequest {}
+import { CommonNamespaceRequest } from './_common';
+import { LanguageCode } from '../../../language';
 
-export interface PostNamespaceLanguageResponse {}
+export interface PostNamespaceLanguageRequest extends CommonNamespaceRequest {
+  languageCodes: LanguageCode[];
+}
 
-export interface DeleteNamespaceLanguageRequest {}
+export interface PostNamespaceLanguageResponse {
+  addedLanguageCodes: LanguageCode[];
+}
 
-export interface DeleteNamespaceLanguageResponse {}
+export interface DeleteNamespaceLanguageRequest extends CommonNamespaceRequest {
+  languageCode: LanguageCode;
+}
+
+export interface DeleteNamespaceLanguageResponse {
+  deletedLanguageCode: LanguageCode;
+}

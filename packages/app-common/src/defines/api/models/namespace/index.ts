@@ -1,10 +1,17 @@
+import { LanguageCode } from '../../../language';
+import { Translation } from '../../../translation';
+import { CommonNamespaceRequest } from './_common';
+
 export * from './language';
 export * from './translation';
 
-export interface GetNamespaceRequest {}
+export interface GetNamespaceRequest extends CommonNamespaceRequest {}
 
-export interface GetNamespaceResponse {}
+export interface GetNamespaceResponse {
+  languageCodes: LanguageCode[];
+  translations: Translation[];
+}
 
-export interface PostNamespaceRequest {}
+export interface PostNamespaceRequest extends CommonNamespaceRequest {}
 
-export interface PostNamespaceResponse {}
+export type PostNamespaceResponse = void;

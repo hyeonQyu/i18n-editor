@@ -16,8 +16,8 @@ export default class FileSystemController extends BaseController {
     method: 'get',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.Ok,
-        data: {},
+        status: HttpStatusCode.NotImplemented,
+        errorMessage: 'Not implemented',
       };
     },
   };
@@ -27,8 +27,8 @@ export default class FileSystemController extends BaseController {
     method: 'get',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.Ok,
-        data: {},
+        status: HttpStatusCode.NotImplemented,
+        errorMessage: 'Not implemented',
       };
     },
   };
@@ -38,8 +38,8 @@ export default class FileSystemController extends BaseController {
     method: 'get',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.Ok,
-        data: {},
+        status: HttpStatusCode.NotImplemented,
+        errorMessage: 'Not implemented',
       };
     },
   };

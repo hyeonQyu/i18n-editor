@@ -1,3 +1,7 @@
-export interface GetFileSystemLocaleRequest {}
+export interface GetFileSystemLocaleRequest {
+  path: string;
+}
 
-export interface GetFileSystemLocaleResponse {}
+export interface GetFileSystemLocaleResponse {
+  namespaces: string[];
+}
