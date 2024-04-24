@@ -1,6 +1,6 @@
-import { Button } from 'primereact/button';
-import { ColumnHeaderKey } from 'i18n-editor-common';
 import useColumnHeader from '@components/translationFileEditor/components/translationContentTable/components/columnHeader/useColumnHeader';
+import { ColumnHeaderKey } from 'i18n-editor-common';
+import { Button } from 'primereact/button';
 
 export interface ColumnHeaderProps {
   header: ColumnHeaderKey;

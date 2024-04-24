@@ -1,6 +1,6 @@
 import { ColumnHeaderProps } from '@components/translationFileEditor/components/translationContentTable/components/columnHeader';
-import { MouseEventHandler, useState } from 'react';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { MouseEventHandler, useState } from 'react';
 
 export interface IUseColumnHeaderParams extends ColumnHeaderProps {}
 

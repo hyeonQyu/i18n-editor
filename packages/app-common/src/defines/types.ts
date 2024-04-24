@@ -14,7 +14,7 @@ export type DirectoryEntryType = 'directory' | 'file' | 'unknown';
 /**
  * @deprecated 전체 제거 예정
  */
-export type LanguageCode = typeof LANGUAGE_CODES[number];
+export type LanguageCode = (typeof LANGUAGE_CODES)[number];
 /**
  * @deprecated 전체 제거 예정
  */

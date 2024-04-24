@@ -1,5 +1,5 @@
-import { Env } from '../defines/appOption';
 import { Config, ConfigMeta } from 'i18n-editor-common';
+import { Env } from '../defines/appOption';
 import { FileSystemManager } from './fileSystemManager';
 
 export namespace ConfigUtil {

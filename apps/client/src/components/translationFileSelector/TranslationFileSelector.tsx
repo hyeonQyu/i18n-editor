@@ -1,8 +1,8 @@
-import { Dropdown, DropdownChangeParams } from 'primereact/dropdown';
 import useTranslationFileSelector from '@components/translationFileSelector/useTranslationFileSelector';
-import classNames from 'classnames';
 import { CustomEventHandler } from '@defines/event';
+import classNames from 'classnames';
 import { Button } from 'primereact/button';
+import { Dropdown, DropdownChangeParams } from 'primereact/dropdown';
 import { MouseEventHandler } from 'react';
 
 export interface TranslationFileSelectorProps {

@@ -1,7 +1,7 @@
-import { SelectButton, SelectButtonChangeParams } from 'primereact/selectbutton';
-import { VIEW_OPTIONS, ViewType } from '@components/directorySelector/defines';
+import { ViewType, VIEW_OPTIONS } from '@components/directorySelector/defines';
 import { SelectButtonTemplate } from '@components/selectButtonTemplate';
 import { CustomEventHandler } from '@defines/event';
+import { SelectButton, SelectButtonChangeParams } from 'primereact/selectbutton';
 
 export interface ViewOptionSelectorProps {
   value: ViewType;

@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { ViewType } from '@components/directorySelector/defines';
-import { SelectButtonChangeParams } from 'primereact/selectbutton';
 import { CustomEventHandler } from '@defines/event';
+import { SelectButtonChangeParams } from 'primereact/selectbutton';
+import { useState } from 'react';
 
 export interface IUseViewOptionParams {}
 

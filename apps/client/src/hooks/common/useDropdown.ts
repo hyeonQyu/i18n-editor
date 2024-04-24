@@ -1,6 +1,6 @@
+import { CustomEventHandler } from '@defines/event';
 import { DropdownChangeParams, DropdownProps } from 'primereact/dropdown';
 import { useState } from 'react';
-import { CustomEventHandler } from '@defines/event';
 
 export interface UseDropdownParams<T> {
   initialValue?: T;

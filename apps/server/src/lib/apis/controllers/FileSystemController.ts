@@ -1,5 +1,4 @@
-import BaseController from '../../utils/BaseController';
-import { ControllerMethod } from '../../defines/api';
+import { HttpStatusCode } from 'axios';
 import {
   GetFileSystemDirectoryRequest,
   GetFileSystemDirectoryResponse,
@@ -8,7 +7,8 @@ import {
   GetFileSystemLocaleRequest,
   GetFileSystemLocaleResponse,
 } from 'i18n-editor-common';
-import { HttpStatusCode } from 'axios';
+import { ControllerMethod } from '../../defines/api';
+import BaseController from '../../utils/BaseController';
 
 export default class FileSystemController extends BaseController {
   private getFileSystemDirectory: ControllerMethod<never, GetFileSystemDirectoryRequest, GetFileSystemDirectoryResponse> = {

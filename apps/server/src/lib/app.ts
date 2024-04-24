@@ -1,7 +1,9 @@
-import { AppOption } from './defines/appOption';
-import { UiExecutor } from './utils/uiExecutor';
+import { Express } from 'express';
 import { Controller } from './apis/controller';
+import ConfigController from './apis/controllers/ConfigController';
+import { AppOption } from './defines/appOption';
 import { ConfigUtil } from './utils/configUtil';
+import { UiExecutor } from './utils/uiExecutor';
 
 const express = require('express');
 const server = express();

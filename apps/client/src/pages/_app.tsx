@@ -1,17 +1,17 @@
-import '../styles/globals.css';
-import '../styles/animations.css';
-import '../styles/reset.css';
-import type { AppProps } from 'next/app';
-import { RecoilRoot } from 'recoil';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { Toast } from 'primereact/toast';
-import { ToastContext } from '@contexts/toastContext';
-import { ConfirmDialog } from 'primereact/confirmdialog';
 import { Portal } from '@components/portal';
+import { ToastContext } from '@contexts/toastContext';
 import useApp from '@hooks/pages/useApp';
+import { QueryClientProvider } from '@tanstack/react-query';
+import type { AppProps } from 'next/app';
 import 'primeicons/primeicons.css';
+import { ConfirmDialog } from 'primereact/confirmdialog';
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import { Toast } from 'primereact/toast';
+import { RecoilRoot } from 'recoil';
+import '../styles/animations.css';
+import '../styles/globals.css';
+import '../styles/reset.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { queryClient, toastRef } = useApp();

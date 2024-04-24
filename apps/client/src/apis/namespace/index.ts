@@ -1,5 +1,5 @@
-import BaseApi from '@utils/BaseApi';
 import { AxiosRequestFunction } from '@defines/api';
+import BaseApi from '@utils/BaseApi';
 import {
   DeleteNamespaceLanguageRequest,
   DeleteNamespaceLanguageResponse,

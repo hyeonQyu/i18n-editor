@@ -1,6 +1,6 @@
 import useTableMoreOptionsColumnMenu from '@components/translationFileEditor/components/tableMoreOptionsMenu/column/useTableMoreOptionsColumnMenu';
-import { Menu } from 'primereact/menu';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { Menu } from 'primereact/menu';
 
 export interface TableMoreOptionsColumnMenuProps {}
 

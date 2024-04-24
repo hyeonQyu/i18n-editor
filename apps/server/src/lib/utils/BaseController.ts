@@ -1,6 +1,6 @@
 import { Express } from 'express';
-import { getLeadingSlash, ResponseEntity } from 'i18n-editor-common';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
+import { getLeadingSlash, ResponseEntity } from 'i18n-editor-common';
 import { ControllerMethod, RequestHandler } from '../defines/api';
 
 abstract class BaseController {

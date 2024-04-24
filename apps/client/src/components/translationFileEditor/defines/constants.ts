@@ -1,6 +1,6 @@
 import { TableExtendDialogData, TableExtendType } from '@components/translationFileEditor/defines/types';
-import { SelectItem } from 'primereact/selectitem';
 import { LANGUAGE_CODES, LANGUAGE_NAME_BY_CODE } from 'i18n-editor-common';
+import { SelectItem } from 'primereact/selectitem';
 
 export const INITIAL_TABLE_EXTEND_DIALOG_DATA: TableExtendDialogData = {
   type: 'row',

@@ -40,7 +40,7 @@ export const LANGUAGE_CODES = [
   'zh-cht',
 ] as const;
 
-export type LanguageCode = typeof LANGUAGE_CODES[number];
+export type LanguageCode = (typeof LANGUAGE_CODES)[number];
 
 export const LANGUAGE_NAME_BY_CODE: Record<LanguageCode, string> = {
   'ar-xa': '아랍어',

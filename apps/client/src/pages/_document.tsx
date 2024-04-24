@@ -1,4 +1,4 @@
-import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
+import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -14,7 +14,7 @@ class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16" />
           <link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32" />
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/primeicons@4.1.0/primeicons.css"/>
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/primeicons@4.1.0/primeicons.css" />
         </Head>
         <body>
           <Main />

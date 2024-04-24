@@ -1,8 +1,8 @@
-import { SelectItem } from 'primereact/selectitem';
-import { LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defines';
 import { DropdownLanguageOptionTemplate } from '@components/languageCodeMultiSelect/components/dropdownLanguageOptionTemplate';
-import { MultiSelect } from 'primereact/multiselect';
+import { LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defines';
 import { UseMultiSelect } from '@hooks/common/useMultiSelect';
+import { MultiSelect } from 'primereact/multiselect';
+import { SelectItem } from 'primereact/selectitem';
 
 export interface LanguageCodeMultiSelectProps {
   multiSelectLanguageCode: UseMultiSelect;

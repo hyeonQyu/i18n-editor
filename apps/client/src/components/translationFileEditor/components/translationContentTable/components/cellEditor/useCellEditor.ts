@@ -1,6 +1,6 @@
-import { FocusEventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
-import { ColumnEditorOptions } from 'primereact/column';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { ColumnEditorOptions } from 'primereact/column';
+import { FocusEventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
 
 export interface IUseCellEditorParams extends ColumnEditorOptions {}
 

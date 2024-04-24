@@ -1,12 +1,12 @@
-import { Column } from 'primereact/column';
-import { ColumnHeader } from '@components/translationFileEditor/components/translationContentTable/components/columnHeader';
 import { CellEditor } from '@components/translationFileEditor/components/translationContentTable/components/cellEditor';
 import { CellViewer } from '@components/translationFileEditor/components/translationContentTable/components/cellViewer';
-import classNames from 'classnames';
-import { DataTable } from 'primereact/datatable';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { ColumnHeader } from '@components/translationFileEditor/components/translationContentTable/components/columnHeader';
 import { NewTranslationAdder } from '@components/translationFileEditor/components/translationContentTable/components/newTranslationAdder';
 import { TableHeader } from '@components/translationFileEditor/components/translationContentTable/components/tableHeader';
+import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import classNames from 'classnames';
+import { Column } from 'primereact/column';
+import { DataTable } from 'primereact/datatable';
 
 export interface TranslationContentTableProps {}
 

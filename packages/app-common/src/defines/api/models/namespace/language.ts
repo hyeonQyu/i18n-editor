@@ -1,5 +1,5 @@
-import { CommonNamespaceRequest } from './_common';
 import { LanguageCode } from '../../../language';
+import { CommonNamespaceRequest } from './_common';
 
 export interface PostNamespaceLanguageRequest extends CommonNamespaceRequest {
   languageCodes: LanguageCode[];
