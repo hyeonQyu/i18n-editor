@@ -1,7 +1,7 @@
-import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import { LANGUAGE_SELECT_OPTIONS } from '@components/translationFileEditor/defines';
 import { SelectItem } from 'primereact/selectitem';
+import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
 
 export interface IUseTableExtendDialogParams {}
 

@@ -4,7 +4,6 @@ import { CellData, ColumnData, Config, DirectoryEntry, LanguageCode, RowData } f
  * @deprecated 전체 제거 예정
  */
 
-
 export interface CommonRes<T = void> {
   status: number;
   errorMessage?: string;

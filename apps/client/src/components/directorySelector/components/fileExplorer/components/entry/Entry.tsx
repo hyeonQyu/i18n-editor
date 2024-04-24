@@ -1,9 +1,9 @@
-import { DirectoryEntry } from 'i18n-editor-common';
+import useEntry from '@components/directorySelector/components/fileExplorer/components/entry/useEntry';
 import { ICON_BY_DIRECTORY_ENTRY_TYPE, ViewType } from '@components/directorySelector/defines';
 import { Shortening } from '@components/shortening';
-import classNames from 'classnames';
-import useEntry from '@components/directorySelector/components/fileExplorer/components/entry/useEntry';
 import { CustomEventHandler } from '@defines/event';
+import classNames from 'classnames';
+import { DirectoryEntry } from 'i18n-editor-common';
 
 export interface EntryProps {
   entry: DirectoryEntry;

@@ -1,5 +1,5 @@
-import { DialogPositionType } from 'primereact/dialog';
 import { LanguageCode, RowData } from 'i18n-editor-common';
+import { DialogPositionType } from 'primereact/dialog';
 
 export type CustomEventHandler<E = undefined> = (e?: E) => void;
 

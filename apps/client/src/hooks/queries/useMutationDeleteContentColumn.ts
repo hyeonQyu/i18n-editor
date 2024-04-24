@@ -1,8 +1,8 @@
+import { HomeApi } from '@apis/homeApi';
 import { MUTATION_KEY, UseMutationParams } from '@defines/reactQuery';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { DeleteContentColumnReq, DeleteContentColumnRes } from 'i18n-editor-common';
-import { HomeApi } from '@apis/homeApi';
 
 type Request = DeleteContentColumnReq;
 

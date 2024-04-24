@@ -1,6 +1,6 @@
 import useNewTranslationAdder from '@components/translationFileEditor/components/translationContentTable/components/newTranslationAdder/useNewTranslationAdder';
-import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
 
 export interface NewTranslationAdderProps {}
 

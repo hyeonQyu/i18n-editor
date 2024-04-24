@@ -1,2 +1,2 @@
-export * from './stringUtil';
 export * from './string';
+export * from './stringUtil';

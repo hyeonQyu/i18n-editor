@@ -1,4 +1,4 @@
-import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
+import { ParamsDictionary, Request } from 'express-serve-static-core';
 import { ResponseEntity } from 'i18n-editor-common';
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'delete' | 'patch' | 'options' | 'head';

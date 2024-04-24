@@ -1,10 +1,10 @@
-import { Dialog } from 'primereact/dialog';
-import useLocaleDirectoryCreationDialog from '@components/localeDirectoryCreationDialog/useLocaleDirectoryCreationDialog';
-import { LanguageCodeMultiSelect } from '@components/languageCodeMultiSelect';
 import { CustomConfirmDialogFooter } from '@components/customConfirmDialogFooter';
-import { InputText } from 'primereact/inputtext';
-import classNames from 'classnames';
+import { LanguageCodeMultiSelect } from '@components/languageCodeMultiSelect';
+import useLocaleDirectoryCreationDialog from '@components/localeDirectoryCreationDialog/useLocaleDirectoryCreationDialog';
 import { CreateDirectoryEvent, CustomEventHandler } from '@defines/event';
+import classNames from 'classnames';
+import { Dialog } from 'primereact/dialog';
+import { InputText } from 'primereact/inputtext';
 
 export interface LocaleDirectoryCreationDialogProps {
   visible: boolean;

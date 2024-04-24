@@ -1,11 +1,11 @@
+import { CustomConfirmDialogFooter } from '@components/customConfirmDialogFooter';
+import { LanguageCodeMultiSelect } from '@components/languageCodeMultiSelect';
+import useTableExtendDialog from '@components/translationFileEditor/components/tableExtendDialog/useTableExtendDialog';
+import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { COLOR } from '@defines/css';
+import classNames from 'classnames';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
-import classNames from 'classnames';
-import { COLOR } from '@defines/css';
-import useTableExtendDialog from '@components/translationFileEditor/components/tableExtendDialog/useTableExtendDialog';
-import { LanguageCodeMultiSelect } from '@components/languageCodeMultiSelect';
-import { CustomConfirmDialogFooter } from '@components/customConfirmDialogFooter';
 
 const inputId = 'table-extend';
 

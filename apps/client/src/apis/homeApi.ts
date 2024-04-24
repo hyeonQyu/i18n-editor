@@ -1,3 +1,4 @@
+import { AxiosInstanceProps } from '@defines/axios';
 import axios, { AxiosInstance } from 'axios';
 import {
   DeleteContentColumnReq,
@@ -24,7 +25,6 @@ import {
   PostTranslationFileReq,
   PostTranslationFileRes,
 } from 'i18n-editor-common';
-import { AxiosInstanceProps } from '@defines/axios';
 
 /**
  * @deprecated

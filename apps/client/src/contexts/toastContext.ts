@@ -1,5 +1,5 @@
-import React, { RefObject } from 'react';
 import { Toast } from 'primereact/toast';
+import React, { RefObject } from 'react';
 
 export interface IToastContext {
   toastRef: RefObject<Toast>;

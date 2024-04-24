@@ -1,6 +1,3 @@
-import { TranslationFileEditorProps } from '@components/translationFileEditor/TranslationFileEditor';
-import { KeyboardEvent, MouseEventHandler, RefObject, SyntheticEvent, useRef, useState } from 'react';
-import { CustomEventHandler } from '@defines/event';
 import {
   INITIAL_TABLE_EXTEND_DIALOG_DATA,
   LABELS_BY_TABLE_EXTEND_TYPE,
@@ -9,14 +6,17 @@ import {
   TableMoreOptionsColumnMenuClickEvent,
   TableMoreOptionsRowMenuClickEvent,
 } from '@components/translationFileEditor/defines';
-import { Menu } from 'primereact/menu';
-import { ColumnHeaderKey, LanguageCode, RowData } from 'i18n-editor-common';
-import { DialogPositionType } from 'primereact/dialog';
-import useInput, { IUseInput } from '@hooks/common/useInput';
-import { DataTable, DataTableFilterMeta } from 'primereact/datatable';
-import useMultiSelect, { UseMultiSelect } from '@hooks/common/useMultiSelect';
-import { ColumnEventParams } from 'primereact/column';
+import { TranslationFileEditorProps } from '@components/translationFileEditor/TranslationFileEditor';
 import { useToastContext } from '@contexts/toastContext';
+import { CustomEventHandler } from '@defines/event';
+import useInput, { IUseInput } from '@hooks/common/useInput';
+import useMultiSelect, { UseMultiSelect } from '@hooks/common/useMultiSelect';
+import { ColumnHeaderKey, LanguageCode, RowData } from 'i18n-editor-common';
+import { ColumnEventParams } from 'primereact/column';
+import { DataTable, DataTableFilterMeta } from 'primereact/datatable';
+import { DialogPositionType } from 'primereact/dialog';
+import { Menu } from 'primereact/menu';
+import { KeyboardEvent, MouseEventHandler, RefObject, SyntheticEvent, useRef, useState } from 'react';
 
 export interface IUseTranslationFileEditorParams extends TranslationFileEditorProps {}
 

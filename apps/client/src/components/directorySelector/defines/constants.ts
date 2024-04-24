@@ -1,6 +1,6 @@
-import { DirectoryEntryType } from 'i18n-editor-common';
-import { SelectButtonTemplateOption } from '@defines/selectButtonTemplate';
 import { MoveDirection, ViewType } from '@components/directorySelector/defines/types';
+import { SelectButtonTemplateOption } from '@defines/selectButtonTemplate';
+import { DirectoryEntryType } from 'i18n-editor-common';
 
 export const ICON_BY_DIRECTORY_ENTRY_TYPE: {
   [key in DirectoryEntryType]: string;

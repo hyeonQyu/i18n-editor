@@ -1,6 +1,6 @@
 import { MovePathButtonProps } from '@components/directorySelector/components/fileExplorer/components/movePathButton';
-import { SelectButtonTemplateOption } from '@defines/selectButtonTemplate';
 import { MoveDirection } from '@components/directorySelector/defines';
+import { SelectButtonTemplateOption } from '@defines/selectButtonTemplate';
 
 export interface IUseMovePathButtonParams extends MovePathButtonProps {}
 

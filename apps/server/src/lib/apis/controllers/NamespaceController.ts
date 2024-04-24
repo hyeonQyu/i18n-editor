@@ -1,5 +1,4 @@
-import BaseController from '../../utils/BaseController';
-import { ControllerMethod } from '../../defines/api';
+import { HttpStatusCode } from 'axios';
 import {
   DeleteNamespaceLanguageRequest,
   DeleteNamespaceLanguageResponse,
@@ -16,7 +15,8 @@ import {
   PutNamespaceTranslationRequest,
   PutNamespaceTranslationResponse,
 } from 'i18n-editor-common';
-import { HttpStatusCode } from 'axios';
+import { ControllerMethod } from '../../defines/api';
+import BaseController from '../../utils/BaseController';
 
 export default class NamespaceController extends BaseController {
   private getNamespace: ControllerMethod<never, GetNamespaceRequest, GetNamespaceResponse> = {

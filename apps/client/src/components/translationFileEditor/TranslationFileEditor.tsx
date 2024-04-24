@@ -1,19 +1,19 @@
-import { ColumnData, RowData } from 'i18n-editor-common';
-import { ColumnEventParams } from 'primereact/column';
+import { TableExtendDialog } from '@components/translationFileEditor/components/tableExtendDialog';
+import { TableMoreOptionsColumnMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/column';
+import { TableMoreOptionsRowMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row';
+import { TranslationContentTable } from '@components/translationFileEditor/components/translationContentTable';
+import { TranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import useTranslationFileEditor from '@components/translationFileEditor/useTranslationFileEditor';
 import {
   CustomEventHandler,
-  TranslationTableRowAddEvent,
-  TranslationTableDeleteRowEvent,
-  TranslationTableColumnDeleteEvent,
   TranslationTableColumnAddEvent,
+  TranslationTableColumnDeleteEvent,
+  TranslationTableDeleteRowEvent,
   TranslationTableNewRowAddEvent,
+  TranslationTableRowAddEvent,
 } from '@defines/event';
-import { TranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
-import { TableMoreOptionsRowMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/row';
-import { TableExtendDialog } from '@components/translationFileEditor/components/tableExtendDialog';
-import { TableMoreOptionsColumnMenu } from '@components/translationFileEditor/components/tableMoreOptionsMenu/column';
-import { TranslationContentTable } from '@components/translationFileEditor/components/translationContentTable';
+import { ColumnData, RowData } from 'i18n-editor-common';
+import { ColumnEventParams } from 'primereact/column';
 
 export interface TranslationFileEditorProps {
   columns?: ColumnData[];

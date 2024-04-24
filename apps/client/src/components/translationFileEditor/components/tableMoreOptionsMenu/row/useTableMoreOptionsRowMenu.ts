@@ -1,5 +1,5 @@
-import { MenuItem } from 'primereact/menuitem';
 import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
+import { MenuItem } from 'primereact/menuitem';
 
 export interface IUseTableMoreOptionsRowMenuParams {}
 

@@ -1,4 +1,5 @@
 import { AxiosRequestFunction } from '@defines/api';
+import BaseApi from '@utils/BaseApi';
 import {
   GetFileSystemDirectoryRequest,
   GetFileSystemDirectoryResponse,
@@ -7,7 +8,6 @@ import {
   GetFileSystemLocaleRequest,
   GetFileSystemLocaleResponse,
 } from 'i18n-editor-common';
-import BaseApi from '@utils/BaseApi';
 
 export default class FileSystemApi extends BaseApi {
   public getFileSystemDirectory: AxiosRequestFunction<GetFileSystemDirectoryRequest, GetFileSystemDirectoryResponse> = (req) => {

@@ -1,38 +1,38 @@
+import childProcess from 'child_process';
+import * as fs from 'fs';
 import {
+  CommonRes,
+  DeleteContentColumnReq,
+  DeleteContentColumnRes,
+  DeleteContentRowReq,
+  DeleteContentRowRes,
   DirectoryEntry,
   DirectoryEntryType,
-  GetDirectoryReq,
-  GetDirectoryRes,
+  ErrorMessage,
+  GetConfigRes,
   GetContentReq,
   GetContentRes,
-  StringUtil,
+  GetDirectoryReq,
+  GetDirectoryRes,
+  GetFileExplorerReq,
+  GetFileExplorerRes,
   GetTranslationFileReq,
   GetTranslationFileRes,
   PatchContentReq,
   PatchContentRes,
-  DeleteContentRowReq,
-  DeleteContentRowRes,
   PostContentColumnReq,
   PostContentColumnRes,
-  DeleteContentColumnReq,
-  DeleteContentColumnRes,
-  GetFileExplorerReq,
-  GetFileExplorerRes,
-  CommonRes,
-  ErrorMessage,
   PostDirectoryReq,
   PostDirectoryRes,
   PostTranslationFileReq,
   PostTranslationFileRes,
-  GetConfigRes,
+  StringUtil,
 } from 'i18n-editor-common';
-import * as fs from 'fs';
-import { FileSystemManager } from '../utils/fileSystemManager';
 import { PostContentRowReq, PostContentRowRes } from 'i18n-editor-common/lib/defines/models';
-import { ContentUtil } from '../utils/contentUtil';
 import { ServiceCache } from '../defines/types';
-import childProcess from 'child_process';
 import { ConfigUtil } from '../utils/configUtil';
+import { ContentUtil } from '../utils/contentUtil';
+import { FileSystemManager } from '../utils/fileSystemManager';
 
 export namespace Service {
   const cache: ServiceCache = {

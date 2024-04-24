@@ -1,6 +1,6 @@
+import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import { Button } from 'primereact/button';
 import { DataTableHeaderTemplateOptions } from 'primereact/datatable';
-import { useTranslationFileEditorContext } from '@components/translationFileEditor/contexts/translationFileEditorContext';
 import { InputText } from 'primereact/inputtext';
 
 export interface TableHeaderProps extends DataTableHeaderTemplateOptions {}

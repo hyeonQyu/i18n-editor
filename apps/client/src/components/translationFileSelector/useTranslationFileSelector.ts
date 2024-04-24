@@ -1,7 +1,7 @@
 import { TranslationFileSelectorProps } from '@components/translationFileSelector/TranslationFileSelector';
+import { CustomEventHandler } from '@defines/event';
 import { SelectItem } from 'primereact/selectitem';
 import { useState } from 'react';
-import { CustomEventHandler } from '@defines/event';
 
 export interface IUseTranslationFileSelectorParams extends TranslationFileSelectorProps {}
 

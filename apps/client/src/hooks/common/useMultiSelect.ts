@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { CustomEventHandler } from '@defines/event';
 import { MultiSelectChangeParams, MultiSelectProps } from 'primereact/multiselect';
+import { useState } from 'react';
 
 export interface UseMultiSelectParams<T> {
   initialValue?: T[];
