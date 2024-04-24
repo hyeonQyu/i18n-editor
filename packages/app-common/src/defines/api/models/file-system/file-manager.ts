@@ -1,3 +1,5 @@
-export interface GetFileSystemFileManagerRequest {}
+export interface GetFileSystemFileManagerRequest {
+  path: string;
+}
 
-export interface GetFileSystemFileManagerResponse {}
+export type GetFileSystemFileManagerResponse = void;

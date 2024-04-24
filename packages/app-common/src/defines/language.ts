@@ -1,8 +1,3 @@
-import { LanguageCode } from './types';
-
-/**
- * @deprecated 전체 제거 예정
- */
 export const LANGUAGE_CODES = [
   'ar-xa',
   'bg',
@@ -45,14 +40,8 @@ export const LANGUAGE_CODES = [
   'zh-cht',
 ] as const;
 
-/**
- * @deprecated 전체 제거 예정
- */
-export const LANGUAGE_CODE_SET = new Set<string>(LANGUAGE_CODES);
+export type LanguageCode = typeof LANGUAGE_CODES[number];
 
-/**
- * @deprecated 전체 제거 예정
- */
 export const LANGUAGE_NAME_BY_CODE: Record<LanguageCode, string> = {
   'ar-xa': '아랍어',
   bg: '불가리아어',

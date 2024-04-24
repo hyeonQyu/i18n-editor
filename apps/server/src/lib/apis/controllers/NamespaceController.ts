@@ -24,8 +24,8 @@ export default class NamespaceController extends BaseController {
     method: 'get',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.Ok,
-        data: {},
+        status: HttpStatusCode.NotImplemented,
+        errorMessage: 'Not implemented',
       };
     },
   };
@@ -35,8 +35,8 @@ export default class NamespaceController extends BaseController {
     method: 'post',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.Ok,
-        data: {},
+        status: HttpStatusCode.NotImplemented,
+        errorMessage: 'Not implemented',
       };
     },
   };
@@ -46,8 +46,8 @@ export default class NamespaceController extends BaseController {
     method: 'post',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.Ok,
-        data: {},
+        status: HttpStatusCode.NotImplemented,
+        errorMessage: 'Not implemented',
       };
     },
   };
@@ -57,8 +57,8 @@ export default class NamespaceController extends BaseController {
     method: 'put',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.Ok,
-        data: {},
+        status: HttpStatusCode.NotImplemented,
+        errorMessage: 'Not implemented',
       };
     },
   };
@@ -68,8 +68,8 @@ export default class NamespaceController extends BaseController {
     method: 'delete',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.Ok,
-        data: {},
+        status: HttpStatusCode.NotImplemented,
+        errorMessage: 'Not implemented',
       };
     },
   };
@@ -79,8 +79,8 @@ export default class NamespaceController extends BaseController {
     method: 'post',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.Ok,
-        data: {},
+        status: HttpStatusCode.NotImplemented,
+        errorMessage: 'Not implemented',
       };
     },
   };
@@ -90,8 +90,8 @@ export default class NamespaceController extends BaseController {
     method: 'delete',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.Ok,
-        data: {},
+        status: HttpStatusCode.NotImplemented,
+        errorMessage: 'Not implemented',
       };
     },
   };

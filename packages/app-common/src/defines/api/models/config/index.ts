@@ -1,3 +1,7 @@
+import { Config } from '../../../config';
+
 export type GetConfigRequest = void;
 
-export interface GetConfigResponse {}
+export interface GetConfigResponse {
+  config: Config;
+}
