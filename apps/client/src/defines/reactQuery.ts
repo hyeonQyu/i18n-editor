@@ -18,7 +18,6 @@ export const QUERY_KEY = {
   fileSystem: {
     base: ['fileSystem'] as const,
     getDirectory: (req: object) => [...QUERY_KEY.fileSystem.base, 'getDirectory', req],
-    getFileManager: (req: object) => [...QUERY_KEY.fileSystem.base, 'getFileManager', req],
     getLocale: (req: object) => [...QUERY_KEY.fileSystem.base, 'getLocale', req],
   },
   namespace: {
