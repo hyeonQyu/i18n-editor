@@ -1,5 +1,11 @@
+/**
+ * @deprecated
+ */
 export interface InvalidLocaleDirectoryConfirmMessageTemplateProps {}
 
+/**
+ * @deprecated
+ */
 export function InvalidLocaleDirectoryConfirmMessageTemplate(props: InvalidLocaleDirectoryConfirmMessageTemplateProps) {
   const {} = props;
 

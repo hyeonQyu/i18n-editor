@@ -6,6 +6,9 @@ import classNames from 'classnames';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 
+/**
+ * @deprecated
+ */
 export interface LocaleDirectoryCreationDialogProps {
   visible: boolean;
   onCreate: CustomEventHandler<CreateDirectoryEvent>;
@@ -14,6 +17,9 @@ export interface LocaleDirectoryCreationDialogProps {
 
 const inputFileNameId = 'new-file';
 
+/**
+ * @deprecated
+ */
 export function LocaleDirectoryCreationDialog(props: LocaleDirectoryCreationDialogProps) {
   const { visible, onHide } = props;
   const { multiSelectLanguageCode, inputFileName, inputDisabled, creationDisabled, handleCreateButtonClick, handleFormSubmit } =

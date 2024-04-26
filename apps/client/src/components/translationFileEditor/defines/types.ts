@@ -1,7 +1,13 @@
 import { DialogPositionType } from 'primereact/dialog';
 
+/**
+ * @deprecated
+ */
 export type TableExtendType = 'row' | 'column';
 
+/**
+ * @deprecated
+ */
 export interface TableExtendDialogData {
   type: TableExtendType;
   visible: boolean;

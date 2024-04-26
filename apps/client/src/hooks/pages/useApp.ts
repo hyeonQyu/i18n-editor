@@ -9,6 +9,9 @@ export interface UseApp {
   toastRef: MutableRefObject<Toast | null>;
 }
 
+/**
+ * @deprecated
+ */
 export default function useApp(): UseApp {
   const queryClient = new QueryClient();
   const toastRef = useRef<Toast>(null);

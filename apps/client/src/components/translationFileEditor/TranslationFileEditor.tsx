@@ -15,6 +15,9 @@ import {
 import { ColumnData, RowData } from 'i18n-editor-common';
 import { ColumnEventParams } from 'primereact/column';
 
+/**
+ * @deprecated
+ */
 export interface TranslationFileEditorProps {
   columns?: ColumnData[];
   rows?: RowData[];
@@ -28,6 +31,9 @@ export interface TranslationFileEditorProps {
   onDeleteRow: CustomEventHandler<TranslationTableDeleteRowEvent>;
 }
 
+/**
+ * @deprecated
+ */
 export function TranslationFileEditor(props: TranslationFileEditorProps) {
   const { rows, columns } = props;
 

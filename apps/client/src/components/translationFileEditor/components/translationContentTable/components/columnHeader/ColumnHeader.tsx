@@ -6,6 +6,9 @@ export interface ColumnHeaderProps {
   header: ColumnHeaderKey;
 }
 
+/**
+ * @deprecated
+ */
 export function ColumnHeader(props: ColumnHeaderProps) {
   const { header } = props;
   const { isShowColumnOptionButton, handleMouseEnter, handleMouseLeave, handleTableMoreOptionColumnButtonClick } = useColumnHeader(props);

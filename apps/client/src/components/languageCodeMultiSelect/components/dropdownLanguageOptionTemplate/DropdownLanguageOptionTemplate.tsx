@@ -1,7 +1,13 @@
 import { SelectItem } from 'primereact/selectitem';
 
+/**
+ * @deprecated
+ */
 interface DropdownLanguageOptionTemplateProps extends SelectItem {}
 
+/**
+ * @deprecated
+ */
 export function DropdownLanguageOptionTemplate(props: DropdownLanguageOptionTemplateProps) {
   const { label, value } = props;
 

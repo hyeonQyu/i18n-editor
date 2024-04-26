@@ -6,7 +6,9 @@ export interface IUseTableMoreOptionsColumnMenuParams {}
 export interface IUseTableMoreOptionsColumnMenu {
   items: MenuItem[];
 }
-
+/**
+ * @deprecated
+ */
 function useTableMoreOptionsColumnMenu(params: IUseTableMoreOptionsColumnMenuParams): IUseTableMoreOptionsColumnMenu {
   const {} = params;
   const { handleColumnMenuClickDeleteColumn } = useTranslationFileEditorContext();

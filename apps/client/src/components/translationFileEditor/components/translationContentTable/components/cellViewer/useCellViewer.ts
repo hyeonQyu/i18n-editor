@@ -12,6 +12,9 @@ export interface IUseCellViewer {
   handleTableMoreOptionRowButtonClick: MouseEventHandler<HTMLButtonElement>;
 }
 
+/**
+ * @deprecated
+ */
 function useCellViewer(params: IUseCellViewerParams): IUseCellViewer {
   const {
     rowData: { index },

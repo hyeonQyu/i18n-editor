@@ -1,7 +1,13 @@
 import { SelectItem } from 'primereact/selectitem';
 
+/**
+ * @deprecated
+ */
 export interface DropdownLanguageHeaderTemplateProps extends SelectItem {}
 
+/**
+ * @deprecated
+ */
 export function DropdownLanguageHeaderTemplate(props: DropdownLanguageHeaderTemplateProps) {
   if (!props) return <div className={'container'} style={{ height: 24 }} />;
 

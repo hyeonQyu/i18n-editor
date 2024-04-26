@@ -1,10 +1,16 @@
 import { LanguageCode } from 'i18n-editor-common';
 
+/**
+ * @deprecated
+ */
 export interface DeleteColumnConfirmMessageTemplateProps {
   languageCode: LanguageCode;
   translationFile: string;
 }
 
+/**
+ * @deprecated
+ */
 export function DeleteColumnConfirmMessageTemplate(props: DeleteColumnConfirmMessageTemplateProps) {
   const { languageCode, translationFile } = props;
 

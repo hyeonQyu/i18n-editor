@@ -4,6 +4,9 @@ import { PropsWithChildren } from 'react';
 
 export interface LayoutProps extends PropsWithChildren {}
 
+/**
+ * @deprecated
+ */
 export function Layout(props: LayoutProps) {
   const { children } = props;
 

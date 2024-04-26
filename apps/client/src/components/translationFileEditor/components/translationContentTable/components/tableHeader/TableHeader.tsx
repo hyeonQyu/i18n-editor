@@ -5,6 +5,9 @@ import { InputText } from 'primereact/inputtext';
 
 export interface TableHeaderProps extends DataTableHeaderTemplateOptions {}
 
+/**
+ * @deprecated
+ */
 export function TableHeader(props: TableHeaderProps) {
   const {} = props;
   const { inputFilter, handleAddColumnClick } = useTranslationFileEditorContext();

@@ -10,6 +10,9 @@ import { DataTable } from 'primereact/datatable';
 
 export interface TranslationContentTableProps {}
 
+/**
+ * @deprecated
+ */
 export function TranslationContentTable(props: TranslationContentTableProps) {
   const {} = props;
   const {

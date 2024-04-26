@@ -2,6 +2,9 @@ import { TableExtendDialogData, TableExtendType } from '@components/translationF
 import { LANGUAGE_CODES, LANGUAGE_NAME_BY_CODE } from 'i18n-editor-common';
 import { SelectItem } from 'primereact/selectitem';
 
+/**
+ * @deprecated
+ */
 export const INITIAL_TABLE_EXTEND_DIALOG_DATA: TableExtendDialogData = {
   type: 'row',
   visible: false,
@@ -14,6 +17,9 @@ export const INITIAL_TABLE_EXTEND_DIALOG_DATA: TableExtendDialogData = {
   onHide() {},
 };
 
+/**
+ * @deprecated
+ */
 export const LABELS_BY_TABLE_EXTEND_TYPE: Record<TableExtendType, Record<'header' | 'inputLabel', string>> = {
   row: {
     header: '번역을 추가하시겠어요?',
@@ -25,6 +31,9 @@ export const LABELS_BY_TABLE_EXTEND_TYPE: Record<TableExtendType, Record<'header
   },
 };
 
+/**
+ * @deprecated
+ */
 export const LANGUAGE_SELECT_OPTIONS: SelectItem[] = LANGUAGE_CODES.map((code) => ({
   label: LANGUAGE_NAME_BY_CODE[code],
   value: code,

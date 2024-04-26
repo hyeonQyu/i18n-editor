@@ -1,12 +1,18 @@
 import { InputText } from 'primereact/inputtext';
 import { ChangeEventHandler } from 'react';
 
+/**
+ * @deprecated
+ */
 export interface InputFilterProps {
   keyword: string;
   placeholder: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
+/**
+ * @deprecated
+ */
 export function InputFilter(props: InputFilterProps) {
   const { keyword, placeholder, onChange } = props;
 

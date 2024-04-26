@@ -4,12 +4,18 @@ import { SelectButtonTemplate } from '@components/selectButtonTemplate';
 import { CustomEventHandler } from '@defines/event';
 import { SelectButton, SelectButtonChangeParams } from 'primereact/selectbutton';
 
+/**
+ * @deprecated
+ */
 export interface MovePathButtonProps {
   onChange: CustomEventHandler<SelectButtonChangeParams>;
   backwardStack: string[];
   forwardStack: string[];
 }
 
+/**
+ * @deprecated
+ */
 export function MovePathButton(props: MovePathButtonProps) {
   const { onChange } = props;
   const { getOptionDisabled } = useMovePathButton(props);

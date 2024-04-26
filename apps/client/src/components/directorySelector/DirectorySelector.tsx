@@ -8,6 +8,9 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Menu } from 'primereact/menu';
 
+/**
+ * @deprecated
+ */
 export interface DirectorySelectorProps {
   path: string | undefined;
   invalid: boolean;
@@ -16,6 +19,9 @@ export interface DirectorySelectorProps {
 
 const inputId = 'locale-directory';
 
+/**
+ * @deprecated
+ */
 export function DirectorySelector(props: DirectorySelectorProps) {
   const { path, invalid, onChange } = props;
 

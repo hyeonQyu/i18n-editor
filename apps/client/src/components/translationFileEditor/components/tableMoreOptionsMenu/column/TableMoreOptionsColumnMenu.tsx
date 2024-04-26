@@ -4,6 +4,9 @@ import { Menu } from 'primereact/menu';
 
 export interface TableMoreOptionsColumnMenuProps {}
 
+/**
+ * @deprecated
+ */
 export function TableMoreOptionsColumnMenu(props: TableMoreOptionsColumnMenuProps) {
   const {} = props;
   const { columnMenuRef } = useTranslationFileEditorContext();

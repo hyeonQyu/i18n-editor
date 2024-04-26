@@ -8,7 +8,9 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 
 const inputId = 'table-extend';
-
+/**
+ * @deprecated
+ */
 export function TableExtendDialog() {
   const {
     tableExtendDialogData: { type, visible, inputLabel, invalid, onAddKey, onHide, ...rest },

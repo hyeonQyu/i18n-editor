@@ -1,8 +1,14 @@
 import { TranslationFileCreationDialogProps } from '@components/translationFileCreationDialog/TranslationFileCreationDialog';
 import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
 
+/**
+ * @deprecated
+ */
 export interface UseTranslationFileCreationDialogParams extends TranslationFileCreationDialogProps {}
 
+/**
+ * @deprecated
+ */
 export interface UseTranslationFileCreationDialog {
   creationDisabled: boolean;
   labelMessage: string;
@@ -10,6 +16,9 @@ export interface UseTranslationFileCreationDialog {
   handleFormSubmit: FormEventHandler<HTMLFormElement>;
 }
 
+/**
+ * @deprecated
+ */
 export default function useTranslationFileCreationDialog(params: UseTranslationFileCreationDialogParams): UseTranslationFileCreationDialog {
   const { visible, isDuplicate, inputTranslationFileName, onCreate } = params;
 

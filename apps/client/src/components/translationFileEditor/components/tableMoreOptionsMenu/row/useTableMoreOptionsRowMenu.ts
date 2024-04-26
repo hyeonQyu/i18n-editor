@@ -7,6 +7,9 @@ export interface IUseTableMoreOptionsRowMenu {
   items: MenuItem[];
 }
 
+/**
+ * @deprecated
+ */
 function useTableMoreOptionsRowMenu(params: IUseTableMoreOptionsRowMenuParams): IUseTableMoreOptionsRowMenu {
   const {} = params;
   const {

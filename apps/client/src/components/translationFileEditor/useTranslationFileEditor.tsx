@@ -18,8 +18,14 @@ import { DialogPositionType } from 'primereact/dialog';
 import { Menu } from 'primereact/menu';
 import { KeyboardEvent, MouseEventHandler, RefObject, SyntheticEvent, useRef, useState } from 'react';
 
+/**
+ * @deprecated
+ */
 export interface IUseTranslationFileEditorParams extends TranslationFileEditorProps {}
 
+/**
+ * @deprecated
+ */
 export interface IUseTranslationFileEditor {
   dataTableRef: RefObject<DataTable> | undefined;
   rowMenuRef: RefObject<Menu> | undefined;
@@ -50,6 +56,9 @@ export interface IUseTranslationFileEditor {
   onAddNewTranslationKey: CustomEventHandler<string>;
 }
 
+/**
+ * @deprecated
+ */
 function useTranslationFileEditor(params: IUseTranslationFileEditorParams): IUseTranslationFileEditor {
   const {
     rows,

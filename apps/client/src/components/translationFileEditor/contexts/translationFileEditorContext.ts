@@ -3,6 +3,9 @@ import { INITIAL_TABLE_EXTEND_DIALOG_DATA } from '@components/translationFileEdi
 import { IUseTranslationFileEditor } from '@components/translationFileEditor/useTranslationFileEditor';
 import React, { createRef } from 'react';
 
+/**
+ * @deprecated
+ */
 export interface ITranslationFileEditorContext
   extends Pick<
       IUseTranslationFileEditor,

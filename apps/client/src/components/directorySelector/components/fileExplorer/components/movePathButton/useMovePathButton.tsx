@@ -2,12 +2,21 @@ import { MovePathButtonProps } from '@components/directorySelector/components/fi
 import { MoveDirection } from '@components/directorySelector/defines';
 import { SelectButtonTemplateOption } from '@defines/selectButtonTemplate';
 
+/**
+ * @deprecated
+ */
 export interface IUseMovePathButtonParams extends MovePathButtonProps {}
 
+/**
+ * @deprecated
+ */
 export interface IUseMovePathButton {
   getOptionDisabled: (option: SelectButtonTemplateOption<MoveDirection>) => boolean;
 }
 
+/**
+ * @deprecated
+ */
 function useMovePathButton(params: IUseMovePathButtonParams): IUseMovePathButton {
   const { backwardStack, forwardStack } = params;
 

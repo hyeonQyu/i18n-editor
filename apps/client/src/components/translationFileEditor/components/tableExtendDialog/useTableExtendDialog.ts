@@ -5,6 +5,9 @@ import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
 
 export interface IUseTableExtendDialogParams {}
 
+/**
+ * @deprecated
+ */
 export interface IUseTableExtendDialog {
   disabledYes: boolean;
   languageSelectOptions: SelectItem[];
@@ -12,6 +15,9 @@ export interface IUseTableExtendDialog {
   handleFormSubmit: FormEventHandler<HTMLFormElement>;
 }
 
+/**
+ * @deprecated
+ */
 function useTableExtendDialog(params: IUseTableExtendDialogParams): IUseTableExtendDialog {
   const {} = params;
   const {

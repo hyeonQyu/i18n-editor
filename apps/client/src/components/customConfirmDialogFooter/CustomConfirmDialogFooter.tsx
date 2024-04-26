@@ -1,6 +1,9 @@
 import { Button } from 'primereact/button';
 import { MouseEventHandler } from 'react';
 
+/**
+ * @deprecated
+ */
 export interface CustomConfirmDialogFooterProps {
   yesLabel: string;
   noLabel: string;
@@ -13,6 +16,11 @@ export interface CustomConfirmDialogFooterProps {
   onNoClick: MouseEventHandler<HTMLButtonElement>;
 }
 
+/**
+ * @deprecated
+ * @param props
+ * @constructor
+ */
 export function CustomConfirmDialogFooter(props: CustomConfirmDialogFooterProps) {
   const {
     yesLabel,
