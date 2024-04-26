@@ -3,10 +3,10 @@ import BaseApi from '@utils/BaseApi';
 import {
   GetFileSystemDirectoryRequest,
   GetFileSystemDirectoryResponse,
-  GetFileSystemFileManagerRequest,
-  GetFileSystemFileManagerResponse,
   GetFileSystemLocaleRequest,
   GetFileSystemLocaleResponse,
+  PostFileSystemFileManagerRequest,
+  PostFileSystemFileManagerResponse,
 } from 'i18n-editor-common';
 
 export default class FileSystemApi extends BaseApi {
@@ -14,8 +14,8 @@ export default class FileSystemApi extends BaseApi {
     return this.axiosInstance.get(this.getUrl('/directory'), { params: req });
   };
 
-  public getFileSystemFileManager: AxiosRequestFunction<GetFileSystemFileManagerRequest, GetFileSystemFileManagerResponse> = (req) => {
-    return this.axiosInstance.get(this.getUrl('/file-manager'), { params: req });
+  public postFileSystemFileManager: AxiosRequestFunction<PostFileSystemFileManagerRequest, PostFileSystemFileManagerResponse> = (req) => {
+    return this.axiosInstance.post(this.getUrl('/file-manager'), req);
   };
 
   public getFileSystemLocale: AxiosRequestFunction<GetFileSystemLocaleRequest, GetFileSystemLocaleResponse> = (req) => {

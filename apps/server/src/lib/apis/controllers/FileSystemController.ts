@@ -2,10 +2,10 @@ import { HttpStatusCode } from 'axios';
 import {
   GetFileSystemDirectoryRequest,
   GetFileSystemDirectoryResponse,
-  GetFileSystemFileManagerRequest,
-  GetFileSystemFileManagerResponse,
   GetFileSystemLocaleRequest,
   GetFileSystemLocaleResponse,
+  PostFileSystemFileManagerRequest,
+  PostFileSystemFileManagerResponse,
 } from 'i18n-editor-common';
 import { ControllerMethod } from '../../defines/api';
 import BaseController from '../../utils/BaseController';
@@ -22,9 +22,9 @@ export default class FileSystemController extends BaseController {
     },
   };
 
-  private getFileSystemFileManager: ControllerMethod<never, GetFileSystemFileManagerRequest, GetFileSystemFileManagerResponse> = {
+  private postFileSystemFileManager: ControllerMethod<never, PostFileSystemFileManagerRequest, PostFileSystemFileManagerResponse> = {
     path: '/file-manager',
-    method: 'get',
+    method: 'post',
     handler: async (req) => {
       return {
         status: HttpStatusCode.NotImplemented,
