@@ -12,7 +12,7 @@ import {
   TranslationTableNewRowAddEvent,
   TranslationTableRowAddEvent,
 } from '@defines/event';
-import { QUERY_KEY } from '@defines/reactQuery';
+import { OLD_QUERY_KEY } from '@defines/reactQuery';
 import useInput, { IUseInput } from '@hooks/common/useInput';
 import useMutationDeleteContentColumn from '@hooks/queries/useMutationDeleteContentColumn';
 import useMutationDeleteContentRow from '@hooks/queries/useMutationDeleteContentRow';
@@ -328,7 +328,7 @@ function useHome(params: IUseHomeParams): IUseHome {
       },
       {
         async onSuccess() {
-          queryClient.invalidateQueries(QUERY_KEY.translationFile.base);
+          queryClient.invalidateQueries(OLD_QUERY_KEY.translationFile.base);
 
           toastRef.current?.show({
             severity: 'success',

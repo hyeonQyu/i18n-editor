@@ -1,5 +1,5 @@
 import { HomeApi } from '@apis/homeApi';
-import { QUERY_KEY, UseQueryParams } from '@defines/reactQuery';
+import { OLD_QUERY_KEY, UseQueryParams } from '@defines/reactQuery';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { GetFileExplorerReq, GetFileExplorerRes } from 'i18n-editor-common';
@@ -16,7 +16,7 @@ function useQueryGetFileExplorer(params: UseQueryGetFileExplorerParams): UseQuer
   const { req, queryOption } = params;
 
   return useQuery({
-    queryKey: QUERY_KEY.fileExplorer.getFileExplorer(req.path),
+    queryKey: OLD_QUERY_KEY.fileExplorer.getFileExplorer(req.path),
     queryFn: () => HomeApi.getFileExplorer(req),
     ...queryOption,
   });
