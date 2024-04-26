@@ -7,6 +7,9 @@ export interface CellViewerProps {
   field: 'key' | 'index' | LanguageCode;
 }
 
+/**
+ * @deprecated
+ */
 export function CellViewer(props: CellViewerProps) {
   const { rowData, field } = props;
   const { isKey, isShowTableOptionsButton, handleClick, handleMouseEnter, handleTableMoreOptionRowButtonClick } = useCellViewer(props);

@@ -16,6 +16,9 @@ export interface TranslationFileSelectorProps {
 
 const selectId = 'translation-file';
 
+/**
+ * @deprecated
+ */
 export function TranslationFileSelector(props: TranslationFileSelectorProps) {
   const { file, onChange, onAddTranslationFileButtonClick } = props;
   const { options, disabled, opened, tooltipMessage, handleShow, handleHide } = useTranslationFileSelector(props);

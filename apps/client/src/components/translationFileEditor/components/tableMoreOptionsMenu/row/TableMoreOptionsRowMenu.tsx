@@ -4,6 +4,9 @@ import { Menu } from 'primereact/menu';
 
 export interface TableMoreOptionsRowMenuProps {}
 
+/**
+ * @deprecated
+ */
 export function TableMoreOptionsRowMenu(props: TableMoreOptionsRowMenuProps) {
   const {} = props;
   const { rowMenuRef } = useTranslationFileEditorContext();

@@ -11,6 +11,9 @@ export interface IUseColumnHeader {
   handleTableMoreOptionColumnButtonClick: MouseEventHandler<HTMLButtonElement>;
 }
 
+/**
+ * @deprecated
+ */
 function useColumnHeader(params: IUseColumnHeaderParams): IUseColumnHeader {
   const { header } = params;
   const [isHovered, setIsHovered] = useState(false);

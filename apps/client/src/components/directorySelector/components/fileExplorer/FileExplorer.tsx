@@ -14,12 +14,18 @@ import { MenuItem } from 'primereact/menuitem';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { forwardRef, RefObject } from 'react';
 
+/**
+ * @deprecated
+ */
 export interface FileExplorerProps extends Pick<DirectorySelectorProps, 'path' | 'onChange'> {
   onShow: CustomEventHandler;
   onHide: CustomEventHandler;
   opened: boolean;
 }
 
+/**
+ * @deprecated
+ */
 export const FileExplorer = forwardRef<OverlayPanel, FileExplorerProps>((props, ref) => {
   const { onShow, onHide } = props;
 

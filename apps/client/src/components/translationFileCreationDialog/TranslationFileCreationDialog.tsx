@@ -7,6 +7,9 @@ import classNames from 'classnames';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 
+/**
+ * @deprecated
+ */
 export interface TranslationFileCreationDialogProps {
   visible: boolean;
   isDuplicate: boolean;
@@ -17,6 +20,9 @@ export interface TranslationFileCreationDialogProps {
 
 const inputFileNameId = 'new-translation-file';
 
+/**
+ * @deprecated
+ */
 export function TranslationFileCreationDialog(props: TranslationFileCreationDialogProps) {
   const { visible, isDuplicate, inputTranslationFileName, onHide } = props;
   const { creationDisabled, labelMessage, handleCreateButtonClick, handleFormSubmit } = useTranslationFileCreationDialog(props);

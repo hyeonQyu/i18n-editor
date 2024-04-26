@@ -10,6 +10,9 @@ export interface IUseNewTranslationAdder {
   handleFormSubmit: FormEventHandler<HTMLFormElement>;
 }
 
+/**
+ * @deprecated
+ */
 function useNewTranslationAdder(params: IUseNewTranslationAdderParams): IUseNewTranslationAdder {
   const {} = params;
   const { rows, inputFilter, onAddNewTranslationKey } = useTranslationFileEditorContext();

@@ -1,7 +1,13 @@
 import { Skeleton } from 'primereact/skeleton';
 
+/**
+ * @deprecated
+ */
 export interface HomeSkeletonProps {}
 
+/**
+ * @deprecated
+ */
 export function HomeSkeleton(props: HomeSkeletonProps) {
   const {} = props;
 

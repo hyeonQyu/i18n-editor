@@ -5,6 +5,9 @@ import { InputTextarea } from 'primereact/inputtextarea';
 
 export interface CellEditorProps extends ColumnEditorOptions {}
 
+/**
+ * @deprecated
+ */
 export function CellEditor(props: CellEditorProps) {
   const { value, field, rowData } = props;
   const { handleClick, handleFocus, handleChange, handleMouseEnter, handleKeyDown } = useCellEditor(props);

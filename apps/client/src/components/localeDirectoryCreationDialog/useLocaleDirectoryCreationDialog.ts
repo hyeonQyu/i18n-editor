@@ -4,8 +4,14 @@ import useMultiSelect, { UseMultiSelect } from '@hooks/common/useMultiSelect';
 import { LanguageCode } from 'i18n-editor-common';
 import { FormEventHandler, MouseEventHandler, useEffect } from 'react';
 
+/**
+ * @deprecated
+ */
 export interface IUseLocaleDirectoryCreationDialogParams extends LocaleDirectoryCreationDialogProps {}
 
+/**
+ * @deprecated
+ */
 export interface IUseLocaleDirectoryCreationDialog {
   multiSelectLanguageCode: UseMultiSelect;
   inputFileName: IUseInput;
@@ -15,6 +21,9 @@ export interface IUseLocaleDirectoryCreationDialog {
   handleFormSubmit: FormEventHandler<HTMLFormElement>;
 }
 
+/**
+ * @deprecated
+ */
 function useLocaleDirectoryCreationDialog(params: IUseLocaleDirectoryCreationDialogParams): IUseLocaleDirectoryCreationDialog {
   const { visible, onCreate } = params;
 

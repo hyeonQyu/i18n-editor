@@ -21,6 +21,9 @@ export interface IUseDirectorySelector {
   handleFileExplorerHide: CustomEventHandler;
 }
 
+/**
+ * @deprecated
+ */
 function useDirectorySelector(params: IUseDirectorySelectorParams): IUseDirectorySelector {
   const { path } = params;
 

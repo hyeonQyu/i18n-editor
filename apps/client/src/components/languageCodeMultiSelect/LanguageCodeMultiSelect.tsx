@@ -4,11 +4,17 @@ import { UseMultiSelect } from '@hooks/common/useMultiSelect';
 import { MultiSelect } from 'primereact/multiselect';
 import { SelectItem } from 'primereact/selectitem';
 
+/**
+ * @deprecated
+ */
 export interface LanguageCodeMultiSelectProps {
   multiSelectLanguageCode: UseMultiSelect;
   options?: SelectItem[];
 }
 
+/**
+ * @deprecated
+ */
 export function LanguageCodeMultiSelect(props: LanguageCodeMultiSelectProps) {
   const { multiSelectLanguageCode, options = LANGUAGE_SELECT_OPTIONS } = props;
 

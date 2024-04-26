@@ -11,6 +11,9 @@ export interface EntryProps {
   onClick: CustomEventHandler<DirectoryEntry>;
 }
 
+/**
+ * @deprecated
+ */
 export function Entry(props: EntryProps) {
   const { entry, viewType } = props;
   const { name, type } = entry;

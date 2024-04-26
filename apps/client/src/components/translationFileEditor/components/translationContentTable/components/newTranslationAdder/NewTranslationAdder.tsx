@@ -6,6 +6,9 @@ export interface NewTranslationAdderProps {}
 
 const inputId = 'new-translation';
 
+/**
+ * @deprecated
+ */
 export function NewTranslationAdder(props: NewTranslationAdderProps) {
   const {} = props;
   const { isFiltered, inputTranslationKey, handleFormSubmit } = useNewTranslationAdder({});

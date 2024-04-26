@@ -9,10 +9,16 @@ import { OverlayPanel } from 'primereact/overlaypanel';
 import { SelectButtonChangeParams } from 'primereact/selectbutton';
 import { ChangeEventHandler, MouseEventHandler, RefObject, useEffect, useState } from 'react';
 
+/**
+ * @deprecated
+ */
 export interface IUseFileExplorerParams extends FileExplorerProps {
   ref: RefObject<OverlayPanel>;
 }
 
+/**
+ * @deprecated
+ */
 export interface IUseFileExplorer {
   breadcrumbItems: MenuItem[];
   entries: DirectoryEntry[];
@@ -26,6 +32,9 @@ export interface IUseFileExplorer {
   onEntryClick: CustomEventHandler<DirectoryEntry>;
 }
 
+/**
+ * @deprecated
+ */
 function useFileExplorer(params: IUseFileExplorerParams): IUseFileExplorer {
   const { ref, path: initialPath, onChange } = params;
 

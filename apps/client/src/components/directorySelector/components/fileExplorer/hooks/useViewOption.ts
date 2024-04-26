@@ -2,14 +2,21 @@ import { ViewType } from '@components/directorySelector/defines';
 import { CustomEventHandler } from '@defines/event';
 import { SelectButtonChangeParams } from 'primereact/selectbutton';
 import { useState } from 'react';
-
+/**
+ * @deprecated
+ */
 export interface IUseViewOptionParams {}
-
+/**
+ * @deprecated
+ */
 export interface IUseViewOption {
   viewType: ViewType;
   handleViewTypeChange: CustomEventHandler<SelectButtonChangeParams>;
 }
 
+/**
+ * @deprecated
+ */
 function useViewOption(params: IUseViewOptionParams): IUseViewOption {
   const {} = params;
 

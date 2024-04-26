@@ -14,6 +14,9 @@ export interface IUseTranslationFileSelector {
   handleHide: CustomEventHandler;
 }
 
+/**
+ * @deprecated
+ */
 function useTranslationFileSelector(params: IUseTranslationFileSelectorParams): IUseTranslationFileSelector {
   const { directoryPath, files, hasDirectorySelectorError } = params;
 

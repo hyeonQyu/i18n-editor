@@ -102,6 +102,9 @@ const rowToCell = (row: RowData, getCell: (cell: CellData) => CellData = (cell) 
     );
 };
 
+/**
+ * @deprecated
+ */
 function useHome(params: IUseHomeParams): IUseHome {
   const {} = params;
 

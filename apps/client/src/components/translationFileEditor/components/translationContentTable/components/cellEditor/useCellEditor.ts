@@ -12,6 +12,9 @@ export interface IUseCellEditor {
   handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement>;
 }
 
+/**
+ * @deprecated
+ */
 function useCellEditor(params: IUseCellEditorParams): IUseCellEditor {
   const { rowData, editorCallback } = params;
   const { onCellClick, onCellMouseEnter } = useTranslationFileEditorContext();
