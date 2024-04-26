@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 export interface AppOption {
   port: number;
   env: Env;

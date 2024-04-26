@@ -3,6 +3,9 @@ const cheerio = require('cheerio');
 
 const { exec } = require('child_process');
 
+/**
+ * @deprecated
+ */
 export namespace UiExecutor {
   export function runHtmlUi(port: number) {
     const appName = 'i18n-editor';

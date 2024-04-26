@@ -34,6 +34,9 @@ import { ConfigUtil } from '../utils/configUtil';
 import { ContentUtil } from '../utils/contentUtil';
 import { FileSystemManager } from '../utils/fileSystemManager';
 
+/**
+ * @deprecated
+ */
 export namespace Service {
   const cache: ServiceCache = {
     lastReadRows: [],

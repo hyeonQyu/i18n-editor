@@ -3,6 +3,9 @@ import { ColumnData, LanguageCode, LANGUAGE_CODE_SET, RowData, StringUtil } from
 import { FileData, JsonObject } from '../defines/types';
 import { FileSystemManager } from './fileSystemManager';
 
+/**
+ * @deprecated
+ */
 export namespace ContentUtil {
   /**
    * 언어 코드명으로 이름 지어진 디렉토리 이름 목록 반환
