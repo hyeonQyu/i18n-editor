@@ -1,5 +1,5 @@
 import { HomeApi } from '@apis/homeApi';
-import { QUERY_KEY, UseQueryParams } from '@defines/reactQuery';
+import { OLD_QUERY_KEY, UseQueryParams } from '@defines/reactQuery';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { GetContentReq, GetContentRes } from 'i18n-editor-common';
@@ -17,7 +17,7 @@ function useQueryGetContent(params: UseQueryGetContentParams): UseQueryGetConten
   const { path, fileName } = req;
 
   return useQuery({
-    queryKey: QUERY_KEY.content.getContent(path, fileName),
+    queryKey: OLD_QUERY_KEY.content.getContent(path, fileName),
     queryFn: () => HomeApi.getContent(req),
     ...queryOption,
   });

@@ -1,5 +1,5 @@
 import { HomeApi } from '@apis/homeApi';
-import { QUERY_KEY, UseQueryParams } from '@defines/reactQuery';
+import { OLD_QUERY_KEY, UseQueryParams } from '@defines/reactQuery';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { GetTranslationFileReq, GetTranslationFileRes } from 'i18n-editor-common';
@@ -16,7 +16,7 @@ function useQueryGetTranslationFile(params: UseQueryGetTranslationFileParams): U
   const { req, queryOption } = params;
 
   return useQuery({
-    queryKey: QUERY_KEY.translationFile.getTranslationFile(req.path),
+    queryKey: OLD_QUERY_KEY.translationFile.getTranslationFile(req.path),
     queryFn: () => HomeApi.getTranslationFile(req),
     ...queryOption,
   });
