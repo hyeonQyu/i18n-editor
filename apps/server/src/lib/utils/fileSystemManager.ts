@@ -2,6 +2,9 @@ import fs from 'fs';
 import { StringUtil } from 'i18n-editor-common';
 import { JsonObject } from '../defines/types';
 
+/**
+ * @deprecated
+ */
 export namespace FileSystemManager {
   /**
    * 디렉토리가 없는 경우 생성

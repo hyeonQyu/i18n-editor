@@ -2,6 +2,9 @@ import { Config, ConfigMeta } from 'i18n-editor-common';
 import { Env } from '../defines/appOption';
 import { FileSystemManager } from './fileSystemManager';
 
+/**
+ * @deprecated
+ */
 export namespace ConfigUtil {
   const configMeta: ConfigMeta = {
     path: '',
