@@ -14,7 +14,7 @@ export type DirectoryEntryType = 'directory' | 'file' | 'unknown';
 /**
  * @deprecated 전체 제거 예정
  */
-export type LanguageCode = (typeof LANGUAGE_CODES)[number];
+export type LanguageCode = typeof LANGUAGE_CODES[number];
 /**
  * @deprecated 전체 제거 예정
  */
@@ -43,15 +43,3 @@ export interface CellData {
  * @deprecated 전체 제거 예정
  */
 export type ErrorMessage = 'INVALID_LOCALE_DIRECTORY' | 'KEYS_CHANGED_BY_EXTERNAL_WRITE' | 'EXIST_FILE_NAME';
-/**
- * @deprecated 전체 제거 예정
- */
-export interface Config {
-  localeDirectoryPath: string;
-}
-/**
- * @deprecated 전체 제거 예정
- */
-export interface ConfigMeta {
-  path: string;
-}
