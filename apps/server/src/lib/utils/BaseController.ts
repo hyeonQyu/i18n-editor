@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { Express } from 'express';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { getLeadingSlash, ResponseEntity } from 'i18n-editor-common';
@@ -39,8 +40,29 @@ abstract class BaseController {
     this._app[method](url, async (req: Request<ParamsDictionary, any, ReqBody, ReqQuery>, res: Response<ResponseEntity<Res>>) => {
       console.log(`\nrequest: ${url}`);
 
-      const response = await onRequest(req);
-      res.status(response.status).send(response);
+      try {
+        const response = await onRequest(req);
+
+        BaseController.sendResponse(res, HttpStatusCode.Ok, {
+          data: response,
+        });
+      } catch (e) {
+        BaseController.sendResponse(res, HttpStatusCode.InternalServerError, {
+          errorMessage: (e as Error).message,
+        });
+      }
+    });
+  };
+
+  private static sendResponse = <Res>(
+    res: Response<ResponseEntity<Res>>,
+    status: HttpStatusCode,
+    data: Omit<ResponseEntity<Res>, 'status'>,
+  ) => {
+    res.status(status).send({
+      // @ts-ignore
+      status,
+      ...data,
     });
   };
 
