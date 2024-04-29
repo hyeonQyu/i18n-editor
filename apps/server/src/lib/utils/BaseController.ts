@@ -23,9 +23,9 @@ abstract class BaseController {
   }
 
   public start() {
-    Object.entries(this).forEach(([key, value]) => {
-      if (BaseController.getIsControllerMethod(value)) {
-        this.processRequest(value.path, value.method, value.handler);
+    Object.values(this).forEach((prop) => {
+      if (BaseController.getIsControllerMethod(prop)) {
+        this.processRequest(prop.path, prop.method, prop.handler);
       }
     });
   }

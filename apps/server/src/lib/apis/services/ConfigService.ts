@@ -1,5 +1,6 @@
 import { Config, ConfigMeta } from 'i18n-editor-common';
 import { Environment } from '../../defines/env';
+import { createService } from '../../utils/createService';
 import { getEnvironment } from '../../utils/env';
 import { readFile } from '../../utils/file';
 
@@ -16,10 +17,10 @@ const CONFIG_META: ConfigMeta = {
   path: CONFIG_PATH_BY_ENV[env],
 };
 
-const ConfigService = {
+const configService = createService({
   async getConfig() {
-    const config = (await readFile(CONFIG_META.path)) as Config;
+    return (await readFile(CONFIG_META.path)) as Config;
   },
-};
+});
 
-export default ConfigService;
+export default configService;
