@@ -6,4 +6,7 @@ export interface AppOption {
   env: Env;
 }
 
+/**
+ * @deprecated
+ */
 export type Env = 'production' | 'development';
