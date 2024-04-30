@@ -47,6 +47,7 @@ abstract class BaseController {
           data: response,
         });
       } catch (e) {
+        // TODO 공통 예외 처리 (IE-54)
         BaseController.sendResponse(res, HttpStatusCode.InternalServerError, {
           errorMessage: (e as Error).message,
         });

@@ -1,4 +1,5 @@
-import { CellData, ColumnData, Config, DirectoryEntry, LanguageCode, RowData } from './types';
+import { Config } from './config';
+import { CellData, ColumnData, DirectoryEntry, LanguageCode, RowData } from './types';
 
 /**
  * @deprecated 전체 제거 예정

@@ -9,16 +9,14 @@ import {
 } from 'i18n-editor-common';
 import { ControllerMethod } from '../../defines/api';
 import BaseController from '../../utils/BaseController';
+import fileSystemService from '../services/FileSystemService';
 
 export default class FileSystemController extends BaseController {
   private getFileSystemDirectory: ControllerMethod<never, GetFileSystemDirectoryRequest, GetFileSystemDirectoryResponse> = {
     path: '/directory',
     method: 'get',
     handler: async (req) => {
-      return {
-        status: HttpStatusCode.NotImplemented,
-        errorMessage: 'Not implemented',
-      };
+      return await fileSystemService.getFileSystemDirectory(req);
     },
   };
 
