@@ -8,11 +8,7 @@ export default class ConfigController extends BaseController {
     path: '/',
     method: 'get',
     handler: async () => {
-      const config = await configService.getConfig();
-
-      return {
-        config,
-      };
+      return await configService.getConfig();
     },
   };
 }
