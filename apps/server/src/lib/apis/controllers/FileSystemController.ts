@@ -1,4 +1,3 @@
-import { HttpStatusCode } from 'axios';
 import {
   GetFileSystemDirectoryRequest,
   GetFileSystemDirectoryResponse,
@@ -16,7 +15,7 @@ export default class FileSystemController extends BaseController {
     path: '/directory',
     method: 'get',
     handler: async (req) => {
-      return await fileSystemService.getFileSystemDirectory(req);
+      return await fileSystemService.getFileSystemDirectory(req.query);
     },
   };
 
@@ -24,10 +23,7 @@ export default class FileSystemController extends BaseController {
     path: '/file-manager',
     method: 'post',
     handler: async (req) => {
-      return {
-        status: HttpStatusCode.NotImplemented,
-        errorMessage: 'Not implemented',
-      };
+      return await fileSystemService.postFileSystemFileManager(req.body);
     },
   };
 
@@ -36,8 +32,7 @@ export default class FileSystemController extends BaseController {
     method: 'get',
     handler: async (req) => {
       return {
-        status: HttpStatusCode.NotImplemented,
-        errorMessage: 'Not implemented',
+        namespaces: [],
       };
     },
   };
