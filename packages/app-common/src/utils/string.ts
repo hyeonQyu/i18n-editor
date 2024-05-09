@@ -5,3 +5,7 @@
 export const getLeadingSlash = (str: string) => {
   return str.startsWith('/') ? str : `/${str}`;
 };
+
+export const getExtensionName = (fileName: string) => {
+  return fileName.slice(fileName.lastIndexOf('.') + 1);
+};

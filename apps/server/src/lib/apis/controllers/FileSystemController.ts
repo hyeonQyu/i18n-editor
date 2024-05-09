@@ -31,9 +31,7 @@ export default class FileSystemController extends BaseController {
     path: '/locale',
     method: 'get',
     handler: async (req) => {
-      return {
-        namespaces: [],
-      };
+      return await fileSystemService.getFileSystemLocale(req.query);
     },
   };
 }
