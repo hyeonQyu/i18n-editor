@@ -5,6 +5,10 @@ export const readFile = async (filePath: string) => {
   return JSON.parse(await fs.promises.readFile(filePath, 'utf-8'));
 };
 
+export const writeFile = async (filePath: string, content: object) => {
+  await fs.promises.writeFile(filePath, JSON.stringify(content));
+};
+
 export const getFileNames = async (directoryPath: string, validFileExtensions: string[]) => {
   const validFileExtensionSet = new Set<string>(validFileExtensions);
 
@@ -15,8 +19,8 @@ export const getFileNames = async (directoryPath: string, validFileExtensions: s
   return files.filter(getIsValidFile).map((entry) => entry.name);
 };
 
-export const createFileWhenNotExist = async (filePath: string, content: string = '') => {
+export const createFileWhenNotExist = async (filePath: string, content: object) => {
   if (!fs.existsSync(filePath)) {
-    await fs.promises.writeFile(filePath, content);
+    await writeFile(filePath, content);
   }
 };

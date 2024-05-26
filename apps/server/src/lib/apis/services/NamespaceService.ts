@@ -1,4 +1,5 @@
-import { GetNamespaceRequest, GetNamespaceResponse, LanguageCode } from 'i18n-editor-common';
+import fs from 'fs';
+import { GetNamespaceRequest, GetNamespaceResponse, LanguageCode, PostNamespaceRequest, PostNamespaceResponse } from 'i18n-editor-common';
 import { CommonNamespaceRequest } from 'i18n-editor-common/lib/defines/api/models/namespace/_common';
 import {
   NamespaceContent,
@@ -9,7 +10,7 @@ import {
 } from 'i18n-editor-common/lib/defines/translation';
 import { KeyValuePair } from 'i18n-eidtor-client/src/defines';
 import { createService } from '../../utils/createService';
-import { createFileWhenNotExist, readFile } from '../../utils/file';
+import { createFileWhenNotExist, readFile, writeFile } from '../../utils/file';
 import { getLanguageCodes } from '../../utils/locale';
 
 const updateTranslationMap = (
@@ -57,16 +58,20 @@ const getTranslationsByLanguageContentPairs = (
   });
 };
 
+const languageCodeToNamespaceFilePath = (namespaceRequest: CommonNamespaceRequest, languageCode: LanguageCode) => {
+  const { localeDirectoryPath, namespace } = namespaceRequest;
+
+  const languageDirectoryPath = `${localeDirectoryPath}/${languageCode}`;
+  return `${languageDirectoryPath}/${namespace}.json`;
+};
+
 const languageCodeToNamespaceContent = async (
   namespaceRequest: CommonNamespaceRequest,
   languageCode: LanguageCode,
 ): Promise<NamespaceContent> => {
-  const { localeDirectoryPath, namespace } = namespaceRequest;
+  const namespaceFilePath = languageCodeToNamespaceFilePath(namespaceRequest, languageCode);
 
-  const languageDirectoryPath = `${localeDirectoryPath}/${languageCode}`;
-  const namespaceFilePath = `${languageDirectoryPath}/${namespace}.json`;
-
-  await createFileWhenNotExist(namespaceFilePath, '{}');
+  await createFileWhenNotExist(namespaceFilePath, {});
 
   return await readFile(namespaceFilePath);
 };
@@ -90,22 +95,51 @@ const getTranslations = async (namespaceRequest: CommonNamespaceRequest, languag
   return getTranslationsByLanguageContentPairs(languageContentPairs);
 };
 
+const getIsExistNamespace = (req: CommonNamespaceRequest, languageCodes: LanguageCode[]) => {
+  return languageCodes.some((languageCode) => {
+    const namespaceFilePath = languageCodeToNamespaceFilePath(req, languageCode);
+    return fs.existsSync(namespaceFilePath);
+  });
+};
+
+const createNewNamespace = async (namespaceFilePath: string) => {
+  return await writeFile(namespaceFilePath, {});
+};
+
+const getLanguageCodesByLocaleDirectoryPath = async (localeDirectoryPath: string) => {
+  const languageCodes = await getLanguageCodes(localeDirectoryPath);
+
+  if (languageCodes.length === 0) {
+    throw new Error('올바른 locale 디렉토리가 아닙니다.');
+  }
+
+  return languageCodes;
+};
+
 const namespaceService = createService({
   async getNamespace(req: GetNamespaceRequest): Promise<GetNamespaceResponse> {
-    const { localeDirectoryPath, namespace } = req;
-
-    const languageCodes = await getLanguageCodes(localeDirectoryPath);
-
-    if (languageCodes.length === 0) {
-      throw new Error('올바른 locale 디렉토리가 아닙니다.');
-    }
-
+    const languageCodes = await getLanguageCodesByLocaleDirectoryPath(req.localeDirectoryPath);
     const translations = await getTranslations(req, languageCodes);
 
     return {
       languageCodes,
       translations,
     };
+  },
+
+  async postNamespace(req: PostNamespaceRequest): Promise<PostNamespaceResponse> {
+    const languageCodes = await getLanguageCodesByLocaleDirectoryPath(req.localeDirectoryPath);
+
+    if (getIsExistNamespace(req, languageCodes)) {
+      throw new Error('이미 존재하는 namespace 입니다.');
+    }
+
+    await Promise.all(
+      languageCodes.map(async (languageCode) => {
+        const namespaceFilePath = languageCodeToNamespaceFilePath(req, languageCode);
+        return await createNewNamespace(namespaceFilePath);
+      }),
+    );
   },
 });
 
