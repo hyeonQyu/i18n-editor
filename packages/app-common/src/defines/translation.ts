@@ -1,6 +1,11 @@
+import { KeyValuePair } from 'i18n-eidtor-client/src/defines';
 import { LanguageCode } from './language';
 
-type TranslationKey = string;
-type TranslationValue = string;
+export type TranslationKey = string;
+export type TranslationValue = string;
 
-export type Translation = Record<TranslationKey, Record<LanguageCode, TranslationValue>>;
+export type TranslationValueByLanguageCode = Partial<Record<LanguageCode, TranslationValue>>;
+
+export type NamespaceContent = Record<TranslationKey, TranslationValue>;
+
+export type Translation = KeyValuePair<TranslationKey, TranslationValueByLanguageCode>;

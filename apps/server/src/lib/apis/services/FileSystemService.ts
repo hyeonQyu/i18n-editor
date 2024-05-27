@@ -13,7 +13,7 @@ import { CMD_BY_OS } from '../../defines/env';
 import { createService } from '../../utils/createService';
 import { getOS } from '../../utils/env';
 import { getFileNames } from '../../utils/file';
-import { getLanguages } from '../../utils/locale';
+import { getLanguageCodes } from '../../utils/locale';
 
 const getFileEntryType = (item: fs.Dirent): FileEntryType => {
   if (item.isDirectory()) return 'directory';
@@ -72,7 +72,7 @@ const fileSystemService = createService({
   async getFileSystemLocale(req: GetFileSystemLocaleRequest): Promise<GetFileSystemLocaleResponse> {
     const { path } = req;
 
-    const languages = await getLanguages(path);
+    const languages = await getLanguageCodes(path);
 
     if (languages.length === 0) {
       throw new Error('올바른 locale 디렉토리가 아닙니다.');

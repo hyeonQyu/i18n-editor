@@ -14,3 +14,9 @@ export const getFileNames = async (directoryPath: string, validFileExtensions: s
 
   return files.filter(getIsValidFile).map((entry) => entry.name);
 };
+
+export const createFileWhenNotExist = async (filePath: string, content: string = '') => {
+  if (!fs.existsSync(filePath)) {
+    await fs.promises.writeFile(filePath, content);
+  }
+};
