@@ -1,4 +1,4 @@
-import { GetNamespaceRequest, GetNamespaceResponse } from 'i18n-editor-common';
+import { GetNamespaceRequest, GetNamespaceResponse, PostNamespaceRequest, PostNamespaceResponse } from 'i18n-editor-common';
 import { ControllerMethod } from '../../defines/api';
 import BaseController from '../../utils/BaseController';
 import namespaceService from '../services/NamespaceService';
@@ -12,17 +12,14 @@ export default class NamespaceController extends BaseController {
     },
   };
 
-  // private postNamespace: ControllerMethod<PostNamespaceRequest, never, PostNamespaceResponse> = {
-  //   path: '/',
-  //   method: 'post',
-  //   handler: async (req) => {
-  //     return {
-  //       status: HttpStatusCode.NotImplemented,
-  //       errorMessage: 'Not implemented',
-  //     };
-  //   },
-  // };
-  //
+  private postNamespace: ControllerMethod<PostNamespaceRequest, never, PostNamespaceResponse> = {
+    path: '/',
+    method: 'post',
+    handler: async (req) => {
+      return await namespaceService.postNamespace(req.body);
+    },
+  };
+
   // private postNamespaceTranslation: ControllerMethod<PostNamespaceTranslationRequest, never, PostNamespaceTranslationResponse> = {
   //   path: '/translation',
   //   method: 'post',
