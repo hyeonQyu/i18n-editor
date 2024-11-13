@@ -8,7 +8,7 @@ import {
   TranslationValue,
   TranslationValueByLanguageCode,
 } from 'i18n-editor-common/lib/defines/translation';
-import { KeyValuePair } from 'i18n-eidtor-client/src/defines';
+import { KeyValuePair } from '../../../../../client/src/deprecated/defines';
 import { createService } from '../../utils/createService';
 import { createFileWhenNotExist, readFile, writeFile } from '../../utils/file';
 import { getLanguageCodes } from '../../utils/locale';

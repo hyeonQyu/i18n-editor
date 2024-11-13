@@ -1,10 +1,10 @@
-import { DirectorySelector } from '@components/directorySelector';
-import { LocaleDirectoryCreationDialog } from '@components/localeDirectoryCreationDialog';
-import { HomeSkeleton } from '@components/page/home/homeSkeleton';
-import { TranslationFileCreationDialog } from '@components/translationFileCreationDialog';
-import { TranslationFileEditor } from '@components/translationFileEditor';
-import { TranslationFileSelector } from '@components/translationFileSelector';
-import useHome from '@hooks/pages/useHome';
+import { DirectorySelector } from '../deprecated/components/directorySelector';
+import { LocaleDirectoryCreationDialog } from '../deprecated/components/localeDirectoryCreationDialog';
+import { HomeSkeleton } from '../deprecated/components/page/home/homeSkeleton';
+import { TranslationFileCreationDialog } from '../deprecated/components/translationFileCreationDialog';
+import { TranslationFileEditor } from '../deprecated/components/translationFileEditor';
+import { TranslationFileSelector } from '../deprecated/components/translationFileSelector';
+import useHome from '../deprecated/hooks/pages/useHome';
 import Head from 'next/head';
 
 export interface IndexProps {}

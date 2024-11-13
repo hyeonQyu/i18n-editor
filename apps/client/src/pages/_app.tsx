@@ -1,6 +1,6 @@
-import { Portal } from '@components/portal';
-import { ToastContext } from '@contexts/toastContext';
-import useApp from '@hooks/pages/useApp';
+import { Portal } from '../deprecated/components/portal';
+import { ToastContext } from '../deprecated/contexts/toastContext';
+import useApp from '../deprecated/hooks/pages/useApp';
 import { QueryClientProvider } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import 'primeicons/primeicons.css';
