@@ -9,18 +9,15 @@
     ]
   },
   "scripts": {
-    "dev:client": "yarn --cwd apps/client run dev",
-    "dev:server": "yarn --cwd apps/server run dev",
-    "watch:common": "yarn --cwd packages/app-common run watch",
-    "build:common": "yarn --cwd packages/app-common run build",
-    "build:client": "yarn --cwd apps/client run build",
-    "build:server": "yarn --cwd apps/server run build",
-    "build": "yarn build:common && yarn build:client && yarn build:server && node setupPackage.js",
+    "client": "yarn workspace i18n-eidtor-client",
+    "server": "yarn workspace i18n-eidtor-server",
+    "common": "yarn workspace i18n-editor-common",
+    "build": "yarn common build && yarn client build && yarn server build && node setupPackage.js",
     "publish:dist": "yarn --cwd dist publish",
     "build-publish": "yarn build && yarn publish:dist"
   },
   "dependencies": {
-    "axios": "^1.6.8",
+    "axios": "^1.7.7",
     "i18n-editor-common": "0.1.0"
   },
   "devDependencies": {
