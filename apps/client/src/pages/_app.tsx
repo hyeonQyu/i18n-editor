@@ -5,25 +5,16 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import type { AppProps } from 'next/app';
-import { RecoilRoot } from 'recoil';
+import { SnackbarProvider } from 'notistack';
 import '../styles/animations.css';
 import '../styles/globals.css';
 import '../styles/reset.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // const { queryClient, toastRef } = useApp();
-
   return (
-    <RecoilRoot>
-      {/*<QueryClientProvider client={queryClient}>*/}
-      {/*<Portal.Provider>*/}
-      {/*<ToastContext.Provider value={{ toastRef }}>*/}
+    <SnackbarProvider>
       <Component {...pageProps} />
-      {/*<Toast ref={toastRef} />*/}
-      {/*</ToastContext.Provider>*/}
-      {/*</Portal.Provider>*/}
-      {/*</QueryClientProvider>*/}
-    </RecoilRoot>
+    </SnackbarProvider>
   );
 }
 
