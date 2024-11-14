@@ -5,7 +5,7 @@ import { grey } from '@mui/material/colors';
 import { MouseEventHandler } from 'react';
 
 function CopiableDirectoryPath() {
-  const directoryPath = 'User/midas/Desktop/Projects/Project1';
+  const directoryPath = 'User/Desktop/Projects/Project1';
 
   const copyClipboard = useCopyClipboard();
 
