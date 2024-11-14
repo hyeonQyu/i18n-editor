@@ -2,8 +2,7 @@ import ConfigAPI from '@apis/config';
 import FileSystemAPI from '@apis/file-system';
 import NamespaceAPI from '@apis/namespace';
 import axios, { AxiosInstance } from 'axios';
-import { DEFAULT_APP_CONFIG, ResponseEntity } from 'i18n-editor-common';
-import { readServerPort } from 'i18n-editor-common/lib/utils/serverPort';
+import { DEFAULT_APP_CONFIG, readServerPort, ResponseEntity } from 'i18n-editor-common';
 import { identity } from 'lodash';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
