@@ -1,6 +1,6 @@
-export type Environment = 'production' | 'development';
+import { OS } from 'i18n-editor-common';
 
-export type OS = 'win' | 'linux' | 'macos';
+export type Environment = 'production' | 'development';
 
 export const CMD_BY_OS: Record<
   OS,

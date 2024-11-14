@@ -1,1 +1,1 @@
-export type OSType = 'windows' | 'mac' | 'linux' | 'windows phone' | 'android' | 'ios';
+export type OS = 'win' | 'linux' | 'macos';

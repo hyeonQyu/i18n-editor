@@ -1,13 +1,13 @@
 import useOS from '@hooks/useOS';
 import { FolderOpen } from '@mui/icons-material';
 import { Button, Tooltip } from '@mui/material';
-import { OSType } from 'i18n-editor-common';
+import { OS } from 'i18n-editor-common';
 
-const getFileManagerNameByOS = (os: OSType | undefined) => {
+const getFileManagerNameByOS = (os: OS | undefined) => {
   switch (os) {
-    case 'windows':
+    case 'win':
       return '파일 탐색기';
-    case 'mac':
+    case 'macos':
       return '파인더';
     default:
       return '파일 관리자';
