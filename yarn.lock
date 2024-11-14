@@ -1665,6 +1665,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/roboto@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@fontsource/roboto@npm:5.1.0"
+  checksum: 6431d9230e56ce3246e6339ece2ccae68053dda5e54aa0a85bdf929418f6deaa7ec7c4e964adb66a50a8521c3522644babc7099086d486ba240c4869f4fce8b8
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.9.2":
   version: 0.9.5
   resolution: "@humanwhocodes/config-array@npm:0.9.5"
@@ -3085,6 +3092,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:^1.1.0":
+  version: 1.2.1
+  resolution: "clsx@npm:1.2.1"
+  checksum: 30befca8019b2eb7dbad38cff6266cf543091dae2825c856a62a8ccf2c3ab9c2907c4d12b288b73101196767f66812365400a227581484a05f968b0307cfaf12
+  languageName: node
+  linkType: hard
+
 "clsx@npm:^2.1.0":
   version: 2.1.1
   resolution: "clsx@npm:2.1.1"
@@ -4403,6 +4417,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"goober@npm:^2.0.33":
+  version: 2.1.16
+  resolution: "goober@npm:2.1.16"
+  peerDependencies:
+    csstype: ^3.0.10
+  checksum: ec82aa2e4dc7c30b1fc681e3555818386fbcb61350afdd4deb44431e4df4eba4f25ef7dbabbac06fccc1b62a417ddd66563b80045443a623554dcc793ee17238
+  languageName: node
+  linkType: hard
+
 "gopd@npm:^1.0.1":
   version: 1.0.1
   resolution: "gopd@npm:1.0.1"
@@ -4597,6 +4620,7 @@ __metadata:
   dependencies:
     "@emotion/react": ^11.11.4
     "@emotion/styled": ^11.11.5
+    "@fontsource/roboto": ^5.1.0
     "@mui/icons-material": ^5.15.15
     "@mui/material": ^5.15.15
     "@svgr/webpack": ^6.5.1
@@ -4607,6 +4631,7 @@ __metadata:
     eslint: 8.20.0
     eslint-config-next: 12.2.3
     next: 12.2.3
+    notistack: ^3.0.1
     primeicons: ^6.0.1
     primereact: ^8.7.3
     react: 18.2.0
@@ -5525,6 +5550,19 @@ __metadata:
   version: 3.0.0
   resolution: "normalize-path@npm:3.0.0"
   checksum: 88eeb4da891e10b1318c4b2476b6e2ecbeb5ff97d946815ffea7794c31a89017c70d7f34b3c2ebf23ef4e9fc9fb99f7dffe36da22011b5b5c6ffa34f4873ec20
+  languageName: node
+  linkType: hard
+
+"notistack@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "notistack@npm:3.0.1"
+  dependencies:
+    clsx: ^1.1.0
+    goober: ^2.0.33
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 421c970308690b8c8cb2e275e7f66020db7c1955e104f638e7fa562396a6b9322ff95f0e62492b07f3d36b0ef72adb4de2c2ce9803089c1c8f028d1a3b088e01
   languageName: node
   linkType: hard
 
