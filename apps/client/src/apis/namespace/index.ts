@@ -17,7 +17,7 @@ import {
   PutNamespaceTranslationResponse,
 } from 'i18n-editor-common';
 
-export default class NamespaceApi extends BaseAPI {
+export default class NamespaceAPI extends BaseAPI {
   public getNamespace: AxiosRequestFunction<GetNamespaceRequest, GetNamespaceResponse> = (req) => {
     return this.axiosInstance.get(this.getUrl('/namespace'), { params: req });
   };

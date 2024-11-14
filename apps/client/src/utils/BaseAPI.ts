@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { getLeadingSlash } from 'i18n-editor-common';
 
-abstract class BaseApi {
+abstract class BaseAPI {
   private readonly _axiosInstance: AxiosInstance;
   protected get axiosInstance(): AxiosInstance {
     return this._axiosInstance;
@@ -9,7 +9,7 @@ abstract class BaseApi {
 
   private readonly _baseUrl: string;
 
-  public constructor(baseUrl: string, axiosInstance: AxiosInstance) {
+  public constructor(axiosInstance: AxiosInstance, baseUrl: string) {
     this._baseUrl = baseUrl;
     this._axiosInstance = axiosInstance;
   }
@@ -19,4 +19,4 @@ abstract class BaseApi {
   }
 }
 
-export default BaseApi;
+export default BaseAPI;
