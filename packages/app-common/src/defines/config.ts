@@ -11,5 +11,5 @@ export interface AppConfig {
 }
 
 export const DEFAULT_APP_CONFIG: AppConfig = {
-  port: 4848,
+  port: 5252,
 };

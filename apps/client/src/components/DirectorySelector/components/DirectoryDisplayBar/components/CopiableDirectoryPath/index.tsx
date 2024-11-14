@@ -1,3 +1,4 @@
+import { directoryPath } from '@defines/tmp';
 import useCopyClipboard from '@hooks/useCopyClipboard';
 import { ContentCopy } from '@mui/icons-material';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
@@ -5,8 +6,6 @@ import { grey } from '@mui/material/colors';
 import { MouseEventHandler } from 'react';
 
 function CopiableDirectoryPath() {
-  const directoryPath = 'User/Desktop/Projects/Project1';
-
   const copyClipboard = useCopyClipboard();
 
   const handleClickCopy: MouseEventHandler = (e) => {
