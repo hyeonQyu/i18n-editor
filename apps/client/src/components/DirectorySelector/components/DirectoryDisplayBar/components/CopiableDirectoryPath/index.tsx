@@ -52,7 +52,7 @@ function CopiableDirectoryPath() {
           </Typography>
         </Box>
 
-        <Tooltip title={'복사'}>
+        <Tooltip title={'경로 복사'}>
           <IconButton aria-label={'copy'} className={'copy'} size={'small'} onClick={handleClickCopy}>
             <ContentCopy fontSize={'small'} />
           </IconButton>
