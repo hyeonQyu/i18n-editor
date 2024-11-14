@@ -1,4 +1,4 @@
-import { Config, ConfigMeta, GetConfigResponse } from 'i18n-editor-common';
+import { ConfigMeta, EditorConfig, GetConfigResponse } from 'i18n-editor-common';
 import { Environment } from '../../defines/env';
 import { createService } from '../../utils/createService';
 import { getEnvironment } from '../../utils/env';
@@ -19,7 +19,7 @@ const CONFIG_META: ConfigMeta = {
 
 const configService = createService({
   async getConfig(): Promise<GetConfigResponse> {
-    const config = (await readFile(CONFIG_META.path)) as Config;
+    const config = (await readFile(CONFIG_META.path)) as EditorConfig;
 
     return {
       config,
