@@ -1,4 +1,4 @@
-import { KeyValuePair } from '../../../../apps/client/src/deprecated/defines';
+import { KeyValuePair } from './keyValue';
 import { LanguageCode } from './language';
 
 export type TranslationKey = string;
