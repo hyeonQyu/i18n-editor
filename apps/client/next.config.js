@@ -4,7 +4,7 @@ const nextConfig = {
   experimental: {
     modularizeImports: {
       lodash: {
-        transform: 'loadsh/{{member}}',
+        transform: 'lodash/{{member}}',
       },
     },
   },
