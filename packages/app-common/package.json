@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "node commands/clean.js",
     "copy": "node commands/copy.js",
-    "build": "yarn clean && tsc && yarn copy",
+    "build": "yarn clean && tsc -p ./tsconfig.build.json && yarn copy",
     "watch": "tsc-watch --onSuccess 'tsc'"
   },
   "devDependencies": {
