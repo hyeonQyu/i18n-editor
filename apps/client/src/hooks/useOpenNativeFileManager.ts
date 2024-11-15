@@ -2,7 +2,7 @@ import { MUTATION_KEY } from '@defines/reactQuery';
 import { useAPI } from '@providers/APIProvider';
 import { useMutation } from '@tanstack/react-query';
 
-function useOpenFileManager() {
+function useOpenNativeFileManager() {
   const api = useAPI();
 
   const { mutateAsync } = useMutation({
@@ -13,4 +13,4 @@ function useOpenFileManager() {
   return mutateAsync;
 }
 
-export default useOpenFileManager;
+export default useOpenNativeFileManager;
