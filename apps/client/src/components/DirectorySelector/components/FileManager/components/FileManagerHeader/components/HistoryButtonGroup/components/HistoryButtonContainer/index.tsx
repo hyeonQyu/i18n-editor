@@ -1,14 +1,19 @@
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import { ReactNode } from 'react';
 
 interface HistoryButtonContainerProps {
   children: ReactNode;
+  tooltipMessage: string;
 }
 
 function HistoryButtonContainer(props: HistoryButtonContainerProps) {
-  const { children } = props;
+  const { children, tooltipMessage } = props;
 
-  return <Button sx={{ padding: '8px 6px' }}>{children}</Button>;
+  return (
+    <Tooltip title={tooltipMessage}>
+      <Button sx={{ padding: '8px 6px' }}>{children}</Button>
+    </Tooltip>
+  );
 }
 
 export default HistoryButtonContainer;

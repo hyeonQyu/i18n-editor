@@ -23,6 +23,7 @@ function FileManagerSearchInput() {
       inputRef={inputRef}
       size={'small'}
       variant={'outlined'}
+      placeholder={'검색'}
       inputProps={{
         style: {
           paddingLeft: `${FILE_MANAGER_SEARCH_ICON_WIDTH + FILE_MANAGER_HEADER_GAP}px`,

@@ -6,11 +6,11 @@ import { ButtonGroup } from '@mui/material';
 function HistoryButtonGroup() {
   return (
     <ButtonGroup variant={'outlined'} aria-label={'navigation history button group'}>
-      <HistoryButtonContainer>
+      <HistoryButtonContainer tooltipMessage={'뒤로 가기'}>
         <ArrowLeftIcon />
       </HistoryButtonContainer>
 
-      <HistoryButtonContainer>
+      <HistoryButtonContainer tooltipMessage={'앞으로 가기'}>
         <ArrowRightIcon />
       </HistoryButtonContainer>
     </ButtonGroup>

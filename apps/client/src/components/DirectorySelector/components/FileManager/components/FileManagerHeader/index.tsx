@@ -1,5 +1,5 @@
 import FileManagerBreadcrumbs from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerBreadcrumbs';
-import SearchBar from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch';
+import FileManagerSearch from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch';
 import {
   FILE_MANAGER_HEADER_GAP,
   FILE_MANAGER_SEARCH_ICON_WIDTH,
@@ -23,7 +23,7 @@ function FileManagerHeader() {
     >
       <HistoryButtonGroup />
       <FileManagerBreadcrumbs />
-      <SearchBar />
+      <FileManagerSearch />
     </Box>
   );
 }
