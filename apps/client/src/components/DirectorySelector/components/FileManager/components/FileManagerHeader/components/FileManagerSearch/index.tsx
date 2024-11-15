@@ -1,7 +1,19 @@
-import SearchIcon from '@mui/icons-material/Search';
-import { Box, IconButton } from '@mui/material';
+import FileManagerExitSearchIconButton from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/components/FileManagerExitSearchIconButton';
+import FileManagerSearchInput from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/components/FileManagerSearchInput';
+import { useFileManagerSearchStore } from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/stores/fileManagerSearch';
+import { Box } from '@mui/material';
+import FileManagerSearchIconButton from 'components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/components/FileManagerSearchIconButton';
+import { useEffect } from 'react';
 
 function FileManagerSearch() {
+  const { searchMode, reset } = useFileManagerSearchStore();
+
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, []);
+
   return (
     <Box
       sx={{
@@ -10,9 +22,9 @@ function FileManagerSearch() {
         alignItems: 'center',
       }}
     >
-      <IconButton aria-label={'search file manager'} size={'small'}>
-        <SearchIcon fontSize={'medium'} />
-      </IconButton>
+      <FileManagerSearchIconButton />
+      <FileManagerSearchInput />
+      {searchMode && <FileManagerExitSearchIconButton />}
     </Box>
   );
 }

@@ -1,17 +1,16 @@
+import BorderBox from '@components/BorderBox';
 import HomeIcon from '@mui/icons-material/Home';
-import { Box, Breadcrumbs, Link } from '@mui/material';
+import { Breadcrumbs, Link } from '@mui/material';
 
 function FileManagerBreadcrumbs() {
   return (
-    <Box
+    <BorderBox
       sx={{
         maxWidth: '100%',
         height: '100%',
         display: 'flex',
         alignItems: 'center',
         padding: '0 8px',
-        border: `1px solid rgba(25, 118, 210, 0.5)`,
-        borderRadius: '4px',
       }}
     >
       <Breadcrumbs
@@ -58,7 +57,7 @@ function FileManagerBreadcrumbs() {
           dasfas
         </Link>
       </Breadcrumbs>
-    </Box>
+    </BorderBox>
   );
 }
 
