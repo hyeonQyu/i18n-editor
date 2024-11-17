@@ -1,4 +1,4 @@
-import { KeyValuePair } from 'i18n-eidtor-client/src/defines';
+import { KeyValuePair } from '../../../../apps/client/src/deprecated/defines';
 import { LanguageCode } from './language';
 
 export type TranslationKey = string;
