@@ -1,32 +1,28 @@
 import FileManagerExitSearchIconButton from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/components/FileManagerExitSearchIconButton';
 import FileManagerSearchInput from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/components/FileManagerSearchInput';
+import useFileManagerSearchShortcuts from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/hooks/useFileManagerSearchShortcuts';
 import { useFileManagerSearchStore } from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/stores/fileManagerSearch';
 import useClickOutside from '@hooks/useClickOutside';
 import { Box } from '@mui/material';
 import FileManagerSearchIconButton from 'components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/components/FileManagerSearchIconButton';
-import { KeyboardEventHandler, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 function FileManagerSearch() {
-  const { searchMode, reset } = useFileManagerSearchStore();
+  const { searchMode, finishSearch } = useFileManagerSearchStore();
 
   const ref = useRef<HTMLElement>();
 
   useEffect(() => {
     return () => {
-      reset();
+      finishSearch();
     };
-  }, []);
+  }, [finishSearch]);
 
   useClickOutside(ref, () => {
-    reset();
+    finishSearch();
   });
 
-  const handleKeyDown: KeyboardEventHandler = (e) => {
-    if (e.key === 'Escape' && searchMode) {
-      reset();
-      e.stopPropagation();
-    }
-  };
+  useFileManagerSearchShortcuts();
 
   return (
     <Box
@@ -36,7 +32,6 @@ function FileManagerSearch() {
         justifyContent: 'end',
         alignItems: 'center',
       }}
-      onKeyDown={handleKeyDown}
     >
       <FileManagerSearchIconButton />
       <FileManagerSearchInput />

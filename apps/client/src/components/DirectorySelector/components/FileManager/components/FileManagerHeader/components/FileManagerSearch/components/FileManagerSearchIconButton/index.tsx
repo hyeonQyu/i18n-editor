@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, Tooltip } from '@mui/material';
 
 function FileManagerSearchIconButton() {
-  const { searchMode, setSearchMode: handleClick } = useFileManagerSearchStore();
+  const { searchMode, startSearch: handleClick } = useFileManagerSearchStore();
   const right = useFileManagerSearchInputWidth();
 
   return (
