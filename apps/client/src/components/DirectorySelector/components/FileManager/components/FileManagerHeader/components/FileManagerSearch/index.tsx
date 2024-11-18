@@ -4,7 +4,7 @@ import { useFileManagerSearchStore } from '@components/DirectorySelector/compone
 import useClickOutside from '@hooks/useClickOutside';
 import { Box } from '@mui/material';
 import FileManagerSearchIconButton from 'components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/components/FileManagerSearchIconButton';
-import { useEffect, useRef } from 'react';
+import { KeyboardEventHandler, useEffect, useRef } from 'react';
 
 function FileManagerSearch() {
   const { searchMode, reset } = useFileManagerSearchStore();
@@ -21,6 +21,13 @@ function FileManagerSearch() {
     reset();
   });
 
+  const handleKeyDown: KeyboardEventHandler = (e) => {
+    if (e.key === 'Escape' && searchMode) {
+      reset();
+      e.stopPropagation();
+    }
+  };
+
   return (
     <Box
       ref={ref}
@@ -29,6 +36,7 @@ function FileManagerSearch() {
         justifyContent: 'end',
         alignItems: 'center',
       }}
+      onKeyDown={handleKeyDown}
     >
       <FileManagerSearchIconButton />
       <FileManagerSearchInput />
