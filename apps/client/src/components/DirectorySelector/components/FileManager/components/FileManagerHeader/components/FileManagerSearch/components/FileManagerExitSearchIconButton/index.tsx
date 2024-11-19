@@ -6,7 +6,7 @@ function FileManagerExitSearchIconButton() {
   const handleClick = useFileManagerSearchStore(({ finishSearch }) => finishSearch);
 
   return (
-    <Tooltip title={'검색창 닫기'}>
+    <Tooltip title={'검색창 닫기 (esc)'}>
       <IconButton
         aria-label={'exit search'}
         size={'small'}
