@@ -4,6 +4,7 @@ import { CommonNamespaceRequest } from './_common';
 
 export * from './language';
 export * from './translation';
+export * from './_common';
 
 export interface GetNamespaceRequest extends CommonNamespaceRequest {}
 

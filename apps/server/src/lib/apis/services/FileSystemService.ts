@@ -10,7 +10,6 @@ import {
 } from 'i18n-editor-common';
 import { FileEntry, FileEntryType } from 'i18n-editor-common/lib/defines/file';
 import { CMD_BY_OS } from '../../defines/env';
-import { createService } from '../../utils/createService';
 import { getOS } from '../../utils/env';
 import { getFileNames } from '../../utils/file';
 import { getLanguageCodes } from '../../utils/locale';
@@ -46,7 +45,7 @@ const getAllNamespaces = async (rootPath: string, languages: string[]) => {
   return Array.from(new Set(jsonFileNames));
 };
 
-const fileSystemService = createService({
+const fileSystemService = {
   async getFileSystemDirectory(req: GetFileSystemDirectoryRequest): Promise<GetFileSystemDirectoryResponse> {
     const { path } = req;
 
@@ -84,6 +83,6 @@ const fileSystemService = createService({
       namespaces,
     };
   },
-});
+};
 
 export default fileSystemService;
