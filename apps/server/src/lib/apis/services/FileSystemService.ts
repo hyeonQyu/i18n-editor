@@ -3,6 +3,8 @@ import fs from 'fs';
 import {
   GetFileSystemDirectoryRequest,
   GetFileSystemDirectoryResponse,
+  GetFileSystemInitialPathRequest,
+  GetFileSystemInitialPathResponse,
   GetFileSystemLocaleRequest,
   GetFileSystemLocaleResponse,
   PostFileSystemFileManagerRequest,
@@ -46,6 +48,12 @@ const getAllNamespaces = async (rootPath: string, languages: string[]) => {
 };
 
 const fileSystemService = {
+  async getFileSystemInitialPath(_: GetFileSystemInitialPathRequest): Promise<GetFileSystemInitialPathResponse> {
+    return {
+      path: process.cwd(),
+    };
+  },
+
   async getFileSystemDirectory(req: GetFileSystemDirectoryRequest): Promise<GetFileSystemDirectoryResponse> {
     const { path } = req;
 

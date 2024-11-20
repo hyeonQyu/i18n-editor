@@ -1,6 +1,8 @@
 import {
   GetFileSystemDirectoryRequest,
   GetFileSystemDirectoryResponse,
+  GetFileSystemInitialPathRequest,
+  GetFileSystemInitialPathResponse,
   GetFileSystemLocaleRequest,
   GetFileSystemLocaleResponse,
   PostFileSystemFileManagerRequest,
@@ -11,6 +13,14 @@ import BaseController from '../../utils/BaseController';
 import fileSystemService from '../services/FileSystemService';
 
 export default class FileSystemController extends BaseController {
+  private getFileSystemInitialPath: ControllerMethod<never, GetFileSystemInitialPathRequest, GetFileSystemInitialPathResponse> = {
+    path: '/initial-path',
+    method: 'get',
+    handler: async (req) => {
+      return await fileSystemService.getFileSystemInitialPath(req.query);
+    },
+  };
+
   private getFileSystemDirectory: ControllerMethod<never, GetFileSystemDirectoryRequest, GetFileSystemDirectoryResponse> = {
     path: '/directory',
     method: 'get',
