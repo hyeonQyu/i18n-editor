@@ -1,10 +1,12 @@
 import { SxProps, Typography } from '@mui/material';
 import { TypographyProps } from '@mui/material/Typography/Typography';
+import classNames from 'classnames';
 
 interface EllipsisTextProps {
   label: string;
   variant: TypographyProps['variant'];
   maxLines?: number;
+  className?: string;
   sx?: SxProps;
 }
 
@@ -14,15 +16,15 @@ const CLASSNAME = {
 };
 
 function EllipsisText(props: EllipsisTextProps) {
-  const { label, variant, maxLines = 1, sx } = props;
+  const { label, variant, maxLines = 1, className, sx } = props;
 
-  const className = maxLines === 1 ? CLASSNAME.single : CLASSNAME.multi;
+  const lineClassName = maxLines === 1 ? CLASSNAME.single : CLASSNAME.multi;
 
   return (
     <Typography
       variant={variant}
       title={label}
-      className={className}
+      className={classNames(lineClassName, className)}
       sx={{
         textOverflow: 'ellipsis',
         overflow: 'hidden',

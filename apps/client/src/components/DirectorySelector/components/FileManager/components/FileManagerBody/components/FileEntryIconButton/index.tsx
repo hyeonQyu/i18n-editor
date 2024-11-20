@@ -1,3 +1,4 @@
+import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import EllipsisText from '@components/EllipsisText';
 import FolderIcon from '@mui/icons-material/Folder';
 import { IconButton } from '@mui/material';
@@ -12,26 +13,49 @@ function FileEntryIconButton(props: FileEntryIconButtonProps) {
     entry: { name },
   } = props;
 
+  const viewType = useFileManagerStore(({ viewType }) => viewType);
+
   return (
     <IconButton
-      className={'table'}
+      className={viewType}
       sx={{
         borderRadius: '4px',
         display: 'flex',
-        width: '92px',
 
         ['&.table']: {
           flexDirection: 'column',
+          width: '92px',
+        },
+
+        ['&.list']: {
+          width: '100%',
         },
       }}
       aria-label={'go to directory'}
     >
       <FolderIcon
+        className={viewType}
         sx={{
-          fontSize: '64px',
+          ['&.table']: {
+            fontSize: '64px',
+          },
+
+          ['&.list']: {
+            fontSize: '32px',
+          },
         }}
       />
-      <EllipsisText label={name} variant={'caption'} />
+      <EllipsisText
+        className={viewType}
+        label={name}
+        variant={'caption'}
+        sx={{
+          ['&.list']: {
+            textAlign: 'left',
+            padding: '0 10px',
+          },
+        }}
+      />
     </IconButton>
   );
 }
