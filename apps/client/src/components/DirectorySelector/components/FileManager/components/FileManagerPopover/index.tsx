@@ -12,7 +12,8 @@ interface FileManagerPopoverProps {
 function FileManagerPopover(props: FileManagerPopoverProps) {
   const { children } = props;
 
-  const { anchorElement, close } = useFileManagerStore();
+  const anchorElement = useFileManagerStore(({ anchorElement }) => anchorElement);
+  const close = useFileManagerStore(({ close }) => close);
 
   const opened = Boolean(anchorElement);
 

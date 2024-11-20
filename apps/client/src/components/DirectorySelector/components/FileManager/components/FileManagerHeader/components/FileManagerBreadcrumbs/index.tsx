@@ -1,8 +1,29 @@
 import BorderBox from '@components/BorderBox';
+import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import HomeIcon from '@mui/icons-material/Home';
 import { Breadcrumbs, Link } from '@mui/material';
 
+interface BreadcrumbItem {
+  label: string;
+  path: string;
+}
+
 function FileManagerBreadcrumbs() {
+  const path = useFileManagerStore(({ path }) => path);
+  const movePathTo = useFileManagerStore(({ movePathTo }) => movePathTo);
+
+  const breadcrumbs: BreadcrumbItem[] =
+    path
+      ?.split('/')
+      .filter(Boolean)
+      .reduce((acc, label) => {
+        const path = acc.length ? `${acc[acc.length - 1].path}/${label}` : label;
+        acc.push({ path, label });
+        return acc;
+      }, [] as BreadcrumbItem[]) ?? [];
+
+  const getHandleClick = (_path: string) => () => movePathTo(_path);
+
   return (
     <BorderBox
       sx={{
@@ -35,27 +56,19 @@ function FileManagerBreadcrumbs() {
         <Link component={'button'} color={'inherit'} sx={{ display: 'flex', alignItems: 'center' }}>
           <HomeIcon />
         </Link>
-        <Link component={'button'} color={'inherit'} underline={'hover'} sx={{ display: 'flex', alignItems: 'center' }}>
-          dasfas
-        </Link>
-        <Link component={'button'} color={'inherit'} underline={'hover'} sx={{ display: 'flex', alignItems: 'center' }}>
-          dasfas
-        </Link>
-        <Link component={'button'} color={'inherit'} underline={'hover'} sx={{ display: 'flex', alignItems: 'center' }}>
-          dasfas
-        </Link>
-        <Link component={'button'} color={'inherit'} underline={'hover'} sx={{ display: 'flex', alignItems: 'center' }}>
-          dasfas
-        </Link>
-        <Link component={'button'} color={'inherit'} underline={'hover'} sx={{ display: 'flex', alignItems: 'center' }}>
-          dasfas
-        </Link>
-        <Link component={'button'} color={'inherit'} underline={'hover'} sx={{ display: 'flex', alignItems: 'center' }}>
-          dasfas
-        </Link>
-        <Link component={'button'} color={'inherit'} underline={'hover'} sx={{ display: 'flex', alignItems: 'center' }}>
-          dasfas
-        </Link>
+
+        {breadcrumbs.map(({ label, path }) => (
+          <Link
+            key={path}
+            onClick={getHandleClick(path)}
+            component={'button'}
+            color={'inherit'}
+            underline={'hover'}
+            sx={{ display: 'flex', alignItems: 'center' }}
+          >
+            {label}
+          </Link>
+        ))}
       </Breadcrumbs>
     </BorderBox>
   );
