@@ -34,7 +34,7 @@ function FileManagerBody() {
   return (
     <Box
       sx={{
-        height: '460px',
+        height: '440px',
         overflowY: 'auto',
         margin: '24px 0',
       }}
