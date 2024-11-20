@@ -8,17 +8,36 @@ interface EllipsisTextProps {
   sx?: SxProps;
 }
 
+const CLASSNAME = {
+  single: 'ellipsis',
+  multi: 'multiline-ellipsis',
+};
+
 function EllipsisText(props: EllipsisTextProps) {
   const { label, variant, maxLines = 1, sx } = props;
+
+  const className = maxLines === 1 ? CLASSNAME.single : CLASSNAME.multi;
 
   return (
     <Typography
       variant={variant}
+      title={label}
+      className={className}
       sx={{
-        display: '-webkit-box',
+        textOverflow: 'ellipsis',
         overflow: 'hidden',
-        WebkitBoxOrient: 'vertical',
-        WebkitLineClamp: maxLines,
+        width: '100%',
+
+        [`&.${CLASSNAME.single}`]: {
+          whiteSpace: 'nowrap',
+        },
+
+        [`&.${CLASSNAME.multi}`]: {
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
+          WebkitLineClamp: maxLines,
+        },
+
         ...sx,
       }}
     >
