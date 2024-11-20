@@ -1,13 +1,14 @@
 import { DIRECTORY_PATH_ID, FILE_MANAGER_ID } from '@components/DirectorySelector/defines/attributes';
 import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
-import { directoryPath } from '@defines/tmp';
 import useCopyClipboard from '@hooks/useCopyClipboard';
 import { ContentCopy } from '@mui/icons-material';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
+import { usePathStore } from '@stores/pathStore';
 import { MouseEventHandler } from 'react';
 
 function CopiableDirectoryPath() {
+  const path = usePathStore(({ path }) => path);
   const { open, anchorElement } = useFileManagerStore();
 
   const copyClipboard = useCopyClipboard();
@@ -18,11 +19,11 @@ function CopiableDirectoryPath() {
 
   const handleClickCopy: MouseEventHandler = (e) => {
     e.stopPropagation();
-    copyClipboard(directoryPath);
+    copyClipboard(path!);
   };
 
   return (
-    <Tooltip title={directoryPath} placement={'bottom-start'}>
+    <Tooltip title={path} placement={'bottom-start'}>
       <Box
         id={DIRECTORY_PATH_ID}
         aria-controls={anchorElement ? FILE_MANAGER_ID : undefined}
@@ -59,13 +60,13 @@ function CopiableDirectoryPath() {
             alignItems: 'center',
           }}
         >
-          <Typography variant={'body1'} title={directoryPath} sx={{ height: '100%', display: 'flex', alignItems: 'center' }} tabIndex={0}>
-            {directoryPath}
+          <Typography variant={'body1'} title={path} sx={{ height: '100%', display: 'flex', alignItems: 'center' }} tabIndex={0}>
+            {path}
           </Typography>
         </Box>
 
         <Tooltip title={'경로 복사'}>
-          <IconButton aria-label={'copy'} className={'copy'} size={'small'} onClick={handleClickCopy}>
+          <IconButton aria-label={'copy'} className={'copy'} size={'small'} onClick={handleClickCopy} disabled={!path}>
             <ContentCopy fontSize={'small'} />
           </IconButton>
         </Tooltip>
