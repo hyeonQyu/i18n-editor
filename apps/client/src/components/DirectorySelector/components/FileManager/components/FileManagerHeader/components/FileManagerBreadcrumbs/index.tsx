@@ -53,7 +53,7 @@ function FileManagerBreadcrumbs() {
           },
         }}
       >
-        <Link component={'button'} color={'inherit'} sx={{ display: 'flex', alignItems: 'center' }}>
+        <Link component={'button'} onClick={getHandleClick('/')} color={'inherit'} sx={{ display: 'flex', alignItems: 'center' }}>
           <HomeIcon />
         </Link>
 
@@ -64,7 +64,7 @@ function FileManagerBreadcrumbs() {
             component={'button'}
             color={'inherit'}
             underline={'hover'}
-            sx={{ display: 'flex', alignItems: 'center' }}
+            sx={{ display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}
           >
             {label}
           </Link>
