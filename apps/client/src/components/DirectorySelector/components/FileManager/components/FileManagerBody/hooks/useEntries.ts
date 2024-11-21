@@ -2,7 +2,7 @@ import { useFileManagerStore } from '@components/DirectorySelector/stores/fileMa
 import useDirectoryEntries from '@hooks/file-system/useDirectoryEntries';
 import { FileEntry } from 'i18n-editor-common';
 import { throttle } from 'lodash';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 function useEntries() {
   const path = useFileManagerStore(({ path }) => path) ?? '';
@@ -12,11 +12,12 @@ function useEntries() {
 
   const [filteredEntries, setFilteredEntries] = useState(entries);
 
-  const throttleFilterEntries = useCallback(
-    throttle((entries: FileEntry[], keyword) => {
-      setFilteredEntries(entries.filter((entry) => entry.name.includes(keyword)));
-    }, 400),
-    [throttle],
+  const throttleFilterEntries = useMemo(
+    () =>
+      throttle((entries: FileEntry[], keyword) => {
+        setFilteredEntries(entries.filter((entry) => entry.name.includes(keyword)));
+      }, 400),
+    [],
   );
 
   useEffect(() => {
