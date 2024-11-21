@@ -1,17 +1,40 @@
 import { create } from 'zustand/react';
 import { StateCreator } from 'zustand/vanilla';
 
-interface PopoverStore {
+type PopoverActionHandler<T extends object> = () => Partial<PopoverStore<T>>;
+
+type PopoverStore<T extends object> = T & {
   anchorElement: HTMLElement | null;
-  open: (element: HTMLElement) => void;
-  close: () => void;
-}
+  open: (element: HTMLElement, onOpen?: PopoverActionHandler<T>) => void;
+  close: (onClose?: PopoverActionHandler<T>) => void;
+};
+
+const getDefaultActionHandler =
+  <T extends object>(): PopoverActionHandler<T> =>
+  () => ({});
 
 export const createPopoverStore = <T extends object>(extendState: StateCreator<T>) => {
-  return create<PopoverStore & T>((set, get, api) => ({
+  const defaultActionHandler = getDefaultActionHandler<PopoverStore<T>>();
+
+  return create<PopoverStore<T>>((set, get, api) => ({
     anchorElement: null,
-    open: (element) => set((prev) => ({ ...prev, anchorElement: element })),
-    close: () => set((prev) => ({ ...prev, anchorElement: null })),
+
+    open: (element, onOpen = defaultActionHandler) => {
+      set((prev) => ({
+        ...prev,
+        ...onOpen(),
+        anchorElement: element,
+      }));
+    },
+
+    close: (onClose = defaultActionHandler) => {
+      set((prev) => ({
+        ...prev,
+        ...onClose(),
+        anchorElement: null,
+      }));
+    },
+
     ...extendState(set, get, api),
   }));
 };

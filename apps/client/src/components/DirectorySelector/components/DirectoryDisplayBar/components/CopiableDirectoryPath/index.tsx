@@ -10,15 +10,12 @@ import { MouseEventHandler } from 'react';
 function CopiableDirectoryPath() {
   const path = usePathStore(({ path }) => path);
   const openFileManager = useFileManagerStore(({ open }) => open);
-  const movePathTo = useFileManagerStore(({ movePathTo }) => movePathTo);
   const anchorElement = useFileManagerStore(({ anchorElement }) => anchorElement);
 
   const copyClipboard = useCopyClipboard();
 
   const handleClickPath: MouseEventHandler = (e) => {
-    openFileManager(e.target as HTMLElement);
-    if (!path) return;
-    movePathTo(path);
+    openFileManager(e.target as HTMLElement, () => (path ? { path } : {}));
   };
 
   const handleClickCopy: MouseEventHandler = (e) => {
