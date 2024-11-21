@@ -1,8 +1,9 @@
 import FileEntryIconButton from '@components/DirectorySelector/components/FileManager/components/FileManagerBody/components/FileEntryIconButton';
-import useEntries from '@components/DirectorySelector/components/FileManager/components/FileManagerBody/hooks/useEntries';
 import { FileManagerViewType, useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import { Box } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2';
+import { FileEntry } from 'i18n-editor-common';
+import { memo } from 'react';
 
 const ATTRIBUTES_BY_VIEW_TYPE: Record<
   FileManagerViewType,
@@ -21,8 +22,12 @@ const ATTRIBUTES_BY_VIEW_TYPE: Record<
   },
 };
 
-function FileManagerBody() {
-  const entries = useEntries();
+interface FileManagerBodyProps {
+  entries: FileEntry[];
+}
+
+function FileManagerBody(props: FileManagerBodyProps) {
+  const { entries } = props;
 
   const viewType = useFileManagerStore(({ viewType }) => viewType);
 
@@ -47,4 +52,4 @@ function FileManagerBody() {
   );
 }
 
-export default FileManagerBody;
+export default memo(FileManagerBody);

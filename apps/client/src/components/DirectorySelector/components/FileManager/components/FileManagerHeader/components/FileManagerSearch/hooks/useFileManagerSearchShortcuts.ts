@@ -1,10 +1,12 @@
-import { useFileManagerSearchStore } from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/stores/fileManagerSearch';
+import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import useKeyboardEventListener from '@hooks/useKeyboardEventListener';
 import useOS from '@hooks/useOS';
 import { useCallback } from 'react';
 
 function useFileManagerSearchShortcuts() {
-  const { searchMode, finishSearch, startSearch } = useFileManagerSearchStore();
+  const searchMode = useFileManagerStore(({ searchMode }) => searchMode);
+  const startSearch = useFileManagerStore(({ startSearch }) => startSearch);
+  const finishSearch = useFileManagerStore(({ finishSearch }) => finishSearch);
 
   const os = useOS();
 

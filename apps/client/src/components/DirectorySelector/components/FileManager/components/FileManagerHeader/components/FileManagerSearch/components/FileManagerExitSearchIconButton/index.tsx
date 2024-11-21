@@ -1,9 +1,9 @@
-import { useFileManagerSearchStore } from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/stores/fileManagerSearch';
+import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton, Tooltip } from '@mui/material';
 
 function FileManagerExitSearchIconButton() {
-  const handleClick = useFileManagerSearchStore(({ finishSearch }) => finishSearch);
+  const handleClick = useFileManagerStore(({ finishSearch }) => finishSearch);
 
   return (
     <Tooltip title={'검색창 닫기 (esc)'}>

@@ -1,14 +1,14 @@
 import FileManagerExitSearchIconButton from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/components/FileManagerExitSearchIconButton';
 import FileManagerSearchInput from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/components/FileManagerSearchInput';
 import useFileManagerSearchShortcuts from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/hooks/useFileManagerSearchShortcuts';
-import { useFileManagerSearchStore } from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/stores/fileManagerSearch';
+import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import useClickOutside from '@hooks/useClickOutside';
 import { Box } from '@mui/material';
 import FileManagerSearchIconButton from 'components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/components/FileManagerSearchIconButton';
 import { useEffect, useRef } from 'react';
 
 function FileManagerSearch() {
-  const { searchMode, finishSearch } = useFileManagerSearchStore();
+  const { searchMode, finishSearch } = useFileManagerStore();
 
   const ref = useRef<HTMLElement>();
 
