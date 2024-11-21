@@ -7,6 +7,7 @@ import {
   GetFileSystemInitialPathResponse,
   GetFileSystemLocaleRequest,
   GetFileSystemLocaleResponse,
+  getLeadingSlash,
   PostFileSystemFileManagerRequest,
   PostFileSystemFileManagerResponse,
 } from 'i18n-editor-common';
@@ -75,7 +76,7 @@ const fileSystemService = {
     const { path } = req;
 
     const entries: FileEntry[] = (
-      await fs.promises.readdir(path, {
+      await fs.promises.readdir(getLeadingSlash(path), {
         withFileTypes: true,
       })
     )

@@ -1,8 +1,8 @@
 import FileEntryIconButton from '@components/DirectorySelector/components/FileManager/components/FileManagerBody/components/FileEntryIconButton';
+import useEntries from '@components/DirectorySelector/components/FileManager/components/FileManagerBody/hooks/useEntries';
 import { FileManagerViewType, useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import { Box } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import { FileEntry } from 'i18n-editor-common';
 
 const ATTRIBUTES_BY_VIEW_TYPE: Record<
   FileManagerViewType,
@@ -22,10 +22,7 @@ const ATTRIBUTES_BY_VIEW_TYPE: Record<
 };
 
 function FileManagerBody() {
-  const entries: FileEntry[] = Array.from({ length: 10 }).map((_, index) => ({
-    name: `file${index}`,
-    type: 'directory',
-  }));
+  const entries = useEntries();
 
   const viewType = useFileManagerStore(({ viewType }) => viewType);
 
