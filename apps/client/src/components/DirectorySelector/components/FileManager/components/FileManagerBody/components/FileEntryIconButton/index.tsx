@@ -22,13 +22,21 @@ function FileEntryIconButton(props: FileEntryIconButtonProps) {
     entry: { name, type },
   } = props;
 
-  const viewType = useFileManagerStore(({ viewType }) => viewType);
-
   const Icon = ICON_BY_TYPE[type];
+
+  const path = useFileManagerStore(({ path }) => path);
+  const viewType = useFileManagerStore(({ viewType }) => viewType);
+  const movePathTo = useFileManagerStore(({ movePathTo }) => movePathTo);
+
+  const handleClick = () => {
+    if (type !== 'directory') return;
+    movePathTo(`${path}/${name}`);
+  };
 
   return (
     <IconButton
       className={viewType}
+      onClick={handleClick}
       sx={{
         borderRadius: '4px',
         display: 'flex',
