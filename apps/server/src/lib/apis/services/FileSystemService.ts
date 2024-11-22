@@ -94,7 +94,7 @@ const fileSystemService = {
     const { path } = req;
 
     const { openFileManager } = CMD_BY_OS[getOS()];
-    childProcess.spawn(openFileManager, [path]);
+    childProcess.spawn(openFileManager, [getLeadingSlash(path)]);
   },
 
   async getFileSystemLocale(req: GetFileSystemLocaleRequest): Promise<GetFileSystemLocaleResponse> {
