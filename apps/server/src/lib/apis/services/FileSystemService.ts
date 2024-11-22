@@ -13,6 +13,7 @@ import {
 } from 'i18n-editor-common';
 import { FileEntry, FileEntryType } from 'i18n-editor-common/lib/defines/file';
 import { CMD_BY_OS } from '../../defines/env';
+import { BadRequestError } from '../../defines/errors';
 import { getOS } from '../../utils/env';
 import { getFileNames } from '../../utils/file';
 import { getLanguageCodes } from '../../utils/locale';
@@ -102,7 +103,7 @@ const fileSystemService = {
     const languages = await getLanguageCodes(path);
 
     if (languages.length === 0) {
-      throw new Error('올바른 locale 디렉토리가 아닙니다.');
+      throw new BadRequestError('올바른 locale 디렉토리가 아닙니다.');
     }
 
     const namespaces = await getAllNamespaces(path, languages);
