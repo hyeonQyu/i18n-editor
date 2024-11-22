@@ -14,6 +14,7 @@ function useDirectoryEntries(path: string): FileEntry[] {
     queryKey: QUERY_KEY.fileSystem.getDirectory(req),
     queryFn: async () => (await api.fileSystem.getFileSystemDirectory(req)).data,
     enabled: Boolean(path),
+    keepPreviousData: true,
   });
 
   return entries;
