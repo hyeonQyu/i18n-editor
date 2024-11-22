@@ -11,6 +11,7 @@ interface FileManagerStore {
   };
   searchMode: boolean;
   searchKeyword: string;
+  directoryOnly: boolean;
   setViewType: (viewType: FileManagerViewType) => void;
   movePathTo: (path: string) => void;
   moveForward: () => void;
@@ -18,87 +19,94 @@ interface FileManagerStore {
   startSearch: () => void;
   finishSearch: () => void;
   setSearchKeyword: (keyword: string) => void;
+  setDirectoryOnly: (directoryOnly: boolean) => void;
 }
 
-const getPoppedList = <T>(list: Array<T>): T[] => list.slice(0, list.length - 1);
+export const useFileManagerStore = createPopoverStore<FileManagerStore>((set) => {
+  const getPoppedList = <T>(list: Array<T>): T[] => list.slice(0, list.length - 1);
 
-export const useFileManagerStore = createPopoverStore<FileManagerStore>((set) => ({
-  viewType: 'table',
+  return {
+    viewType: 'table',
 
-  path: undefined,
+    path: undefined,
 
-  pathHistory: {
-    backward: [],
-    forward: [],
-  },
+    pathHistory: {
+      backward: [],
+      forward: [],
+    },
 
-  searchMode: false,
+    searchMode: false,
 
-  searchKeyword: '',
+    searchKeyword: '',
 
-  setViewType: (viewType) => set({ viewType }),
+    directoryOnly: false,
 
-  movePathTo: (path) => {
-    set((state) => {
-      const {
-        path: prevPath,
-        pathHistory: { backward },
-      } = state;
+    setViewType: (viewType) => set({ viewType }),
 
-      return {
-        ...state,
-        path,
-        pathHistory: {
-          backward: [...backward, prevPath!],
-          forward: [],
-        },
-      };
-    });
-  },
+    movePathTo: (path) => {
+      set((state) => {
+        const {
+          path: prevPath,
+          pathHistory: { backward },
+        } = state;
 
-  moveBackward: () => {
-    set((state) => {
-      const {
-        path: prevPath,
-        pathHistory: { backward, forward },
-      } = state;
+        return {
+          ...state,
+          path,
+          pathHistory: {
+            backward: [...backward, prevPath!],
+            forward: [],
+          },
+        };
+      });
+    },
 
-      const path = backward[backward.length - 1];
+    moveBackward: () => {
+      set((state) => {
+        const {
+          path: prevPath,
+          pathHistory: { backward, forward },
+        } = state;
 
-      return {
-        ...state,
-        path,
-        pathHistory: {
-          backward: getPoppedList(backward),
-          forward: [...forward, prevPath!],
-        },
-      };
-    });
-  },
+        const path = backward[backward.length - 1];
 
-  moveForward: () => {
-    set((state) => {
-      const {
-        path: prevPath,
-        pathHistory: { backward, forward },
-      } = state;
+        return {
+          ...state,
+          path,
+          pathHistory: {
+            backward: getPoppedList(backward),
+            forward: [...forward, prevPath!],
+          },
+        };
+      });
+    },
 
-      const path = forward[forward.length - 1];
+    moveForward: () => {
+      set((state) => {
+        const {
+          path: prevPath,
+          pathHistory: { backward, forward },
+        } = state;
 
-      return {
-        ...state,
-        path,
-        pathHistory: {
-          backward: [...backward, prevPath!],
-          forward: getPoppedList(forward),
-        },
-      };
-    });
-  },
+        const path = forward[forward.length - 1];
 
-  startSearch: () => set({ searchMode: true }),
+        return {
+          ...state,
+          path,
+          pathHistory: {
+            backward: [...backward, prevPath!],
+            forward: getPoppedList(forward),
+          },
+        };
+      });
+    },
 
-  finishSearch: () => set({ searchMode: false, searchKeyword: '' }),
+    startSearch: () => set({ searchMode: true }),
 
-  setSearchKeyword: (keyword) => set({ searchKeyword: keyword }),
-}));
+    finishSearch: () => set({ searchMode: false, searchKeyword: '' }),
+
+    setSearchKeyword: (keyword) => set({ searchKeyword: keyword }),
+
+    setDirectoryOnly: (directoryOnly) => set({ directoryOnly }),
+  };
+});
