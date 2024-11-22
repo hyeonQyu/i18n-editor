@@ -14,8 +14,8 @@ function useEntries() {
 
   const throttleFilterEntries = useMemo(
     () =>
-      throttle((entries: FileEntry[], keyword) => {
-        setFilteredEntries(entries.filter((entry) => entry.name.includes(keyword)));
+      throttle((entries: FileEntry[], keyword: string) => {
+        setFilteredEntries(entries.filter((entry) => entry.name.toLowerCase().includes(keyword.toLowerCase())));
       }, 400),
     [],
   );
