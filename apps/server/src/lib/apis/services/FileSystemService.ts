@@ -99,14 +99,15 @@ const fileSystemService = {
 
   async getFileSystemLocale(req: GetFileSystemLocaleRequest): Promise<GetFileSystemLocaleResponse> {
     const { path } = req;
+    const directoryPath = getLeadingSlash(path);
 
-    const languages = await getLanguageCodes(path);
+    const languages = await getLanguageCodes(directoryPath);
 
     if (languages.length === 0) {
       throw new BadRequestError('올바른 locale 디렉토리가 아닙니다.');
     }
 
-    const namespaces = await getAllNamespaces(path, languages);
+    const namespaces = await getAllNamespaces(directoryPath, languages);
 
     return {
       namespaces,

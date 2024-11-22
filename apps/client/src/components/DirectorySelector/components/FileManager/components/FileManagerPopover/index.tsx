@@ -1,3 +1,4 @@
+import useCloseFileManager from '@components/DirectorySelector/components/FileManager/hooks/useCloseFileManager';
 import { FILE_MANAGER_ID } from '@components/DirectorySelector/defines/attributes';
 import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import { SELECTOR_MAX_WIDTH } from '@defines/styles';
@@ -12,19 +13,18 @@ function FileManagerPopover(props: FileManagerPopoverProps) {
   const { children } = props;
 
   const anchorElement = useFileManagerStore(({ anchorElement }) => anchorElement);
-  const close = useFileManagerStore(({ close }) => close);
   const searchMode = useFileManagerStore(({ searchMode }) => searchMode);
 
-  const opened = Boolean(anchorElement);
+  const close = useCloseFileManager();
 
-  const handleClose = () => close(({ viewType, directoryOnly }) => ({ viewType, directoryOnly }));
+  const opened = Boolean(anchorElement);
 
   return (
     <Popover
       id={FILE_MANAGER_ID}
       open={opened}
       anchorEl={anchorElement}
-      onClose={handleClose}
+      onClose={close}
       disableEscapeKeyDown={searchMode}
       anchorOrigin={{
         vertical: 'bottom',

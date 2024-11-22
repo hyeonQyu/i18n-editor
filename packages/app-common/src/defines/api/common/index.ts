@@ -6,8 +6,10 @@ export type ResponseEntity<T> =
       errorMessage?: never | undefined;
       data: T;
     }
-  | {
-      status: Exclude<HttpStatusCode, HttpStatusCode.Ok>;
-      errorMessage: string;
-      data?: never;
-    };
+  | ErrorResponseEntity;
+
+export type ErrorResponseEntity = {
+  status: Exclude<HttpStatusCode, HttpStatusCode.Ok>;
+  errorMessage: string;
+  data?: never;
+};
