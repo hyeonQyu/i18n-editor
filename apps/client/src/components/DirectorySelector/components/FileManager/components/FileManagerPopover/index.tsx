@@ -17,7 +17,7 @@ function FileManagerPopover(props: FileManagerPopoverProps) {
 
   const opened = Boolean(anchorElement);
 
-  const handleClose = () => close();
+  const handleClose = () => close(({ viewType, directoryOnly }) => ({ viewType, directoryOnly }));
 
   return (
     <Popover
