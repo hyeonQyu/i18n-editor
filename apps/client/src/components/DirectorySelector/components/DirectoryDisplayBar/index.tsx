@@ -1,12 +1,13 @@
 import CopiableDirectoryPath from '@components/DirectorySelector/components/DirectoryDisplayBar/components/CopiableDirectoryPath';
-import { Button, ButtonGroup } from '@mui/material';
+import { ButtonGroup } from '@mui/material';
+import OpenNativeFileManagerButton from 'components/DirectorySelector/components/DirectoryDisplayBar/components/OpenNativeFileManagerButton';
 
 function DirectoryDisplayBar() {
   return (
     <>
       <ButtonGroup variant={'contained'} fullWidth size={'large'}>
         <CopiableDirectoryPath />
-        <Button sx={{ width: '60px' }}>ads</Button>
+        <OpenNativeFileManagerButton />
       </ButtonGroup>
     </>
   );

@@ -1,6 +1,7 @@
+import { OS } from 'i18n-editor-common';
 import os from 'os';
 import * as process from 'process';
-import { Environment, OS } from '../defines/env';
+import { Environment } from '../defines/env';
 
 export const getEnvironment = () => process.env.NODE_ENV as Environment;
 
