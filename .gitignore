@@ -2,3 +2,4 @@ node_modules
 dist
 .idea
 i18n-editor-config.json
+.yarn/install-state.gz
