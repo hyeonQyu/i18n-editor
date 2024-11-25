@@ -1,4 +1,4 @@
-import useLocaleNamespaces from '@hooks/file-system/useLocaleNamespaces';
+import useLocaleNamespaces from '@hooks/namespace/useLocaleNamespaces';
 import { useGlobalStore } from '@stores/globalStore';
 
 function useNamespaces() {

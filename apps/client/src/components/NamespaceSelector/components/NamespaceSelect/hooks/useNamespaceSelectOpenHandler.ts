@@ -1,4 +1,4 @@
-import useInvalidateLocaleNamespaces from '@hooks/file-system/useInvalidateLocaleNamespaces';
+import useInvalidateLocaleNamespaces from '@hooks/namespace/useInvalidateLocaleNamespaces';
 import { useCallback, useEffect, useState } from 'react';
 
 function useNamespaceSelectOpenHandler() {
