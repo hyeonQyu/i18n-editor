@@ -2,7 +2,7 @@ import useNamespaceChangeHandler from '@components/NamespaceSelector/components/
 import useNamespaces from '@components/NamespaceSelector/components/NamespaceSelect/hooks/useNamespaces';
 import useNamespaceSelectOpenHandler from '@components/NamespaceSelector/components/NamespaceSelect/hooks/useNamespaceSelectOpenHandler';
 import { Autocomplete, TextField } from '@mui/material';
-import { useNamespaceStore } from '@stores/namespaceStore';
+import { useGlobalStore } from '@stores/globalStore';
 
 function NamespaceSelect() {
   const namespaces = useNamespaces();
@@ -10,11 +10,12 @@ function NamespaceSelect() {
   const handleOpen = useNamespaceSelectOpenHandler();
   const handleChange = useNamespaceChangeHandler();
 
-  const namespace = useNamespaceStore(({ namespace }) => namespace);
+  const namespace = useGlobalStore(({ namespace }) => namespace);
 
   return (
     <Autocomplete
       fullWidth
+      key={namespace}
       value={namespace}
       options={namespaces}
       size={'small'}

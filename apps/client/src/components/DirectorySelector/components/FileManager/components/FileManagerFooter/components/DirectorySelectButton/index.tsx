@@ -2,12 +2,12 @@ import useCloseFileManager from '@components/DirectorySelector/components/FileMa
 import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import useCreateAxiosErrorHandler from '@hooks/useCreateAxiosErrorHandler';
 import { Button } from '@mui/material';
-import { usePathStore } from '@stores/pathStore';
+import { useGlobalStore } from '@stores/globalStore';
 import { HttpStatusCode } from 'axios';
 
 function DirectorySelectButton() {
   const path = useFileManagerStore(({ path }) => path);
-  const setPath = usePathStore(({ setPath }) => setPath);
+  const setPath = useGlobalStore(({ setPath }) => setPath);
 
   const close = useCloseFileManager();
 

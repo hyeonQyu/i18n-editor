@@ -4,11 +4,11 @@ import useCopyClipboard from '@hooks/useCopyClipboard';
 import { ContentCopy } from '@mui/icons-material';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { usePathStore } from '@stores/pathStore';
+import { useGlobalStore } from '@stores/globalStore';
 import { MouseEventHandler } from 'react';
 
 function CopiableDirectoryPath() {
-  const path = usePathStore(({ path }) => path);
+  const path = useGlobalStore(({ path }) => path);
   const openFileManager = useFileManagerStore(({ open }) => open);
   const anchorElement = useFileManagerStore(({ anchorElement }) => anchorElement);
 

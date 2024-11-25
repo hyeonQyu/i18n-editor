@@ -1,8 +1,8 @@
 import useLocaleNamespaces from '@hooks/file-system/useLocaleNamespaces';
-import { usePathStore } from '@stores/pathStore';
+import { useGlobalStore } from '@stores/globalStore';
 
 function useNamespaces() {
-  const path = usePathStore(({ path }) => path) ?? '';
+  const path = useGlobalStore(({ path }) => path) ?? '';
   return useLocaleNamespaces(path);
 }
 
