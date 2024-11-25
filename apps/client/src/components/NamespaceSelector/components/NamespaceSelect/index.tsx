@@ -9,6 +9,7 @@ function NamespaceSelect() {
       fullWidth
       size={'small'}
       options={namespaces}
+      noOptionsText={'결과 없음'}
       renderInput={(params) => (
         <TextField
           {...params}
