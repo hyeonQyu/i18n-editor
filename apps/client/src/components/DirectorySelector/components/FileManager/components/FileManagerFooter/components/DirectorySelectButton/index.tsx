@@ -1,6 +1,5 @@
 import useCloseFileManager from '@components/DirectorySelector/components/FileManager/hooks/useCloseFileManager';
 import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
-import useFetchLocaleNamespaces from '@hooks/file-system/useFetchLocaleNamespaces';
 import useCreateAxiosErrorHandler from '@hooks/useCreateAxiosErrorHandler';
 import { Button } from '@mui/material';
 import { usePathStore } from '@stores/pathStore';
@@ -12,16 +11,16 @@ function DirectorySelectButton() {
 
   const close = useCloseFileManager();
 
-  const fetchNamespaces = useFetchLocaleNamespaces();
   const createErrorHandler = useCreateAxiosErrorHandler();
 
   const handleClick = async () => {
     if (!path) return;
 
+    setPath(path);
+    close();
+
+    // TODO 예외 처리 로직 이동 필요
     try {
-      await fetchNamespaces(path);
-      setPath(path);
-      close();
     } catch (e) {
       createErrorHandler({
         [HttpStatusCode.BadRequest]: ({ errorMessage }) => {
