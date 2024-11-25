@@ -20,7 +20,7 @@ function useNamespaceSelectOpenHandler() {
     if (!shouldInvalidate) return;
     setShouldInvalidate(false);
     return invalidateLocaleNamespaces();
-  }, [shouldInvalidate]);
+  }, [shouldInvalidate, invalidateLocaleNamespaces]);
 }
 
 export default useNamespaceSelectOpenHandler;
