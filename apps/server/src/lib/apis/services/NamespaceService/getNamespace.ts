@@ -11,6 +11,7 @@ import {
   TranslationValueByLanguageCode,
 } from 'i18n-editor-common';
 import { createFileWhenNotExist, readFile } from '../../../utils/file';
+import { namespaceContainer } from '../../../utils/namespaceContainer';
 import { getLanguageCodesByLocaleDirectoryPath, languageCodeToNamespaceFilePath } from './common/utils';
 
 const languageCodeToNamespaceContent = async (
@@ -91,6 +92,8 @@ const getTranslations = async (namespaceRequest: CommonNamespaceRequest, languag
 export const getNamespace: (req: GetNamespaceRequest) => Promise<GetNamespaceResponse> = async (req) => {
   const languageCodes = await getLanguageCodesByLocaleDirectoryPath(req.localeDirectoryPath);
   const translations = await getTranslations(req, languageCodes);
+
+  namespaceContainer.setTranslations(translations);
 
   return {
     languageCodes,
