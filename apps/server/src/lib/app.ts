@@ -29,7 +29,7 @@ module.exports = {
         if (env === 'production') {
           UiExecutor.runHtmlUi(port);
         } else {
-          startCheckMemoryInterval(TIME_UNIT.unitOfMs.asSecond * 5);
+          startCheckMemoryInterval(TIME_UNIT.unitOfMs.asSecond * 30);
         }
       })
       .parse(process.argv);
