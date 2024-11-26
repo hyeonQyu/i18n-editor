@@ -1,4 +1,4 @@
-import useNamespaces from '@components/NamespaceSelector/components/NamespaceSelect/hooks/useNamespaces';
+import useNamespaces from '@components/NamespaceSelector/hooks/useNamespaces';
 import { EXTENSIONS_SUFFIX } from '@defines/extensions';
 import { debounce } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';

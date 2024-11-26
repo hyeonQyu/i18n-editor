@@ -1,17 +1,14 @@
+import { getDefaultActionHandler, PortalActionHandler } from '@defines/portal';
 import { create } from 'zustand/react';
 import { StateCreator } from 'zustand/vanilla';
 
-type PopoverActionHandler<T extends object> = (state: PopoverStore<T>) => Partial<PopoverStore<T>>;
+type PopoverActionHandler<T extends object> = PortalActionHandler<PopoverStore<T>>;
 
 type PopoverStore<T extends object> = T & {
   anchorElement: HTMLElement | null;
   open: (element: HTMLElement, onOpen?: PopoverActionHandler<T>) => void;
   close: (onClose?: PopoverActionHandler<T>) => void;
 };
-
-const getDefaultActionHandler =
-  <T extends object>(): PopoverActionHandler<T> =>
-  () => ({});
 
 export const createPopoverStore = <T extends object>(extendState: StateCreator<T>) => {
   const defaultActionHandler = getDefaultActionHandler<PopoverStore<T>>();
