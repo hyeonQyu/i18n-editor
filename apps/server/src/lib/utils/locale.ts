@@ -1,13 +1,14 @@
 import fs from 'fs';
-import { getLeadingSlash, LanguageCode, LANGUAGE_CODE_SET } from 'i18n-editor-common';
+import { LanguageCode, LANGUAGE_CODE_SET } from 'i18n-editor-common';
 import { GLOBAL } from '../defines/global';
+import { readDirectory } from './file';
 
 const isLanguageDirectory = (dirent: fs.Dirent) => {
   return dirent.isDirectory() && LANGUAGE_CODE_SET.has(dirent.name);
 };
 
 export const getLanguageCodes = async (localeDirectoryPath: string) => {
-  return (await fs.promises.readdir(getLeadingSlash(localeDirectoryPath), { withFileTypes: true }))
+  return (await readDirectory(localeDirectoryPath, { withFileTypes: true }))
     .filter(isLanguageDirectory)
     .map((dirent) => dirent.name as LanguageCode)
     .sort((a, b) => {

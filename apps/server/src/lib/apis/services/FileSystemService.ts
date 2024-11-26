@@ -15,7 +15,7 @@ import { FileEntry, FileEntryType } from 'i18n-editor-common/lib/defines/file';
 import { CMD_BY_OS } from '../../defines/env';
 import { BadRequestError } from '../../defines/errors';
 import { getOS } from '../../utils/env';
-import { getFileNames } from '../../utils/file';
+import { getFileNames, readDirectory } from '../../utils/file';
 import { getLanguageCodes } from '../../utils/locale';
 
 const getFileEntryType = (item: fs.Dirent): FileEntryType => {
@@ -77,7 +77,7 @@ const fileSystemService = {
     const { path } = req;
 
     const entries: FileEntry[] = (
-      await fs.promises.readdir(getLeadingSlash(path), {
+      await readDirectory(path, {
         withFileTypes: true,
       })
     )
@@ -99,15 +99,14 @@ const fileSystemService = {
 
   async getFileSystemLocale(req: GetFileSystemLocaleRequest): Promise<GetFileSystemLocaleResponse> {
     const { path } = req;
-    const directoryPath = getLeadingSlash(path);
 
-    const languages = await getLanguageCodes(directoryPath);
+    const languages = await getLanguageCodes(path);
 
     if (languages.length === 0) {
       throw new BadRequestError('올바른 locale 디렉토리가 아닙니다.');
     }
 
-    const namespaces = await getAllNamespaces(directoryPath, languages);
+    const namespaces = await getAllNamespaces(path, languages);
 
     return {
       namespaces,
