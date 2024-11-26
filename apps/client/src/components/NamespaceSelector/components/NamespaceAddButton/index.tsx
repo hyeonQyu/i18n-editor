@@ -1,4 +1,3 @@
-import NamespaceAddDialog from '@components/NamespaceSelector/components/NamespaceAddButton/components/NamespaceAddDialog';
 import { useNamespaceAddDialogStore } from '@components/NamespaceSelector/stores/namespaceAddDialogStore';
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Tooltip } from '@mui/material';
@@ -15,8 +14,6 @@ function NamespaceAddButton() {
           <AddIcon />
         </Button>
       </Tooltip>
-
-      <NamespaceAddDialog />
     </>
   );
 }
