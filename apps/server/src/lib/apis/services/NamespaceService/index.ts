@@ -14,9 +14,9 @@ import {
   TranslationValue,
   TranslationValueByLanguageCode,
 } from 'i18n-editor-common';
-import { BadRequestError } from '../../defines/errors';
-import { createFileWhenNotExist, readFile, writeFile } from '../../utils/file';
-import { getLanguageCodes } from '../../utils/locale';
+import { BadRequestError } from '../../../defines/errors';
+import { createFileWhenNotExist, readFile, writeFile } from '../../../utils/file';
+import { getLanguageCodes } from '../../../utils/locale';
 
 const updateTranslationMap = (
   translationMap: Map<TranslationKey, TranslationValueByLanguageCode>,
@@ -115,7 +115,7 @@ const getLanguageCodesByLocaleDirectoryPath = async (localeDirectoryPath: string
   const languageCodes = await getLanguageCodes(localeDirectoryPath);
 
   if (languageCodes.length === 0) {
-    throw new Error('올바른 locale 디렉토리가 아닙니다.');
+    throw new BadRequestError('올바른 locale 디렉토리가 아닙니다.');
   }
 
   return languageCodes;
