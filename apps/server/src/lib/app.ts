@@ -1,12 +1,11 @@
+import { TIME_UNIT } from 'i18n-editor-common';
 import { AppOption } from './defines/appOption';
 import { ConfigUtil } from './utils/configUtil';
+import { startCheckMemoryInterval } from './utils/memory';
 import { startResponse } from './utils/response';
+import { createServer } from './utils/server';
 import { UiExecutor } from './utils/uiExecutor';
 
-const express = require('express');
-const server = express();
-const cors = require('cors');
-const bodyParser = require('body-parser');
 const { program } = require('commander');
 
 module.exports = {
@@ -17,16 +16,8 @@ module.exports = {
       .action(() => {
         const options: AppOption = program.opts();
         const { port = defaultOption.port, env = defaultOption.env } = options;
-        const limit = '1000mb';
 
-        server.use(cors());
-        server.use(bodyParser.json({ limit }));
-        server.use(
-          bodyParser.urlencoded({
-            extended: true,
-            limit,
-          }),
-        );
+        const server = createServer();
 
         server.listen(port, () => {
           console.log(`i18n editor started with port ${port}`);
@@ -37,6 +28,8 @@ module.exports = {
 
         if (env === 'production') {
           UiExecutor.runHtmlUi(port);
+        } else {
+          startCheckMemoryInterval(TIME_UNIT.unitOfMs.asSecond * 5);
         }
       })
       .parse(process.argv);

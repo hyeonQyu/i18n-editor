@@ -6,5 +6,6 @@ export * from './keyValue';
 export * from './language';
 export * from './models';
 export * from './os';
+export * from './time';
 export * from './translation';
 export * from './types';
