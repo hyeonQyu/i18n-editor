@@ -1,9 +1,13 @@
+const getLeading = (str: string, leading: string) => {
+  return str.startsWith(leading) ? str : `${leading}${str}`;
+};
+
 /**
  * "/"로 시작하는 문자열 반환
  * @param str
  */
 export const getLeadingSlash = (str: string) => {
-  return str.startsWith('/') ? str : `/${str}`;
+  return getLeading(str, '/');
 };
 
 export const getExtensionName = (fileName: string) => {

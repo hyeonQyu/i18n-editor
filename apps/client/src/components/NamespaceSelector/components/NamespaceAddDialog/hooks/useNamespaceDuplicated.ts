@@ -1,5 +1,4 @@
 import useNamespaces from '@components/NamespaceSelector/hooks/useNamespaces';
-import { EXTENSIONS_SUFFIX } from '@defines/extensions';
 import { debounce } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -11,7 +10,7 @@ function useNamespaceDuplicated(namespace: string) {
   const debounceCheckDuplicated = useMemo(
     () =>
       debounce((allNamespaces: string[], currentNamespace: string) => {
-        setDuplicated(allNamespaces.includes(currentNamespace.concat(EXTENSIONS_SUFFIX.json)));
+        setDuplicated(allNamespaces.includes(currentNamespace));
       }, 300),
     [],
   );

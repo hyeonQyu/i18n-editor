@@ -1,6 +1,7 @@
 import childProcess from 'child_process';
 import fs from 'fs';
 import {
+  EXTENSIONS_SUFFIX,
   GetFileSystemDirectoryRequest,
   GetFileSystemDirectoryResponse,
   GetFileSystemInitialPathRequest,
@@ -10,6 +11,7 @@ import {
   getLeadingSlash,
   PostFileSystemFileManagerRequest,
   PostFileSystemFileManagerResponse,
+  removeExtension,
 } from 'i18n-editor-common';
 import { FileEntry, FileEntryType } from 'i18n-editor-common/lib/defines/file';
 import { CMD_BY_OS } from '../../defines/env';
@@ -55,7 +57,7 @@ const getAllNamespaces = async (rootPath: string, languages: string[]) => {
   const jsonFileNamesList = await Promise.all(
     languages.map((language) => {
       const directoryPath = `${rootPath}/${language}`;
-      return getFileNames(directoryPath, ['json']);
+      return getFileNames(directoryPath, [EXTENSIONS_SUFFIX.json]);
     }),
   );
 
@@ -63,7 +65,7 @@ const getAllNamespaces = async (rootPath: string, languages: string[]) => {
     jsonFileNames.push(...fileNames);
   });
 
-  return Array.from(new Set(jsonFileNames));
+  return Array.from(new Set(jsonFileNames)).map(removeExtension);
 };
 
 const fileSystemService = {
