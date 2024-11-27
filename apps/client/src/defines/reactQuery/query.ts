@@ -1,4 +1,4 @@
-import { GetFileSystemDirectoryRequest, GetFileSystemLocaleRequest } from 'i18n-editor-common';
+import { GetFileSystemDirectoryRequest, GetFileSystemLocaleRequest, GetNamespaceRequest } from 'i18n-editor-common';
 
 export const QUERY_KEY = {
   config: {
@@ -12,5 +12,10 @@ export const QUERY_KEY = {
     getDirectory: (req: GetFileSystemDirectoryRequest) => [...QUERY_KEY.fileSystem.base, 'getDirectory', req] as const,
     getLocaleAll: () => [...QUERY_KEY.fileSystem.base, 'getLocale'] as const,
     getLocale: (req: GetFileSystemLocaleRequest) => [...QUERY_KEY.fileSystem.getLocaleAll(), req] as const,
+  },
+
+  namespace: {
+    base: ['namespace'] as const,
+    getNamespace: (req: GetNamespaceRequest) => [...QUERY_KEY.namespace.base, 'getNamespace', req] as const,
   },
 };
