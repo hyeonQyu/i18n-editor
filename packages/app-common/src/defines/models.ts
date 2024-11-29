@@ -1,4 +1,4 @@
-import { Config } from './config';
+import { EditorConfig } from './config';
 import { LanguageCode } from './language';
 import { CellData, ColumnData, DirectoryEntry, RowData } from './types';
 
@@ -14,7 +14,7 @@ export interface CommonRes<T = void> {
 
 export interface GetConfigRes
   extends CommonRes<{
-    config: Config;
+    config: EditorConfig;
   }> {}
 
 export interface GetDirectoryReq {

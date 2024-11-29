@@ -10,7 +10,7 @@
   },
   "scripts": {
     "client": "yarn workspace i18n-eidtor-client",
-    "server": "yarn workspace i18n-eidtor-server",
+    "server": "yarn workspace i18n-editor-server",
     "common": "yarn workspace i18n-editor-common",
     "build": "yarn common build && yarn client build && yarn server build && node setupPackage.js",
     "publish:dist": "yarn --cwd dist publish",
@@ -18,9 +18,11 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
-    "i18n-editor-common": "0.1.0"
+    "i18n-editor-common": "0.1.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.13",
     "@types/node": "^18.11.17",
     "path": "^0.12.7",
     "prettier": "^2.8.1",

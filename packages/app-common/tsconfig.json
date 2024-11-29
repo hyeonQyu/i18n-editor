@@ -16,7 +16,8 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "declaration": true,
     "isolatedModules": true,
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "tsBuildInfoFile": "./lib/tsconfig.build.tsbuildinfo"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

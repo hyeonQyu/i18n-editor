@@ -9,7 +9,7 @@ import {
   PostFileSystemFileManagerResponse,
 } from 'i18n-editor-common';
 
-export default class FileSystemApi extends BaseAPI {
+export default class FileSystemAPI extends BaseAPI {
   public getFileSystemDirectory: AxiosRequestFunction<GetFileSystemDirectoryRequest, GetFileSystemDirectoryResponse> = (req) => {
     return this.axiosInstance.get(this.getUrl('/directory'), { params: req });
   };

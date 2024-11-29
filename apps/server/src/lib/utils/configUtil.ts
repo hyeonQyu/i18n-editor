@@ -1,4 +1,4 @@
-import { Config, ConfigMeta } from 'i18n-editor-common';
+import { ConfigMeta, EditorConfig } from 'i18n-editor-common';
 import { Env } from '../defines/appOption';
 import { FileSystemManager } from './fileSystemManager';
 
@@ -17,9 +17,9 @@ export namespace ConfigUtil {
         : `${process.cwd()}/../../i18n-editor-config.json`;
   }
 
-  export function read(): Config {
+  export function read(): EditorConfig {
     try {
-      const config = FileSystemManager.readFile<Config>(configMeta.path);
+      const config = FileSystemManager.readFile<EditorConfig>(configMeta.path);
       console.log('config');
       console.log(config);
       return config;
@@ -29,7 +29,7 @@ export namespace ConfigUtil {
     }
   }
 
-  export function write(config: Config) {
+  export function write(config: EditorConfig) {
     try {
       console.log(configMeta.path);
       FileSystemManager.writeFile(configMeta.path, config);

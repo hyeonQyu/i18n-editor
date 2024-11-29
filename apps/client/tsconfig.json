@@ -25,6 +25,7 @@
       "@icons/*": ["./icons/*"],
       "@utils/*": ["./utils/*"],
       "@contexts/*": ["./contexts/*"],
+      "@providers/*": ["./providers/*"],
       "@public/*": ["../public/*"]
     }
   },
