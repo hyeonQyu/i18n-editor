@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "i18n-eidtor-client",
+  "name": "i18n-editor-client",
   "version": "0.1.0",
   "scripts": {
     "dev": "next dev",

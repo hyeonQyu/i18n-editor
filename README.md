@@ -45,7 +45,7 @@ i18n-editor
 
 실행 포트 옵션 (9000번 포트 사용)
 ```bash
-i18n-eidtor -p 9000
+i18n-editor -p 9000
 ```
 ```bash
 i18n-editor --port 9000

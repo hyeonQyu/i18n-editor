@@ -3265,7 +3265,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:^7.0.0":
+"cross-env@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "cross-env@npm:7.0.3"
+  dependencies:
+    cross-spawn: ^7.0.1
+  bin:
+    cross-env: src/bin/cross-env.js
+    cross-env-shell: src/bin/cross-env-shell.js
+  checksum: 26f2f3ea2ab32617f57effb70d329c2070d2f5630adc800985d8b30b56e8bf7f5f439dd3a0358b79cee6f930afc23cf8e23515f17ccfb30092c6b62c6b630a79
+  languageName: node
+  linkType: hard
+
+"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.1":
   version: 7.0.5
   resolution: "cross-spawn@npm:7.0.5"
   dependencies:
@@ -4581,6 +4593,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"i18n-editor-client@workspace:apps/client":
+  version: 0.0.0-use.local
+  resolution: "i18n-editor-client@workspace:apps/client"
+  dependencies:
+    "@emotion/react": ^11.11.4
+    "@emotion/styled": ^11.11.5
+    "@fontsource/roboto": ^5.1.0
+    "@mui/icons-material": ^5.15.15
+    "@mui/material": ^5.15.15
+    "@svgr/webpack": ^6.5.1
+    "@tanstack/react-query": ^4.20.4
+    "@types/react": 18.0.26
+    "@types/react-dom": 18.0.10
+    classnames: ^2.3.1
+    eslint: 8.20.0
+    eslint-config-next: 12.2.3
+    next: 12.2.3
+    notistack: ^3.0.1
+    primeicons: ^6.0.1
+    primereact: ^8.7.3
+    react: 18.2.0
+    react-dom: 18.2.0
+    recoil: ^0.7.6
+    zustand: ^5.0.1
+  languageName: unknown
+  linkType: soft
+
 "i18n-editor-common@0.1.0, i18n-editor-common@workspace:packages/app-common":
   version: 0.0.0-use.local
   resolution: "i18n-editor-common@workspace:packages/app-common"
@@ -4614,39 +4653,13 @@ __metadata:
     "@types/lodash": ^4.17.13
     "@types/node": ^18.11.17
     axios: ^1.7.7
+    cross-env: ^7.0.3
     i18n-editor-common: 0.1.0
     lodash: ^4.17.21
     path: ^0.12.7
     prettier: ^2.8.1
     prettier-plugin-organize-imports: ^3.2.4
     typescript: ^4.9.4
-  languageName: unknown
-  linkType: soft
-
-"i18n-eidtor-client@workspace:apps/client":
-  version: 0.0.0-use.local
-  resolution: "i18n-eidtor-client@workspace:apps/client"
-  dependencies:
-    "@emotion/react": ^11.11.4
-    "@emotion/styled": ^11.11.5
-    "@fontsource/roboto": ^5.1.0
-    "@mui/icons-material": ^5.15.15
-    "@mui/material": ^5.15.15
-    "@svgr/webpack": ^6.5.1
-    "@tanstack/react-query": ^4.20.4
-    "@types/react": 18.0.26
-    "@types/react-dom": 18.0.10
-    classnames: ^2.3.1
-    eslint: 8.20.0
-    eslint-config-next: 12.2.3
-    next: 12.2.3
-    notistack: ^3.0.1
-    primeicons: ^6.0.1
-    primereact: ^8.7.3
-    react: 18.2.0
-    react-dom: 18.2.0
-    recoil: ^0.7.6
-    zustand: ^5.0.1
   languageName: unknown
   linkType: soft
 

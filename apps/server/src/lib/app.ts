@@ -1,8 +1,6 @@
-import { Express } from 'express';
-import { Controller } from './apis/controller';
-import ConfigController from './apis/controllers/ConfigController';
 import { AppOption } from './defines/appOption';
 import { ConfigUtil } from './utils/configUtil';
+import { startResponse } from './utils/response';
 import { UiExecutor } from './utils/uiExecutor';
 
 const express = require('express');
@@ -33,7 +31,8 @@ module.exports = {
         server.listen(port, () => {
           console.log(`i18n editor started with port ${port}`);
           ConfigUtil.init(env);
-          Controller.response(server);
+
+          startResponse(server);
         });
 
         if (env === 'production') {

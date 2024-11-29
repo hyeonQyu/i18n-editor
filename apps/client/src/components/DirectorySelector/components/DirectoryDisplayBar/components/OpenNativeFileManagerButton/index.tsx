@@ -1,3 +1,5 @@
+import { directoryPath } from '@defines/tmp';
+import useOpenFileManager from '@hooks/useOpenFileManager';
 import useOS from '@hooks/useOS';
 import { FolderOpen } from '@mui/icons-material';
 import { Button, Tooltip } from '@mui/material';
@@ -21,9 +23,13 @@ function OpenNativeFileManagerButton() {
 
   const tooltipMessage = `${fileManagerName} 열기`;
 
+  const openFileManager = useOpenFileManager();
+
+  const handleClick = () => openFileManager({ path: directoryPath });
+
   return (
     <Tooltip title={tooltipMessage}>
-      <Button sx={{ width: '50px' }}>
+      <Button sx={{ width: '50px' }} onClick={handleClick}>
         <FolderOpen />
       </Button>
     </Tooltip>

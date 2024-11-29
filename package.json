@@ -9,7 +9,7 @@
     ]
   },
   "scripts": {
-    "client": "yarn workspace i18n-eidtor-client",
+    "client": "yarn workspace i18n-editor-client",
     "server": "yarn workspace i18n-editor-server",
     "common": "yarn workspace i18n-editor-common",
     "build": "yarn common build && yarn client build && yarn server build && node setupPackage.js",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@types/lodash": "^4.17.13",
     "@types/node": "^18.11.17",
+    "cross-env": "^7.0.3",
     "path": "^0.12.7",
     "prettier": "^2.8.1",
     "prettier-plugin-organize-imports": "^3.2.4",

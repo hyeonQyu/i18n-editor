@@ -7,7 +7,7 @@
     "i18n-editor": "bin/i18n-editor.js"
   },
   "scripts": {
-    "dev": "SET \"NODE_ENV=development\" && nodemon --watch \"src/lib/**/*.ts\" --exec \"ts-node\" src/bin/i18n-editor.ts",
+    "dev": "NODE_ENV=development && nodemon --watch \"src/lib/**/*.ts\" --exec \"ts-node\" src/bin/i18n-editor.ts",
     "build": "tsc -p . && tsc-alias"
   },
   "dependencies": {
