@@ -1,3 +1,5 @@
+import { DIRECTORY_PATH_ID, FILE_MANAGER_ID } from '@components/DirectorySelector/defines/attributes';
+import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import { directoryPath } from '@defines/tmp';
 import useCopyClipboard from '@hooks/useCopyClipboard';
 import { ContentCopy } from '@mui/icons-material';
@@ -6,7 +8,13 @@ import { grey } from '@mui/material/colors';
 import { MouseEventHandler } from 'react';
 
 function CopiableDirectoryPath() {
+  const { open, anchorElement } = useFileManagerStore();
+
   const copyClipboard = useCopyClipboard();
+
+  const handleClickPath: MouseEventHandler = (e) => {
+    open(e.target as HTMLElement);
+  };
 
   const handleClickCopy: MouseEventHandler = (e) => {
     e.stopPropagation();
@@ -16,8 +24,13 @@ function CopiableDirectoryPath() {
   return (
     <Tooltip title={directoryPath} placement={'bottom-start'}>
       <Box
+        id={DIRECTORY_PATH_ID}
+        aria-controls={anchorElement ? FILE_MANAGER_ID : undefined}
+        aria-haspopup
+        aria-expanded={anchorElement ? 'true' : undefined}
         aria-label={'directory path'}
         role={'button'}
+        onClick={handleClickPath}
         sx={{
           width: '100%',
           display: 'flex',
