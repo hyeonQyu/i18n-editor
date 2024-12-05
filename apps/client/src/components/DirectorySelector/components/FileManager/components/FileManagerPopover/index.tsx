@@ -1,3 +1,4 @@
+import { useFileManagerSearchStore } from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/stores/fileManagerSearch';
 import { FILE_MANAGER_ID } from '@components/DirectorySelector/defines/attributes';
 import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import { SELECTOR_MAX_WIDTH } from '@defines/styles';
@@ -15,12 +16,15 @@ function FileManagerPopover(props: FileManagerPopoverProps) {
 
   const opened = Boolean(anchorElement);
 
+  const searchMode = useFileManagerSearchStore(({ searchMode }) => searchMode);
+
   return (
     <Popover
       id={FILE_MANAGER_ID}
       open={opened}
       anchorEl={anchorElement}
       onClose={close}
+      disableEscapeKeyDown={searchMode}
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left',

@@ -3,10 +3,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import { IconButton, Tooltip } from '@mui/material';
 
 function FileManagerExitSearchIconButton() {
-  const handleClick = useFileManagerSearchStore(({ exitSearchMode }) => exitSearchMode);
+  const handleClick = useFileManagerSearchStore(({ finishSearch }) => finishSearch);
 
   return (
-    <Tooltip title={'검색창 닫기'}>
+    <Tooltip title={'검색창 닫기 (esc)'}>
       <IconButton
         aria-label={'exit search'}
         size={'small'}
