@@ -36,7 +36,6 @@ function FileManagerPopover(props: FileManagerPopoverProps) {
       sx={{
         '& .MuiPopover-paper': {
           width: `${SELECTOR_MAX_WIDTH}px`,
-          height: '500px',
           transform: 'translateY(12px) !important',
         },
       }}

@@ -1,4 +1,5 @@
 import { create } from 'zustand/react';
+import { StateCreator } from 'zustand/vanilla';
 
 interface PopoverStore {
   anchorElement: HTMLElement | null;
@@ -6,9 +7,11 @@ interface PopoverStore {
   close: () => void;
 }
 
-export const createPopoverStore = () =>
-  create<PopoverStore>((set) => ({
+export const createPopoverStore = <T extends object>(extendState: StateCreator<T>) => {
+  return create<PopoverStore & T>((set, get, api) => ({
     anchorElement: null,
-    open: (element) => set({ anchorElement: element }),
-    close: () => set({ anchorElement: null }),
+    open: (element) => set((prev) => ({ ...prev, anchorElement: element })),
+    close: () => set((prev) => ({ ...prev, anchorElement: null })),
+    ...extendState(set, get, api),
   }));
+};
