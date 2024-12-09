@@ -1,8 +1,8 @@
-import { directoryPath } from '@defines/tmp';
 import useOpenNativeFileManager from '@hooks/useOpenNativeFileManager';
 import useOS from '@hooks/useOS';
 import { FolderOpen } from '@mui/icons-material';
 import { Button, Tooltip } from '@mui/material';
+import { usePathStore } from '@stores/pathStore';
 import { OS } from 'i18n-editor-common';
 
 const getFileManagerNameByOS = (os: OS | undefined) => {
@@ -17,6 +17,8 @@ const getFileManagerNameByOS = (os: OS | undefined) => {
 };
 
 function OpenNativeFileManagerButton() {
+  const path = usePathStore(({ path }) => path);
+
   const os = useOS();
 
   const fileManagerName = getFileManagerNameByOS(os);
@@ -25,11 +27,11 @@ function OpenNativeFileManagerButton() {
 
   const openFileManager = useOpenNativeFileManager();
 
-  const handleClick = () => openFileManager({ path: directoryPath });
+  const handleClick = () => openFileManager({ path: path! });
 
   return (
     <Tooltip title={tooltipMessage}>
-      <Button sx={{ width: '50px' }} onClick={handleClick}>
+      <Button sx={{ width: '50px' }} disabled={!path} onClick={handleClick}>
         <FolderOpen />
       </Button>
     </Tooltip>

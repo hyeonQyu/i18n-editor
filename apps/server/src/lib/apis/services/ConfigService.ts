@@ -1,4 +1,4 @@
-import { ConfigMeta, EditorConfig, GetConfigResponse } from 'i18n-editor-common';
+import { EditorConfig, GetConfigResponse } from 'i18n-editor-common';
 import { Environment } from '../../defines/env';
 import { createService } from '../../utils/createService';
 import { getEnvironment } from '../../utils/env';
@@ -8,18 +8,18 @@ const projectRoot = process.cwd();
 
 const env = getEnvironment();
 
-const CONFIG_PATH_BY_ENV: Record<Environment, string> = {
-  production: `${projectRoot}/node_modules/i18n-editor/i18n-editor-config.json`,
-  development: `${projectRoot}/../../i18n-editor-config.json`,
-};
+const getConfigFilePath = () => {
+  const CONFIG_PATH_BY_ENV: Record<Environment, string> = {
+    production: `${projectRoot}/node_modules/i18n-editor/i18n-editor-config.json`,
+    development: `${projectRoot}/../../i18n-editor-config.json`,
+  };
 
-const CONFIG_META: ConfigMeta = {
-  path: CONFIG_PATH_BY_ENV[env],
+  return CONFIG_PATH_BY_ENV[env];
 };
 
 const configService = createService({
   async getConfig(): Promise<GetConfigResponse> {
-    const config = (await readFile(CONFIG_META.path)) as EditorConfig;
+    const config = (await readFile(getConfigFilePath())) as EditorConfig;
 
     return {
       config,
