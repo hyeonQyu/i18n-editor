@@ -3,6 +3,7 @@ import { Express } from 'express';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { getLeadingSlash, ResponseEntity } from 'i18n-editor-common';
 import { ControllerMethod, RequestHandler } from '../defines/api';
+import { NotFoundError } from '../defines/errors';
 
 abstract class BaseController {
   private readonly _baseUrl: string;
@@ -47,8 +48,12 @@ abstract class BaseController {
           data: response,
         });
       } catch (e) {
-        // TODO 공통 예외 처리 (IE-54)
-        BaseController.sendResponse(res, HttpStatusCode.InternalServerError, {
+        const getStatusCode = () => {
+          if (e instanceof NotFoundError) return HttpStatusCode.NotFound;
+          return HttpStatusCode.InternalServerError;
+        };
+
+        BaseController.sendResponse(res, getStatusCode(), {
           errorMessage: (e as Error).message,
         });
       }

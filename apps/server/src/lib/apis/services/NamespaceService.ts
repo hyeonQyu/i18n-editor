@@ -1,15 +1,18 @@
 import fs from 'fs';
-import { GetNamespaceRequest, GetNamespaceResponse, LanguageCode, PostNamespaceRequest, PostNamespaceResponse } from 'i18n-editor-common';
-import { CommonNamespaceRequest } from 'i18n-editor-common/lib/defines/api/models/namespace/_common';
 import {
+  CommonNamespaceRequest,
+  GetNamespaceRequest,
+  GetNamespaceResponse,
+  KeyValuePair,
+  LanguageCode,
   NamespaceContent,
+  PostNamespaceRequest,
+  PostNamespaceResponse,
   Translation,
   TranslationKey,
   TranslationValue,
   TranslationValueByLanguageCode,
-} from 'i18n-editor-common/lib/defines/translation';
-import { KeyValuePair } from '../../../../../client/src/deprecated/defines';
-import { createService } from '../../utils/createService';
+} from 'i18n-editor-common';
 import { createFileWhenNotExist, readFile, writeFile } from '../../utils/file';
 import { getLanguageCodes } from '../../utils/locale';
 
@@ -116,7 +119,7 @@ const getLanguageCodesByLocaleDirectoryPath = async (localeDirectoryPath: string
   return languageCodes;
 };
 
-const namespaceService = createService({
+const namespaceService = {
   async getNamespace(req: GetNamespaceRequest): Promise<GetNamespaceResponse> {
     const languageCodes = await getLanguageCodesByLocaleDirectoryPath(req.localeDirectoryPath);
     const translations = await getTranslations(req, languageCodes);
@@ -141,6 +144,6 @@ const namespaceService = createService({
       }),
     );
   },
-});
+};
 
 export default namespaceService;
