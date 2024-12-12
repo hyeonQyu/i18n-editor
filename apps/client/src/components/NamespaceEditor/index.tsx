@@ -5,13 +5,13 @@ import NamespaceEditorTable from '@components/NamespaceEditor/components/Namespa
 import NamespaceEditorTableBody from '@components/NamespaceEditor/components/NamespaceEditorTableBody';
 import NamespaceEditorTableHead from '@components/NamespaceEditor/components/NamespaceEditorTableHead';
 import useEditorColumns from '@components/NamespaceEditor/hooks/useEditorColumns';
-import useEditorRows from '@components/NamespaceEditor/hooks/useEditorRows';
 import RowIndexProvider from '@components/NamespaceEditor/providers/RowIndexProvider';
+import useNamespaceToRows from '@components/NamespaceEditor/providers/RowsProvider/hooks/useNamespaceToRows';
 import { Paper, TableRow } from '@mui/material';
 import { TableVirtuoso } from 'react-virtuoso';
 
 function NamespaceEditor() {
-  const rows = useEditorRows();
+  const rows = useNamespaceToRows();
   const columns = useEditorColumns();
 
   return (
