@@ -1,11 +1,11 @@
-import useNamespaces from '@components/NamespaceSelector/hooks/useNamespaces';
+import useLocaleNamespaces from '@hooks/namespace/useLocaleNamespaces';
 import { debounce } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 
 function useNamespaceDuplicated(namespace: string) {
   const [duplicated, setDuplicated] = useState(false);
 
-  const namespaces = useNamespaces();
+  const namespaces = useLocaleNamespaces();
 
   const debounceCheckDuplicated = useMemo(
     () =>
