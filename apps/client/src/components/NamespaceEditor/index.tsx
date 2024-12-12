@@ -3,8 +3,8 @@ import NamespaceEditorScroller from '@components/NamespaceEditor/components/Name
 import NamespaceEditorTable from '@components/NamespaceEditor/components/NamespaceEditorTable';
 import NamespaceEditorTableBody from '@components/NamespaceEditor/components/NamespaceEditorTableBody';
 import NamespaceEditorTableHead from '@components/NamespaceEditor/components/NamespaceEditorTableHead';
+import useEditorRows from '@components/NamespaceEditor/hooks/useEditorRows';
 import RowIndexProvider from '@components/NamespaceEditor/providers/RowIndexProvider';
-import useNamespace from '@hooks/namespace/useNamespace';
 import { Paper, TableCell, TableRow } from '@mui/material';
 import { LanguageCode } from 'i18n-editor-common';
 import { TableVirtuoso } from 'react-virtuoso';
@@ -18,7 +18,7 @@ interface ColumnData {
 }
 
 function NamespaceEditor() {
-  const a = useNamespace();
+  const rows = useEditorRows();
 
   const columns: ColumnData[] = [
     {
@@ -35,32 +35,32 @@ function NamespaceEditor() {
     },
   ];
 
-  const rows: RowData[] = [
-    {
-      key: 'KEY1',
-      ko: '한국어1',
-      en: '영어1',
-      ja: '일본어1',
-    },
-    {
-      key: 'KEY2',
-      ko: '한국어2',
-      en: '영어2',
-      ja: '일본어2',
-    },
-    {
-      key: 'KEY3',
-      ko: '한국어3',
-      en: '영어3',
-      ja: '일본어3',
-    },
-    {
-      key: 'KEY4',
-      ko: '한국어4',
-      en: '영어4',
-      ja: '일본어4',
-    },
-  ];
+  // const rows: RowData[] = [
+  //   {
+  //     key: 'KEY1',
+  //     ko: '한국어1',
+  //     en: '영어1',
+  //     ja: '일본어1',
+  //   },
+  //   {
+  //     key: 'KEY2',
+  //     ko: '한국어2',
+  //     en: '영어2',
+  //     ja: '일본어2',
+  //   },
+  //   {
+  //     key: 'KEY3',
+  //     ko: '한국어3',
+  //     en: '영어3',
+  //     ja: '일본어3',
+  //   },
+  //   {
+  //     key: 'KEY4',
+  //     ko: '한국어4',
+  //     en: '영어4',
+  //     ja: '일본어4',
+  //   },
+  // ];
 
   return (
     <Paper style={{ height: '100%', padding: '36px' }}>
