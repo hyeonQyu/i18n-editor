@@ -1,0 +1,26 @@
+import NamespaceEditorCell from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorItemContent/components/NamespaceEditorCell';
+import { RowData } from '@components/NamespaceEditor/defines/table';
+import { useColumns } from '@components/NamespaceEditor/providers/ColumnProvider';
+import RowIndexProvider from '@components/NamespaceEditor/providers/RowIndexProvider';
+
+interface NamespaceEditorItemContentProps {
+  rowIndex: number;
+  row: RowData;
+}
+
+function NamespaceEditorItemContent(props: NamespaceEditorItemContentProps) {
+  const { rowIndex, row } = props;
+
+  const columns = useColumns();
+
+  return (
+    <RowIndexProvider rowIndex={rowIndex}>
+      {columns.map(({ label }) => {
+        const value = row[label]!;
+        return <NamespaceEditorCell key={value} defaultValue={value} isKey={label === 'key'} />;
+      })}
+    </RowIndexProvider>
+  );
+}
+
+export default NamespaceEditorItemContent;
