@@ -4,7 +4,7 @@ import NamespaceEditorScroller from '@components/NamespaceEditor/components/Name
 import NamespaceEditorTable from '@components/NamespaceEditor/components/NamespaceEditorTable';
 import NamespaceEditorTableBody from '@components/NamespaceEditor/components/NamespaceEditorTableBody';
 import NamespaceEditorTableHead from '@components/NamespaceEditor/components/NamespaceEditorTableHead';
-import useEditorColumns from '@components/NamespaceEditor/hooks/useEditorColumns';
+import useNamespaceToColumns from '@components/NamespaceEditor/providers/ColumnProvider/hooks/useNamespaceToColumns';
 import RowIndexProvider from '@components/NamespaceEditor/providers/RowIndexProvider';
 import useNamespaceToRows from '@components/NamespaceEditor/providers/RowsProvider/hooks/useNamespaceToRows';
 import { Paper, TableRow } from '@mui/material';
@@ -12,7 +12,7 @@ import { TableVirtuoso } from 'react-virtuoso';
 
 function NamespaceEditor() {
   const rows = useNamespaceToRows();
-  const columns = useEditorColumns();
+  const columns = useNamespaceToColumns();
 
   return (
     <Paper style={{ height: '100%', padding: '36px' }}>

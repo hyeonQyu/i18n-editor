@@ -9,3 +9,4 @@ export interface ColumnData {
 }
 
 export const EMPTY_ROWS: RowData[] = [];
+export const EMPTY_COLUMNS: ColumnData[] = [];
