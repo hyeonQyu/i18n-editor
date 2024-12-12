@@ -7,16 +7,7 @@ import useEditorColumns from '@components/NamespaceEditor/hooks/useEditorColumns
 import useEditorRows from '@components/NamespaceEditor/hooks/useEditorRows';
 import RowIndexProvider from '@components/NamespaceEditor/providers/RowIndexProvider';
 import { Paper, TableCell, TableRow } from '@mui/material';
-import { LanguageCode } from 'i18n-editor-common';
 import { TableVirtuoso } from 'react-virtuoso';
-
-type RowData = {
-  key: string;
-} & Partial<Record<LanguageCode, string>>;
-
-interface ColumnData {
-  label: keyof RowData;
-}
 
 function NamespaceEditor() {
   const rows = useEditorRows();
