@@ -1,5 +1,9 @@
-import { HEADER_HEIGHT } from '@components/Layout/components/defines/size';
 import Header from '@components/Layout/components/Header';
+import Main from '@components/Layout/components/Main';
+import Sidebar from '@components/Layout/components/Sidebar';
+import { HEADER_HEIGHT } from '@components/Layout/defines/size';
+import { SIDEBAR_TRANSITION_DURATION } from '@components/Layout/defines/transitions';
+import useCurrentSidebarWidth from '@components/Layout/hooks/useCurrentSidebarWidth';
 import { Box } from '@mui/material';
 import { ReactNode } from 'react';
 
@@ -9,6 +13,8 @@ interface LayoutProps {
 
 function Layout(props: LayoutProps) {
   const { children } = props;
+
+  const sidebarWidth = useCurrentSidebarWidth();
 
   return (
     <Box
@@ -21,16 +27,17 @@ function Layout(props: LayoutProps) {
       <Header />
 
       <Box
-        component={'main'}
         sx={{
           flexGrow: 1,
           overflow: 'auto',
           marginTop: `${HEADER_HEIGHT}px`,
           display: 'flex',
-          flexDirection: 'column',
+          transition: `margin-left ${SIDEBAR_TRANSITION_DURATION}s ease`,
+          marginLeft: `${sidebarWidth}px`,
         }}
       >
-        {children}
+        <Sidebar />
+        <Main>{children}</Main>
       </Box>
     </Box>
   );
