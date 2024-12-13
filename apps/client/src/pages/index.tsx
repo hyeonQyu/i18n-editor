@@ -1,6 +1,4 @@
 import DirectorySelector from '@components/DirectorySelector';
-import NamespaceEditor from '@components/NamespaceEditor';
-import NamespaceSelector from '@components/NamespaceSelector';
 import { SELECTOR_MAX_WIDTH } from '@defines/styles';
 import { Box } from '@mui/material';
 
@@ -19,10 +17,10 @@ function HomePage() {
         }}
       >
         <DirectorySelector />
-        <NamespaceSelector />
+        {/*<NamespaceSelector />*/}
       </Box>
 
-      <NamespaceEditor />
+      {/*<NamespaceEditor />*/}
     </Box>
   );
 }

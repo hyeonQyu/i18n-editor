@@ -2,7 +2,7 @@ import useOpenNativeFileManager from '@hooks/useOpenNativeFileManager';
 import useOS from '@hooks/useOS';
 import { FolderOpen } from '@mui/icons-material';
 import { Button, Tooltip } from '@mui/material';
-import { useGlobalStore } from '@stores/globalStore';
+import { useWorkspaceStore } from '@stores/workspace';
 import { OS } from 'i18n-editor-common';
 
 const getFileManagerNameByOS = (os: OS | undefined) => {
@@ -17,7 +17,7 @@ const getFileManagerNameByOS = (os: OS | undefined) => {
 };
 
 function OpenNativeFileManagerButton() {
-  const path = useGlobalStore(({ path }) => path);
+  const path = useWorkspaceStore(({ path }) => path);
 
   const os = useOS();
 

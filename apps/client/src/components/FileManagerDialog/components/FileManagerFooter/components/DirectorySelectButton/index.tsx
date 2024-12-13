@@ -2,12 +2,12 @@ import useFileManagerDialogCloseHandler from '@components/FileManagerDialog/hook
 import { useFileManagerDialogStore } from '@components/FileManagerDialog/stores';
 import useCreateAxiosErrorHandler from '@hooks/useCreateAxiosErrorHandler';
 import { Button } from '@mui/material';
-import { useGlobalStore } from '@stores/globalStore';
+import { useWorkspaceStore } from '@stores/workspace';
 import { HttpStatusCode } from 'axios';
 
 function DirectorySelectButton() {
   const path = useFileManagerDialogStore(({ path }) => path);
-  const setPath = useGlobalStore(({ setPath }) => setPath);
+  const setPath = useWorkspaceStore(({ setPath }) => setPath);
 
   const close = useFileManagerDialogCloseHandler();
 
