@@ -1,8 +1,8 @@
-import FileManagerBody from '@components/DirectorySelector/components/FileManager/components/FileManagerBody';
-import useEntries from '@components/DirectorySelector/components/FileManager/components/FileManagerBody/hooks/useEntries';
-import FileManagerFooter from '@components/DirectorySelector/components/FileManager/components/FileManagerFooter';
-import FileManagerHeader from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader';
 import FileManagerPopover from '@components/DirectorySelector/components/FileManager/components/FileManagerPopover';
+import useEntries from '@components/FileManagerDialog/components/FileManagerBody/hooks/useEntries';
+import FileManagerBody from 'components/FileManagerDialog/components/FileManagerBody';
+import FileManagerFooter from 'components/FileManagerDialog/components/FileManagerFooter';
+import FileManagerHeader from 'components/FileManagerDialog/components/FileManagerHeader';
 
 function FileManager() {
   const entries = useEntries();

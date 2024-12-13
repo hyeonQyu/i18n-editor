@@ -1,3 +1,4 @@
+import FileManagerDialog from '@components/FileManagerDialog';
 import Layout from '@components/Layout';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -21,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ThemeProvider>
             <Layout>
               <Component {...pageProps} />
+              <FileManagerDialog />
             </Layout>
             <ReactQueryDevtools />
           </ThemeProvider>
