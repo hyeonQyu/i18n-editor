@@ -1,10 +1,14 @@
-import { TableCell, TextField } from '@mui/material';
+import { Box, TableCell, TextField } from '@mui/material';
 import { ChangeEventHandler, useState } from 'react';
 
 interface NamespaceEditorCellProps {
   defaultValue: string;
   isKey: boolean;
 }
+
+const createHtmlString = (str: string) => {
+  return str.replace(/_/g, '_<wbr>');
+};
 
 function NamespaceEditorCell(props: NamespaceEditorCellProps) {
   const { isKey, defaultValue } = props;
@@ -17,7 +21,18 @@ function NamespaceEditorCell(props: NamespaceEditorCellProps) {
 
   return (
     <TableCell>
-      {isKey ? defaultValue : <TextField value={value} onChange={handleChange} fullWidth multiline maxRows={8} sx={{ height: '100%' }} />}
+      {isKey ? (
+        <Box
+          sx={{
+            wordBreak: 'break-word',
+            lineHeight: 1.5,
+            fontWeight: 'bold',
+          }}
+          dangerouslySetInnerHTML={{ __html: createHtmlString(defaultValue) }}
+        />
+      ) : (
+        <TextField value={value} onChange={handleChange} fullWidth multiline maxRows={8} sx={{ height: '100%' }} />
+      )}
     </TableCell>
   );
 }
