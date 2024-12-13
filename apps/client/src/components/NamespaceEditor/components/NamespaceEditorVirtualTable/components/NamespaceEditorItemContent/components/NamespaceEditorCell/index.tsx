@@ -31,7 +31,7 @@ function NamespaceEditorCell(props: NamespaceEditorCellProps) {
           dangerouslySetInnerHTML={{ __html: createHtmlString(defaultValue) }}
         />
       ) : (
-        <TextField value={value} onChange={handleChange} fullWidth multiline maxRows={8} sx={{ height: '100%' }} />
+        <TextField value={value} onChange={handleChange} fullWidth multiline maxRows={8} />
       )}
     </TableCell>
   );
