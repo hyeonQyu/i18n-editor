@@ -2,6 +2,7 @@ import { Express } from 'express';
 import ConfigController from '../apis/controllers/ConfigController';
 import FileSystemController from '../apis/controllers/FileSystemController';
 import NamespaceController from '../apis/controllers/NamespaceController';
+import WorkspaceController from '../apis/controllers/WorkspaceController';
 import BaseController from './BaseController';
 
 const CONTROLLER_MAP = {
@@ -12,6 +13,10 @@ const CONTROLLER_MAP = {
   fileSystem: {
     path: '/file-system',
     constructor: FileSystemController,
+  },
+  workspace: {
+    path: '/workspace',
+    constructor: WorkspaceController,
   },
   namespace: {
     path: '/namespace',
@@ -25,8 +30,8 @@ const CONTROLLER_MAP = {
   }
 >;
 
-export const startResponse = (server: Express) => {
-  Object.values(CONTROLLER_MAP).forEach(({ path, constructor }) => {
-    new constructor(path, server).start();
-  });
+export const startResponse = async (server: Express) => {
+  for (const { path, constructor } of Object.values(CONTROLLER_MAP)) {
+    await new constructor(path, server).start();
+  }
 };

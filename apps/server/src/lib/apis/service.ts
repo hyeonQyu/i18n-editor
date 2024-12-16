@@ -30,7 +30,7 @@ import {
 } from 'i18n-editor-common';
 import { PostContentRowReq, PostContentRowRes } from 'i18n-editor-common/lib/defines/models';
 import { ServiceCache } from '../defines/types';
-import { ConfigUtil } from '../utils/configUtil';
+// import { ConfigUtil } from '../utils/configUtil';
 import { ContentUtil } from '../utils/contentUtil';
 import { FileSystemManager } from '../utils/fileSystemManager';
 
@@ -46,8 +46,8 @@ export namespace Service {
    * 설정 불러오기
    */
   export function getConfig(): GetConfigRes {
-    const config = ConfigUtil.read();
-    return { status: 200, data: { config } };
+    // const config = ConfigUtil.read();
+    return { status: 200, data: { config: { workspaces: [] } } };
   }
 
   /**
@@ -135,7 +135,7 @@ export namespace Service {
       console.log('valid locale directory');
       console.log(files);
 
-      ConfigUtil.write({ localeDirectoryPath: path });
+      // ConfigUtil.write({ localeDirectoryPath: path });
 
       return { status: 200, data: { files } };
     });
