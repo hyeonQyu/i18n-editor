@@ -24,6 +24,10 @@ export default class FileSystemAPI extends BaseAPI {
     return this.axiosInstance.post(this.getUrl('/file-manager'), req);
   };
 
+  /**
+   * @deprecated
+   * @param req
+   */
   public getFileSystemLocale: AxiosRequestFunction<GetFileSystemLocaleRequest, GetFileSystemLocaleResponse> = (req) => {
     return this.axiosInstance.get(this.getUrl('/locale'), { params: req });
   };

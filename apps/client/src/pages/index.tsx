@@ -1,6 +1,6 @@
 import StartView from '@components/StartView';
-import useLastWorkedWorkspace from '@hooks/config/useLastWorkedWorkspace';
 import { Box, CircularProgress } from '@mui/material';
+import { useLastWorkedWorkspace } from '@providers/LastWorkedWorkspaceProvider';
 
 function HomePage() {
   const loading = false;

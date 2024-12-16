@@ -8,7 +8,7 @@ import {
   PutWorkspaceParams,
   PutWorkspaceRequest,
   PutWorkspaceResponse,
-} from 'i18n-editor-common/lib/defines/api/models/worksapce';
+} from 'i18n-editor-common';
 import { ControllerMethod } from '../../defines/api';
 import BaseController from '../../utils/BaseController';
 import workspaceService from '../services/WorkspaceService';

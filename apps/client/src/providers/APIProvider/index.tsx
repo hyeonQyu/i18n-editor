@@ -1,6 +1,7 @@
 import ConfigAPI from '@apis/config';
 import FileSystemAPI from '@apis/file-system';
 import NamespaceAPI from '@apis/namespace';
+import WorkspaceAPI from '@apis/workspace';
 import axios, { AxiosInstance } from 'axios';
 import { DEFAULT_APP_CONFIG, readServerPort, ResponseEntity } from 'i18n-editor-common';
 import { identity } from 'lodash';
@@ -9,6 +10,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 interface API {
   config: ConfigAPI;
   fileSystem: FileSystemAPI;
+  workspace: WorkspaceAPI;
   namespace: NamespaceAPI;
 }
 
@@ -19,6 +21,7 @@ const createAPI = (axiosInstance: AxiosInstance): API => {
   return {
     config: new ConfigAPI(axiosInstance, '/config'),
     fileSystem: new FileSystemAPI(axiosInstance, '/file-system'),
+    workspace: new WorkspaceAPI(axiosInstance, '/workspace'),
     namespace: new NamespaceAPI(axiosInstance, '/namespace'),
   };
 };

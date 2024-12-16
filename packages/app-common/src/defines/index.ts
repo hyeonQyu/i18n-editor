@@ -10,3 +10,4 @@ export * from './os';
 export * from './time';
 export * from './translation';
 export * from './types';
+export * from './workspace';
