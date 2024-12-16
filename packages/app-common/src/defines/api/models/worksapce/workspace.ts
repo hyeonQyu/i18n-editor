@@ -1,9 +1,9 @@
 import { EditorConfig } from '../../../config';
 import { Workspace } from '../../../workspace';
 
-export type GetWorkspaceRequest = void;
+export type GetWorkspacesRequest = void;
 
-export interface GetWorkspaceResponse {
+export interface GetWorkspacesResponse {
   workspaces: EditorConfig['workspaces'];
 }
 
@@ -20,3 +20,11 @@ export interface PutWorkspaceParams {
 }
 
 export type PutWorkspaceResponse = void;
+
+export interface GetWorkspaceRequest {
+  path: string;
+}
+
+export interface GetWorkspaceResponse {
+  namespaces: string[];
+}

@@ -1,6 +1,8 @@
 import {
   GetWorkspaceRequest,
   GetWorkspaceResponse,
+  GetWorkspacesRequest,
+  GetWorkspacesResponse,
   PostWorkspaceRequest,
   PostWorkspaceResponse,
   PutWorkspaceParams,
@@ -12,11 +14,11 @@ import BaseController from '../../utils/BaseController';
 import workspaceService from '../services/WorkspaceService';
 
 export default class WorkspaceController extends BaseController {
-  private getWorkspace: ControllerMethod<never, GetWorkspaceRequest, GetWorkspaceResponse> = {
+  private getWorkspaces: ControllerMethod<never, GetWorkspacesRequest, GetWorkspacesResponse> = {
     path: '/',
     method: 'get',
     handler: async () => {
-      const workspaces = await workspaceService.getWorkspaces();
+      const workspaces = workspaceService.getWorkspaces();
       return { workspaces };
     },
   };
@@ -36,6 +38,15 @@ export default class WorkspaceController extends BaseController {
       const { path } = req.params;
       const { name } = req.body;
       return await workspaceService.updateWorkspace(path, name);
+    },
+  };
+
+  private getWorkspace: ControllerMethod<never, GetWorkspaceRequest, GetWorkspaceResponse> = {
+    path: '/:path',
+    method: 'get',
+    handler: async (req) => {
+      const namespaces = await workspaceService.getWorkspace(req.params.path);
+      return { namespaces };
     },
   };
 }
