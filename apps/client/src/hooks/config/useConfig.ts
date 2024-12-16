@@ -2,6 +2,9 @@ import { QUERY_KEY } from '@defines/reactQuery';
 import { useAPI } from '@providers/APIProvider';
 import { useQuery } from '@tanstack/react-query';
 
+/**
+ * @deprecated
+ */
 function useConfig() {
   const api = useAPI();
 

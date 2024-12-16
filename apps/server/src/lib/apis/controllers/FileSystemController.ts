@@ -29,7 +29,7 @@ export default class FileSystemController extends BaseController {
     },
   };
 
-  private postFileSystemFileManager: ControllerMethod<never, PostFileSystemFileManagerRequest, PostFileSystemFileManagerResponse> = {
+  private postFileSystemFileManager: ControllerMethod<PostFileSystemFileManagerRequest, never, PostFileSystemFileManagerResponse> = {
     path: '/file-manager',
     method: 'post',
     handler: async (req) => {
