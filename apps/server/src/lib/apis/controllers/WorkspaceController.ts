@@ -3,6 +3,9 @@ import {
   GetWorkspaceResponse,
   PostWorkspaceRequest,
   PostWorkspaceResponse,
+  PutWorkspaceParams,
+  PutWorkspaceRequest,
+  PutWorkspaceResponse,
 } from 'i18n-editor-common/lib/defines/api/models/worksapce';
 import { ControllerMethod } from '../../defines/api';
 import BaseController from '../../utils/BaseController';
@@ -23,6 +26,16 @@ export default class WorkspaceController extends BaseController {
     method: 'post',
     handler: async (req) => {
       return await workspaceService.createWorkspace(req.body);
+    },
+  };
+
+  private putWorkspace: ControllerMethod<PutWorkspaceRequest, PutWorkspaceParams, PutWorkspaceResponse> = {
+    path: '/:path',
+    method: 'put',
+    handler: async (req) => {
+      const { path } = req.params;
+      const { name } = req.body;
+      return await workspaceService.updateWorkspace(path, name);
     },
   };
 }

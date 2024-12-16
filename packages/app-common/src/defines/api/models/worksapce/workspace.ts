@@ -10,3 +10,13 @@ export interface GetWorkspaceResponse {
 export type PostWorkspaceRequest = Pick<Workspace, 'name' | 'path'>;
 
 export type PostWorkspaceResponse = void;
+
+export interface PutWorkspaceRequest {
+  name: string;
+}
+
+export interface PutWorkspaceParams {
+  path: string;
+}
+
+export type PutWorkspaceResponse = void;
