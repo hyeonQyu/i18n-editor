@@ -1,6 +1,6 @@
 import { create } from 'zustand/react';
 
-interface Workspace {
+export interface Workspace {
   name: string;
   path: string;
 }

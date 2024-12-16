@@ -1,26 +1,46 @@
-import DirectorySelector from '@components/DirectorySelector';
-import { SELECTOR_MAX_WIDTH } from '@defines/styles';
-import { Box } from '@mui/material';
+import StartView from '@components/StartView';
+import useLastWorkedWorkspace from '@hooks/config/useLastWorkedWorkspace';
+import { Box, CircularProgress } from '@mui/material';
 
 function HomePage() {
-  return (
-    <Box sx={{ height: '100%' }}>
+  const loading = false;
+
+  const lastWorkedWorkspace = useLastWorkedWorkspace();
+
+  if (loading) {
+    return (
       <Box
         sx={{
-          width: '100%',
-          maxWidth: `${SELECTOR_MAX_WIDTH}px`,
-          margin: '0 auto',
-          padding: '80px 0',
+          height: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          gap: '36px',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <DirectorySelector />
-        {/*<NamespaceSelector />*/}
+        <CircularProgress />
       </Box>
+    );
+  }
 
-      {/*<NamespaceEditor />*/}
+  return (
+    <Box sx={{ height: '100%' }}>
+      {lastWorkedWorkspace ? <></> : <StartView />}
+      {/*<Box*/}
+      {/*  sx={{*/}
+      {/*    width: '100%',*/}
+      {/*    maxWidth: `${SELECTOR_MAX_WIDTH}px`,*/}
+      {/*    margin: '0 auto',*/}
+      {/*    padding: '80px 0',*/}
+      {/*    display: 'flex',*/}
+      {/*    flexDirection: 'column',*/}
+      {/*    gap: '36px',*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <DirectorySelector />*/}
+      {/*  /!*<NamespaceSelector />*!/*/}
+      {/*</Box>*/}
+
+      {/*/!*<NamespaceEditor />*!/*/}
     </Box>
   );
 }
