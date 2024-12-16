@@ -1,7 +1,7 @@
-import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import GTranslateIcon from '@mui/icons-material/GTranslate';
-import { Box, Button, Paper, Typography, useTheme } from '@mui/material';
+import { Box, Paper, Typography, useTheme } from '@mui/material';
 import { grey } from '@mui/material/colors';
+import WorkspaceSelectButton from 'components/StartView/components/WorkspaceSelectButton';
 
 function StartView() {
   const {
@@ -56,23 +56,7 @@ function StartView() {
         <Typography variant={'body1'} color={grey[600]}>
           번역 디렉토리를 선택하여 새로운 워크스페이스를 생성하세요
         </Typography>
-        <Button
-          variant={'contained'}
-          sx={{
-            display: 'flex',
-            borderRadius: '8px',
-            width: '300px',
-            height: '56px',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '16px',
-          }}
-        >
-          <Typography variant={'body1'} color={'white'}>
-            디렉토리 선택하고 시작
-          </Typography>
-          <CreateNewFolderIcon sx={{ fontSize: 32, color: 'white' }} />
-        </Button>
+        <WorkspaceSelectButton />
       </Box>
     </Paper>
   );
