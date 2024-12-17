@@ -33,8 +33,8 @@ function EllipsisText(props: EllipsisTextProps) {
 
           [`&.${CLASSNAME.single}`]: {
             whiteSpace: 'nowrap',
-            direction: reverse ? 'rtl' : 'ltr', // 말줄임표 위치 조정
-            textAlign: reverse ? 'left' : 'inherit', // 텍스트 정렬 조정
+            direction: reverse ? 'rtl' : 'ltr',
+            textAlign: reverse ? 'left' : 'inherit',
           },
 
           [`&.${CLASSNAME.multi}`]: {
