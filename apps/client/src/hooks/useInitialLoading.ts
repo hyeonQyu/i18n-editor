@@ -1,10 +1,8 @@
-import { QUERY_KEY } from '@defines/reactQuery';
-import { useQueryClient } from '@tanstack/react-query';
+import useQueryGetWorkspaces from '@hooks/workspace/useQueryGetWorkspaces';
 
 function useInitialLoading() {
-  const queryClient = useQueryClient();
-
-  return !queryClient.getQueryData(QUERY_KEY.workspace.getWorkspaces());
+  const { data, isLoading } = useQueryGetWorkspaces();
+  return !data || isLoading;
 }
 
 export default useInitialLoading;
