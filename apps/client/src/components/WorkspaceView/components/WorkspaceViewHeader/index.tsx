@@ -12,16 +12,6 @@ function WorkspaceViewHeader() {
     >
       <WorkspaceTitle />
       <WorkspaceMenu />
-      {/*<Box*/}
-      {/*  sx={{*/}
-      {/*    display: 'flex',*/}
-      {/*    gap: '12px',*/}
-      {/*    alignItems: 'center',*/}
-      {/*    justifyContent: 'end',*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <WorkspaceDirectoryPathCopyButton />*/}
-      {/*</Box>*/}
     </Box>
   );
 }
