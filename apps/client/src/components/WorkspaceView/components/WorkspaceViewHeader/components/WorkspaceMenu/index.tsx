@@ -5,7 +5,7 @@ import DirectoryPathCopyButton from 'components/WorkspaceView/components/Workspa
 
 function WorkspaceMenu() {
   return (
-    <Box sx={{ display: 'flex', gap: '8px' }}>
+    <Box sx={{ display: 'flex', gap: '8px', minWidth: 'fit-content' }}>
       <DirectoryChangeButton />
       <DirectoryPathCopyButton />
       <NativeFileManagerOpenButton />
