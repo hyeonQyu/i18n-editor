@@ -2,16 +2,16 @@ import useInitialPath from '@hooks/file-system/useInitialPath';
 import useOpenFileManagerDialog from '@hooks/useOpenFileManagerDialog';
 import AddIcon from '@mui/icons-material/Add';
 import { IconButton, Tooltip } from '@mui/material';
-import { useLastWorkedWorkspace } from '@providers/LastWorkedWorkspaceProvider';
+import { useWorkspace } from 'providers/WorkspaceProvider';
 
 function WorkspaceAddButton() {
   const openFileManagerDialog = useOpenFileManagerDialog();
 
-  const lastWorkedWorkspace = useLastWorkedWorkspace();
+  const workspace = useWorkspace();
 
   const initialPath = useInitialPath();
 
-  const handleClick = () => openFileManagerDialog(lastWorkedWorkspace?.path ?? initialPath);
+  const handleClick = () => openFileManagerDialog(workspace?.path ?? initialPath);
 
   return (
     <Tooltip title={'워크스페이스 추가'}>

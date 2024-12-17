@@ -1,12 +1,13 @@
 import StartView from '@components/StartView';
+import WorkspaceView from '@components/WorkspaceView';
 import useInitialLoading from '@hooks/useInitialLoading';
 import { Box, CircularProgress } from '@mui/material';
-import { useLastWorkedWorkspace } from '@providers/LastWorkedWorkspaceProvider';
+import { useWorkspace } from 'providers/WorkspaceProvider';
 
 function HomePage() {
   const loading = useInitialLoading();
 
-  const lastWorkedWorkspace = useLastWorkedWorkspace();
+  const workspace = useWorkspace();
 
   if (loading) {
     return (
@@ -25,7 +26,7 @@ function HomePage() {
 
   return (
     <Box sx={{ height: '100%' }}>
-      {lastWorkedWorkspace ? <></> : <StartView />}
+      {workspace ? <WorkspaceView /> : <StartView />}
       {/*<Box*/}
       {/*  sx={{*/}
       {/*    width: '100%',*/}
