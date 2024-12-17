@@ -8,6 +8,7 @@ interface EllipsisTextProps {
   maxLines?: number;
   className?: string;
   sx?: SxProps;
+  reverse?: boolean;
 }
 
 const CLASSNAME = {
@@ -16,7 +17,7 @@ const CLASSNAME = {
 };
 
 function EllipsisText(props: EllipsisTextProps) {
-  const { label, variant, maxLines = 1, className, sx } = props;
+  const { label, variant, maxLines = 1, className, sx, reverse } = props;
 
   const lineClassName = maxLines === 1 ? CLASSNAME.single : CLASSNAME.multi;
 
@@ -32,6 +33,8 @@ function EllipsisText(props: EllipsisTextProps) {
 
         [`&.${CLASSNAME.single}`]: {
           whiteSpace: 'nowrap',
+          direction: reverse ? 'rtl' : 'ltr', // 말줄임표 위치 조정
+          textAlign: reverse ? 'left' : 'inherit', // 텍스트 정렬 조정
         },
 
         [`&.${CLASSNAME.multi}`]: {
