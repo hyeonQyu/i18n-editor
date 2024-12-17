@@ -1,4 +1,4 @@
-import { SxProps, Typography } from '@mui/material';
+import { SxProps, Tooltip, Typography } from '@mui/material';
 import { TypographyProps } from '@mui/material/Typography/Typography';
 import classNames from 'classnames';
 
@@ -22,32 +22,33 @@ function EllipsisText(props: EllipsisTextProps) {
   const lineClassName = maxLines === 1 ? CLASSNAME.single : CLASSNAME.multi;
 
   return (
-    <Typography
-      variant={variant}
-      title={label}
-      className={classNames(lineClassName, className)}
-      sx={{
-        textOverflow: 'ellipsis',
-        overflow: 'hidden',
-        width: '100%',
+    <Tooltip title={label}>
+      <Typography
+        variant={variant}
+        className={classNames(lineClassName, className)}
+        sx={{
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+          width: '100%',
 
-        [`&.${CLASSNAME.single}`]: {
-          whiteSpace: 'nowrap',
-          direction: reverse ? 'rtl' : 'ltr', // 말줄임표 위치 조정
-          textAlign: reverse ? 'left' : 'inherit', // 텍스트 정렬 조정
-        },
+          [`&.${CLASSNAME.single}`]: {
+            whiteSpace: 'nowrap',
+            direction: reverse ? 'rtl' : 'ltr', // 말줄임표 위치 조정
+            textAlign: reverse ? 'left' : 'inherit', // 텍스트 정렬 조정
+          },
 
-        [`&.${CLASSNAME.multi}`]: {
-          display: '-webkit-box',
-          WebkitBoxOrient: 'vertical',
-          WebkitLineClamp: maxLines,
-        },
+          [`&.${CLASSNAME.multi}`]: {
+            display: '-webkit-box',
+            WebkitBoxOrient: 'vertical',
+            WebkitLineClamp: maxLines,
+          },
 
-        ...sx,
-      }}
-    >
-      {label}
-    </Typography>
+          ...sx,
+        }}
+      >
+        {label}
+      </Typography>
+    </Tooltip>
   );
 }
 
