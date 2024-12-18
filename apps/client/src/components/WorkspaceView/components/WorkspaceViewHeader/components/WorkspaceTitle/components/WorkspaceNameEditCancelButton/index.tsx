@@ -1,11 +1,11 @@
-import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/components/WorkspaceViewHeader/stores';
+import useCancelEditWorkspaceName from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useCancelEditWorkspaceName';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { IconButton } from '@mui/material';
 
 function WorkspaceNameEditCancelButton() {
-  const setNameEditing = useWorkspaceViewHeaderStore(({ setNameEditing }) => setNameEditing);
+  const cancelEdit = useCancelEditWorkspaceName();
 
-  const handleClick = () => setNameEditing(false);
+  const handleClick = () => cancelEdit();
 
   return (
     <IconButton aria-label={'cancel edit workspace name'} size={'medium'} onClick={handleClick}>

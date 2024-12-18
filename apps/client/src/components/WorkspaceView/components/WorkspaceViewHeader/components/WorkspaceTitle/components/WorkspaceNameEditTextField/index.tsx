@@ -1,22 +1,18 @@
+import useCancelEditWorkspaceName from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useCancelEditWorkspaceName';
 import useUpdateWorkspaceName from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useUpdateWorkspaceName';
 import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/components/WorkspaceViewHeader/stores';
 import { TextField, useTheme } from '@mui/material';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import { ChangeEventHandler, KeyboardEventHandler, useEffect } from 'react';
 
-interface WorkspaceNameEditTextFieldProps {
-  defaultWidth: number;
-}
-
-function WorkspaceNameEditTextField(props: WorkspaceNameEditTextFieldProps) {
-  const { defaultWidth } = props;
-
+function WorkspaceNameEditTextField() {
   const workspace = useWorkspace();
 
   const editingName = useWorkspaceViewHeaderStore(({ editingName }) => editingName);
   const setEditingName = useWorkspaceViewHeaderStore(({ setEditingName }) => setEditingName);
 
-  const updateWorkspaceName = useUpdateWorkspaceName();
+  const updateName = useUpdateWorkspaceName();
+  const cancelEdit = useCancelEditWorkspaceName();
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEditingName(e.target.value);
@@ -25,7 +21,9 @@ function WorkspaceNameEditTextField(props: WorkspaceNameEditTextFieldProps) {
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = async (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      await updateWorkspaceName();
+      await updateName();
+    } else if (e.key === 'Escape') {
+      cancelEdit();
     }
   };
 
@@ -45,13 +43,13 @@ function WorkspaceNameEditTextField(props: WorkspaceNameEditTextFieldProps) {
       value={editingName}
       onChange={handleChange}
       autoFocus
+      fullWidth
       InputProps={{
         sx: {
           fontSize,
           fontWeight,
           lineHeight,
           letterSpacing,
-          width: `${defaultWidth}px`,
 
           '& input': {
             padding: 0,
