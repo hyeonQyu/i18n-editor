@@ -20,7 +20,7 @@ function WorkspaceList() {
       <SidebarMenuTitle>workspace</SidebarMenuTitle>
 
       <SidebarMenuList>
-        {workspaces.map(({ id, name, path }) => (
+        {workspaces.map(({ id, name }) => (
           <SidebarMenuListItem
             key={id}
             menuItems={[

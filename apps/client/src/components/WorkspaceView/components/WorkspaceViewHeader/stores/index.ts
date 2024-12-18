@@ -8,7 +8,7 @@ interface WorkspaceViewHeaderStore {
   setEditingName: (name: string) => void;
 }
 
-export const useWorkspaceViewHeaderStore = create<WorkspaceViewHeaderStore>((set, get) => ({
+export const useWorkspaceViewHeaderStore = create<WorkspaceViewHeaderStore>((set) => ({
   isNameEditing: false,
   editingName: '',
 
