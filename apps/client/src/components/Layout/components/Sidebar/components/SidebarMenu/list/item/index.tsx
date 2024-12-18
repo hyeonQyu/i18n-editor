@@ -67,7 +67,10 @@ function SidebarMenuListItem(props: SidebarMenuListItemProps) {
                 display: 'flex',
                 gap: '12px',
               }}
-              onClick={onClick}
+              onClick={(e) => {
+                onClick(e);
+                handleClose();
+              }}
             >
               <IconComponent sx={{ color }} fontSize={'small'} />
               <Typography variant={'body2'} sx={{ color }}>
