@@ -32,20 +32,19 @@ export default class WorkspaceController extends BaseController {
   };
 
   private putWorkspace: ControllerMethod<PutWorkspaceRequest, PutWorkspaceParams, PutWorkspaceResponse> = {
-    path: '/:path',
+    path: '/:id',
     method: 'put',
     handler: async (req) => {
-      const { path } = req.params;
-      const { name } = req.body;
-      return await workspaceService.updateWorkspace(path, name);
+      const { id } = req.params;
+      return await workspaceService.updateWorkspace(id, req.body);
     },
   };
 
   private getWorkspace: ControllerMethod<never, GetWorkspaceRequest, GetWorkspaceResponse> = {
-    path: '/:path',
+    path: '/:id',
     method: 'get',
     handler: async (req) => {
-      const namespaces = await workspaceService.getWorkspace(req.params.path);
+      const namespaces = await workspaceService.getWorkspace(req.params.id);
       return { namespaces };
     },
   };

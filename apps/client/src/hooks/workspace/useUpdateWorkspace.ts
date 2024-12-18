@@ -1,23 +1,23 @@
-import { MUTATION_KEY } from '@defines/reactQuery';
 import useInvalidateGetWorkspacesQuery from '@hooks/workspace/useInvalidateGetWorkspacesQuery';
 import { useAPI } from '@providers/APIProvider';
 import { useMutation } from '@tanstack/react-query';
-import { PostWorkspaceRequest } from 'i18n-editor-common';
+import { PutWorkspaceParams, PutWorkspaceRequest } from 'i18n-editor-common';
 
-function useCreateWorkspace() {
+type Request = PutWorkspaceRequest & PutWorkspaceParams;
+
+function useUpdateWorkspace() {
   const api = useAPI();
 
   const invalidateWorkspaces = useInvalidateGetWorkspacesQuery();
 
   const { mutateAsync } = useMutation({
-    mutationKey: MUTATION_KEY.workspace.postWorkspace(),
-    mutationFn: async (req: PostWorkspaceRequest) => (await api.workspace.postWorkspace(req)).data,
+    mutationFn: async (req: Request) => (await api.workspace.putWorkspace(req)).data,
   });
 
-  return async (req: PostWorkspaceRequest) => {
+  return async (req: Request) => {
     await mutateAsync(req);
     await invalidateWorkspaces();
   };
 }
 
-export default useCreateWorkspace;
+export default useUpdateWorkspace;

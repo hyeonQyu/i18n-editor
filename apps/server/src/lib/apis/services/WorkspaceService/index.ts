@@ -1,4 +1,4 @@
-import { EXTENSIONS_SUFFIX, removeExtension, Workspace } from 'i18n-editor-common';
+import { EXTENSIONS_SUFFIX, generateUniqueID, removeExtension, Workspace } from 'i18n-editor-common';
 import { createTimestamp } from 'i18n-editor-common/lib/utils/time';
 import { BadRequestError, NotFoundError } from '../../../defines/errors';
 import { getFileNames } from '../../../utils/file';
@@ -19,21 +19,27 @@ const createWorkspace = async ({ name, path }: Pick<Workspace, 'name' | 'path'>)
     workspaces.splice(existingWorkspaceIndex, 1);
   }
 
-  workspaces.push({ name, path, lastOpenedAt: createTimestamp() });
+  workspaces.push({ id: generateUniqueID(), name, path, lastOpenedAt: createTimestamp() });
 
   await configService.setWorkspaces(workspaces);
 };
 
-const updateWorkspace = async (path: string, name: string) => {
+const updateWorkspace = async (id: string, workspace: Pick<Workspace, 'name' | 'path'>) => {
   const workspaces = getWorkspaces();
 
-  const existingWorkspaceIndex = workspaces.findIndex((workspace) => workspace.path === path);
+  const existingWorkspaceIndex = workspaces.findIndex((workspace) => workspace.id === id);
 
   if (existingWorkspaceIndex === -1) {
     throw new NotFoundError('Workspace not found');
   }
 
-  workspaces[existingWorkspaceIndex].name = name;
+  const currentWorkspace = workspaces[existingWorkspaceIndex];
+
+  workspaces[existingWorkspaceIndex] = {
+    ...currentWorkspace,
+    ...workspace,
+  };
+
   await configService.setWorkspaces(workspaces);
 };
 
@@ -54,7 +60,16 @@ const getAllNamespaces = async (rootPath: string, languages: string[]) => {
   return Array.from(new Set(jsonFileNames)).map(removeExtension);
 };
 
-const getWorkspace = async (path: string) => {
+const getWorkspace = async (id: string) => {
+  const workspaces = getWorkspaces();
+  const workspace = workspaces.find((workspace) => workspace.id === id);
+
+  if (!workspace) {
+    throw new NotFoundError('Workspace not found');
+  }
+
+  const { path } = workspace;
+
   const languages = await getLanguageCodes(path);
 
   if (languages.length === 0) {
