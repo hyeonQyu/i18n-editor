@@ -2,20 +2,26 @@ import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/component
 import useUpdateWorkspace from '@hooks/workspace/useUpdateWorkspace';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 
-function useUpdateCurrentWorkspaceName() {
+export default function useUpdateCurrentWorkspaceName() {
   const workspace = useWorkspace();
 
   const editingName = useWorkspaceViewHeaderStore(({ editingName }) => editingName);
-  const setNameEditing = useWorkspaceViewHeaderStore(({ setNameEditing }) => setNameEditing);
-
-  const updateWorkspace = useUpdateWorkspace();
+  const setHasError = useWorkspaceViewHeaderStore(({ setHasError }) => setHasError);
+  const setIsNameEditing = useWorkspaceViewHeaderStore(({ setIsNameEditing }) => setIsNameEditing);
+  const updateWorkspaceName = useUpdateWorkspace();
 
   return async () => {
     if (!workspace) return;
 
-    await updateWorkspace({ ...workspace, name: editingName });
-    setNameEditing(false);
+    try {
+      await updateWorkspaceName({
+        ...workspace,
+        name: editingName,
+      });
+      setHasError(false);
+      setIsNameEditing(false);
+    } catch (err) {
+      setHasError(true);
+    }
   };
 }
-
-export default useUpdateCurrentWorkspaceName;

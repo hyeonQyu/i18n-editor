@@ -22,7 +22,7 @@ function WorkspaceTitle() {
     <Box>
       <Box sx={{ display: 'flex', alignItems: 'end', gap: '12px' }}>
         {isNameEditing ? (
-          <WorkspaceNameEditTextField defaultWidth={width} />
+          <WorkspaceNameEditTextField />
         ) : (
           <Typography ref={textRef} variant={'h2'}>
             {workspace?.name}

@@ -3,9 +3,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
 
 function WorkspaceNameEditButton() {
-  const setNameEditing = useWorkspaceViewHeaderStore(({ setNameEditing }) => setNameEditing);
+  const setIsNameEditing = useWorkspaceViewHeaderStore(({ setIsNameEditing }) => setIsNameEditing);
 
-  const handleClick = () => setNameEditing(true);
+  const handleClick = () => setIsNameEditing(true);
 
   return (
     <IconButton aria-label={'edit workspace name'} size={'medium'} onClick={handleClick}>

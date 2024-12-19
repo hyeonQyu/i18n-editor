@@ -2,6 +2,7 @@ import ConfigAPI from '@apis/config';
 import FileSystemAPI from '@apis/file-system';
 import NamespaceAPI from '@apis/namespace';
 import WorkspaceAPI from '@apis/workspace';
+import { enqueueClosableSnackbar } from '@utils/snackbar';
 import axios, { AxiosInstance } from 'axios';
 import { DEFAULT_APP_CONFIG, readServerPort, ResponseEntity } from 'i18n-editor-common';
 import { identity } from 'lodash';
@@ -41,7 +42,11 @@ function APIProvider({ children }: { children: ReactNode }) {
     instance.interceptors.response.use(identity, (error) => {
       const { status, errorMessage } = error.response.data as ResponseEntity<any>;
 
-      // TODO: Implement error handling
+      // 에러 메시지 표시
+      enqueueClosableSnackbar({
+        message: errorMessage,
+        variant: 'error',
+      });
 
       return Promise.reject(error);
     });
