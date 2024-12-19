@@ -8,6 +8,7 @@ export const QUERY_KEY = {
 
   fileSystem: {
     base: ['fileSystem'] as const,
+    getInitialPath: () => [...QUERY_KEY.fileSystem.base, 'getInitialPath'] as const,
     getDirectory: (req: GetFileSystemDirectoryRequest) => [...QUERY_KEY.fileSystem.base, 'getDirectory', req] as const,
   },
 };

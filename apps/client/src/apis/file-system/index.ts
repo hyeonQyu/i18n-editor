@@ -3,6 +3,8 @@ import BaseAPI from '@utils/BaseAPI';
 import {
   GetFileSystemDirectoryRequest,
   GetFileSystemDirectoryResponse,
+  GetFileSystemInitialPathRequest,
+  GetFileSystemInitialPathResponse,
   GetFileSystemLocaleRequest,
   GetFileSystemLocaleResponse,
   PostFileSystemFileManagerRequest,
@@ -10,6 +12,10 @@ import {
 } from 'i18n-editor-common';
 
 export default class FileSystemAPI extends BaseAPI {
+  public getFileSystemInitialPath: AxiosRequestFunction<GetFileSystemInitialPathRequest, GetFileSystemInitialPathResponse> = (req) => {
+    return this.axiosInstance.get(this.getUrl('/initial-path'), { params: req });
+  };
+
   public getFileSystemDirectory: AxiosRequestFunction<GetFileSystemDirectoryRequest, GetFileSystemDirectoryResponse> = (req) => {
     return this.axiosInstance.get(this.getUrl('/directory'), { params: req });
   };
