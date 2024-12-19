@@ -2,17 +2,25 @@ import useWorkspaceNameUpdateDialogClose from '@components/Layout/components/Sid
 import useWorkspaceNameUpdateFormSubmit from '@components/Layout/components/Sidebar/components/WorkspaceList/components/hooks/useWorkspaceNameUpdateFormSubmit';
 import { useWorkspaceNameUpdateStore } from '@components/Layout/components/Sidebar/components/WorkspaceList/stores/nameUpdate';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { ChangeEventHandler } from 'react';
 
 function WorkspaceNameUpdateDialog() {
   const workspace = useWorkspaceNameUpdateStore(({ workspace }) => workspace);
   const newName = useWorkspaceNameUpdateStore(({ newName }) => newName);
   const setNewName = useWorkspaceNameUpdateStore(({ setNewName }) => setNewName);
+  const hasError = useWorkspaceNameUpdateStore(({ hasError }) => hasError);
+  const setHasError = useWorkspaceNameUpdateStore(({ setHasError }) => setHasError);
 
   const opened = Boolean(workspace);
 
   const handleClose = useWorkspaceNameUpdateDialogClose();
 
   const handleSubmit = useWorkspaceNameUpdateFormSubmit();
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setNewName(e.target.value);
+    setHasError(false);
+  };
 
   return (
     <Dialog
@@ -24,7 +32,7 @@ function WorkspaceNameUpdateDialog() {
         onSubmit: handleSubmit,
       }}
     >
-      <DialogTitle>workspace 이름 변경</DialogTitle>
+      <DialogTitle>워크스페이스 이름 변경</DialogTitle>
 
       <DialogContent>
         <TextField
@@ -32,11 +40,12 @@ function WorkspaceNameUpdateDialog() {
           required
           margin={'dense'}
           name={'workspace'}
-          label={'workspace 이름'}
+          label={'워크스페이스 이름'}
           variant={'standard'}
           fullWidth
           value={newName}
-          onChange={(e) => setNewName(e.target.value)}
+          onChange={handleChange}
+          error={hasError}
         />
       </DialogContent>
 

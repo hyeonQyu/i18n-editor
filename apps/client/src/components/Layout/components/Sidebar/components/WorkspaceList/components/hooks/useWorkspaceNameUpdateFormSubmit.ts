@@ -6,6 +6,7 @@ import { FormEventHandler } from 'react';
 function useWorkspaceNameUpdateFormSubmit(): FormEventHandler<HTMLFormElement> {
   const workspace = useWorkspaceNameUpdateStore(({ workspace }) => workspace);
   const newName = useWorkspaceNameUpdateStore(({ newName }) => newName);
+  const setHasError = useWorkspaceNameUpdateStore(({ setHasError }) => setHasError);
 
   const updateWorkspace = useUpdateWorkspace();
 
@@ -16,7 +17,11 @@ function useWorkspaceNameUpdateFormSubmit(): FormEventHandler<HTMLFormElement> {
 
     if (!workspace) return;
 
-    await updateWorkspace({ ...workspace, name: newName });
+    try {
+      await updateWorkspace({ ...workspace, name: newName });
+    } catch (e) {
+      setHasError(true);
+    }
     close();
   };
 }
