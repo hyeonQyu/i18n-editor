@@ -1,5 +1,7 @@
 node_modules
 dist
 .idea
+.vscode
 i18n-editor-config.json
 .yarn/install-state.gz
+.DS_Store
