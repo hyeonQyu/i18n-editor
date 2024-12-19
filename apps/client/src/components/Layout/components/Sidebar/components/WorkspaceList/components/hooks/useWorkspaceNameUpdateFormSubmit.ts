@@ -19,10 +19,10 @@ function useWorkspaceNameUpdateFormSubmit(): FormEventHandler<HTMLFormElement> {
 
     try {
       await updateWorkspace({ ...workspace, name: newName });
+      close();
     } catch (e) {
       setHasError(true);
     }
-    close();
   };
 }
 
