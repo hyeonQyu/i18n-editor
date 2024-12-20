@@ -19,12 +19,14 @@ function FileManagerPopover(props: FileManagerPopoverProps) {
 
   const searchMode = useFileManagerSearchStore(({ searchMode }) => searchMode);
 
+  const handleClose = () => close();
+
   return (
     <Popover
       id={FILE_MANAGER_ID}
       open={opened}
       anchorEl={anchorElement}
-      onClose={close}
+      onClose={handleClose}
       disableEscapeKeyDown={searchMode}
       anchorOrigin={{
         vertical: 'bottom',
