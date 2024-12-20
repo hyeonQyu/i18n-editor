@@ -30,6 +30,23 @@ const direntToFileEntry = (item: fs.Dirent): FileEntry => {
   };
 };
 
+const compareFileEntry = (a: FileEntry, b: FileEntry) => {
+  const FILE_ENTRY_TYPE_PRIORITY: Record<FileEntryType, number> = {
+    directory: 0,
+    file: 1,
+    unknown: 2,
+  } as const;
+
+  const priorityA = FILE_ENTRY_TYPE_PRIORITY[a.type];
+  const priorityB = FILE_ENTRY_TYPE_PRIORITY[b.type];
+
+  if (priorityA !== priorityB) {
+    return priorityA - priorityB;
+  }
+
+  return a.name.localeCompare(b.name);
+};
+
 const getAllNamespaces = async (rootPath: string, languages: string[]) => {
   const jsonFileNames: string[] = [];
 
@@ -61,7 +78,9 @@ const fileSystemService = {
       await fs.promises.readdir(path, {
         withFileTypes: true,
       })
-    ).map(direntToFileEntry);
+    )
+      .map(direntToFileEntry)
+      .sort(compareFileEntry);
 
     return {
       path,
