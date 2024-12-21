@@ -12,11 +12,13 @@ interface MenuItemProps {
 
 interface SidebarMenuListItemProps {
   children: ReactNode;
+  onClick: MouseEventHandler;
+  selected: boolean;
   menuItems?: MenuItemProps[];
 }
 
 function SidebarMenuListItem(props: SidebarMenuListItemProps) {
-  const { children, menuItems } = props;
+  const { children, menuItems, onClick, selected } = props;
 
   const {
     palette: { text },
@@ -35,8 +37,8 @@ function SidebarMenuListItem(props: SidebarMenuListItemProps) {
   const handleClose = () => setAnchorElement(null);
 
   return (
-    <ListItem>
-      <ListItemButton sx={{ gap: '6px' }}>
+    <ListItem onClick={onClick}>
+      <ListItemButton sx={{ gap: '6px' }} selected={selected}>
         <ListItemText primary={children} sx={{ color: text.secondary }} />
 
         {hasMenu && (

@@ -8,16 +8,20 @@ import useWorkspaces from '@hooks/workspace/useWorkspaces';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTheme } from '@mui/material';
+import { useWorkspace } from '@providers/WorkspaceProvider';
 import SidebarMenu from 'components/Layout/components/Sidebar/components/SidebarMenu';
+import useSelectWorkspace from './hooks/useSelectWorkspace';
 
 function WorkspaceList() {
   const workspaces = useWorkspaces();
+  const currentWorkspace = useWorkspace();
 
   const {
     palette: { error },
   } = useTheme();
 
   const openNameUpdateDialog = useOpenWorkspaceNameUpdateDialog();
+  const selectWorkspace = useSelectWorkspace();
 
   return (
     <>
@@ -28,9 +32,14 @@ function WorkspaceList() {
           {workspaces.map((workspace) => {
             const { id, name } = workspace;
 
+            const handleClick = () => selectWorkspace(id);
+            const selected = currentWorkspace?.id === id;
+
             return (
               <SidebarMenuListItem
                 key={id}
+                onClick={handleClick}
+                selected={selected}
                 menuItems={[
                   {
                     label: '이름 변경',

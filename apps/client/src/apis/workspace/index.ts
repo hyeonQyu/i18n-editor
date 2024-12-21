@@ -1,6 +1,8 @@
 import { AxiosRequestFunction } from '@defines/api';
 import BaseAPI from '@utils/BaseAPI';
 import {
+  GetWorkspaceRequest,
+  GetWorkspaceResponse,
   GetWorkspacesRequest,
   GetWorkspacesResponse,
   PostWorkspaceRequest,
@@ -22,5 +24,10 @@ export default class WorkspaceAPI extends BaseAPI {
   public putWorkspace: AxiosRequestFunction<PutWorkspaceRequest & PutWorkspaceParams, PutWorkspaceResponse> = (req) => {
     const { id, name, path } = req;
     return this.axiosInstance.put(this.getUrl(`/${id}`), { name, path });
+  };
+
+  public getWorkspace: AxiosRequestFunction<GetWorkspaceRequest, GetWorkspaceResponse> = (req) => {
+    const { id } = req;
+    return this.axiosInstance.get(this.getUrl(`/${id}`));
   };
 }

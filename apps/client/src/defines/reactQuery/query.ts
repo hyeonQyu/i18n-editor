@@ -1,4 +1,4 @@
-import { GetFileSystemDirectoryRequest, GetFileSystemLocaleRequest, GetNamespaceRequest } from 'i18n-editor-common';
+import { GetFileSystemDirectoryRequest, GetFileSystemLocaleRequest, GetNamespaceRequest, GetWorkspaceRequest } from 'i18n-editor-common';
 
 export const QUERY_KEY = {
   config: {
@@ -17,6 +17,8 @@ export const QUERY_KEY = {
   workspace: {
     base: ['workspace'] as const,
     getWorkspaces: () => [...QUERY_KEY.workspace.base, 'getWorkspaces'] as const,
+    getAnyWorkspace: () => [...QUERY_KEY.workspace.base, 'getWorkspace'] as const,
+    getWorkspace: (req: GetWorkspaceRequest) => [...QUERY_KEY.workspace.getAnyWorkspace(), req] as const,
   },
 
   namespace: {
