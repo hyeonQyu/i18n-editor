@@ -1,19 +1,30 @@
 import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import EllipsisText from '@components/EllipsisText';
+import DescriptionIcon from '@mui/icons-material/Description';
 import FolderIcon from '@mui/icons-material/Folder';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { IconButton } from '@mui/material';
-import { FileEntry } from 'i18n-editor-common';
+import SvgIcon from '@mui/material/SvgIcon/SvgIcon';
+import { FileEntry, FileEntryType } from 'i18n-editor-common';
 
 interface FileEntryIconButtonProps {
   entry: FileEntry;
 }
 
+const ICON_BY_TYPE: Record<FileEntryType, typeof SvgIcon> = {
+  directory: FolderIcon,
+  file: DescriptionIcon,
+  unknown: QuestionMarkIcon,
+};
+
 function FileEntryIconButton(props: FileEntryIconButtonProps) {
   const {
-    entry: { name },
+    entry: { name, type },
   } = props;
 
   const viewType = useFileManagerStore(({ viewType }) => viewType);
+
+  const Icon = ICON_BY_TYPE[type];
 
   return (
     <IconButton
@@ -32,8 +43,9 @@ function FileEntryIconButton(props: FileEntryIconButtonProps) {
         },
       }}
       aria-label={'go to directory'}
+      disabled={type !== 'directory'}
     >
-      <FolderIcon
+      <Icon
         className={viewType}
         sx={{
           ['&.table']: {
