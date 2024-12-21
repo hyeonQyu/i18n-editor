@@ -1,4 +1,4 @@
-import { CommonNamespaceRequest, getLeadingSlash, LanguageCode } from 'i18n-editor-common';
+import { CommonNamespaceRequest, LanguageCode } from 'i18n-editor-common';
 import { BadRequestError } from '../../../../defines/errors';
 import { getLanguageCodes } from '../../../../utils/locale';
 
@@ -16,5 +16,5 @@ export const languageCodeToNamespaceFilePath = (namespaceRequest: CommonNamespac
   const { localeDirectoryPath, namespace } = namespaceRequest;
 
   const languageDirectoryPath = `${localeDirectoryPath}/${languageCode}`;
-  return `${getLeadingSlash(languageDirectoryPath)}/${namespace}.json`;
+  return `${languageDirectoryPath}/${namespace}.json`;
 };

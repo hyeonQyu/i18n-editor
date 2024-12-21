@@ -1,13 +1,12 @@
-import fs from 'fs';
 import { CommonNamespaceRequest, LanguageCode, PostNamespaceRequest, PostNamespaceResponse } from 'i18n-editor-common';
 import { BadRequestError } from '../../../defines/errors';
-import { writeFile } from '../../../utils/file';
+import { getIsExistFile, writeFile } from '../../../utils/file';
 import { getLanguageCodesByLocaleDirectoryPath, languageCodeToNamespaceFilePath } from './common/utils';
 
 const getIsExistNamespace = (req: CommonNamespaceRequest, languageCodes: LanguageCode[]) => {
   return languageCodes.some((languageCode) => {
     const namespaceFilePath = languageCodeToNamespaceFilePath(req, languageCode);
-    return fs.existsSync(namespaceFilePath);
+    return getIsExistFile(namespaceFilePath);
   });
 };
 
