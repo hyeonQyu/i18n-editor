@@ -7,6 +7,10 @@ import { grey } from '@mui/material/colors';
 import { useWorkspaceStore } from '@stores/workspace';
 import { MouseEventHandler } from 'react';
 
+/**
+ * @deprecated
+ * @returns
+ */
 function CopiableDirectoryPath() {
   const path = useWorkspaceStore(({ path }) => path);
   const openFileManager = useFileManagerStore(({ open }) => open);

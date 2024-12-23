@@ -6,7 +6,7 @@ import { GetFileSystemLocaleRequest } from 'i18n-editor-common';
 
 const DEFAULT_NAMESPACES: string[] = [];
 
-function useLocaleNamespaces() {
+function useNamespaces() {
   const api = useAPI();
 
   const workspace = useWorkspace();
@@ -26,4 +26,4 @@ function useLocaleNamespaces() {
   return namespaces;
 }
 
-export default useLocaleNamespaces;
+export default useNamespaces;

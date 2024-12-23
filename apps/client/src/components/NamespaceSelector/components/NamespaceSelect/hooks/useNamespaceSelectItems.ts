@@ -1,9 +1,9 @@
 import { NamespaceSelectItem } from '@components/NamespaceSelector/components/NamespaceSelect/defines/select';
-import useLocaleNamespaces from '@hooks/namespace/useLocaleNamespaces';
+import useNamespaces from '@hooks/namespace/useNamespaces';
 import { useMemo } from 'react';
 
 function useNamespaceSelectItems() {
-  const namespaces = useLocaleNamespaces();
+  const namespaces = useNamespaces();
 
   return useMemo(
     () =>
