@@ -2,7 +2,9 @@ import EllipsisText from '@components/EllipsisText';
 import SidebarMenuList from '@components/Layout/components/Sidebar/components/SidebarMenu/list';
 import SidebarMenuListItem from '@components/Layout/components/Sidebar/components/SidebarMenu/list/item';
 import SidebarMenuTitle from '@components/Layout/components/Sidebar/components/SidebarMenu/title';
+import WorkspaceDeleteConfirmDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceDeleteConfirmDialog';
 import WorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog';
+import useDeleteWorkspaceHandler from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useDeleteWorkspaceHandler';
 import useOpenWorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useOpenWorkspaceNameUpdateDialog';
 import useWorkspaces from '@hooks/workspace/useWorkspaces';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -10,7 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useTheme } from '@mui/material';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import SidebarMenu from 'components/Layout/components/Sidebar/components/SidebarMenu';
-import useSelectWorkspace from './hooks/useSelectWorkspace';
+import useSelectWorkspaceHandler from './hooks/useSelectWorkspaceHandler';
 
 function WorkspaceList() {
   const workspaces = useWorkspaces();
@@ -21,7 +23,8 @@ function WorkspaceList() {
   } = useTheme();
 
   const openNameUpdateDialog = useOpenWorkspaceNameUpdateDialog();
-  const selectWorkspace = useSelectWorkspace();
+  const selectWorkspace = useSelectWorkspaceHandler();
+  const deleteWorkspace = useDeleteWorkspaceHandler();
 
   return (
     <>
@@ -49,7 +52,7 @@ function WorkspaceList() {
                   {
                     label: '삭제',
                     IconComponent: DeleteForeverIcon,
-                    onClick: () => {},
+                    onClick: () => deleteWorkspace(id),
                     color: error.light,
                   },
                 ]}
@@ -62,6 +65,7 @@ function WorkspaceList() {
       </SidebarMenu>
 
       <WorkspaceNameUpdateDialog />
+      <WorkspaceDeleteConfirmDialog />
     </>
   );
 }
