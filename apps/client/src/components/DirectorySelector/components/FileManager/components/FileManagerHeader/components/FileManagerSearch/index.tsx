@@ -5,10 +5,11 @@ import { useFileManagerStore } from '@components/DirectorySelector/stores/fileMa
 import useClickOutside from '@hooks/useClickOutside';
 import { Box } from '@mui/material';
 import FileManagerSearchIconButton from 'components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/components/FileManagerSearchIconButton';
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 
 function FileManagerSearch() {
-  const { searchMode, finishSearch } = useFileManagerStore();
+  const searchMode = useFileManagerStore(({ searchMode }) => searchMode);
+  const finishSearch = useFileManagerStore(({ finishSearch }) => finishSearch);
 
   const ref = useRef<HTMLElement>();
 
@@ -40,4 +41,4 @@ function FileManagerSearch() {
   );
 }
 
-export default FileManagerSearch;
+export default memo(FileManagerSearch);

@@ -2,20 +2,34 @@ import { useFileManagerStore } from '@components/DirectorySelector/stores/fileMa
 import useDirectoryEntries from '@hooks/file-system/useDirectoryEntries';
 import { FileEntry } from 'i18n-editor-common';
 import { throttle } from 'lodash';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 function useEntries() {
   const path = useFileManagerStore(({ path }) => path) ?? '';
   const keyword = useFileManagerStore(({ searchKeyword }) => searchKeyword);
+  const directoryOnly = useFileManagerStore(({ directoryOnly }) => directoryOnly);
 
-  const entries = useDirectoryEntries(path);
+  const filterDirectories = useCallback(
+    (entries: FileEntry[]) => {
+      if (!directoryOnly) return entries;
+      return entries.filter((entry) => entry.type === 'directory');
+    },
+    [directoryOnly],
+  );
+
+  const allEntries = useDirectoryEntries(path);
+  const entries = useMemo(() => filterDirectories(allEntries), [allEntries, filterDirectories]);
 
   const [filteredEntries, setFilteredEntries] = useState(entries);
 
   const throttleFilterEntries = useMemo(
     () =>
-      throttle((entries: FileEntry[], keyword: string) => {
-        setFilteredEntries(entries.filter((entry) => entry.name.toLowerCase().includes(keyword.toLowerCase())));
+      throttle((_entries: FileEntry[], _keyword: string) => {
+        setFilteredEntries(
+          _entries.filter((entry) => {
+            return entry.name.toLowerCase().includes(_keyword.toLowerCase());
+          }),
+        );
       }, 400),
     [],
   );

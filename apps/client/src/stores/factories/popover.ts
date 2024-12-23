@@ -1,7 +1,7 @@
 import { create } from 'zustand/react';
 import { StateCreator } from 'zustand/vanilla';
 
-type PopoverActionHandler<T extends object> = () => Partial<PopoverStore<T>>;
+type PopoverActionHandler<T extends object> = (state: PopoverStore<T>) => Partial<PopoverStore<T>>;
 
 type PopoverStore<T extends object> = T & {
   anchorElement: HTMLElement | null;
@@ -26,7 +26,7 @@ export const createPopoverStore = <T extends object>(extendState: StateCreator<T
       open: (element, onOpen = defaultActionHandler) => {
         set((prev) => ({
           ...prev,
-          ...onOpen(),
+          ...onOpen(prev),
           anchorElement: element,
         }));
       },
@@ -35,7 +35,7 @@ export const createPopoverStore = <T extends object>(extendState: StateCreator<T
         set((prev) => ({
           ...prev,
           ...initialState,
-          ...onClose(),
+          ...onClose(prev),
           anchorElement: null,
         }));
       },

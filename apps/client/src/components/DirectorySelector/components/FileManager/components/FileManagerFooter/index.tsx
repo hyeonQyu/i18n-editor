@@ -1,3 +1,4 @@
+import DirectoryOnlySwitch from '@components/DirectorySelector/components/FileManager/components/FileManagerFooter/components/DirectoryOnlySwitch';
 import DirectorySelectButton from '@components/DirectorySelector/components/FileManager/components/FileManagerFooter/components/DirectorySelectButton';
 import ViewTypeSelector from '@components/DirectorySelector/components/FileManager/components/FileManagerFooter/components/ViewTypeSelector';
 import { Box } from '@mui/material';
@@ -8,10 +9,17 @@ function FileManagerFooter() {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
-        gap: '32px',
       }}
     >
-      <ViewTypeSelector />
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '48px',
+        }}
+      >
+        <ViewTypeSelector />
+        <DirectoryOnlySwitch />
+      </Box>
       <DirectorySelectButton />
     </Box>
   );
