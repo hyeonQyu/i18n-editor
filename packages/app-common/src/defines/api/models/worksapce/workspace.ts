@@ -11,7 +11,7 @@ export type PostWorkspaceRequest = Pick<Workspace, 'name' | 'path'>;
 
 export type PostWorkspaceResponse = void;
 
-export type PutWorkspaceRequest = PostWorkspaceRequest;
+export type PutWorkspaceRequest = Omit<Workspace, 'id'>;
 
 export interface PutWorkspaceParams {
   id: string;
@@ -26,3 +26,9 @@ export interface GetWorkspaceRequest {
 export interface GetWorkspaceResponse {
   namespaces: string[];
 }
+
+export interface DeleteWorkspaceRequest {
+  id: string;
+}
+
+export type DeleteWorkspaceResponse = void;
