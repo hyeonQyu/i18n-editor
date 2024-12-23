@@ -1,6 +1,6 @@
 import { FILE_MANAGER_SEARCH_TRANSITION_SECONDS } from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/defines/animation';
 import useFileManagerSearchInputWidth from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/hooks/useFileManagerSearchInputWidth';
-import { useFileManagerSearchStore } from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/stores/fileManagerSearch';
+import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import useOS from '@hooks/useOS';
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, Tooltip } from '@mui/material';
@@ -18,7 +18,7 @@ const getShortcutByOS = (os: string | undefined) => {
 
 function FileManagerSearchIconButton() {
   const os = useOS();
-  const { searchMode, startSearch: handleClick } = useFileManagerSearchStore();
+  const { searchMode, startSearch: handleClick } = useFileManagerStore();
   const right = useFileManagerSearchInputWidth();
 
   return (

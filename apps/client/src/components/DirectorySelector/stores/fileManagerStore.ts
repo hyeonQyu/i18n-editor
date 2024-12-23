@@ -9,10 +9,15 @@ interface FileManagerStore {
     backward: string[];
     forward: string[];
   };
+  searchMode: boolean;
+  searchKeyword: string;
   setViewType: (viewType: FileManagerViewType) => void;
   movePathTo: (path: string) => void;
   moveForward: () => void;
   moveBackward: () => void;
+  startSearch: () => void;
+  finishSearch: () => void;
+  setSearchKeyword: (keyword: string) => void;
 }
 
 const getPoppedList = <T>(list: Array<T>): T[] => list.slice(0, list.length - 1);
@@ -26,6 +31,10 @@ export const useFileManagerStore = createPopoverStore<FileManagerStore>((set) =>
     backward: [],
     forward: [],
   },
+
+  searchMode: false,
+
+  searchKeyword: '',
 
   setViewType: (viewType) => set({ viewType }),
 
@@ -86,4 +95,10 @@ export const useFileManagerStore = createPopoverStore<FileManagerStore>((set) =>
       };
     });
   },
+
+  startSearch: () => set({ searchMode: true }),
+
+  finishSearch: () => set({ searchMode: false, searchKeyword: '' }),
+
+  setSearchKeyword: (keyword) => set({ searchKeyword: keyword }),
 }));

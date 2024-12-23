@@ -1,16 +1,20 @@
 import { FILE_MANAGER_SEARCH_TRANSITION_SECONDS } from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/defines/animation';
 import useFileManagerSearchInputWidth from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/hooks/useFileManagerSearchInputWidth';
-import { useFileManagerSearchStore } from '@components/DirectorySelector/components/FileManager/components/FileManagerHeader/components/FileManagerSearch/stores/fileManagerSearch';
 import {
   FILE_MANAGER_HEADER_GAP,
   FILE_MANAGER_SEARCH_ICON_WIDTH,
 } from '@components/DirectorySelector/components/FileManager/defines/sizes';
+import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
 import { TextField } from '@mui/material';
-import { useEffect, useRef } from 'react';
+import { ChangeEventHandler, useEffect, useRef } from 'react';
 
 function FileManagerSearchInput() {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const searchMode = useFileManagerSearchStore(({ searchMode }) => searchMode);
+
+  const searchMode = useFileManagerStore(({ searchMode }) => searchMode);
+  const keyword = useFileManagerStore(({ searchKeyword }) => searchKeyword);
+  const setKeyword = useFileManagerStore(({ setSearchKeyword }) => setSearchKeyword);
+
   const width = useFileManagerSearchInputWidth();
 
   useEffect(() => {
@@ -18,9 +22,13 @@ function FileManagerSearchInput() {
     inputRef.current?.focus();
   }, [searchMode]);
 
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => setKeyword(e.target.value);
+
   return (
     <TextField
       inputRef={inputRef}
+      value={keyword}
+      onChange={handleChange}
       size={'small'}
       variant={'outlined'}
       placeholder={'검색'}

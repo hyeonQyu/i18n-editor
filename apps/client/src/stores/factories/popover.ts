@@ -16,25 +16,31 @@ const getDefaultActionHandler =
 export const createPopoverStore = <T extends object>(extendState: StateCreator<T>) => {
   const defaultActionHandler = getDefaultActionHandler<PopoverStore<T>>();
 
-  return create<PopoverStore<T>>((set, get, api) => ({
-    anchorElement: null,
+  return create<PopoverStore<T>>((set, get, api) => {
+    const extend = extendState(set, get, api);
+    const initialState = { ...extend };
 
-    open: (element, onOpen = defaultActionHandler) => {
-      set((prev) => ({
-        ...prev,
-        ...onOpen(),
-        anchorElement: element,
-      }));
-    },
+    return {
+      anchorElement: null,
 
-    close: (onClose = defaultActionHandler) => {
-      set((prev) => ({
-        ...prev,
-        ...onClose(),
-        anchorElement: null,
-      }));
-    },
+      open: (element, onOpen = defaultActionHandler) => {
+        set((prev) => ({
+          ...prev,
+          ...onOpen(),
+          anchorElement: element,
+        }));
+      },
 
-    ...extendState(set, get, api),
-  }));
+      close: (onClose = defaultActionHandler) => {
+        set((prev) => ({
+          ...prev,
+          ...initialState,
+          ...onClose(),
+          anchorElement: null,
+        }));
+      },
+
+      ...extendState(set, get, api),
+    };
+  });
 };
