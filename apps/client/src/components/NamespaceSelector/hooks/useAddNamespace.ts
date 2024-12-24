@@ -1,3 +1,4 @@
+import useSelectNamespaceHandler from '@components/Layout/components/Sidebar/components/NamespaceList/hooks/useSelectNamespaceHandler';
 import useCreateNamespace from '@hooks/namespace/useCreateNamespace';
 import useInvalidateGetWorkspaceQuery from '@hooks/workspace/useInvalidateGetWorkspaceQuery';
 import { useWorkspace } from '@providers/WorkspaceProvider';
@@ -10,6 +11,8 @@ function useAddNamespace() {
 
   const invalidateWorkspace = useInvalidateGetWorkspaceQuery(workspace?.id ?? '');
 
+  const selectNamespace = useSelectNamespaceHandler();
+
   return async (namespace: string) => {
     if (!workspace || !namespace) return;
 
@@ -21,6 +24,8 @@ function useAddNamespace() {
     });
 
     await invalidateWorkspace();
+
+    selectNamespace(namespace);
   };
 }
 
