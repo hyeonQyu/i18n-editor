@@ -1,20 +1,14 @@
 import fs from 'fs';
 import {
-  EXTENSIONS_SUFFIX,
   GetFileSystemDirectoryRequest,
   GetFileSystemDirectoryResponse,
   GetFileSystemInitialPathRequest,
   GetFileSystemInitialPathResponse,
-  GetFileSystemLocaleRequest,
-  GetFileSystemLocaleResponse,
   PostFileSystemFileManagerRequest,
   PostFileSystemFileManagerResponse,
-  removeExtension,
 } from 'i18n-editor-common';
 import { FileEntry, FileEntryType } from 'i18n-editor-common/lib/defines/file';
-import { BadRequestError } from '../../defines/errors';
-import { getCurrentWorkingDirectory, getFileNames, openFileManager, readDirectory } from '../../utils/file';
-import { getLanguageCodes } from '../../utils/locale';
+import { getCurrentWorkingDirectory, openFileManager, readDirectory } from '../../utils/file';
 
 const getFileEntryType = (item: fs.Dirent): FileEntryType => {
   if (item.isDirectory()) return 'directory';
@@ -47,28 +41,6 @@ const compareFileEntry = (a: FileEntry, b: FileEntry) => {
   return a.name.localeCompare(b.name);
 };
 
-/**
- * @deprecated
- * @param rootPath
- * @param languages
- */
-const getAllNamespaces = async (rootPath: string, languages: string[]) => {
-  const jsonFileNames: string[] = [];
-
-  const jsonFileNamesList = await Promise.all(
-    languages.map((language) => {
-      const directoryPath = `${rootPath}/${language}`;
-      return getFileNames(directoryPath, [EXTENSIONS_SUFFIX.json]);
-    }),
-  );
-
-  jsonFileNamesList.forEach((fileNames) => {
-    jsonFileNames.push(...fileNames);
-  });
-
-  return Array.from(new Set(jsonFileNames)).map(removeExtension);
-};
-
 const fileSystemService = {
   async getFileSystemInitialPath(_: GetFileSystemInitialPathRequest): Promise<GetFileSystemInitialPathResponse> {
     return {
@@ -96,26 +68,6 @@ const fileSystemService = {
   async postFileSystemFileManager(req: PostFileSystemFileManagerRequest): Promise<PostFileSystemFileManagerResponse> {
     const { path } = req;
     openFileManager(path);
-  },
-
-  /**
-   * @deprecated
-   * @param req
-   */
-  async getFileSystemLocale(req: GetFileSystemLocaleRequest): Promise<GetFileSystemLocaleResponse> {
-    const { path } = req;
-
-    const languages = await getLanguageCodes(path);
-
-    if (languages.length === 0) {
-      throw new BadRequestError('올바른 locale 디렉토리가 아닙니다.');
-    }
-
-    const namespaces = await getAllNamespaces(path, languages);
-
-    return {
-      namespaces,
-    };
   },
 };
 
