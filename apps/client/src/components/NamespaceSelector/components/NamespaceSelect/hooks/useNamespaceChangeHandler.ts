@@ -1,5 +1,5 @@
 import { NamespaceSelectProps } from '@components/NamespaceSelector/components/NamespaceSelect/defines/select';
-import { useNamespaceAddDialogStore } from '@components/NamespaceSelector/stores/namespaceAddDialogStore';
+import { useNamespaceAddDialogStore } from '@stores/namespaceAddDialogStore';
 import { useWorkspaceStore } from '@stores/workspace';
 
 function useNamespaceChangeHandler(): NamespaceSelectProps['onChange'] {

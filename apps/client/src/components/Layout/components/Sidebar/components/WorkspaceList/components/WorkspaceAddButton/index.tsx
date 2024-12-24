@@ -1,10 +1,8 @@
 import SidebarMenuAddButton from '@components/Layout/components/Sidebar/components/SidebarMenu/add';
-import useAddNewWorkspace from '@hooks/workspace/useAddNewWorkspace';
+import useAddWorkspaceClickHandler from '@hooks/workspace/useAddWorkspaceClickHandler';
 
 function WorkspaceAddButton() {
-  const addNewWorkspace = useAddNewWorkspace();
-
-  const handleClick = () => addNewWorkspace();
+  const handleClick = useAddWorkspaceClickHandler();
 
   return <SidebarMenuAddButton onClick={handleClick} />;
 }

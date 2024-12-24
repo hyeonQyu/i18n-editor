@@ -1,11 +1,9 @@
-import useAddNewWorkspace from '@hooks/workspace/useAddNewWorkspace';
+import useAddWorkspaceClickHandler from '@hooks/workspace/useAddWorkspaceClickHandler';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import { Button, Typography } from '@mui/material';
 
 function WorkspaceSelectButton() {
-  const addNewWorkspace = useAddNewWorkspace();
-
-  const handleClick = () => addNewWorkspace();
+  const handleClick = useAddWorkspaceClickHandler();
 
   return (
     <Button

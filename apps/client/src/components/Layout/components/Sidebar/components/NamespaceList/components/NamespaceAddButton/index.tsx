@@ -1,7 +1,10 @@
 import SidebarMenuAddButton from '@components/Layout/components/Sidebar/components/SidebarMenu/add';
+import useAddNamespaceClickHandler from '@hooks/namespace/useAddNamespaceClickHandler';
 
 function NamespaceAddButton() {
-  return <SidebarMenuAddButton onClick={() => {}} />;
+  const handleClick = useAddNamespaceClickHandler();
+
+  return <SidebarMenuAddButton onClick={handleClick} />;
 }
 
 export default NamespaceAddButton;

@@ -1,11 +1,9 @@
-import useAddNewWorkspace from '@hooks/workspace/useAddNewWorkspace';
+import useAddWorkspaceClickHandler from '@hooks/workspace/useAddWorkspaceClickHandler';
 import AddIcon from '@mui/icons-material/Add';
 import { IconButton, Tooltip } from '@mui/material';
 
 function WorkspaceAddButton() {
-  const addNewWorkspace = useAddNewWorkspace();
-
-  const handleClick = () => addNewWorkspace();
+  const handleClick = useAddWorkspaceClickHandler();
 
   return (
     <Tooltip title={'워크스페이스 추가'}>

@@ -3,7 +3,7 @@ import { useAPI } from '@providers/APIProvider';
 import { useMutation } from '@tanstack/react-query';
 import { PostNamespaceRequest } from 'i18n-editor-common';
 
-function useCreateNewNamespace() {
+function useCreateNamespace() {
   const api = useAPI();
 
   const { mutateAsync } = useMutation({
@@ -14,4 +14,4 @@ function useCreateNewNamespace() {
   return mutateAsync;
 }
 
-export default useCreateNewNamespace;
+export default useCreateNamespace;
