@@ -1,21 +1,18 @@
-import { QUERY_KEY } from '@defines/reactQuery';
-import useInvalidateGetWorkspacesQuery from '@hooks/workspace/useInvalidateGetWorkspacesQuery';
+import { QueryOption, QUERY_KEY } from '@defines/reactQuery';
 import { useAPI } from '@providers/APIProvider';
 import { useQuery } from '@tanstack/react-query';
-import { GetWorkspaceRequest } from 'i18n-editor-common';
+import { GetWorkspaceRequest, GetWorkspaceResponse } from 'i18n-editor-common';
+import { useMemo } from 'react';
 
-function useQueryGetWorkspace(id: string) {
+function useQueryGetWorkspace(id: string, options: QueryOption<GetWorkspaceResponse, typeof QUERY_KEY.workspace.getWorkspace> = {}) {
   const api = useAPI();
-
-  const invalidateWorkspaces = useInvalidateGetWorkspacesQuery();
-
-  const req: GetWorkspaceRequest = { id };
+  const req: GetWorkspaceRequest = useMemo(() => ({ id }), [id]);
 
   return useQuery({
     queryKey: QUERY_KEY.workspace.getWorkspace(req),
     queryFn: async () => (await api.workspace.getWorkspace(req)).data,
     enabled: Boolean(id),
-    onSuccess: invalidateWorkspaces,
+    ...options,
   });
 }
 

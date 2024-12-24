@@ -1,14 +1,9 @@
-import useQueryGetWorkspace from '@hooks/namespace/useQueryGetWorkspace';
-import useFetchWorkspace from '@hooks/workspace/useQueryGetWorkspace';
-import { useState } from 'react';
+import useFetchWorkspace from '@hooks/workspace/useFetchWorkspace';
 
 function useSelectWorkspaceHandler() {
   const fetchWorkspace = useFetchWorkspace();
-  const [workspaceId, setWorkspaceId] = useState<string>('');
 
-  useQueryGetWorkspace(workspaceId);
-
-  return (id: string) => setWorkspaceId(id);
+  return fetchWorkspace;
 }
 
 export default useSelectWorkspaceHandler;

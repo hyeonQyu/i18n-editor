@@ -1,4 +1,11 @@
-import { GetFileSystemDirectoryRequest, GetNamespaceRequest, GetWorkspaceRequest } from 'i18n-editor-common';
+import { UseQueryOptions } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { GetFileSystemDirectoryRequest, GetNamespaceRequest, GetWorkspaceRequest, ResponseEntity } from 'i18n-editor-common';
+
+export type QueryOption<TResponse, TQueryKey extends (...args: any) => readonly unknown[]> = Omit<
+  UseQueryOptions<ResponseEntity<TResponse>, AxiosError, ResponseEntity<TResponse>, ReturnType<TQueryKey>>,
+  'initialData' | 'queryKey' | 'queryFn'
+>;
 
 export const QUERY_KEY = {
   config: {
