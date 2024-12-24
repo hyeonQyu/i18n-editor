@@ -1,4 +1,4 @@
-import useWorkspaceNameUpdateDialogClose from '@components/Layout/components/Sidebar/components/WorkspaceList/components/hooks/useWorkspaceNameUpdateDialogClose';
+import useWorkspaceNameUpdateDialogClose from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog/hooks/useWorkspaceNameUpdateDialogClose';
 import { useWorkspaceNameUpdateStore } from '@components/Layout/components/Sidebar/components/WorkspaceList/stores/nameUpdate';
 import useUpdateWorkspace from '@hooks/workspace/useUpdateWorkspace';
 import { FormEventHandler } from 'react';

@@ -12,6 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useTheme } from '@mui/material';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import SidebarMenu from 'components/Layout/components/Sidebar/components/SidebarMenu';
+import SidebarMenuAddButton from '../SidebarMenu/add';
 import useSelectWorkspaceHandler from './hooks/useSelectWorkspaceHandler';
 
 function WorkspaceList() {
@@ -29,7 +30,7 @@ function WorkspaceList() {
   return (
     <>
       <SidebarMenu>
-        <SidebarMenuTitle>워크스페이스</SidebarMenuTitle>
+        <SidebarMenuTitle label={'워크스페이스'} action={<SidebarMenuAddButton onClick={() => {}} />} />
 
         <SidebarMenuList>
           {workspaces.map((workspace) => {

@@ -1,5 +1,5 @@
-import useWorkspaceNameUpdateDialogClose from '@components/Layout/components/Sidebar/components/WorkspaceList/components/hooks/useWorkspaceNameUpdateDialogClose';
-import useWorkspaceNameUpdateFormSubmit from '@components/Layout/components/Sidebar/components/WorkspaceList/components/hooks/useWorkspaceNameUpdateFormSubmit';
+import useWorkspaceNameUpdateDialogClose from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog/hooks/useWorkspaceNameUpdateDialogClose';
+import useWorkspaceNameUpdateFormSubmit from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog/hooks/useWorkspaceNameUpdateFormSubmit';
 import { useWorkspaceNameUpdateStore } from '@components/Layout/components/Sidebar/components/WorkspaceList/stores/nameUpdate';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { ChangeEventHandler } from 'react';
