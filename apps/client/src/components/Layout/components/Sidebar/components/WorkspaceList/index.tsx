@@ -1,19 +1,19 @@
 import EllipsisText from '@components/EllipsisText';
+import SidebarMenu from '@components/Layout/components/Sidebar/components/SidebarMenu';
 import SidebarMenuList from '@components/Layout/components/Sidebar/components/SidebarMenu/list';
 import SidebarMenuListItem from '@components/Layout/components/Sidebar/components/SidebarMenu/list/item';
 import SidebarMenuTitle from '@components/Layout/components/Sidebar/components/SidebarMenu/title';
+import WorkspaceAddButton from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceAddButton';
 import WorkspaceDeleteConfirmDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceDeleteConfirmDialog';
 import WorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog';
 import useDeleteWorkspaceHandler from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useDeleteWorkspaceHandler';
 import useOpenWorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useOpenWorkspaceNameUpdateDialog';
+import useSelectWorkspaceHandler from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useSelectWorkspaceHandler';
 import useWorkspaces from '@hooks/workspace/useWorkspaces';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTheme } from '@mui/material';
 import { useWorkspace } from '@providers/WorkspaceProvider';
-import SidebarMenu from 'components/Layout/components/Sidebar/components/SidebarMenu';
-import SidebarMenuAddButton from '../SidebarMenu/add';
-import useSelectWorkspaceHandler from './hooks/useSelectWorkspaceHandler';
 
 function WorkspaceList() {
   const workspaces = useWorkspaces();
@@ -30,7 +30,7 @@ function WorkspaceList() {
   return (
     <>
       <SidebarMenu>
-        <SidebarMenuTitle label={'워크스페이스'} action={<SidebarMenuAddButton onClick={() => {}} />} />
+        <SidebarMenuTitle label={'워크스페이스'} action={<WorkspaceAddButton />} />
 
         <SidebarMenuList>
           {workspaces.map((workspace) => {

@@ -1,20 +1,16 @@
 import EllipsisText from '@components/EllipsisText';
+import NamespaceListTitleLabel from '@components/Layout/components/Sidebar/components/NamespaceList/components/NamespaceListTitleLabel';
 import useSelectNamespaceHandler from '@components/Layout/components/Sidebar/components/NamespaceList/hooks/useSelectNamespaceHandler';
 import SidebarMenu from '@components/Layout/components/Sidebar/components/SidebarMenu';
 import SidebarMenuList from '@components/Layout/components/Sidebar/components/SidebarMenu/list';
 import SidebarMenuListItem from '@components/Layout/components/Sidebar/components/SidebarMenu/list/item';
+import SidebarMenuTitle from '@components/Layout/components/Sidebar/components/SidebarMenu/title';
 import useNamespaces from '@hooks/namespace/useNamespaces';
-import { Typography, useTheme } from '@mui/material';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import { useWorkspaceStore } from '@stores/workspace';
-import SidebarMenuAddButton from '../SidebarMenu/add';
-import SidebarMenuTitle from '../SidebarMenu/title';
+import NamespaceAddButton from './components/NamespaceAddButton';
 
 function NamespaceList() {
-  const {
-    palette: { text },
-  } = useTheme();
-
   const workspace = useWorkspace();
   const namespaces = useNamespaces();
 
@@ -27,26 +23,7 @@ function NamespaceList() {
   return (
     <>
       <SidebarMenu>
-        <SidebarMenuTitle
-          label={
-            <>
-              <span>네임스페이스</span>
-
-              <Typography
-                variant={'body2'}
-                sx={{
-                  width: 'fit-content',
-                  display: 'inline-flex',
-                  marginLeft: '8px',
-                  color: text.secondary,
-                }}
-              >
-                [{workspace.name}]
-              </Typography>
-            </>
-          }
-          action={<SidebarMenuAddButton onClick={() => {}} />}
-        />
+        <SidebarMenuTitle label={<NamespaceListTitleLabel />} action={<NamespaceAddButton />} />
 
         <SidebarMenuList>
           {namespaces.map((namespace) => (
