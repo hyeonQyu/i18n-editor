@@ -1,6 +1,6 @@
 import { useFileManagerStore } from '@components/DirectorySelector/stores/fileManagerStore';
+import useCheckMetaKey from '@hooks/useCheckMetaKey';
 import useKeyboardEventListener from '@hooks/useKeyboardEventListener';
-import useOS from '@hooks/useOS';
 import { useCallback } from 'react';
 
 function useFileManagerSearchShortcuts() {
@@ -8,7 +8,7 @@ function useFileManagerSearchShortcuts() {
   const startSearch = useFileManagerStore(({ startSearch }) => startSearch);
   const finishSearch = useFileManagerStore(({ finishSearch }) => finishSearch);
 
-  const os = useOS();
+  const checkMetaKey = useCheckMetaKey();
 
   const handleStartByShortcut = useCallback(
     (e: KeyboardEvent) => {
@@ -20,27 +20,11 @@ function useFileManagerSearchShortcuts() {
         startSearch();
       };
 
-      switch (os) {
-        case 'macos':
-          if (e.metaKey && e.key === 'f') {
-            openSearch();
-            return;
-          }
-          return;
-
-        case 'win':
-        case 'linux':
-          if (e.ctrlKey && e.key === 'f') {
-            openSearch();
-            return;
-          }
-          return;
-
-        default:
-          return;
+      if (checkMetaKey(e) && e.key === 'f') {
+        openSearch();
       }
     },
-    [searchMode, os, startSearch],
+    [searchMode, startSearch, checkMetaKey],
   );
 
   const handleFinishByShortcut = useCallback(
