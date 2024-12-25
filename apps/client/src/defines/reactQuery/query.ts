@@ -1,4 +1,4 @@
-import { GetFileSystemDirectoryRequest } from 'i18n-editor-common';
+import { GetFileSystemDirectoryRequest, GetFileSystemLocaleRequest } from 'i18n-editor-common';
 
 export const QUERY_KEY = {
   config: {
@@ -10,5 +10,6 @@ export const QUERY_KEY = {
     base: ['fileSystem'] as const,
     getInitialPath: () => [...QUERY_KEY.fileSystem.base, 'getInitialPath'] as const,
     getDirectory: (req: GetFileSystemDirectoryRequest) => [...QUERY_KEY.fileSystem.base, 'getDirectory', req] as const,
+    getLocale: (req: GetFileSystemLocaleRequest) => [...QUERY_KEY.fileSystem.base, 'getLocale', req] as const,
   },
 };

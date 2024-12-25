@@ -39,6 +39,8 @@ function APIProvider({ children }: { children: ReactNode }) {
       const { status, errorMessage } = error.response.data as ResponseEntity<any>;
 
       // TODO: Implement error handling
+
+      return Promise.reject(error);
     });
 
     setAPI(() => createAPI(instance));
