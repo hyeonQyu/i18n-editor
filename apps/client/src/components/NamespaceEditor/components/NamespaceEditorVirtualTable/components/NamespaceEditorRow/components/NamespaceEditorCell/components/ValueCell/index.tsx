@@ -27,6 +27,7 @@ function ValueCell(props: ValueCellProps) {
           padding: `${CELL_PADDING}px`,
           cursor: 'pointer',
           borderRadius: 0,
+          transition: 'all 0.1s ease-in-out',
           '&.Mui-focused': {
             cursor: 'text',
             borderRadius: 1,
