@@ -5,7 +5,7 @@ import { Paper } from '@mui/material';
 
 function NamespaceEditor() {
   return (
-    <Paper style={{ height: '100%', padding: '36px' }}>
+    <Paper style={{ height: '100%' }}>
       <RowsProvider>
         <ColumnProvider>
           <NamespaceEditorVirtualTable />
