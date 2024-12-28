@@ -1,21 +1,10 @@
-import AddIcon from '@mui/icons-material/Add';
-import { Button, Tooltip } from '@mui/material';
-import { useNamespaceAddDialogStore } from '@stores/namespaceAddDialogStore';
+import SidebarMenuAddButton from '@components/Layout/components/Sidebar/components/SidebarMenu/add';
+import useAddNamespaceClickHandler from '@hooks/namespace/useAddNamespaceClickHandler';
 
 function NamespaceAddButton() {
-  const open = useNamespaceAddDialogStore(({ open }) => open);
+  const handleClick = useAddNamespaceClickHandler();
 
-  const handleClick = () => open();
-
-  return (
-    <>
-      <Tooltip title={'새로운 namespace 추가'}>
-        <Button sx={{ width: '50px' }} onClick={handleClick}>
-          <AddIcon />
-        </Button>
-      </Tooltip>
-    </>
-  );
+  return <SidebarMenuAddButton onClick={handleClick} />;
 }
 
 export default NamespaceAddButton;
