@@ -1,40 +1,16 @@
-import { Box, TableCell, TextField } from '@mui/material';
-import { ChangeEventHandler, useState } from 'react';
+import KeyCell from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/KeyCell';
+import ValueCell from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/ValueCell';
+import { TableCell } from '@mui/material';
 
 interface NamespaceEditorCellProps {
-  defaultValue: string;
+  value: string;
   isKey: boolean;
 }
 
-const createHtmlString = (str: string) => {
-  return str.replace(/_/g, '_<wbr>');
-};
-
 function NamespaceEditorCell(props: NamespaceEditorCellProps) {
-  const { isKey, defaultValue } = props;
+  const { isKey, value } = props;
 
-  const [value, setValue] = useState(defaultValue);
-
-  const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-    setValue(e.target.value);
-  };
-
-  return (
-    <TableCell>
-      {isKey ? (
-        <Box
-          sx={{
-            wordBreak: 'break-word',
-            lineHeight: 1.5,
-            fontWeight: 'bold',
-          }}
-          dangerouslySetInnerHTML={{ __html: createHtmlString(defaultValue) }}
-        />
-      ) : (
-        <TextField value={value} onChange={handleChange} fullWidth multiline maxRows={8} />
-      )}
-    </TableCell>
-  );
+  return <TableCell sx={{ padding: 0 }}>{isKey ? <KeyCell value={value} /> : <ValueCell value={value} />}</TableCell>;
 }
 
 export default NamespaceEditorCell;

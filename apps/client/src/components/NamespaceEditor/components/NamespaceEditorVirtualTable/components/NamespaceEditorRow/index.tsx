@@ -17,7 +17,7 @@ function NamespaceEditorRow(props: NamespaceEditorRowProps) {
     <RowIndexProvider rowIndex={rowIndex}>
       {columns.map(({ label }) => {
         const value = row[label]!;
-        return <NamespaceEditorCell key={label} defaultValue={value} isKey={label === 'key'} />;
+        return <NamespaceEditorCell key={label} value={value} isKey={label === 'key'} />;
       })}
     </RowIndexProvider>
   );
