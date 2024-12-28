@@ -13,6 +13,7 @@ interface WorkspaceStore {
   setPath: (path: string) => void;
   namespace: string | undefined;
   setNamespace: (namespace: string) => void;
+  resetNamespace: () => void;
 }
 
 export const useWorkspaceStore = create<WorkspaceStore>((set) => {
@@ -21,5 +22,6 @@ export const useWorkspaceStore = create<WorkspaceStore>((set) => {
     namespace: undefined,
     setPath: (path) => set({ path, namespace: undefined }),
     setNamespace: (namespace) => set({ namespace }),
+    resetNamespace: () => set({ namespace: undefined }),
   };
 });
