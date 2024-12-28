@@ -1,14 +1,14 @@
-import NamespaceEditorCell from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorItemContent/components/NamespaceEditorCell';
+import NamespaceEditorCell from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell';
 import { RowData } from '@components/NamespaceEditor/defines/table';
 import { useColumns } from '@components/NamespaceEditor/providers/ColumnProvider';
 import RowIndexProvider from '@components/NamespaceEditor/providers/RowIndexProvider';
 
-interface NamespaceEditorItemContentProps {
+interface NamespaceEditorRowProps {
   rowIndex: number;
   row: RowData;
 }
 
-function NamespaceEditorItemContent(props: NamespaceEditorItemContentProps) {
+function NamespaceEditorRow(props: NamespaceEditorRowProps) {
   const { rowIndex, row } = props;
 
   const columns = useColumns();
@@ -23,4 +23,4 @@ function NamespaceEditorItemContent(props: NamespaceEditorItemContentProps) {
   );
 }
 
-export default NamespaceEditorItemContent;
+export default NamespaceEditorRow;
