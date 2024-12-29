@@ -3,6 +3,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import ReactQueryClientProvider from '@providers/ReactQueryClientProvider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { AppProps } from 'next/app';
 import { SnackbarProvider } from 'notistack';
 import APIProvider from 'providers/APIProvider';
@@ -16,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <APIProvider>
         <ReactQueryClientProvider>
           <Component {...pageProps} />
+          <ReactQueryDevtools />
         </ReactQueryClientProvider>
       </APIProvider>
     </SnackbarProvider>
