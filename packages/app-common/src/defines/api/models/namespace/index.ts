@@ -6,13 +6,25 @@ export * from './language';
 export * from './translation';
 export * from './_common';
 
-export interface GetNamespaceRequest extends CommonNamespaceRequest {}
+/**
+ * @deprecated
+ */
+export interface GetNamespaceRequest1 extends CommonNamespaceRequest {}
 
-export interface GetNamespaceResponse {
+/**
+ * @deprecated
+ */
+export interface GetNamespaceResponse1 {
   languageCodes: LanguageCode[];
   translations: Translation[];
 }
 
-export interface PostNamespaceRequest extends CommonNamespaceRequest {}
+/**
+ * @deprecated
+ */
+export interface PostNamespaceRequest1 extends CommonNamespaceRequest {}
 
-export type PostNamespaceResponse = void;
+/**
+ * @deprecated
+ */
+export type PostNamespaceResponse1 = void;

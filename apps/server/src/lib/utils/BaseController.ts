@@ -1,6 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import { Express } from 'express';
-import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
+import { Request, Response } from 'express-serve-static-core';
 import { getLeadingSlash, ResponseEntity } from 'i18n-editor-common';
 import { ControllerMethod, RequestHandler } from '../defines/api';
 import { BadRequestError, ConflictError, NotFoundError } from '../defines/errors';
@@ -31,14 +31,14 @@ abstract class BaseController {
     });
   }
 
-  private processRequest = <ReqBody, ReqQuery, Res>(
+  private processRequest = <ReqBody, ReqParams, ReqQuery, Res>(
     path: string,
     method: 'get' | 'post' | 'put' | 'delete' | 'patch' | 'options' | 'head',
-    onRequest: RequestHandler<ReqBody, ReqQuery, Res>,
+    onRequest: RequestHandler<ReqBody, ReqParams, ReqQuery, Res>,
   ) => {
     const url = `/api${getLeadingSlash(this._baseUrl)}${getLeadingSlash(path)}`;
 
-    this._app[method](url, async (req: Request<ParamsDictionary, any, ReqBody, ReqQuery>, res: Response<ResponseEntity<Res>>) => {
+    this._app[method](url, async (req: Request<ReqParams, any, ReqBody, ReqQuery>, res: Response<ResponseEntity<Res>>) => {
       console.log(`\nrequest: ${url}`);
 
       try {
@@ -73,7 +73,7 @@ abstract class BaseController {
     } as ResponseEntity<Res>);
   };
 
-  private static getIsControllerMethod = (value: unknown): value is ControllerMethod<unknown, unknown, unknown> => {
+  private static getIsControllerMethod = (value: unknown): value is ControllerMethod<unknown, unknown, unknown, unknown> => {
     return (
       typeof value === 'object' &&
       value !== null &&

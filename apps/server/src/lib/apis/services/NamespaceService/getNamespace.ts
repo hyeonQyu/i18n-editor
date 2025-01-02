@@ -1,7 +1,4 @@
 import {
-  CommonNamespaceRequest,
-  GetNamespaceRequest,
-  GetNamespaceResponse,
   KeyValuePair,
   LanguageCode,
   NamespaceContent,
@@ -9,19 +6,15 @@ import {
   TranslationKey,
   TranslationValue,
   TranslationValueByLanguageCode,
+  type GetNamespaceResponse,
 } from 'i18n-editor-common';
 import { createFileWhenNotExist, readFile } from '../../../utils/file';
 import { namespaceContainer } from '../../../utils/namespaceContainer';
-import { getLanguageCodesByLocaleDirectoryPath, languageCodeToNamespaceFilePath } from './common/utils';
+import { getLanguageCodesByLocaleDirectoryPath, getWorkspacePath, languageCodeToNamespaceFilePath } from './common/utils';
 
-const languageCodeToNamespaceContent = async (
-  namespaceRequest: CommonNamespaceRequest,
-  languageCode: LanguageCode,
-): Promise<NamespaceContent> => {
-  const namespaceFilePath = languageCodeToNamespaceFilePath(namespaceRequest, languageCode);
-
+const languageCodeToNamespaceContent = async (workspacePath: string, namespace: string, languageCode: LanguageCode) => {
+  const namespaceFilePath = languageCodeToNamespaceFilePath(workspacePath, namespace, languageCode);
   await createFileWhenNotExist(namespaceFilePath, {});
-
   return await readFile(namespaceFilePath);
 };
 
@@ -70,11 +63,11 @@ const getTranslationsByLanguageContentPairs = (
   });
 };
 
-const getTranslations = async (namespaceRequest: CommonNamespaceRequest, languageCodes: LanguageCode[]): Promise<Translation[]> => {
+const getTranslations = async (workspacePath: string, namespace: string, languageCodes: LanguageCode[]) => {
   const languageContentPairs: Array<KeyValuePair<LanguageCode, NamespaceContent>> = await Promise.all(
     languageCodes.map(async (languageCode) => {
       try {
-        const content = await languageCodeToNamespaceContent(namespaceRequest, languageCode);
+        const content = await languageCodeToNamespaceContent(workspacePath, namespace, languageCode);
 
         return {
           key: languageCode,
@@ -89,9 +82,11 @@ const getTranslations = async (namespaceRequest: CommonNamespaceRequest, languag
   return getTranslationsByLanguageContentPairs(languageContentPairs);
 };
 
-export const getNamespace: (req: GetNamespaceRequest) => Promise<GetNamespaceResponse> = async (req) => {
-  const languageCodes = await getLanguageCodesByLocaleDirectoryPath(req.localeDirectoryPath);
-  const translations = await getTranslations(req, languageCodes);
+export const getNamespace: (workspaceId: string, namespace: string) => Promise<GetNamespaceResponse> = async (workspaceId, namespace) => {
+  const path = getWorkspacePath(workspaceId);
+
+  const languageCodes = await getLanguageCodesByLocaleDirectoryPath(path);
+  const translations = await getTranslations(path, namespace, languageCodes);
 
   namespaceContainer.setTranslations(translations);
 

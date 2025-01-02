@@ -5,12 +5,12 @@ import {
   DeleteNamespaceLanguageResponse,
   DeleteNamespaceTranslationRequest,
   DeleteNamespaceTranslationResponse,
-  GetNamespaceRequest,
-  GetNamespaceResponse,
+  GetNamespaceRequest1,
+  GetNamespaceResponse1,
   PostNamespaceLanguageRequest,
   PostNamespaceLanguageResponse,
-  PostNamespaceRequest,
-  PostNamespaceResponse,
+  PostNamespaceRequest1,
+  PostNamespaceResponse1,
   PostNamespaceTranslationRequest,
   PostNamespaceTranslationResponse,
   PutNamespaceTranslationRequest,
@@ -18,11 +18,11 @@ import {
 } from 'i18n-editor-common';
 
 export default class NamespaceApi extends BaseAPI {
-  public getNamespace: AxiosRequestFunction<GetNamespaceRequest, GetNamespaceResponse> = (req) => {
+  public getNamespace: AxiosRequestFunction<GetNamespaceRequest1, GetNamespaceResponse1> = (req) => {
     return this.axiosInstance.get(this.getUrl('/namespace'), { params: req });
   };
 
-  public postNamespace: AxiosRequestFunction<PostNamespaceRequest, PostNamespaceResponse> = (req) => {
+  public postNamespace: AxiosRequestFunction<PostNamespaceRequest1, PostNamespaceResponse1> = (req) => {
     return this.axiosInstance.post(this.getUrl('/namespace'), req);
   };
 

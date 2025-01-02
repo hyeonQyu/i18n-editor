@@ -1,6 +1,6 @@
 import { UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { GetFileSystemDirectoryRequest, GetNamespaceRequest, GetWorkspaceRequest, ResponseEntity } from 'i18n-editor-common';
+import { GetFileSystemDirectoryRequest, GetNamespaceRequest1, GetWorkspaceRequest, ResponseEntity } from 'i18n-editor-common';
 
 export type QueryOption<TResponse, TQueryKey extends (...args: any) => readonly unknown[]> = Omit<
   UseQueryOptions<ResponseEntity<TResponse>, AxiosError, ResponseEntity<TResponse>, ReturnType<TQueryKey>>,
@@ -30,6 +30,6 @@ export const QUERY_KEY = {
   namespace: {
     base: ['namespace'] as const,
     getNamespaceAll: () => [...QUERY_KEY.namespace.base, 'getNamespace'] as const,
-    getNamespace: (req: GetNamespaceRequest) => [...QUERY_KEY.namespace.base, 'getNamespace', req] as const,
+    getNamespace: (req: GetNamespaceRequest1) => [...QUERY_KEY.namespace.base, 'getNamespace', req] as const,
   },
 };

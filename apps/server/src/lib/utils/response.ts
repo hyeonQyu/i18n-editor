@@ -1,7 +1,6 @@
 import { Express } from 'express';
 import ConfigController from '../apis/controllers/ConfigController';
 import FileSystemController from '../apis/controllers/FileSystemController';
-import NamespaceController from '../apis/controllers/NamespaceController';
 import WorkspaceController from '../apis/controllers/WorkspaceController';
 import BaseController from './BaseController';
 
@@ -17,10 +16,6 @@ const CONTROLLER_MAP = {
   workspace: {
     path: '/workspace',
     constructor: WorkspaceController,
-  },
-  namespace: {
-    path: '/namespace',
-    constructor: NamespaceController,
   },
 } as const satisfies Record<
   string,
