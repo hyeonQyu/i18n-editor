@@ -22,5 +22,5 @@ export const removeExtension = (fileName: string) => {
 };
 
 export const generateUniqueID = () => {
-  return `${Math.random().toString(36).substring(2, 11)}-${createTimestamp()}`;
+  return createTimestamp().toString(36) + Math.random().toString(36).substring(2, 5);
 };

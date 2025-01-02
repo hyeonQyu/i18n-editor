@@ -6,51 +6,48 @@ import { getLanguageCodes } from '../../../utils/locale';
 import configService from '../ConfigService';
 
 const getWorkspaces = () => {
-  const { workspaces } = configService.getConfig();
-  return [...workspaces];
+  const workspaceConfig = configService.getWorkspace();
+  return Object.values(workspaceConfig);
 };
 
 const createWorkspace = async ({ name, path }: Pick<Workspace, 'name' | 'path'>) => {
-  const workspaces = getWorkspaces();
+  const workspaceConfig = configService.getWorkspace();
 
-  const existingWorkspaceIndex = workspaces.findIndex((workspace) => workspace.path === path);
+  const existingWorkspace = Object.values(workspaceConfig).find((workspace) => workspace.path === path);
 
-  if (existingWorkspaceIndex !== -1) {
-    workspaces.splice(existingWorkspaceIndex, 1);
-  }
+  const id = existingWorkspace ? existingWorkspace.id : generateUniqueID();
 
-  workspaces.push({ id: generateUniqueID(), name, path, lastOpenedAt: createTimestamp() });
+  workspaceConfig[id] = {
+    id,
+    name,
+    path,
+    lastOpenedAt: createTimestamp(),
+  };
 
-  await configService.setWorkspaces(workspaces);
+  await configService.setWorkspace(workspaceConfig);
 };
 
 const updateWorkspace = async (id: string, workspace: Omit<Workspace, 'id'>) => {
-  const workspaces = getWorkspaces();
+  const workspaceConfig = configService.getWorkspace();
 
-  const { hasDuplicateName, existingWorkspaceIndex } = workspaces.reduce(
-    (acc, curr, index) => ({
-      hasDuplicateName: acc.hasDuplicateName || (curr.name === workspace.name && curr.id !== id),
-      existingWorkspaceIndex: curr.id === id ? index : acc.existingWorkspaceIndex,
-    }),
-    { hasDuplicateName: false, existingWorkspaceIndex: -1 },
-  );
+  const currentWorkspace = workspaceConfig[id];
+
+  if (!currentWorkspace) {
+    throw new NotFoundError('워크스페이스를 찾을 수 없습니다. 다시 시도해주세요.');
+  }
+
+  const hasDuplicateName = Object.values(workspaceConfig).some((current) => workspace.name === current.name && id !== current.id);
 
   if (hasDuplicateName) {
     throw new ConflictError('이미 존재하는 이름입니다.');
   }
 
-  if (existingWorkspaceIndex === -1) {
-    throw new NotFoundError('워크스페이스를 찾을 수 없습니다. 다시 시도해주세요.');
-  }
-
-  const currentWorkspace = workspaces[existingWorkspaceIndex];
-
-  workspaces[existingWorkspaceIndex] = {
+  workspaceConfig[id] = {
     ...currentWorkspace,
     ...workspace,
   };
 
-  await configService.setWorkspaces(workspaces);
+  await configService.setWorkspace(workspaceConfig);
 };
 
 const getAllNamespaces = async (rootPath: string, languages: string[]) => {
@@ -71,8 +68,8 @@ const getAllNamespaces = async (rootPath: string, languages: string[]) => {
 };
 
 const getWorkspace = async (id: string) => {
-  const workspaces = getWorkspaces();
-  const workspace = workspaces.find((workspace) => workspace.id === id);
+  const workspaceConfig = configService.getWorkspace();
+  const workspace = workspaceConfig[id];
 
   if (!workspace) {
     throw new NotFoundError('존재하지 않는 워크스페이스입니다.');
@@ -92,9 +89,9 @@ const getWorkspace = async (id: string) => {
 };
 
 const deleteWorkspace = async (id: string) => {
-  const workspaces = getWorkspaces();
-  const filteredWorkspaces = workspaces.filter((workspace) => workspace.id !== id);
-  await configService.setWorkspaces(filteredWorkspaces);
+  const workspaceConfig = configService.getWorkspace();
+  delete workspaceConfig[id];
+  await configService.setWorkspace(workspaceConfig);
 };
 
 const workspaceService = {

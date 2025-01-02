@@ -1,10 +1,9 @@
-import { EditorConfig } from '../../../config';
 import { Workspace } from '../../../workspace';
 
 export type GetWorkspacesRequest = void;
 
 export interface GetWorkspacesResponse {
-  workspaces: EditorConfig['workspaces'];
+  workspaces: Workspace[];
 }
 
 export type PostWorkspaceRequest = Pick<Workspace, 'name' | 'path'>;
