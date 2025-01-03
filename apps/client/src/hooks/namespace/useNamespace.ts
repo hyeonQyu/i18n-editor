@@ -3,22 +3,22 @@ import { useAPI } from '@providers/APIProvider';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import { useWorkspaceStore } from '@stores/workspace';
 import { useQuery } from '@tanstack/react-query';
-import { GetNamespaceRequest1, GetNamespaceResponse1 } from 'i18n-editor-common';
+import { GetNamespaceRequest, GetNamespaceResponse } from 'i18n-editor-common';
 
-function useNamespace(): GetNamespaceResponse1 | undefined {
+function useNamespace(): GetNamespaceResponse | undefined {
   const api = useAPI();
 
   const workspace = useWorkspace();
   const namespace = useWorkspaceStore(({ namespace }) => namespace) ?? '';
 
-  const path = workspace?.path ?? '';
+  const id = workspace?.id ?? '';
 
-  const req: GetNamespaceRequest1 = { localeDirectoryPath: path, namespace };
+  const req: GetNamespaceRequest = { id, namespace };
 
   const { data: { data } = {} } = useQuery({
-    queryKey: QUERY_KEY.namespace.getNamespace(req),
-    queryFn: async () => (await api.namespace.getNamespace(req)).data,
-    enabled: Boolean(path && namespace),
+    queryKey: QUERY_KEY.workspace.getNamespace(req),
+    queryFn: async () => (await api.workspace.getNamespace(req)).data,
+    enabled: Boolean(id && namespace),
   });
 
   return data;

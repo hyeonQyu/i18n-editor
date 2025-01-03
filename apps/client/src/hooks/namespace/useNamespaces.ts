@@ -1,4 +1,4 @@
-import useQueryGetWorkspace from '@hooks/namespace/useQueryGetWorkspace';
+import useQueryGetWorkspace from '@hooks/workspace/useQueryGetWorkspace';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import { TIME_UNIT } from 'i18n-editor-common';
 

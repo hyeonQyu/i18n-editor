@@ -1,14 +1,14 @@
 import { MUTATION_KEY } from '@defines/reactQuery';
 import { useAPI } from '@providers/APIProvider';
 import { useMutation } from '@tanstack/react-query';
-import { PostNamespaceRequest1 } from 'i18n-editor-common';
+import { PostNamespaceRequest } from 'i18n-editor-common';
 
 function useCreateNamespace() {
   const api = useAPI();
 
   const { mutateAsync } = useMutation({
-    mutationKey: MUTATION_KEY.namespace.postNamespace(),
-    mutationFn: async (req: PostNamespaceRequest1) => (await api.namespace.postNamespace(req)).data,
+    mutationKey: MUTATION_KEY.workspace.postNamespace(),
+    mutationFn: async (req: PostNamespaceRequest) => (await api.workspace.postNamespace(req)).data,
   });
 
   return mutateAsync;

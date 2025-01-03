@@ -16,7 +16,7 @@ function useAddNamespace() {
   return async (namespace: string) => {
     if (!workspace || !namespace) return;
 
-    await createNewNamespace({ localeDirectoryPath: workspace.path, namespace });
+    await createNewNamespace({ id: workspace.id, namespace });
 
     enqueueClosableSnackbar({
       message: '새로운 namespace가 추가되었습니다.',
