@@ -1,7 +1,7 @@
 import { LanguageCode, PostNamespaceResponse } from 'i18n-editor-common';
 import { BadRequestError } from '../../../defines/errors';
 import { getIsExistFile, writeFile } from '../../../utils/file';
-import { getLanguageCodesByLocaleDirectoryPath, getWorkspacePath, languageCodeToNamespaceFilePath } from './common/utils';
+import { getLanguageCodesByWorkspacePath, getWorkspacePath, languageCodeToNamespaceFilePath } from './common/utils';
 
 const getIsExistNamespace = (workspacePath: string, namespace: string, languageCodes: LanguageCode[]) => {
   return languageCodes.some((languageCode) => {
@@ -17,7 +17,7 @@ const writeNewNamespace = async (namespaceFilePath: string) => {
 export const createNamespace = async (workspaceId: string, namespace: string): Promise<PostNamespaceResponse> => {
   const path = getWorkspacePath(workspaceId);
 
-  const languageCodes = await getLanguageCodesByLocaleDirectoryPath(path);
+  const languageCodes = await getLanguageCodesByWorkspacePath(path);
 
   if (getIsExistNamespace(path, namespace, languageCodes)) {
     throw new BadRequestError('이미 존재하는 namespace 입니다.');
