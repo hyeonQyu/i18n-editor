@@ -1,10 +1,10 @@
 import { QUERY_KEY } from '@defines/reactQuery';
 import { useAPI } from '@providers/APIProvider';
-import { usePathStore } from '@stores/pathStore';
+import { useGlobalStore } from '@stores/globalStore';
 import { useQuery } from '@tanstack/react-query';
 
 function useInitialPath() {
-  const pathFromStore = usePathStore(({ path }) => path);
+  const pathFromStore = useGlobalStore(({ path }) => path);
 
   const api = useAPI();
 
