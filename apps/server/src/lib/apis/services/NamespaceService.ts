@@ -1,6 +1,7 @@
 import fs from 'fs';
 import {
   CommonNamespaceRequest,
+  getLeadingSlash,
   GetNamespaceRequest,
   GetNamespaceResponse,
   KeyValuePair,
@@ -13,6 +14,7 @@ import {
   TranslationValue,
   TranslationValueByLanguageCode,
 } from 'i18n-editor-common';
+import { BadRequestError } from '../../defines/errors';
 import { createFileWhenNotExist, readFile, writeFile } from '../../utils/file';
 import { getLanguageCodes } from '../../utils/locale';
 
@@ -65,7 +67,7 @@ const languageCodeToNamespaceFilePath = (namespaceRequest: CommonNamespaceReques
   const { localeDirectoryPath, namespace } = namespaceRequest;
 
   const languageDirectoryPath = `${localeDirectoryPath}/${languageCode}`;
-  return `${languageDirectoryPath}/${namespace}.json`;
+  return `${getLeadingSlash(languageDirectoryPath)}/${namespace}.json`;
 };
 
 const languageCodeToNamespaceContent = async (
@@ -134,7 +136,7 @@ const namespaceService = {
     const languageCodes = await getLanguageCodesByLocaleDirectoryPath(req.localeDirectoryPath);
 
     if (getIsExistNamespace(req, languageCodes)) {
-      throw new Error('이미 존재하는 namespace 입니다.');
+      throw new BadRequestError('이미 존재하는 namespace 입니다.');
     }
 
     await Promise.all(

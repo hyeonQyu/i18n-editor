@@ -19,32 +19,32 @@ import {
 
 export default class NamespaceAPI extends BaseAPI {
   public getNamespace: AxiosRequestFunction<GetNamespaceRequest, GetNamespaceResponse> = (req) => {
-    return this.axiosInstance.get(this.getUrl('/namespace'), { params: req });
+    return this.axiosInstance.get(this.getUrl('/'), { params: req });
   };
 
   public postNamespace: AxiosRequestFunction<PostNamespaceRequest, PostNamespaceResponse> = (req) => {
-    return this.axiosInstance.post(this.getUrl('/namespace'), req);
+    return this.axiosInstance.post(this.getUrl('/'), req);
   };
 
   public postNamespaceTranslation: AxiosRequestFunction<PostNamespaceTranslationRequest, PostNamespaceTranslationResponse> = (req) => {
-    return this.axiosInstance.post(this.getUrl('/namespace/translation'), req);
+    return this.axiosInstance.post(this.getUrl('/translation'), req);
   };
 
   public putNamespaceTranslation: AxiosRequestFunction<PutNamespaceTranslationRequest, PutNamespaceTranslationResponse> = (req) => {
-    return this.axiosInstance.put(this.getUrl('/namespace/translation'), req);
+    return this.axiosInstance.put(this.getUrl('/translation'), req);
   };
 
   public deleteNamespaceTranslation: AxiosRequestFunction<DeleteNamespaceTranslationRequest, DeleteNamespaceTranslationResponse> = (
     req,
   ) => {
-    return this.axiosInstance.delete(this.getUrl('/namespace/translation'), { data: req });
+    return this.axiosInstance.delete(this.getUrl('/translation'), { data: req });
   };
 
   public postNamespaceLanguage: AxiosRequestFunction<PostNamespaceLanguageRequest, PostNamespaceLanguageResponse> = (req) => {
-    return this.axiosInstance.post(this.getUrl('/namespace/language'), req);
+    return this.axiosInstance.post(this.getUrl('/language'), req);
   };
 
   public deleteNamespaceLanguage: AxiosRequestFunction<DeleteNamespaceLanguageRequest, DeleteNamespaceLanguageResponse> = (req) => {
-    return this.axiosInstance.delete(this.getUrl('/namespace/language'), { data: req });
+    return this.axiosInstance.delete(this.getUrl('/language'), { data: req });
   };
 }
