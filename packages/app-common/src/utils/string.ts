@@ -9,3 +9,8 @@ export const getLeadingSlash = (str: string) => {
 export const getExtensionName = (fileName: string) => {
   return fileName.slice(fileName.lastIndexOf('.') + 1);
 };
+
+export const removeExtension = (fileName: string) => {
+  const lastDotIndex = fileName.lastIndexOf('.');
+  return lastDotIndex > 0 ? fileName.slice(0, lastDotIndex) : fileName;
+};

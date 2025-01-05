@@ -1,13 +1,25 @@
-import { AutocompleteProps } from '@mui/material/Autocomplete/Autocomplete';
-import { ChipTypeMap } from '@mui/material/Chip';
+import { NamespaceSelectProps } from '@components/NamespaceSelector/components/NamespaceSelect/defines/select';
+import { useNamespaceAddDialogStore } from '@components/NamespaceSelector/stores/namespaceAddDialogStore';
 import { useGlobalStore } from '@stores/globalStore';
 
-function useNamespaceChangeHandler(): AutocompleteProps<string, false, false, false, ChipTypeMap['defaultComponent']>['onChange'] {
+function useNamespaceChangeHandler(): NamespaceSelectProps['onChange'] {
   const setNamespace = useGlobalStore(({ setNamespace }) => setNamespace);
+  const openDialog = useNamespaceAddDialogStore(({ open }) => open);
 
-  return (_, value) => {
-    if (!value) return;
-    setNamespace(value);
+  return (_, item) => {
+    if (!item) return;
+
+    const { type, label, value } = item;
+
+    if (type === 'add') {
+      openDialog(() => ({
+        namespace: value,
+      }));
+
+      return;
+    }
+
+    setNamespace(label);
   };
 }
 
