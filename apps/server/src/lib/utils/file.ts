@@ -1,12 +1,17 @@
 import fs from 'fs';
-import { getExtensionName } from 'i18n-editor-common';
+import { getExtensionName, getLeadingSlash } from 'i18n-editor-common';
 
 export const readFile = async (filePath: string) => {
-  return JSON.parse(await fs.promises.readFile(filePath, 'utf-8'));
+  return JSON.parse(await fs.promises.readFile(getLeadingSlash(filePath), 'utf-8'));
 };
 
 export const writeFile = async (filePath: string, content: object) => {
-  await fs.promises.writeFile(filePath, JSON.stringify(content));
+  await fs.promises.writeFile(getLeadingSlash(filePath), JSON.stringify(content));
+};
+
+export const readDirectory: typeof fs.promises.readdir = async (path, options) => {
+  // @ts-ignore
+  return fs.promises.readdir(getLeadingSlash(path), options);
 };
 
 export const getFileNames = async (directoryPath: string, validFileExtensions: string[]) => {
@@ -14,13 +19,15 @@ export const getFileNames = async (directoryPath: string, validFileExtensions: s
 
   const getIsValidFile = (entry: fs.Dirent) => entry.isFile() && validFileExtensionSet.has(getExtensionName(entry.name));
 
-  const files = await fs.promises.readdir(directoryPath, { withFileTypes: true });
+  const files = await readDirectory(directoryPath, { withFileTypes: true });
 
   return files.filter(getIsValidFile).map((entry) => entry.name);
 };
 
 export const createFileWhenNotExist = async (filePath: string, content: object) => {
-  if (!fs.existsSync(filePath)) {
-    await writeFile(filePath, content);
+  const path = getLeadingSlash(filePath);
+
+  if (!fs.existsSync(path)) {
+    await writeFile(path, content);
   }
 };
