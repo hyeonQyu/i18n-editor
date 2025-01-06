@@ -12,7 +12,7 @@ function ValueCell(props: ValueCellProps) {
   const rows = useRows();
   const rowIndex = useRowIndex();
 
-  const hasKey = Boolean(rows[rowIndex].key);
+  const hasKey = Boolean(rows[rowIndex]?.key);
 
   return <TextFieldCell value={value} multiline={true} disabled={!hasKey} />;
 }

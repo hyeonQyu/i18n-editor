@@ -10,17 +10,15 @@ import {
   PostNamespaceParams,
   PostNamespaceRequest,
   PostNamespaceResponse,
+  PostTranslationParams,
+  PostTranslationRequest,
+  PostTranslationResponse,
   PostWorkspaceRequest,
   PostWorkspaceResponse,
   PutWorkspaceParams,
   PutWorkspaceRequest,
   PutWorkspaceResponse,
 } from 'i18n-editor-common';
-import {
-  PostTranslationParams,
-  PostTranslationRequest,
-  PostTranslationResponse,
-} from 'i18n-editor-common/lib/defines/api/models/worksapce/translation';
 import { ControllerMethod } from '../../defines/api';
 import BaseController from '../../utils/BaseController';
 import namespaceService from '../services/NamespaceService';

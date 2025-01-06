@@ -12,6 +12,9 @@ import {
   PostNamespaceParams,
   PostNamespaceRequest,
   PostNamespaceResponse,
+  PostTranslationParams,
+  PostTranslationRequest,
+  PostTranslationResponse,
   PostWorkspaceRequest,
   PostWorkspaceResponse,
   PutWorkspaceParams,
@@ -51,5 +54,10 @@ export default class WorkspaceAPI extends BaseAPI {
   public getNamespace: AxiosRequestFunction<GetNamespaceParams, GetNamespaceResponse> = (req) => {
     const { id, namespace } = req;
     return this.axiosInstance.get(this.getUrl(`/${id}/${namespace}`));
+  };
+
+  public postTranslation: AxiosRequestFunction<PostTranslationRequest & PostTranslationParams, PostTranslationResponse> = (req) => {
+    const { id, namespace, index, translation } = req;
+    return this.axiosInstance.post(this.getUrl(`/${id}/${namespace}`), { translation, index });
   };
 }

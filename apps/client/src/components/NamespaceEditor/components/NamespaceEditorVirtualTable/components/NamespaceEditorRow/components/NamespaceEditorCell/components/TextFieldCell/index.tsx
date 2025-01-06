@@ -4,15 +4,20 @@ import { ChangeEventHandler, useState } from 'react';
 
 interface TextFieldCellProps extends Omit<TextFieldProps, 'value' | 'onChange' | 'maxRows'> {
   value: string;
+  onComplete?: (value: string) => void | Promise<void>;
 }
 
 function TextFieldCell(props: TextFieldCellProps) {
-  const { value: defaultValue, fullWidth = true, multiline = true, disabled, ...textFieldProps } = props;
+  const { value: defaultValue, onComplete, fullWidth = true, multiline = true, disabled, ...textFieldProps } = props;
 
   const [value, setValue] = useState(defaultValue);
 
   const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setValue(e.target.value);
+  };
+
+  const handleBlur = async () => {
+    await onComplete?.(value);
   };
 
   const cursor = disabled ? 'default' : 'pointer';
@@ -21,6 +26,7 @@ function TextFieldCell(props: TextFieldCellProps) {
     <TextField
       value={value}
       onChange={handleChange}
+      onBlur={handleBlur}
       fullWidth={fullWidth}
       multiline={multiline}
       maxRows={8}
@@ -41,7 +47,7 @@ function TextFieldCell(props: TextFieldCellProps) {
           '&.Mui-focused .MuiInputBase-input': {
             cursor: 'text',
           },
-          '&:hover:not(.Mui-focused)': {
+          '&:hover:not(.Mui-focused):not(.Mui-disabled)': {
             backgroundColor: (theme) => theme.palette.action.hover,
           },
         },

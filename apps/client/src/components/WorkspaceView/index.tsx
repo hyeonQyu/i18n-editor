@@ -1,10 +1,10 @@
 import NamespaceEditor from '@components/NamespaceEditor';
 import WorkspaceViewHeader from '@components/WorkspaceView/components/WorkspaceViewHeader';
-import useNamespace from '@hooks/namespace/useNamespace';
 import { Box } from '@mui/material';
+import { useWorkspaceStore } from '@stores/workspace';
 
 function WorkspaceView() {
-  const namespace = useNamespace();
+  const namespace = useWorkspaceStore(({ namespace }) => namespace);
 
   return (
     <Box
