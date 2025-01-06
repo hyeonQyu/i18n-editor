@@ -1,5 +1,5 @@
+import useDefaultColumnWidth from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorFixedHeaderContent/components/NamespaceEditorHeadCell/hooks/useDefaultColumnWidth';
 import { ColumnData } from '@components/NamespaceEditor/defines/table';
-import { useColumns } from '@components/NamespaceEditor/providers/ColumnProvider';
 import { TableCell } from '@mui/material';
 
 interface NamespaceEditorHeadCellProps {
@@ -10,11 +10,18 @@ function NamespaceEditorHeadCell(props: NamespaceEditorHeadCellProps) {
   const { column } = props;
   const { label } = column;
 
-  const columns = useColumns();
-  const width = `${100 / columns.length}%`;
+  const isMenuColumn = label === '';
+
+  const width = useDefaultColumnWidth(isMenuColumn);
 
   return (
-    <TableCell variant={'head'} sx={{ color: '#ffffff' }} width={width}>
+    <TableCell
+      variant={'head'}
+      sx={{ color: '#ffffff' }}
+      style={{
+        width,
+      }}
+    >
       {label}
     </TableCell>
   );

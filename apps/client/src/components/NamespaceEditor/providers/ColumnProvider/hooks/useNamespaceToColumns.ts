@@ -10,6 +10,9 @@ function useNamespaceToColumns(): ColumnData[] {
 
     return [
       {
+        label: '',
+      },
+      {
         label: 'key',
       },
       ...namespace.languageCodes.map((code) => ({ label: code })),
