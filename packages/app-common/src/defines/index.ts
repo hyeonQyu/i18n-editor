@@ -1,6 +1,7 @@
 export * from './api';
 export * from './config';
 export * from './default';
+export * from './extensions';
 export * from './file';
 export * from './keyValue';
 export * from './language';

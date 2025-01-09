@@ -1,8 +1,8 @@
 import useNamespaceAddFormSubmit from '@components/NamespaceSelector/components/NamespaceAddDialog/hooks/useNamespaceAddFormSubmit';
 import useNamespaceDuplicated from '@components/NamespaceSelector/components/NamespaceAddDialog/hooks/useNamespaceDuplicated';
 import { useNamespaceAddDialogStore } from '@components/NamespaceSelector/stores/namespaceAddDialogStore';
-import { EXTENSIONS_SUFFIX } from '@defines/extensions';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { EXTENSIONS_SUFFIX } from 'i18n-editor-common';
 import { useEffect } from 'react';
 
 function NamespaceAddDialog() {

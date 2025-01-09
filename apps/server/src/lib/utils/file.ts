@@ -15,7 +15,7 @@ export const readDirectory: typeof fs.promises.readdir = async (path, options) =
 };
 
 export const getFileNames = async (directoryPath: string, validFileExtensions: string[]) => {
-  const validFileExtensionSet = new Set<string>(validFileExtensions);
+  const validFileExtensionSet = new Set<string>(validFileExtensions.map((ext) => ext.replace('.', '')));
 
   const getIsValidFile = (entry: fs.Dirent) => entry.isFile() && validFileExtensionSet.has(getExtensionName(entry.name));
 

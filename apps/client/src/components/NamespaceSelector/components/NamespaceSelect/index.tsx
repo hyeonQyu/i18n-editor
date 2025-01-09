@@ -4,7 +4,6 @@ import useNamespaceSelectItems from '@components/NamespaceSelector/components/Na
 import useNamespaceSelectOpenHandler from '@components/NamespaceSelector/components/NamespaceSelect/hooks/useNamespaceSelectOpenHandler';
 import useNamespaceSelectValue from '@components/NamespaceSelector/components/NamespaceSelect/hooks/useNamespaceSelectValue';
 import { Autocomplete, TextField } from '@mui/material';
-import { removeExtension } from 'i18n-editor-common';
 
 function NamespaceSelect() {
   const namespaceItems = useNamespaceSelectItems();
@@ -21,7 +20,7 @@ function NamespaceSelect() {
       key={value?.label}
       value={value}
       options={namespaceItems}
-      getOptionLabel={(option) => removeExtension(option.label)}
+      getOptionLabel={({ label }) => label}
       size={'small'}
       noOptionsText={'결과 없음'}
       onOpen={handleOpen}

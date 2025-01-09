@@ -15,7 +15,7 @@ abstract class BaseAPI {
   }
 
   protected getUrl(url: string): string {
-    return `${this._baseUrl}${getLeadingSlash(url)}`;
+    return `${this._baseUrl}${url ? getLeadingSlash(url) : url}`;
   }
 }
 

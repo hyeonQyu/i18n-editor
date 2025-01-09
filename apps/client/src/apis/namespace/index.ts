@@ -19,11 +19,11 @@ import {
 
 export default class NamespaceAPI extends BaseAPI {
   public getNamespace: AxiosRequestFunction<GetNamespaceRequest, GetNamespaceResponse> = (req) => {
-    return this.axiosInstance.get(this.getUrl('/'), { params: req });
+    return this.axiosInstance.get(this.getUrl(''), { params: req });
   };
 
   public postNamespace: AxiosRequestFunction<PostNamespaceRequest, PostNamespaceResponse> = (req) => {
-    return this.axiosInstance.post(this.getUrl('/'), req);
+    return this.axiosInstance.post(this.getUrl(''), req);
   };
 
   public postNamespaceTranslation: AxiosRequestFunction<PostNamespaceTranslationRequest, PostNamespaceTranslationResponse> = (req) => {
