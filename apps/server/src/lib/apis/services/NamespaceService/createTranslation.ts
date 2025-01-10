@@ -1,4 +1,5 @@
 import { LanguageCode, Translation } from 'i18n-editor-common';
+import { ConflictError } from '../../../defines/errors';
 import { writeFile } from '../../../utils/file';
 import { namespaceContainer } from '../../../utils/namespaceContainer';
 import {
@@ -31,6 +32,12 @@ export const createTranslation = async (workspaceId: string, namespace: string, 
 
   const translations =
     namespaceContainer.getTranslations(workspaceId, namespace) ?? (await readTranslations(path, namespace, languageCodes));
+
+  const isDuplicated = Boolean(translations.find(({ key }) => translation.key === key));
+
+  if (isDuplicated) {
+    throw new ConflictError('이미 동일한 키가 존재합니다.');
+  }
 
   translations.splice(index, 0, completeTranslation(languageCodes, translation));
 
