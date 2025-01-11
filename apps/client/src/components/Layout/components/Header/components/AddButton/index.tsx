@@ -1,21 +1,15 @@
 import useAddNamespaceClickHandler from '@hooks/namespace/useAddNamespaceClickHandler';
+import usePopover from '@hooks/usePopover';
 import useAddWorkspaceClickHandler from '@hooks/workspace/useAddWorkspaceClickHandler';
 import AddIcon from '@mui/icons-material/Add';
 import { IconButton, Menu, MenuItem, Typography, useTheme } from '@mui/material';
-import { MouseEventHandler, useState } from 'react';
 
 function AddButton() {
   const {
     palette: { text },
   } = useTheme();
 
-  const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
-
-  const handleClick: MouseEventHandler = (e) => {
-    setAnchorElement(e.currentTarget as HTMLElement);
-  };
-
-  const handleClose = () => setAnchorElement(null);
+  const { anchorElement, handleOpen, handleClose } = usePopover();
 
   const addWorkspace = useAddWorkspaceClickHandler();
   const addNamespace = useAddNamespaceClickHandler();
@@ -32,7 +26,7 @@ function AddButton() {
 
   return (
     <>
-      <IconButton size={'large'} edge={'start'} color={'inherit'} onClick={handleClick}>
+      <IconButton size={'large'} edge={'start'} color={'inherit'} onClick={handleOpen}>
         <AddIcon />
       </IconButton>
 

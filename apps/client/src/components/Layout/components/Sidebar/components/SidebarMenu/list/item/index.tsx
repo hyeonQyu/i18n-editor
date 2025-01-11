@@ -1,14 +1,8 @@
-import { SvgIconComponent } from '@mui/icons-material';
+import { MenuItemProps } from '@defines/menu';
+import usePopover from '@hooks/usePopover';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { IconButton, ListItem, ListItemButton, ListItemText, Menu, MenuItem, Typography, useTheme } from '@mui/material';
-import { MouseEventHandler, ReactNode, useState } from 'react';
-
-interface MenuItemProps {
-  label: string;
-  IconComponent: SvgIconComponent;
-  onClick: MouseEventHandler;
-  color?: string;
-}
+import { MouseEventHandler, ReactNode } from 'react';
 
 interface SidebarMenuListItemProps {
   children: ReactNode;
@@ -26,15 +20,13 @@ function SidebarMenuListItem(props: SidebarMenuListItemProps) {
 
   const hasMenu = Boolean(menuItems?.length);
 
-  const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
+  const { anchorElement, handleOpen, handleClose } = usePopover();
 
   const handleClickOpenMenu: MouseEventHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setAnchorElement(e.currentTarget as HTMLElement);
+    handleOpen(e);
   };
-
-  const handleClose = () => setAnchorElement(null);
 
   return (
     <ListItem onClick={onClick}>
@@ -74,7 +66,7 @@ function SidebarMenuListItem(props: SidebarMenuListItemProps) {
                 handleClose();
               }}
             >
-              <IconComponent sx={{ color }} fontSize={'small'} />
+              {IconComponent && <IconComponent sx={{ color }} fontSize={'small'} />}
               <Typography variant={'body2'} sx={{ color }}>
                 {label}
               </Typography>
