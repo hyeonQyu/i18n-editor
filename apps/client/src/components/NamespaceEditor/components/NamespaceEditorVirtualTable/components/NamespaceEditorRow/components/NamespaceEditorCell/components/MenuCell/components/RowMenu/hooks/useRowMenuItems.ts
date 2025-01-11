@@ -11,14 +11,14 @@ function useRowMenuItems(): MenuItemProps[] {
 
   return [
     {
-      label: '위에 행 추가',
+      label: '위에 번역 추가',
       onClick: () => {
         addRow(rowIndex);
       },
       IconComponent: NorthIcon,
     },
     {
-      label: '아래에 행 추가',
+      label: '아래에 번역 추가',
       onClick: () => {
         addRow(rowIndex + 1);
       },
