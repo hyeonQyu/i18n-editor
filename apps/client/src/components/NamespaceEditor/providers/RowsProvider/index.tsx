@@ -1,10 +1,27 @@
 import { EMPTY_ROWS, RowData } from '@components/NamespaceEditor/defines/table';
 import useNamespaceToRows from '@components/NamespaceEditor/providers/RowsProvider/hooks/useNamespaceToRows';
-import { createContext, ReactNode, useContext } from 'react';
+import useNamespace from '@hooks/namespace/useNamespace';
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 
-const RowsContext = createContext<RowData[]>(EMPTY_ROWS);
+interface RowsContextProps {
+  rows: RowData[];
+  setRows: Dispatch<SetStateAction<RowData[]>>;
+}
 
-export const useRows = () => useContext(RowsContext);
+const RowsContext = createContext<RowsContextProps>({
+  rows: EMPTY_ROWS,
+  setRows: () => {},
+});
+
+export const useRows = () => {
+  const { rows } = useContext(RowsContext);
+  return rows;
+};
+
+export const useSetRows = () => {
+  const { setRows } = useContext(RowsContext);
+  return setRows;
+};
 
 interface RowsProviderProps {
   children: ReactNode;
@@ -13,9 +30,45 @@ interface RowsProviderProps {
 function RowsProvider(props: RowsProviderProps) {
   const { children } = props;
 
-  const rows = useNamespaceToRows();
+  const namespace = useNamespace();
 
-  return <RowsContext.Provider value={rows}>{children}</RowsContext.Provider>;
+  const { languageCodes } = namespace;
+
+  const emptyRow: RowData = useMemo(
+    () =>
+      languageCodes.reduce(
+        (acc, code) => {
+          acc[code] = '';
+          return acc;
+        },
+        {
+          key: '',
+        } as RowData,
+      ),
+    [languageCodes],
+  );
+
+  const [rows, setRows] = useState<RowData[]>([emptyRow]);
+
+  const namespaceRows = useNamespaceToRows(namespace);
+
+  useEffect(() => {
+    setRows([...namespaceRows, emptyRow]);
+  }, [emptyRow, namespaceRows]);
+
+  return (
+    <RowsContext.Provider
+      value={useMemo(
+        () => ({
+          rows,
+          setRows,
+        }),
+        [rows, setRows],
+      )}
+    >
+      {children}
+    </RowsContext.Provider>
+  );
 }
 
 export default RowsProvider;

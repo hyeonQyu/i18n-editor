@@ -2,6 +2,7 @@ import NamespaceEditorCell from '@components/NamespaceEditor/components/Namespac
 import { RowData } from '@components/NamespaceEditor/defines/table';
 import { useColumns } from '@components/NamespaceEditor/providers/ColumnProvider';
 import RowIndexProvider from '@components/NamespaceEditor/providers/RowIndexProvider';
+import { useWorkspaceStore } from '@stores/workspace';
 
 interface NamespaceEditorRowProps {
   rowIndex: number;
@@ -13,11 +14,13 @@ function NamespaceEditorRow(props: NamespaceEditorRowProps) {
 
   const columns = useColumns();
 
+  const namespace = useWorkspaceStore(({ namespace }) => namespace);
+
   return (
     <RowIndexProvider rowIndex={rowIndex}>
       {columns.map(({ label }) => {
         const value = label === '' ? '' : row[label]!;
-        return <NamespaceEditorCell key={label} label={label} value={value} />;
+        return <NamespaceEditorCell key={`${namespace}-${rowIndex}-${label}-${value}`} label={label} value={value} />;
       })}
     </RowIndexProvider>
   );
