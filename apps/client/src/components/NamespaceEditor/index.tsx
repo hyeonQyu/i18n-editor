@@ -1,4 +1,5 @@
 import NamespaceEditorCell from '@components/NamespaceEditor/components/NamespaceEditorCell';
+import NamespaceEditorHeadCell from '@components/NamespaceEditor/components/NamespaceEditorHeadCell';
 import NamespaceEditorScroller from '@components/NamespaceEditor/components/NamespaceEditorScroller';
 import NamespaceEditorTable from '@components/NamespaceEditor/components/NamespaceEditorTable';
 import NamespaceEditorTableBody from '@components/NamespaceEditor/components/NamespaceEditorTableBody';
@@ -6,7 +7,7 @@ import NamespaceEditorTableHead from '@components/NamespaceEditor/components/Nam
 import useEditorColumns from '@components/NamespaceEditor/hooks/useEditorColumns';
 import useEditorRows from '@components/NamespaceEditor/hooks/useEditorRows';
 import RowIndexProvider from '@components/NamespaceEditor/providers/RowIndexProvider';
-import { Paper, TableCell, TableRow } from '@mui/material';
+import { Paper, TableRow } from '@mui/material';
 import { TableVirtuoso } from 'react-virtuoso';
 
 function NamespaceEditor() {
@@ -26,10 +27,8 @@ function NamespaceEditor() {
         }}
         fixedHeaderContent={() => (
           <TableRow>
-            {columns.map(({ label }) => (
-              <TableCell key={label} variant={'head'}>
-                {label}
-              </TableCell>
+            {columns.map((column) => (
+              <NamespaceEditorHeadCell key={column.label} column={column} />
             ))}
           </TableRow>
         )}
