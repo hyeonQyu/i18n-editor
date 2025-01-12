@@ -5,7 +5,7 @@ function useIsVirtualRow() {
   const rowIndex = useRowIndex();
   const rows = useRows();
 
-  return !rows[rowIndex]?.key;
+  return !rows[rowIndex]?.key.value;
 }
 
 export default useIsVirtualRow;

@@ -1,4 +1,5 @@
 import { useSetRows } from '@components/NamespaceEditor/providers/RowsProvider';
+import { createCell } from '@components/NamespaceEditor/utils/cell';
 
 function useAddRow() {
   const setRows = useSetRows();
@@ -7,7 +8,7 @@ function useAddRow() {
     setRows((prevRows) => {
       const rows = [...prevRows];
       rows.splice(index, 0, {
-        key: '',
+        key: createCell(''),
       });
       return rows;
     });

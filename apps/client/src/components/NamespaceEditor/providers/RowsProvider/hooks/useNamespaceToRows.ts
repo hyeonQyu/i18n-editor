@@ -1,4 +1,5 @@
-import { RowData } from '@components/NamespaceEditor/defines/table';
+import { Cell, RowData } from '@components/NamespaceEditor/defines/table';
+import { createCell } from '@components/NamespaceEditor/utils/cell';
 import { GetNamespaceResponse } from 'i18n-editor-common';
 import { useMemo } from 'react';
 
@@ -7,11 +8,11 @@ function useNamespaceToRows(namespace: GetNamespaceResponse): RowData[] {
 
   return useMemo(() => {
     return translations.map((translation) => ({
-      key: translation.key,
+      key: createCell(translation.key),
       ...languageCodes.reduce((acc, code) => {
-        acc[code] = translation.value[code] || '';
+        acc[code] = createCell(translation.value[code] || '');
         return acc;
-      }, {} as Partial<Record<string, string>>),
+      }, {} as Partial<Record<string, Cell>>),
     }));
   }, [translations, languageCodes]);
 }

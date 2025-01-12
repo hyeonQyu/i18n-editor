@@ -1,8 +1,19 @@
 import { LanguageCode } from 'i18n-editor-common';
 
+export interface CellError {
+  message: string;
+}
+
+export interface Cell {
+  value: string;
+  metadata: {
+    error?: CellError;
+  };
+}
+
 export type RowData = {
-  key: string;
-} & Partial<Record<LanguageCode, string>>;
+  key: Cell;
+} & Partial<Record<LanguageCode, Cell>>;
 
 export interface ColumnData {
   label: keyof RowData | '';
