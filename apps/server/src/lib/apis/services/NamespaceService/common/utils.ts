@@ -8,7 +8,7 @@ import {
   TranslationValueByLanguageCode,
 } from 'i18n-editor-common';
 import { BadRequestError, NotFoundError } from '../../../../defines/errors';
-import { createFileWhenNotExist, readFile } from '../../../../utils/file';
+import { createFileWhenNotExist, readFile, writeFile } from '../../../../utils/file';
 import { getLanguageCodes } from '../../../../utils/locale';
 import configService from '../../ConfigService';
 
@@ -108,9 +108,7 @@ export const readTranslations = async (workspacePath: string, namespace: string,
   return getTranslationsByLanguageContentPairs(languageContentPairs);
 };
 
-export const translationsToNamespaceContentByLanguageCode = (
-  translations: Translation[],
-): Partial<Record<LanguageCode, NamespaceContent>> => {
+const translationsToNamespaceContentByLanguageCode = (translations: Translation[]): Partial<Record<LanguageCode, NamespaceContent>> => {
   const namespaceContentByLanguageCode: Partial<Record<LanguageCode, NamespaceContent>> = {};
 
   translations.forEach((translation) => {
@@ -124,4 +122,30 @@ export const translationsToNamespaceContentByLanguageCode = (
   });
 
   return namespaceContentByLanguageCode;
+};
+
+export const writeTranslation = async (workspacePath: string, namespace: string, translations: Translation[]) => {
+  const namespaceContentByLanguageCode = translationsToNamespaceContentByLanguageCode(translations);
+
+  await Promise.all(
+    Object.entries(namespaceContentByLanguageCode).map(([languageCode, namespaceContent]) => {
+      const namespaceFilePath = languageCodeToNamespaceFilePath(workspacePath, namespace, languageCode as LanguageCode);
+      return writeFile(namespaceFilePath, namespaceContent);
+    }),
+  );
+};
+
+export const completeTranslation = (languageCodes: LanguageCode[], translation: Translation): Translation => {
+  const translationValue = languageCodes.reduce((acc, languageCode) => {
+    if (!acc[languageCode]) {
+      acc[languageCode] = '';
+    }
+
+    return acc;
+  }, translation.value);
+
+  return {
+    key: translation.key,
+    value: translationValue,
+  };
 };

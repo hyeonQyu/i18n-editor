@@ -9,3 +9,11 @@ export interface PostTranslationRequest {
 }
 
 export type PostTranslationResponse = void;
+
+export type PutTranslationParams = NamespaceParams;
+
+export interface PutTranslationRequest {
+  translation: Translation;
+}
+
+export type PutTranslationResponse = void;

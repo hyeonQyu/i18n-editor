@@ -15,6 +15,9 @@ import {
   PostTranslationResponse,
   PostWorkspaceRequest,
   PostWorkspaceResponse,
+  PutTranslationParams,
+  PutTranslationRequest,
+  PutTranslationResponse,
   PutWorkspaceParams,
   PutWorkspaceRequest,
   PutWorkspaceResponse,
@@ -95,6 +98,16 @@ export default class WorkspaceController extends BaseController {
       const { id, namespace } = req.params;
       const { translation, index } = req.body;
       return await namespaceService.createTranslation(id, namespace, translation, index);
+    },
+  };
+
+  private putTranslation: ControllerMethod<PutTranslationRequest, PutTranslationParams, never, PutTranslationResponse> = {
+    path: '/:id/:namespace',
+    method: 'put',
+    handler: async (req) => {
+      const { id, namespace } = req.params;
+      const { translation } = req.body;
+      return await namespaceService.updateTranslation(id, namespace, translation);
     },
   };
 }
