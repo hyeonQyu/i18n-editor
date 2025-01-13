@@ -97,17 +97,33 @@ export default class WorkspaceController extends BaseController {
     handler: async (req) => {
       const { id, namespace } = req.params;
       const { translation, index } = req.body;
-      return await namespaceService.createTranslation(id, namespace, translation, index);
+      return await namespaceService.createTranslation(
+        {
+          workspaceId: id,
+          namespace,
+        },
+        {
+          translation,
+          index,
+        },
+      );
     },
   };
 
   private putTranslation: ControllerMethod<PutTranslationRequest, PutTranslationParams, never, PutTranslationResponse> = {
-    path: '/:id/:namespace',
+    path: '/:id/:namespace/:translationKey',
     method: 'put',
     handler: async (req) => {
-      const { id, namespace } = req.params;
-      const { translation } = req.body;
-      return await namespaceService.updateTranslation(id, namespace, translation);
+      const { id, namespace, translationKey } = req.params;
+      const { languageCode, value } = req.body;
+      return await namespaceService.updateTranslation(
+        {
+          workspaceId: id,
+          namespace,
+          translationKey,
+        },
+        { languageCode, value },
+      );
     },
   };
 }
