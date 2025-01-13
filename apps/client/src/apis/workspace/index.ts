@@ -17,6 +17,9 @@ import {
   PostTranslationResponse,
   PostWorkspaceRequest,
   PostWorkspaceResponse,
+  PutTranslationParams,
+  PutTranslationRequest,
+  PutTranslationResponse,
   PutWorkspaceParams,
   PutWorkspaceRequest,
   PutWorkspaceResponse,
@@ -59,5 +62,10 @@ export default class WorkspaceAPI extends BaseAPI {
   public postTranslation: AxiosRequestFunction<PostTranslationRequest & PostTranslationParams, PostTranslationResponse> = (req) => {
     const { id, namespace, index, translation } = req;
     return this.axiosInstance.post(this.getUrl(`/${id}/${namespace}`), { translation, index });
+  };
+
+  public putTranslation: AxiosRequestFunction<PutTranslationRequest & PutTranslationParams, PutTranslationResponse> = (req) => {
+    const { id, namespace, translationKey, languageCode, value } = req;
+    return this.axiosInstance.put(this.getUrl(`/${id}/${namespace}/${translationKey}`), { languageCode, value });
   };
 }
