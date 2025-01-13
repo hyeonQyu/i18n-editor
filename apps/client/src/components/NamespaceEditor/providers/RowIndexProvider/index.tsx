@@ -1,8 +1,8 @@
-import { createContext, ReactNode } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 
 const RowIndexContext = createContext<number>(0);
 
-export const useRowIndex = createContext(RowIndexContext);
+export const useRowIndex = () => useContext(RowIndexContext);
 
 interface RowIndexProviderProps {
   children: ReactNode;

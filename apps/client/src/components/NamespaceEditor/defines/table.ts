@@ -7,3 +7,6 @@ export type RowData = {
 export interface ColumnData {
   label: keyof RowData;
 }
+
+export const EMPTY_ROWS: RowData[] = [];
+export const EMPTY_COLUMNS: ColumnData[] = [];
