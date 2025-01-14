@@ -1,5 +1,8 @@
 import { focusNextTextFieldCell } from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/TextFieldCell/utils/focus';
-import { CELL_PADDING } from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/defines/styles';
+import {
+  CELL_MIN_HEIGHT,
+  CELL_PADDING,
+} from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/defines/styles';
 import useClearCellError from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/hooks/useClearCellError';
 import { Cell } from '@components/NamespaceEditor/defines/table';
 import { TextField, TextFieldProps, useTheme } from '@mui/material';
@@ -91,7 +94,7 @@ function TextFieldCell(props: TextFieldCellProps) {
         width: '100%',
 
         '& .MuiInputBase-root': {
-          minHeight: '88px',
+          minHeight: `${CELL_MIN_HEIGHT}px`,
         },
 
         '& .MuiFormHelperText-root': {
