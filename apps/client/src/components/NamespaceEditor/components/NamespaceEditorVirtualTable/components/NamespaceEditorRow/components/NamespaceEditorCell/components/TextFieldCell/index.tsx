@@ -45,6 +45,8 @@ function TextFieldCell(props: TextFieldCellProps) {
 
   const handleKeyDown: KeyboardEventHandler = (e) => {
     if (e.key === 'Enter') {
+      if (e.shiftKey) return;
+
       e.preventDefault();
       focusNextTextFieldCell(e.currentTarget);
     }
