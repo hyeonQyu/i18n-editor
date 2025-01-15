@@ -28,6 +28,7 @@ function SidebarContainer(props: SidebarContainerProps) {
       PaperProps={{
         sx: {
           width: SIDEBAR_WIDTH,
+          overflow: 'hidden',
           top: `${HEADER_HEIGHT}px`,
           height: `calc(100% - ${HEADER_HEIGHT}px)`,
           boxSizing: 'borderBox',

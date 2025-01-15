@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 
 function WorkspaceMenu() {
   return (
-    <Box sx={{ display: 'flex', gap: '8px', minWidth: 'fit-content' }}>
+    <Box sx={{ display: 'inline-flex', gap: '8px', flexShrink: 0 }}>
       <DirectoryChangeButton />
       <NativeFileManagerOpenButton />
     </Box>

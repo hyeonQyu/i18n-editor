@@ -9,6 +9,7 @@ function WorkspaceViewHeader() {
         display: 'flex',
         justifyContent: 'space-between',
         gap: '12px',
+        width: '100%',
       }}
     >
       <WorkspaceTitle />
