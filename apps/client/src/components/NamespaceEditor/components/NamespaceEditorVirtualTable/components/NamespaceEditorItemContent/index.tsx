@@ -17,7 +17,7 @@ function NamespaceEditorItemContent(props: NamespaceEditorItemContentProps) {
     <RowIndexProvider rowIndex={rowIndex}>
       {columns.map(({ label }) => {
         const value = row[label]!;
-        return <NamespaceEditorCell key={value} defaultValue={value} isKey={label === 'key'} />;
+        return <NamespaceEditorCell key={label} defaultValue={value} isKey={label === 'key'} />;
       })}
     </RowIndexProvider>
   );
