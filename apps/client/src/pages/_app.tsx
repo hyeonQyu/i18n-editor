@@ -1,3 +1,4 @@
+import Layout from '@components/Layout';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -18,7 +19,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <APIProvider>
         <ReactQueryClientProvider>
           <ThemeProvider>
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
             <ReactQueryDevtools />
           </ThemeProvider>
         </ReactQueryClientProvider>
