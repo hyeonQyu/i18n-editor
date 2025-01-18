@@ -1,28 +1,24 @@
-import RowMenu from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/MenuCell/components/RowMenu';
+import RowMenuButton from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/MenuCell/components/RowMenuButton';
+import VirtualRowDeleteButton from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/MenuCell/components/VirtualRowDeleteButton';
 import useIsVirtualRow from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/hooks/useIsVirtualRow';
-import usePopover from '@hooks/usePopover';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Box, IconButton } from '@mui/material';
+import { useRowIndex } from '@components/NamespaceEditor/providers/RowIndexProvider';
+import { useRows } from '@components/NamespaceEditor/providers/RowsProvider';
+import { Box } from '@mui/material';
 
 function MenuCell() {
   const isVirtualRow = useIsVirtualRow();
 
-  const { anchorElement, handleOpen, handleClose } = usePopover();
+  const rowIndex = useRowIndex();
+  const rows = useRows();
 
-  if (isVirtualRow) {
-    return null;
-  }
+  const isLastRow = rowIndex === rows.length - 1;
+
+  if (isLastRow && isVirtualRow) return null;
 
   return (
-    <>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <IconButton onClick={handleOpen}>
-          <MoreVertIcon sx={{ fontSize: '22px' }} />
-        </IconButton>
-      </Box>
-
-      <RowMenu anchorElement={anchorElement} onClose={handleClose} />
-    </>
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {isVirtualRow ? <VirtualRowDeleteButton /> : <RowMenuButton />}
+    </Box>
   );
 }
 
