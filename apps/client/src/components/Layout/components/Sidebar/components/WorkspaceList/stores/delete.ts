@@ -4,6 +4,6 @@ interface WorkspaceDeleteDialogStore {
   workspaceId: string | undefined;
 }
 
-export const useWorkspaceDeleteDialogStore = createDialogStore<WorkspaceDeleteDialogStore>((set) => ({
+export const useWorkspaceDeleteDialogStore = createDialogStore<WorkspaceDeleteDialogStore>(() => ({
   workspaceId: undefined,
 }));

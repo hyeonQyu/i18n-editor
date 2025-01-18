@@ -9,7 +9,7 @@ import { ErrorResponseEntity } from 'i18n-editor-common';
 
 function useCompleteKeyCellHandler() {
   const workspace = useWorkspace();
-  const namespace = useWorkspaceStore(({ namespace }) => namespace);
+  const namespace = useWorkspaceStore((state) => state.namespace);
 
   const rowIndex = useRowIndex();
 

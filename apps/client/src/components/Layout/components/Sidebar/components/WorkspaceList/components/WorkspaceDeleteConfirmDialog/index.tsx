@@ -5,9 +5,9 @@ import { enqueueClosableSnackbar } from '@utils/snackbar';
 import { FormEventHandler } from 'react';
 
 function WorkspaceDeleteConfirmDialog() {
-  const workspaceId = useWorkspaceDeleteDialogStore(({ workspaceId }) => workspaceId);
-  const opened = useWorkspaceDeleteDialogStore(({ opened }) => opened);
-  const close = useWorkspaceDeleteDialogStore(({ close }) => close);
+  const workspaceId = useWorkspaceDeleteDialogStore((state) => state.workspaceId);
+  const opened = useWorkspaceDeleteDialogStore((state) => state.opened);
+  const close = useWorkspaceDeleteDialogStore((state) => state.close);
 
   const deleteWorkspace = useDeleteWorkspace();
 

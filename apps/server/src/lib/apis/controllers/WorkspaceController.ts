@@ -134,6 +134,11 @@ export default class WorkspaceController extends BaseController {
     method: 'delete',
     handler: async (req) => {
       const { id, namespace, translationKey } = req.params;
+      return await namespaceService.deleteTranslation({
+        workspaceId: id,
+        namespace,
+        translationKey,
+      });
     },
   };
 }
