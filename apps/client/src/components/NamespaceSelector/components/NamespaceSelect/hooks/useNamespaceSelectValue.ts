@@ -1,9 +1,9 @@
 import { NamespaceSelectItem } from '@components/NamespaceSelector/components/NamespaceSelect/defines/select';
-import { useGlobalStore } from '@stores/globalStore';
+import { useWorkspaceStore } from '@stores/workspace';
 import { useMemo } from 'react';
 
 function useNamespaceSelectValue(): NamespaceSelectItem | undefined {
-  const namespace = useGlobalStore(({ namespace }) => namespace);
+  const namespace = useWorkspaceStore(({ namespace }) => namespace);
 
   return useMemo(
     () =>

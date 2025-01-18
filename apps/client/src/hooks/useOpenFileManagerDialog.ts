@@ -1,8 +1,8 @@
 import { useFileManagerDialogStore } from '@components/FileManagerDialog/stores';
-import { useGlobalStore } from '@stores/globalStore';
+import { useWorkspaceStore } from '@stores/workspace';
 
 function useOpenFileManagerDialog() {
-  const path = useGlobalStore(({ path }) => path);
+  const path = useWorkspaceStore(({ path }) => path);
 
   const open = useFileManagerDialogStore(({ open }) => open);
 

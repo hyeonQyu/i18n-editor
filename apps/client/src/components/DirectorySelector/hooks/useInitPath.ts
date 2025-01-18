@@ -1,10 +1,10 @@
 import useConfig from '@hooks/config/useConfig';
 import useInitialPath from '@hooks/file-system/useInitialPath';
-import { useGlobalStore } from '@stores/globalStore';
+import { useWorkspaceStore } from '@stores/workspace';
 import { useEffect } from 'react';
 
 function useInitPath() {
-  const { path, setPath } = useGlobalStore();
+  const { path, setPath } = useWorkspaceStore();
 
   const config = useConfig();
   const initialPath = useInitialPath();

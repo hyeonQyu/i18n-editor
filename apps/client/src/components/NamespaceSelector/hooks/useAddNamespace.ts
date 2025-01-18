@@ -1,10 +1,10 @@
 import useCreateNewNamespace from '@hooks/namespace/useCreateNewNamespace';
 import useInvalidateLocaleNamespaces from '@hooks/namespace/useInvalidateLocaleNamespaces';
-import { useGlobalStore } from '@stores/globalStore';
+import { useWorkspaceStore } from '@stores/workspace';
 import { enqueueClosableSnackbar } from '@utils/snackbar';
 
 function useAddNamespace() {
-  const path = useGlobalStore(({ path }) => path);
+  const path = useWorkspaceStore(({ path }) => path);
 
   const createNewNamespace = useCreateNewNamespace();
 
