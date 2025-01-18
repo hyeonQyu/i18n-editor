@@ -1,5 +1,9 @@
 import { Workspace } from '../../../workspace';
 
+export interface WorkspaceParams {
+  id: string;
+}
+
 export type GetWorkspacesRequest = void;
 
 export interface GetWorkspacesResponse {
@@ -12,22 +16,16 @@ export type PostWorkspaceResponse = void;
 
 export type PutWorkspaceRequest = Omit<Workspace, 'id'>;
 
-export interface PutWorkspaceParams {
-  id: string;
-}
+export type PutWorkspaceParams = WorkspaceParams;
 
 export type PutWorkspaceResponse = void;
 
-export interface GetWorkspaceRequest {
-  id: string;
-}
+export type GetWorkspaceParams = WorkspaceParams;
 
 export interface GetWorkspaceResponse {
   namespaces: string[];
 }
 
-export interface DeleteWorkspaceRequest {
-  id: string;
-}
+export type DeleteWorkspaceParams = WorkspaceParams;
 
 export type DeleteWorkspaceResponse = void;

@@ -47,6 +47,7 @@ const setTranslations = (workspaceId: string, namespace: string, newTranslations
 };
 
 export const namespaceContainer = {
+  checkKeyValid,
   getTranslations,
   setTranslations,
   getLanguageCodes,

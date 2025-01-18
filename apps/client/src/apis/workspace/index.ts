@@ -53,26 +53,26 @@ export default class WorkspaceAPI extends BaseAPI {
 
   public postNamespace: AxiosRequestFunction<PostNamespaceParams & PostNamespaceRequest, PostNamespaceResponse> = (req) => {
     const { id, namespace } = req;
-    return this.axiosInstance.post(this.getUrl(`/${id}`), { namespace });
+    return this.axiosInstance.post(this.getUrl(`/${id}/namespace`), { namespace });
   };
 
   public getNamespace: AxiosRequestFunction<GetNamespaceParams, GetNamespaceResponse> = (req) => {
     const { id, namespace } = req;
-    return this.axiosInstance.get(this.getUrl(`/${id}/${namespace}`));
+    return this.axiosInstance.get(this.getUrl(`/${id}/namespace/${namespace}`));
   };
 
   public postTranslation: AxiosRequestFunction<PostTranslationRequest & PostTranslationParams, PostTranslationResponse> = (req) => {
     const { id, namespace, index, translation } = req;
-    return this.axiosInstance.post(this.getUrl(`/${id}/${namespace}`), { translation, index });
+    return this.axiosInstance.post(this.getUrl(`/${id}/namespace/${namespace}/translation`), { translation, index });
   };
 
   public putTranslation: AxiosRequestFunction<PutTranslationRequest & PutTranslationParams, PutTranslationResponse> = (req) => {
     const { id, namespace, translationKey, languageCode, value } = req;
-    return this.axiosInstance.put(this.getUrl(`/${id}/${namespace}/${translationKey}`), { languageCode, value });
+    return this.axiosInstance.put(this.getUrl(`/${id}/namespace/${namespace}/translation/${translationKey}`), { languageCode, value });
   };
 
   public deleteTranslation: AxiosRequestFunction<DeleteTranslationParams, DeleteTranslationResponse> = (req) => {
     const { id, namespace, translationKey } = req;
-    return this.axiosInstance.delete(this.getUrl(`/${id}/${namespace}/${translationKey}`));
+    return this.axiosInstance.delete(this.getUrl(`/${id}/namespace/${namespace}/translation/${translationKey}`));
   };
 }

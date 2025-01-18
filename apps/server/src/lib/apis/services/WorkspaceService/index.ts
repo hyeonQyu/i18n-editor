@@ -1,9 +1,10 @@
-import { EXTENSIONS_SUFFIX, generateUniqueID, removeExtension, Workspace } from 'i18n-editor-common';
+import { generateUniqueID, Workspace } from 'i18n-editor-common';
 import { createTimestamp } from 'i18n-editor-common/lib/utils/time';
 import { BadRequestError, ConflictError, NotFoundError } from '../../../defines/errors';
-import { getFileNames } from '../../../utils/file';
 import { getLanguageCodes } from '../../../utils/locale';
 import configService from '../ConfigService';
+import { getAllNamespaces } from './common/utils';
+import { createLanguage } from './createLanguage';
 
 const getWorkspaces = () => {
   const workspaceConfig = configService.getWorkspace();
@@ -50,23 +51,6 @@ const updateWorkspace = async (id: string, workspace: Omit<Workspace, 'id'>) => 
   await configService.setWorkspace(workspaceConfig);
 };
 
-const getAllNamespaces = async (rootPath: string, languages: string[]) => {
-  const jsonFileNames: string[] = [];
-
-  const jsonFileNamesList = await Promise.all(
-    languages.map((language) => {
-      const directoryPath = `${rootPath}/${language}`;
-      return getFileNames(directoryPath, [EXTENSIONS_SUFFIX.json]);
-    }),
-  );
-
-  jsonFileNamesList.forEach((fileNames) => {
-    jsonFileNames.push(...fileNames);
-  });
-
-  return Array.from(new Set(jsonFileNames)).map(removeExtension);
-};
-
 const getWorkspace = async (id: string) => {
   const workspaceConfig = configService.getWorkspace();
   const workspace = workspaceConfig[id];
@@ -77,15 +61,15 @@ const getWorkspace = async (id: string) => {
 
   const { path } = workspace;
 
-  const languages = await getLanguageCodes(path);
+  const languageCodes = await getLanguageCodes(path);
 
-  if (languages.length === 0) {
+  if (languageCodes.length === 0) {
     throw new BadRequestError('올바른 workspace가 아닙니다.');
   }
 
   updateWorkspace(id, { ...workspace, lastOpenedAt: createTimestamp() });
 
-  return await getAllNamespaces(path, languages);
+  return await getAllNamespaces(path, languageCodes);
 };
 
 const deleteWorkspace = async (id: string) => {
@@ -100,6 +84,7 @@ const workspaceService = {
   updateWorkspace,
   getWorkspace,
   deleteWorkspace,
+  createLanguage,
 };
 
 export default workspaceService;
