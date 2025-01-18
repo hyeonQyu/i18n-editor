@@ -1,4 +1,4 @@
-import { Translation } from 'i18n-editor-common';
+import { LanguageCode, Translation } from 'i18n-editor-common';
 
 const key: {
   workspaceId: string;
@@ -9,6 +9,7 @@ const key: {
 };
 
 let translations: Translation[] | undefined = undefined;
+let languageCodes: LanguageCode[] | undefined = undefined;
 
 const checkKeyValid = (workspaceId: string, namespace: string) => {
   return key.workspaceId !== workspaceId || key.namespace !== namespace;
@@ -17,6 +18,19 @@ const checkKeyValid = (workspaceId: string, namespace: string) => {
 const setKey = (workspaceId: string, namespace: string) => {
   key.workspaceId = workspaceId;
   key.namespace = namespace;
+};
+
+const setLanguageCodes = (workspaceId: string, namespace: string, languageCodes: LanguageCode[]) => {
+  setKey(workspaceId, namespace);
+  languageCodes = languageCodes;
+};
+
+const getLanguageCodes = (workspaceId: string, namespace: string) => {
+  if (!checkKeyValid(workspaceId, namespace)) {
+    return undefined;
+  }
+
+  return languageCodes ? [...languageCodes] : languageCodes;
 };
 
 const getTranslations = (workspaceId: string, namespace: string) => {
@@ -35,4 +49,6 @@ const setTranslations = (workspaceId: string, namespace: string, newTranslations
 export const namespaceContainer = {
   getTranslations,
   setTranslations,
+  getLanguageCodes,
+  setLanguageCodes,
 } as const;

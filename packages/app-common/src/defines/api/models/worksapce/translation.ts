@@ -11,9 +11,11 @@ export interface PostTranslationRequest {
 
 export type PostTranslationResponse = void;
 
-export type PutTranslationParams = PostTranslationParams & {
+export type TranslationParams = PostTranslationParams & {
   translationKey: string;
 };
+
+export type PutTranslationParams = TranslationParams;
 
 export interface PutTranslationRequest {
   languageCode: LanguageCode;
@@ -21,3 +23,7 @@ export interface PutTranslationRequest {
 }
 
 export type PutTranslationResponse = void;
+
+export type DeleteTranslationParams = TranslationParams;
+
+export type DeleteTranslationResponse = void;
