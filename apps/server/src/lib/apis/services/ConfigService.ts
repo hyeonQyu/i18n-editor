@@ -1,6 +1,5 @@
-import { EditorConfig, GetConfigResponse } from 'i18n-editor-common';
+import { DEFAULT_EDITOR_CONFIG, EditorConfig } from 'i18n-editor-common';
 import { Environment } from '../../defines/env';
-import { NotFoundError } from '../../defines/errors';
 import { getEnvironment } from '../../utils/env';
 import { readFile } from '../../utils/file';
 
@@ -17,18 +16,30 @@ const getConfigFilePath = () => {
   return CONFIG_PATH_BY_ENV[env];
 };
 
-const configService = {
-  async getConfig(): Promise<GetConfigResponse> {
-    try {
-      const config = (await readFile(getConfigFilePath())) as EditorConfig;
+let editorConfig = DEFAULT_EDITOR_CONFIG;
 
-      return {
-        config,
-      };
-    } catch (e) {
-      throw new NotFoundError('Config file not found');
-    }
-  },
+const readConfig = async () => {
+  return (await readFile(getConfigFilePath())) as EditorConfig;
+};
+
+const refreshConfig = async () => {
+  editorConfig = await readConfig();
+};
+
+const getConfig = () => editorConfig;
+
+const initConfig = async () => {
+  try {
+    await refreshConfig();
+  } catch (e) {
+    editorConfig = DEFAULT_EDITOR_CONFIG;
+  }
+};
+
+const configService = {
+  initConfig,
+  getConfig,
+  refreshConfig,
 };
 
 export default configService;

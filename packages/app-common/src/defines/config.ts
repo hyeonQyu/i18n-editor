@@ -1,6 +1,12 @@
+import { Workspace } from './workspace';
+
 export interface EditorConfig {
-  localeDirectoryPath: string;
+  workspaces: Workspace[];
 }
+
+export const DEFAULT_EDITOR_CONFIG: EditorConfig = {
+  workspaces: [],
+};
 
 /**
  * @deprecated

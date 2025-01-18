@@ -1,6 +1,5 @@
 import { TIME_UNIT } from 'i18n-editor-common';
 import { AppOption } from './defines/appOption';
-import { ConfigUtil } from './utils/configUtil';
 import { startCheckMemoryInterval } from './utils/memory';
 import { startResponse } from './utils/response';
 import { createServer } from './utils/server';
@@ -19,11 +18,10 @@ module.exports = {
 
         const server = createServer();
 
-        server.listen(port, () => {
+        server.listen(port, async () => {
           console.log(`i18n editor started with port ${port}`);
-          ConfigUtil.init(env);
 
-          startResponse(server);
+          await startResponse(server);
         });
 
         if (env === 'production') {
