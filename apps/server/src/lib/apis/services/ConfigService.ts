@@ -1,7 +1,8 @@
 import { DEFAULT_EDITOR_CONFIG, EditorConfig } from 'i18n-editor-common';
+import { Workspace } from 'i18n-editor-common/lib/defines/workspace';
 import { Environment } from '../../defines/env';
 import { getEnvironment } from '../../utils/env';
-import { readFile } from '../../utils/file';
+import { readFile, writeFile } from '../../utils/file';
 
 const projectRoot = process.cwd();
 
@@ -22,6 +23,10 @@ const readConfig = async () => {
   return (await readFile(getConfigFilePath())) as EditorConfig;
 };
 
+const writeConfig = async (config: EditorConfig) => {
+  return await writeFile(getConfigFilePath(), config);
+};
+
 const refreshConfig = async () => {
   editorConfig = await readConfig();
 };
@@ -36,10 +41,16 @@ const initConfig = async () => {
   }
 };
 
+const setWorkspaces = async (workspaces: Workspace[]) => {
+  editorConfig.workspaces = workspaces;
+  await writeConfig(editorConfig);
+};
+
 const configService = {
   initConfig,
   getConfig,
   refreshConfig,
+  setWorkspaces,
 };
 
 export default configService;
