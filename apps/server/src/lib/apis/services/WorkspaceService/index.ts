@@ -1,17 +1,17 @@
 import { Workspace } from 'i18n-editor-common/lib/defines/workspace';
 import { createTimestamp } from 'i18n-editor-common/lib/utils/time';
+import { NotFoundError } from '../../../defines/errors';
 import configService from '../ConfigService';
 
-const getWorkspaces = async () => {
+const getWorkspaces = () => {
   const { workspaces } = configService.getConfig();
-  return workspaces;
+  return [...workspaces];
 };
 
 const createWorkspace = async ({ name, path }: Pick<Workspace, 'name' | 'path'>) => {
-  const config = configService.getConfig();
-  const workspaces = [...config.workspaces];
+  const workspaces = getWorkspaces();
 
-  const existingWorkspaceIndex = workspaces.findIndex((workspace) => workspace.name === name);
+  const existingWorkspaceIndex = workspaces.findIndex((workspace) => workspace.path === path);
 
   if (existingWorkspaceIndex !== -1) {
     workspaces.splice(existingWorkspaceIndex, 1);
@@ -22,9 +22,23 @@ const createWorkspace = async ({ name, path }: Pick<Workspace, 'name' | 'path'>)
   await configService.setWorkspaces(workspaces);
 };
 
+const updateWorkspace = async (path: string, name: string) => {
+  const workspaces = getWorkspaces();
+
+  const existingWorkspaceIndex = workspaces.findIndex((workspace) => workspace.path === path);
+
+  if (existingWorkspaceIndex === -1) {
+    throw new NotFoundError('Workspace not found');
+  }
+
+  workspaces[existingWorkspaceIndex].name = name;
+  await configService.setWorkspaces(workspaces);
+};
+
 const workspaceService = {
   getWorkspaces,
   createWorkspace,
+  updateWorkspace,
 };
 
 export default workspaceService;
