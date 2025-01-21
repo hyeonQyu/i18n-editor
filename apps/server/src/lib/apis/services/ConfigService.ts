@@ -39,7 +39,7 @@ const initConfig = async () => {
 };
 
 const getWorkspace = (): Config['workspace'] => {
-  return { ...config.workspace };
+  return config.workspace;
 };
 
 const setWorkspace = async (workspace: Config['workspace']) => {

@@ -37,7 +37,7 @@ export default class WorkspaceController extends BaseController {
     path: '/',
     method: 'get',
     handler: async () => {
-      const workspaces = workspaceService.getWorkspaces();
+      const workspaces = workspaceService.getList();
       return { workspaces };
     },
   };
@@ -46,7 +46,7 @@ export default class WorkspaceController extends BaseController {
     path: '/',
     method: 'post',
     handler: async (req) => {
-      return await workspaceService.createWorkspace(req.body);
+      return await workspaceService.create(req.body);
     },
   };
 
@@ -55,7 +55,7 @@ export default class WorkspaceController extends BaseController {
     method: 'put',
     handler: async (req) => {
       const { id } = req.params;
-      return await workspaceService.updateWorkspace(id, req.body);
+      return await workspaceService.update(id, req.body);
     },
   };
 
@@ -63,8 +63,7 @@ export default class WorkspaceController extends BaseController {
     path: '/:id',
     method: 'get',
     handler: async (req) => {
-      const namespaces = await workspaceService.getWorkspace(req.params.id);
-      return { namespaces };
+      return await workspaceService.get(req.params.id);
     },
   };
 
@@ -73,7 +72,7 @@ export default class WorkspaceController extends BaseController {
     method: 'delete',
     handler: async (req) => {
       const { id } = req.params;
-      return await workspaceService.deleteWorkspace(id);
+      return await workspaceService.delete(id);
     },
   };
 

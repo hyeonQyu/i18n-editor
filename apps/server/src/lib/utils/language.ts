@@ -7,11 +7,6 @@ const isLanguageDirectory = (dirent: fs.Dirent) => {
   return dirent.isDirectory() && LANGUAGE_CODE_SET.has(dirent.name);
 };
 
-/**
- * @deprecated
- * @param workspacePath
- * @returns
- */
 export const getLanguageCodes = async (workspacePath: string) => {
   return (await readDirectory(workspacePath, { withFileTypes: true }))
     .filter(isLanguageDirectory)

@@ -1,3 +1,4 @@
+import { LanguageCode } from '../../../language';
 import { Workspace } from '../../../workspace';
 
 export interface WorkspaceParams {
@@ -23,6 +24,7 @@ export type PutWorkspaceResponse = void;
 export type GetWorkspaceParams = WorkspaceParams;
 
 export interface GetWorkspaceResponse {
+  languageCodes: LanguageCode[];
   namespaces: string[];
 }
 

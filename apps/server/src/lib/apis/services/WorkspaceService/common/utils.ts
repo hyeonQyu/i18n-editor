@@ -15,6 +15,12 @@ export const getWorkspacePath = (workspaceId: string) => {
   return workspace.path;
 };
 
+/**
+ * @deprecated
+ * @param workspacePath
+ * @param languages
+ * @returns
+ */
 export const getAllNamespaces = async (workspacePath: string, languages: string[]) => {
   const jsonFileNames: string[] = [];
 
