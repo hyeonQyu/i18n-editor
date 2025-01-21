@@ -99,6 +99,10 @@ const fileSystemService = {
     childProcess.spawn(openFileManager, [getLeadingSlash(path)]);
   },
 
+  /**
+   * @deprecated
+   * @param req
+   */
   async getFileSystemLocale(req: GetFileSystemLocaleRequest): Promise<GetFileSystemLocaleResponse> {
     const { path } = req;
 
