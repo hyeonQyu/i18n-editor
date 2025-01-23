@@ -1,5 +1,4 @@
-import { DEFAULT_EDITOR_CONFIG, EditorConfig } from 'i18n-editor-common';
-import { Workspace } from 'i18n-editor-common/lib/defines/workspace';
+import { DEFAULT_EDITOR_CONFIG, EditorConfig, Workspace } from 'i18n-editor-common';
 import { Environment } from '../../defines/env';
 import { getEnvironment } from '../../utils/env';
 import { readFile, writeFile } from '../../utils/file';

@@ -4,6 +4,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import LastWorkedWorkspaceProvider from '@providers/LastWorkedWorkspaceProvider';
 import ReactQueryClientProvider from '@providers/ReactQueryClientProvider';
 import ThemeProvider from '@providers/ThemeProvider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -20,10 +21,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       <APIProvider>
         <ReactQueryClientProvider>
           <ThemeProvider>
-            <Layout>
-              <Component {...pageProps} />
-              <FileManagerDialog />
-            </Layout>
+            <LastWorkedWorkspaceProvider>
+              <Layout>
+                <Component {...pageProps} />
+                <FileManagerDialog />
+              </Layout>
+            </LastWorkedWorkspaceProvider>
             <ReactQueryDevtools />
           </ThemeProvider>
         </ReactQueryClientProvider>

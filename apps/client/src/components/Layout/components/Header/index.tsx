@@ -1,6 +1,6 @@
-import LocaleDirectoryAddButton from '@components/Layout/components/Header/components/LocaleDirectoryAddButton';
 import SidebarController from '@components/Layout/components/Header/components/SidebarController';
 import { AppBar, Toolbar, Typography, useTheme } from '@mui/material';
+import WorkspaceAddButton from 'components/Layout/components/Header/components/WorkspaceAddButton';
 
 function Header() {
   const {
@@ -14,7 +14,7 @@ function Header() {
         <Typography variant={'h6'} noWrap component={'div'} sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, padding: '0 8px' }}>
           i18n Editor
         </Typography>
-        <LocaleDirectoryAddButton />
+        <WorkspaceAddButton />
       </Toolbar>
     </AppBar>
   );

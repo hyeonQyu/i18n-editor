@@ -1,11 +1,17 @@
+import useInitialPath from '@hooks/file-system/useInitialPath';
 import useOpenFileManagerDialog from '@hooks/useOpenFileManagerDialog';
 import AddIcon from '@mui/icons-material/Add';
 import { IconButton, Tooltip } from '@mui/material';
+import { useLastWorkedWorkspace } from '@providers/LastWorkedWorkspaceProvider';
 
-function LocaleDirectoryAddButton() {
+function WorkspaceAddButton() {
   const openFileManagerDialog = useOpenFileManagerDialog();
 
-  const handleClick = () => openFileManagerDialog();
+  const lastWorkedWorkspace = useLastWorkedWorkspace();
+
+  const initialPath = useInitialPath();
+
+  const handleClick = () => openFileManagerDialog(lastWorkedWorkspace?.path ?? initialPath);
 
   return (
     <Tooltip title={'워크스페이스 추가'}>
@@ -16,4 +22,4 @@ function LocaleDirectoryAddButton() {
   );
 }
 
-export default LocaleDirectoryAddButton;
+export default WorkspaceAddButton;

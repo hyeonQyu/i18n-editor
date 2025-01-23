@@ -51,6 +51,11 @@ const compareFileEntry = (a: FileEntry, b: FileEntry) => {
   return a.name.localeCompare(b.name);
 };
 
+/**
+ * @deprecated
+ * @param rootPath
+ * @param languages
+ */
 const getAllNamespaces = async (rootPath: string, languages: string[]) => {
   const jsonFileNames: string[] = [];
 

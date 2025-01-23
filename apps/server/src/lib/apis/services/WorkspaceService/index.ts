@@ -1,5 +1,4 @@
-import { EXTENSIONS_SUFFIX, removeExtension } from 'i18n-editor-common';
-import { Workspace } from 'i18n-editor-common/lib/defines/workspace';
+import { EXTENSIONS_SUFFIX, removeExtension, Workspace } from 'i18n-editor-common';
 import { createTimestamp } from 'i18n-editor-common/lib/utils/time';
 import { BadRequestError, NotFoundError } from '../../../defines/errors';
 import { getFileNames } from '../../../utils/file';
