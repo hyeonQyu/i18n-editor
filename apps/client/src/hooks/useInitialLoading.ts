@@ -1,10 +1,10 @@
 import { QUERY_KEY } from '@defines/reactQuery';
-import { useIsFetching } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 function useInitialLoading() {
-  const isFetchingWorkspaces = Boolean(useIsFetching(QUERY_KEY.workspace.getWorkspaces()));
+  const queryClient = useQueryClient();
 
-  return isFetchingWorkspaces;
+  return !queryClient.getQueryData(QUERY_KEY.workspace.getWorkspaces());
 }
 
 export default useInitialLoading;

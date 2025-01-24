@@ -4,6 +4,11 @@ export const MUTATION_KEY = {
     postFileManager: () => [...MUTATION_KEY.fileSystem.base, 'postFileManager'] as const,
   },
 
+  workspace: {
+    base: ['workspace'] as const,
+    postWorkspace: () => [...MUTATION_KEY.workspace.base, 'postWorkspace'] as const,
+  },
+
   namespace: {
     base: ['namespace'] as const,
     postNamespace: () => [...MUTATION_KEY.namespace.base, 'postNamespace'] as const,
