@@ -13,6 +13,7 @@ function useInitialPath() {
     queryFn: async () => (await api.fileSystem.getFileSystemInitialPath()).data,
     refetchOnWindowFocus: false,
     enabled: !pathFromStore,
+    staleTime: Infinity,
   });
 
   return path;

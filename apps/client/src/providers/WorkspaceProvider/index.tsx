@@ -2,20 +2,20 @@ import useWorkspaces from '@hooks/workspace/useWorkspaces';
 import { Workspace } from 'i18n-editor-common';
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 
-const LastWorkedWorkspaceContext = createContext<Workspace | undefined>(undefined);
+const WorkspaceContext = createContext<Workspace | undefined>(undefined);
 
-export const useLastWorkedWorkspace = () => useContext(LastWorkedWorkspaceContext);
+export const useWorkspace = () => useContext(WorkspaceContext);
 
-interface LastWorkedWorkspaceProviderProps {
+interface WorkspaceProviderProps {
   children: ReactNode;
 }
 
-function LastWorkedWorkspaceProvider(props: LastWorkedWorkspaceProviderProps) {
+function WorkspaceProvider(props: WorkspaceProviderProps) {
   const { children } = props;
 
   const workspaces = useWorkspaces();
 
-  const lastWorkedWorkspace = useMemo(
+  const workspace = useMemo(
     () =>
       workspaces.reduce((latest, workspace) => {
         return !latest || workspace.lastOpenedAt > latest.lastOpenedAt ? workspace : latest;
@@ -23,7 +23,7 @@ function LastWorkedWorkspaceProvider(props: LastWorkedWorkspaceProviderProps) {
     [workspaces],
   );
 
-  return <LastWorkedWorkspaceContext.Provider value={lastWorkedWorkspace}>{children}</LastWorkedWorkspaceContext.Provider>;
+  return <WorkspaceContext.Provider value={workspace}>{children}</WorkspaceContext.Provider>;
 }
 
-export default LastWorkedWorkspaceProvider;
+export default WorkspaceProvider;
