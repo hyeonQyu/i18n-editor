@@ -1,4 +1,3 @@
-import { LanguageCode } from '../../../language';
 import { Workspace } from '../../../workspace';
 
 export interface WorkspaceParams {
@@ -20,13 +19,6 @@ export type PutWorkspaceRequest = Omit<Workspace, 'id'>;
 export type PutWorkspaceParams = WorkspaceParams;
 
 export type PutWorkspaceResponse = void;
-
-export type GetWorkspaceParams = WorkspaceParams;
-
-export interface GetWorkspaceResponse {
-  languageCodes: LanguageCode[];
-  namespaces: string[];
-}
 
 export type DeleteWorkspaceParams = WorkspaceParams;
 

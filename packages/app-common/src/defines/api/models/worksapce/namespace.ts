@@ -1,16 +1,14 @@
-import { LanguageCode } from '../../../language';
-import { Translation } from '../../../translation';
+import { WorkspaceParams } from './workspace';
+
+export type GetNamespacesParams = WorkspaceParams;
+
+export type GetNamespacesResponse = {
+  namespaces: string[];
+};
 
 export interface NamespaceParams {
   id: string;
   namespace: string;
-}
-
-export type GetNamespaceParams = NamespaceParams;
-
-export interface GetNamespaceResponse {
-  languageCodes: LanguageCode[];
-  translations: Translation[];
 }
 
 export type PostNamespaceParams = Pick<NamespaceParams, 'id'>;
