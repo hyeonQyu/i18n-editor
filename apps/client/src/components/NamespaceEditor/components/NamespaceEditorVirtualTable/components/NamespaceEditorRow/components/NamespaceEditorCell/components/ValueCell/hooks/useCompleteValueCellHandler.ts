@@ -1,14 +1,14 @@
 import { useRowIndex } from '@components/NamespaceEditor/providers/RowIndexProvider';
 import { useRows } from '@components/NamespaceEditor/providers/RowsProvider';
+import useNamespace from '@hooks/namespace/useNamespace';
 import useInvalidateGetTranslationsQuery from '@hooks/translation/useInvalidateGetTranslationsQuery';
 import useUpdateTranslation from '@hooks/translation/useUpdateTranslation';
 import { useWorkspace } from '@providers/WorkspaceProvider';
-import { useWorkspaceStore } from '@stores/workspace';
 import { LanguageCode } from 'i18n-editor-common';
 
 function useCompleteValueCellHandler(languageCode: LanguageCode) {
   const workspace = useWorkspace();
-  const namespace = useWorkspaceStore(({ namespace }) => namespace);
+  const namespace = useNamespace();
 
   const rows = useRows();
   const rowIndex = useRowIndex();

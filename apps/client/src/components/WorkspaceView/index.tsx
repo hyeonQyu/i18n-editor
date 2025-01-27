@@ -1,11 +1,7 @@
-import NamespaceEditor from '@components/NamespaceEditor';
 import WorkspaceViewHeader from '@components/WorkspaceView/components/WorkspaceViewHeader';
 import { Box } from '@mui/material';
-import { useWorkspaceStore } from '@stores/workspace';
 
 function WorkspaceView() {
-  const namespace = useWorkspaceStore(({ namespace }) => namespace);
-
   return (
     <Box
       component={'section'}
@@ -17,7 +13,6 @@ function WorkspaceView() {
       }}
     >
       <WorkspaceViewHeader />
-      <Box sx={{ height: '100%', marginTop: '20px' }}>{namespace && <NamespaceEditor />}</Box>
     </Box>
   );
 }

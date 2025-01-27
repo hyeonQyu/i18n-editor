@@ -4,7 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import { GetLanguagesParams, GetLanguagesResponse } from 'i18n-editor-common';
 import { useMemo } from 'react';
 
-function useQueryGetLanguages(workspaceId: string, options: QueryOption<GetLanguagesResponse, typeof QUERY_KEY.workspace.getLanguages>) {
+function useQueryGetLanguages(
+  workspaceId: string,
+  options: QueryOption<GetLanguagesResponse, typeof QUERY_KEY.workspace.getLanguages> = {},
+) {
   const api = useAPI();
   const req: GetLanguagesParams = useMemo(() => ({ id: workspaceId }), [workspaceId]);
 

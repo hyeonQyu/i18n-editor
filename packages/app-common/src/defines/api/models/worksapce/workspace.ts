@@ -12,7 +12,7 @@ export interface GetWorkspacesResponse {
 
 export type PostWorkspaceRequest = Pick<Workspace, 'name' | 'path'>;
 
-export type PostWorkspaceResponse = void;
+export type PostWorkspaceResponse = { id: string };
 
 export type PutWorkspaceRequest = Omit<Workspace, 'id'>;
 

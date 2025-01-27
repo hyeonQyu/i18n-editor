@@ -30,6 +30,8 @@ export const createWorkspace = async (workspace: Pick<Workspace, 'name' | 'path'
   };
 
   await saveWorkspaceConfig(workspaceConfig);
+
+  return id;
 };
 
 export const updateWorkspace = async (id: string, workspace: Omit<Workspace, 'id' | 'lastOpenedAt'>) => {
@@ -42,6 +44,8 @@ export const updateWorkspace = async (id: string, workspace: Omit<Workspace, 'id
   };
 
   await configService.setWorkspace(workspaceConfig);
+
+  return id;
 };
 
 export const getWorkspaceById = (id: string) => {

@@ -50,7 +50,8 @@ export default class WorkspaceController extends BaseController {
     path: '/',
     method: 'post',
     handler: async (req) => {
-      return await workspaceService.create(req.body);
+      const id = await workspaceService.create(req.body);
+      return { id };
     },
   };
 
@@ -59,7 +60,7 @@ export default class WorkspaceController extends BaseController {
     method: 'put',
     handler: async (req) => {
       const { id } = req.params;
-      return await workspaceService.update(id, req.body);
+      await workspaceService.update(id, req.body);
     },
   };
 

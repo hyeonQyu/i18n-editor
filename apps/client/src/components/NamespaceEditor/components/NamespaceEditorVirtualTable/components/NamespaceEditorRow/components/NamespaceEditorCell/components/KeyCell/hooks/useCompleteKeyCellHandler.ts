@@ -1,15 +1,15 @@
 import useSetCellError from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/hooks/useSetCellError';
 import { useRowIndex } from '@components/NamespaceEditor/providers/RowIndexProvider';
+import useNamespace from '@hooks/namespace/useNamespace';
 import useCreateTranslation from '@hooks/translation/useCreateTranslation';
 import useInvalidateGetTranslationsQuery from '@hooks/translation/useInvalidateGetTranslationsQuery';
 import { useWorkspace } from '@providers/WorkspaceProvider';
-import { useWorkspaceStore } from '@stores/workspace';
 import axios from 'axios';
 import { ErrorResponseEntity } from 'i18n-editor-common';
 
 function useCompleteKeyCellHandler() {
   const workspace = useWorkspace();
-  const namespace = useWorkspaceStore((state) => state.namespace);
+  const namespace = useNamespace();
 
   const rowIndex = useRowIndex();
 
