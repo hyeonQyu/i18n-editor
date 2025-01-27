@@ -1,7 +1,8 @@
 import { EMPTY_ROWS, RowData } from '@components/NamespaceEditor/defines/table';
-import useNamespaceToRows from '@components/NamespaceEditor/providers/RowsProvider/hooks/useNamespaceToRows';
+import { translationsToRows } from '@components/NamespaceEditor/providers/RowsProvider/utils/rows';
 import { createCell } from '@components/NamespaceEditor/utils/cell';
-import useNamespace from '@hooks/namespace/useNamespace';
+import useLanguageCodes from '@hooks/language/useLanguageCodes';
+import useTranslations from '@hooks/translation/useTranslations';
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 
 interface RowsContextProps {
@@ -31,9 +32,8 @@ interface RowsProviderProps {
 function RowsProvider(props: RowsProviderProps) {
   const { children } = props;
 
-  const namespace = useNamespace();
-
-  const { languageCodes } = namespace;
+  const languageCodes = useLanguageCodes();
+  const translations = useTranslations();
 
   const emptyRow: RowData = useMemo(
     () =>
@@ -51,7 +51,7 @@ function RowsProvider(props: RowsProviderProps) {
 
   const [rows, setRows] = useState<RowData[]>([emptyRow]);
 
-  const namespaceRows = useNamespaceToRows(namespace);
+  const namespaceRows = translationsToRows(translations, languageCodes);
 
   useEffect(() => {
     setRows([...namespaceRows, emptyRow]);

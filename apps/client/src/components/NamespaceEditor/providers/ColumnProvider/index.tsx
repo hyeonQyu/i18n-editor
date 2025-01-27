@@ -1,6 +1,6 @@
 import { ColumnData, EMPTY_COLUMNS } from '@components/NamespaceEditor/defines/table';
-import useNamespaceToColumns from '@components/NamespaceEditor/providers/ColumnProvider/hooks/useNamespaceToColumns';
-import useNamespace from '@hooks/namespace/useNamespace';
+import { languageCodesToColumns } from '@components/NamespaceEditor/providers/ColumnProvider/utils/columns';
+import useLanguageCodes from '@hooks/language/useLanguageCodes';
 import { createContext, ReactNode, useContext } from 'react';
 
 const ColumnsContext = createContext<ColumnData[]>(EMPTY_COLUMNS);
@@ -14,9 +14,9 @@ interface ColumnsProviderProps {
 function ColumnProvider(props: ColumnsProviderProps) {
   const { children } = props;
 
-  const namespace = useNamespace();
+  const languageCodes = useLanguageCodes();
 
-  const columns = useNamespaceToColumns(namespace);
+  const columns = languageCodesToColumns(languageCodes);
 
   return <ColumnsContext.Provider value={columns}>{children}</ColumnsContext.Provider>;
 }

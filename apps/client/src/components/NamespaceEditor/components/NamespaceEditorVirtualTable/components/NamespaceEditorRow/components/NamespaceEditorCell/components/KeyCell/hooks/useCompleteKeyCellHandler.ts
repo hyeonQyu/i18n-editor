@@ -1,7 +1,7 @@
 import useSetCellError from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/hooks/useSetCellError';
 import { useRowIndex } from '@components/NamespaceEditor/providers/RowIndexProvider';
-import useInvalidateGetNamespaceQuery from '@hooks/namespace/useInvalidateGetNamespaceQuery';
 import useCreateTranslation from '@hooks/translation/useCreateTranslation';
+import useInvalidateGetTranslationsQuery from '@hooks/translation/useInvalidateGetTranslationsQuery';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import { useWorkspaceStore } from '@stores/workspace';
 import axios from 'axios';
@@ -15,7 +15,7 @@ function useCompleteKeyCellHandler() {
 
   const createTranslation = useCreateTranslation();
 
-  const invalidateGetNamespaceQuery = useInvalidateGetNamespaceQuery();
+  const invalidateGetTranslationsQuery = useInvalidateGetTranslationsQuery();
 
   const setCellError = useSetCellError();
 
@@ -33,7 +33,7 @@ function useCompleteKeyCellHandler() {
         },
       });
 
-      await invalidateGetNamespaceQuery(workspace.id, namespace);
+      await invalidateGetTranslationsQuery(workspace.id, namespace);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const { errorMessage } = e.response?.data as ErrorResponseEntity;

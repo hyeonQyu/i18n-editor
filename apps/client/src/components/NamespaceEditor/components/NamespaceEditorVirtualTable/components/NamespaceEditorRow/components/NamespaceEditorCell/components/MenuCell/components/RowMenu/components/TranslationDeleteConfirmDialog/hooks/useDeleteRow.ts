@@ -1,6 +1,6 @@
 import { useRows } from '@components/NamespaceEditor/providers/RowsProvider';
-import useInvalidateGetNamespaceQuery from '@hooks/namespace/useInvalidateGetNamespaceQuery';
 import useDeleteTranslation from '@hooks/translation/useDeleteTranslation';
+import useInvalidateGetTranslationsQuery from '@hooks/translation/useInvalidateGetTranslationsQuery';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import { useWorkspaceStore } from '@stores/workspace';
 
@@ -12,7 +12,7 @@ function useDeleteRow() {
 
   const deleteTranslation = useDeleteTranslation();
 
-  const invalidateGetNamespaceQuery = useInvalidateGetNamespaceQuery();
+  const invalidateGetTranslationsQuery = useInvalidateGetTranslationsQuery();
 
   return async (index: number) => {
     if (!workspace?.id || !namespace) return;
@@ -22,7 +22,7 @@ function useDeleteRow() {
     if (!translationKey) return;
 
     await deleteTranslation({ id: workspace.id, namespace, translationKey });
-    await invalidateGetNamespaceQuery(workspace.id, namespace);
+    await invalidateGetTranslationsQuery(workspace.id, namespace);
   };
 }
 

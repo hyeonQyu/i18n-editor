@@ -3,12 +3,14 @@ import BaseAPI from '@utils/BaseAPI';
 import {
   DeleteTranslationParams,
   DeleteTranslationResponse,
-  DeleteWorkspaceRequest,
+  DeleteWorkspaceParams,
   DeleteWorkspaceResponse,
-  GetNamespaceParams,
-  GetNamespaceResponse,
-  GetWorkspaceRequest,
-  GetWorkspaceResponse,
+  GetLanguagesParams,
+  GetLanguagesResponse,
+  GetNamespacesParams,
+  GetNamespacesResponse,
+  GetTranslationsParams,
+  GetTranslationsResponse,
   GetWorkspacesRequest,
   GetWorkspacesResponse,
   PostNamespaceParams,
@@ -41,14 +43,19 @@ export default class WorkspaceAPI extends BaseAPI {
     return this.axiosInstance.put(this.getUrl(`/${id}`), { name, path });
   };
 
-  public getWorkspace: AxiosRequestFunction<GetWorkspaceRequest, GetWorkspaceResponse> = (req) => {
-    const { id } = req;
-    return this.axiosInstance.get(this.getUrl(`/${id}`));
-  };
-
-  public deleteWorkspace: AxiosRequestFunction<DeleteWorkspaceRequest, DeleteWorkspaceResponse> = (req) => {
+  public deleteWorkspace: AxiosRequestFunction<DeleteWorkspaceParams, DeleteWorkspaceResponse> = (req) => {
     const { id } = req;
     return this.axiosInstance.delete(this.getUrl(`/${id}`));
+  };
+
+  public getLanguages: AxiosRequestFunction<GetLanguagesParams, GetLanguagesResponse> = (req) => {
+    const { id } = req;
+    return this.axiosInstance.get(this.getUrl(`/${id}/language`));
+  };
+
+  public getNamespaces: AxiosRequestFunction<GetNamespacesParams, GetNamespacesResponse> = (req) => {
+    const { id } = req;
+    return this.axiosInstance.get(this.getUrl(`/${id}/namespace`));
   };
 
   public postNamespace: AxiosRequestFunction<PostNamespaceParams & PostNamespaceRequest, PostNamespaceResponse> = (req) => {
@@ -56,9 +63,9 @@ export default class WorkspaceAPI extends BaseAPI {
     return this.axiosInstance.post(this.getUrl(`/${id}/namespace`), { namespace });
   };
 
-  public getNamespace: AxiosRequestFunction<GetNamespaceParams, GetNamespaceResponse> = (req) => {
+  public getTranslations: AxiosRequestFunction<GetTranslationsParams, GetTranslationsResponse> = (req) => {
     const { id, namespace } = req;
-    return this.axiosInstance.get(this.getUrl(`/${id}/namespace/${namespace}`));
+    return this.axiosInstance.get(this.getUrl(`/${id}/namespace/${namespace}/translation`));
   };
 
   public postTranslation: AxiosRequestFunction<PostTranslationRequest & PostTranslationParams, PostTranslationResponse> = (req) => {

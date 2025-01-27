@@ -1,6 +1,12 @@
 import { UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { GetFileSystemDirectoryRequest, GetNamespaceParams, GetWorkspaceRequest, ResponseEntity } from 'i18n-editor-common';
+import {
+  GetFileSystemDirectoryRequest,
+  GetLanguagesParams,
+  GetNamespacesParams,
+  GetTranslationsParams,
+  ResponseEntity,
+} from 'i18n-editor-common';
 
 export type QueryOption<TResponse, TQueryKey extends (...args: any) => readonly unknown[]> = Omit<
   UseQueryOptions<ResponseEntity<TResponse>, AxiosError, ResponseEntity<TResponse>, ReturnType<TQueryKey>>,
@@ -24,8 +30,9 @@ export const QUERY_KEY = {
     base: ['workspace'] as const,
     getWorkspaces: () => [...QUERY_KEY.workspace.base, 'getWorkspaces'] as const,
     getAnyWorkspace: () => [...QUERY_KEY.workspace.base, 'getWorkspace'] as const,
-    getWorkspace: (req: GetWorkspaceRequest) => [...QUERY_KEY.workspace.getAnyWorkspace(), req] as const,
+    getLanguages: (req: GetLanguagesParams) => [...QUERY_KEY.workspace.base, 'getLanguages', req] as const,
+    getNamespaces: (req: GetNamespacesParams) => [...QUERY_KEY.workspace.base, 'getNamespaces', req] as const,
     getNamespaceAll: () => [...QUERY_KEY.workspace.base, 'getNamespace'] as const,
-    getNamespace: (req: GetNamespaceParams) => [...QUERY_KEY.workspace.getNamespaceAll(), req] as const,
+    getTranslations: (req: GetTranslationsParams) => [...QUERY_KEY.workspace.base, 'getTranslations', req] as const,
   },
 };

@@ -1,7 +1,6 @@
 import { QUERY_KEY } from '@defines/reactQuery';
 import { useAPI } from '@providers/APIProvider';
 import { useQueryClient } from '@tanstack/react-query';
-import { GetWorkspaceRequest } from 'i18n-editor-common';
 import useInvalidateGetWorkspacesQuery from './useInvalidateGetWorkspacesQuery';
 
 function useFetchWorkspace() {
@@ -12,12 +11,18 @@ function useFetchWorkspace() {
   const invalidateWorkspaces = useInvalidateGetWorkspacesQuery();
 
   return async (id: string) => {
-    const req: GetWorkspaceRequest = { id };
+    const req = { id };
 
-    await queryClient.fetchQuery({
-      queryKey: QUERY_KEY.workspace.getWorkspace(req),
-      queryFn: async () => (await api.workspace.getWorkspace(req)).data,
-    });
+    await Promise.all([
+      queryClient.fetchQuery({
+        queryKey: QUERY_KEY.workspace.getNamespaces(req),
+        queryFn: async () => (await api.workspace.getNamespaces(req)).data,
+      }),
+      queryClient.fetchQuery({
+        queryKey: QUERY_KEY.workspace.getLanguages(req),
+        queryFn: async () => (await api.workspace.getLanguages(req)).data,
+      }),
+    ]);
 
     await invalidateWorkspaces();
   };
