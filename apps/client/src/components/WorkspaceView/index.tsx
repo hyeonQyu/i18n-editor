@@ -1,5 +1,6 @@
-import WorkspaceViewHeader from '@components/WorkspaceView/components/WorkspaceViewHeader';
 import { Box } from '@mui/material';
+import WorkspaceTitle from './components/WorkspaceTitle';
+import WorkspaceToolbar from './components/WorkspaceToolbar';
 import WorkspaceViewNamespaceSelector from './components/WorkspaceViewNamespaceSelector';
 
 function WorkspaceView() {
@@ -7,13 +8,14 @@ function WorkspaceView() {
     <Box
       component={'section'}
       sx={{
-        padding: '40px 36px 32px 36px',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
       }}
     >
-      <WorkspaceViewHeader />
+      {/* <WorkspaceViewHeader /> */}
+      <WorkspaceToolbar />
+      <WorkspaceTitle />
 
       <Box sx={{ marginTop: '24px' }}>
         <WorkspaceViewNamespaceSelector />

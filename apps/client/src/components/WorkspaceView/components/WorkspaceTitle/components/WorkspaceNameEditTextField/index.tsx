@@ -1,5 +1,5 @@
-import useCancelEditWorkspaceName from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useCancelEditWorkspaceName';
-import useUpdateCurrentWorkspaceName from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useUpdateCurrentWorkspaceName';
+import useCancelEditWorkspaceName from '@components/WorkspaceView/components/WorkspaceTitle/hooks/useCancelEditWorkspaceName';
+import useUpdateCurrentWorkspaceName from '@components/WorkspaceView/components/WorkspaceTitle/hooks/useUpdateCurrentWorkspaceName';
 import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/components/WorkspaceViewHeader/stores';
 import useWorkspace from '@hooks/workspace/useWorkspace';
 import { TextField, useTheme } from '@mui/material';

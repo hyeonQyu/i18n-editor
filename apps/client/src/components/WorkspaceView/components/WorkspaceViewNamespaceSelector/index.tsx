@@ -1,6 +1,6 @@
 import useNamespaces from '@hooks/namespace/useNamespaces';
 import useRouteNamespacePage from '@hooks/namespace/useRouteNamespacePage';
-import { ListItemText, MenuItem, MenuList, Paper } from '@mui/material';
+import { Box, ListItemText, MenuItem, MenuList, Paper } from '@mui/material';
 
 function WorkspaceViewNamespaceSelector() {
   const namespaces = useNamespaces();
@@ -10,15 +10,17 @@ function WorkspaceViewNamespaceSelector() {
   if (!namespaces.length) return null;
 
   return (
-    <Paper>
-      <MenuList>
-        {namespaces.map((namespace) => (
-          <MenuItem key={namespace} style={{ height: '56px' }} onClick={() => toNamespace(namespace)}>
-            <ListItemText>{namespace}</ListItemText>
-          </MenuItem>
-        ))}
-      </MenuList>
-    </Paper>
+    <Box sx={{ padding: '0 16px' }}>
+      <Paper>
+        <MenuList>
+          {namespaces.map((namespace) => (
+            <MenuItem key={namespace} style={{ height: '56px' }} onClick={() => toNamespace(namespace)}>
+              <ListItemText>{namespace}</ListItemText>
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Paper>
+    </Box>
   );
 }
 
