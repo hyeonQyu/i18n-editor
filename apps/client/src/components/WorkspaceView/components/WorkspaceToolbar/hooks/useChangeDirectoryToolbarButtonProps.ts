@@ -1,10 +1,10 @@
-import { WorkspaceToolbarButtonProps } from '@components/WorkspaceView/components/WorkspaceToolbar/components/WorkspaceToolbarButton';
+import { ToolbarButtonProps } from '@components/Toolbar/components/ToolbarButton';
 import useOpenFileManagerDialog from '@hooks/useOpenFileManagerDialog';
 import useUpdateWorkspace from '@hooks/workspace/useUpdateWorkspace';
 import useWorkspace from '@hooks/workspace/useWorkspace';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 
-function useChangeDirectoryToolbarButtonProps(): WorkspaceToolbarButtonProps {
+function useChangeDirectoryToolbarButtonProps(): ToolbarButtonProps {
   const workspace = useWorkspace();
 
   const openFileManagerDialog = useOpenFileManagerDialog();
