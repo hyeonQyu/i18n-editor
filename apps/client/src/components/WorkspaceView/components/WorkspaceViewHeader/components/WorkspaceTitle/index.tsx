@@ -5,8 +5,8 @@ import WorkspaceNameEditCancelButton from '@components/WorkspaceView/components/
 import WorkspaceNameEditFinishButton from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/components/WorkspaceNameEditCompleteButton';
 import WorkspaceNameEditTextField from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/components/WorkspaceNameEditTextField';
 import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/components/WorkspaceViewHeader/stores';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { Box } from '@mui/material';
-import { useWorkspace } from '@providers/WorkspaceProvider';
 
 function WorkspaceTitle() {
   const workspace = useWorkspace();

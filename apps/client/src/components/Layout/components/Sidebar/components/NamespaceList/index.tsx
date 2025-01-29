@@ -8,7 +8,7 @@ import SidebarMenuTitle from '@components/Layout/components/Sidebar/components/S
 import useNamespace from '@hooks/namespace/useNamespace';
 import useNamespaces from '@hooks/namespace/useNamespaces';
 import useRouteNamespacePage from '@hooks/namespace/useRouteNamespacePage';
-import { useWorkspace } from '@providers/WorkspaceProvider';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 
 function NamespaceList() {
   const workspace = useWorkspace();

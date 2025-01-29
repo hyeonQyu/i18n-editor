@@ -1,7 +1,7 @@
 import useCreateNamespace from '@hooks/namespace/useCreateNamespace';
 import useInvalidateGetNamespacesQuery from '@hooks/namespace/useInvalidateGetNamespacesQuery';
 import useRouteNamespacePage from '@hooks/namespace/useRouteNamespacePage';
-import { useWorkspace } from '@providers/WorkspaceProvider';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { enqueueClosableSnackbar } from '@utils/snackbar';
 
 function useAddNamespace() {

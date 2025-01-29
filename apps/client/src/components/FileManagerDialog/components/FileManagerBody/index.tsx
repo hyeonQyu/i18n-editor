@@ -1,6 +1,5 @@
-import { FileManagerViewType } from '@components/DirectorySelector/stores/fileManagerStore';
 import FileEntryIconButton from '@components/FileManagerDialog/components/FileManagerBody/components/FileEntryIconButton';
-import { useFileManagerDialogStore } from '@components/FileManagerDialog/stores';
+import { FileManagerViewType, useFileManagerDialogStore } from '@components/FileManagerDialog/stores';
 import { Box } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import { FileEntry } from 'i18n-editor-common';

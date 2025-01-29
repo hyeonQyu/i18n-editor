@@ -9,11 +9,11 @@ import WorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/com
 import useDeleteWorkspaceHandler from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useDeleteWorkspaceHandler';
 import useOpenWorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useOpenWorkspaceNameUpdateDialog';
 import useRouteWorkspacePage from '@hooks/workspace/useRouteWorkspacePage';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import useWorkspaces from '@hooks/workspace/useWorkspaces';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTheme } from '@mui/material';
-import { useWorkspace } from '@providers/WorkspaceProvider';
 
 function WorkspaceList() {
   const workspaces = useWorkspaces();

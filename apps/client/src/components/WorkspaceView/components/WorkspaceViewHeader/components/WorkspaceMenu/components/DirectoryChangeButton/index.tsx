@@ -1,7 +1,7 @@
 import useOpenFileManagerDialog from '@hooks/useOpenFileManagerDialog';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import FolderIcon from '@mui/icons-material/Folder';
 import { Button } from '@mui/material';
-import { useWorkspace } from '@providers/WorkspaceProvider';
 import useChangeCurrentWorkspacePath from './hooks/useChangeCurrentWorkspacePath';
 
 function DirectoryChangeButton() {

@@ -1,6 +1,6 @@
 import useNamespace from '@hooks/namespace/useNamespace';
 import useQueryGetTranslations from '@hooks/translation/useQueryGetTranslations';
-import { useWorkspace } from '@providers/WorkspaceProvider';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { Translation } from 'i18n-editor-common';
 
 const DEFAULT_TRANSLATIONS: Translation[] = [];

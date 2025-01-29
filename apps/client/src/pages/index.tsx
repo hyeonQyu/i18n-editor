@@ -1,9 +1,9 @@
 import StartView from '@components/StartView';
 import useInitialLoading from '@hooks/useInitialLoading';
 import useRouteWorkspacePage from '@hooks/workspace/useRouteWorkspacePage';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { Box, CircularProgress } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useWorkspace } from 'providers/WorkspaceProvider';
 import { useEffect } from 'react';
 
 function HomePage() {

@@ -1,4 +1,4 @@
-import { useWorkspace } from '@providers/WorkspaceProvider';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { useRouter } from 'next/router';
 
 function useRouteNamespacePage() {

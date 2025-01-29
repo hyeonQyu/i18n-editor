@@ -51,7 +51,7 @@ function RowsProvider(props: RowsProviderProps) {
 
   const [rows, setRows] = useState<RowData[]>([emptyRow]);
 
-  const namespaceRows = translationsToRows(translations, languageCodes);
+  const namespaceRows = useMemo(() => translationsToRows(translations, languageCodes), [translations, languageCodes]);
 
   useEffect(() => {
     setRows([...namespaceRows, emptyRow]);

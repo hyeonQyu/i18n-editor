@@ -1,5 +1,5 @@
 import useQueryGetNamespaces from '@hooks/namespace/useQueryGetNamespaces';
-import { useWorkspace } from '@providers/WorkspaceProvider';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { TIME_UNIT } from 'i18n-editor-common';
 
 const DEFAULT_NAMESPACES: string[] = [];

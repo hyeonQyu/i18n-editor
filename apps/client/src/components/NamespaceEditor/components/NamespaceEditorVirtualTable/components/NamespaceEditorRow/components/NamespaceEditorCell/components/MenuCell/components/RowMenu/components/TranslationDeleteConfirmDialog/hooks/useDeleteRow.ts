@@ -2,7 +2,7 @@ import { useRows } from '@components/NamespaceEditor/providers/RowsProvider';
 import useNamespace from '@hooks/namespace/useNamespace';
 import useDeleteTranslation from '@hooks/translation/useDeleteTranslation';
 import useInvalidateGetTranslationsQuery from '@hooks/translation/useInvalidateGetTranslationsQuery';
-import { useWorkspace } from '@providers/WorkspaceProvider';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 
 function useDeleteRow() {
   const workspace = useWorkspace();

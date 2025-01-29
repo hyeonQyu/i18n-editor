@@ -3,7 +3,7 @@ import { useRowIndex } from '@components/NamespaceEditor/providers/RowIndexProvi
 import useNamespace from '@hooks/namespace/useNamespace';
 import useCreateTranslation from '@hooks/translation/useCreateTranslation';
 import useInvalidateGetTranslationsQuery from '@hooks/translation/useInvalidateGetTranslationsQuery';
-import { useWorkspace } from '@providers/WorkspaceProvider';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import axios from 'axios';
 import { ErrorResponseEntity } from 'i18n-editor-common';
 
