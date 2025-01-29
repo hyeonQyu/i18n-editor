@@ -8,11 +8,13 @@ import WorkspaceDeleteConfirmDialog from '@components/Layout/components/Sidebar/
 import WorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog';
 import useDeleteWorkspaceHandler from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useDeleteWorkspaceHandler';
 import useOpenWorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useOpenWorkspaceNameUpdateDialog';
+import useOpenLanguageCodesDialog from '@hooks/useOpenLanguageCodesDialog';
 import useRouteWorkspacePage from '@hooks/workspace/useRouteWorkspacePage';
 import useWorkspace from '@hooks/workspace/useWorkspace';
 import useWorkspaces from '@hooks/workspace/useWorkspaces';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
+import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
 import { useTheme } from '@mui/material';
 
 function WorkspaceList() {
@@ -24,6 +26,7 @@ function WorkspaceList() {
   } = useTheme();
 
   const openNameUpdateDialog = useOpenWorkspaceNameUpdateDialog();
+  const openLanguageCodesDialog = useOpenLanguageCodesDialog();
   const selectWorkspace = useRouteWorkspacePage();
   const deleteWorkspace = useDeleteWorkspaceHandler();
 
@@ -49,6 +52,11 @@ function WorkspaceList() {
                     label: '이름 변경',
                     IconComponent: EditIcon,
                     onClick: () => openNameUpdateDialog(workspace),
+                  },
+                  {
+                    label: '언어 추가',
+                    IconComponent: TranslateOutlinedIcon,
+                    onClick: () => openLanguageCodesDialog(workspace.id, () => {}),
                   },
                   {
                     label: '삭제',

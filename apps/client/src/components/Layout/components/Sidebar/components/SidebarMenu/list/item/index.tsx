@@ -28,6 +28,12 @@ function SidebarMenuListItem(props: SidebarMenuListItemProps) {
     handleOpen(e);
   };
 
+  const handleMenuClose: MouseEventHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleClose();
+  };
+
   return (
     <ListItem onClick={onClick}>
       <ListItemButton sx={{ gap: '6px' }} selected={selected}>
@@ -49,7 +55,7 @@ function SidebarMenuListItem(props: SidebarMenuListItemProps) {
         <Menu
           anchorEl={anchorElement}
           open={Boolean(anchorElement)}
-          onClose={handleClose}
+          onClose={handleMenuClose}
           MenuListProps={{
             sx: { width: '200px' },
           }}
@@ -63,7 +69,7 @@ function SidebarMenuListItem(props: SidebarMenuListItemProps) {
               }}
               onClick={(e) => {
                 onClick(e);
-                handleClose();
+                handleMenuClose(e);
               }}
             >
               {IconComponent && <IconComponent sx={{ color }} fontSize={'small'} />}
