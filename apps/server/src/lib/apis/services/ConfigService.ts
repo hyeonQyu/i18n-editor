@@ -9,7 +9,7 @@ const env = getEnvironment();
 
 const CONFIG_DIRECTORY_NAME = '.i18ne';
 
-const FILES = ['workspace'] as const;
+const FILES = ['workspace', 'ui'] as const;
 
 type ConfigFileName = typeof FILES[number];
 
@@ -28,14 +28,24 @@ const getConfigFilePath = (fileName: ConfigFileName) => {
 
 const config: Config = DEFAULT_CONFIG;
 
-const refreshConfig = async () => {
+const refresh = async () => {
   config.workspace = await readFile(getConfigFilePath('workspace'));
+  config.ui = await readFile(getConfigFilePath('ui'));
 };
 
-const initConfig = async () => {
+const init = async () => {
   try {
-    await refreshConfig();
+    await refresh();
   } catch (e) {}
+};
+
+const getUI = (): Config['ui'] => {
+  return config.ui;
+};
+
+const updatePartialUI = async (ui: Partial<Config['ui']>) => {
+  config.ui = { ...config.ui, ...ui };
+  await writeFile(getConfigFilePath('ui'), config.ui);
 };
 
 const getWorkspace = (): Config['workspace'] => {
@@ -48,8 +58,10 @@ const setWorkspace = async (workspace: Config['workspace']) => {
 };
 
 const configService = {
-  initConfig,
-  refreshConfig,
+  init,
+  refresh,
+  getUI,
+  updatePartialUI,
   getWorkspace,
   setWorkspace,
 };
