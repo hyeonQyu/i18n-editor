@@ -2,7 +2,7 @@ import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/component
 import useUpdateWorkspace from '@hooks/workspace/useUpdateWorkspace';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 
-function useUpdateWorkspaceName() {
+function useUpdateCurrentWorkspaceName() {
   const workspace = useWorkspace();
 
   const editingName = useWorkspaceViewHeaderStore(({ editingName }) => editingName);
@@ -18,4 +18,4 @@ function useUpdateWorkspaceName() {
   };
 }
 
-export default useUpdateWorkspaceName;
+export default useUpdateCurrentWorkspaceName;

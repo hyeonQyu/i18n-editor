@@ -1,9 +1,9 @@
-import useUpdateWorkspaceName from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useUpdateWorkspaceName';
+import useUpdateCurrentWorkspaceName from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useUpdateCurrentWorkspaceName';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { IconButton } from '@mui/material';
 
 function WorkspaceNameEditFinishButton() {
-  const updateWorkspaceName = useUpdateWorkspaceName();
+  const updateWorkspaceName = useUpdateCurrentWorkspaceName();
 
   const handleClick = () => updateWorkspaceName();
 
