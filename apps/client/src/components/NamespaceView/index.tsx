@@ -1,5 +1,5 @@
-import NamespaceEditor from '@components/NamespaceEditor';
-import NamespaceToolbar from '@components/NamespaceToolbar';
+import NamespaceEditor from '@components/NamespaceView/components/NamespaceEditor';
+import NamespaceToolbar from '@components/NamespaceView/components/NamespaceToolbar';
 import { Box } from '@mui/material';
 
 function NamespaceView() {
