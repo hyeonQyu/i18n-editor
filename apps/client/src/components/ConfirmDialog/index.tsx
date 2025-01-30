@@ -56,10 +56,10 @@ function ConfirmDialog() {
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={handleCancel} variant={'text'}>
+        <Button onClick={handleCancel} variant={'text'} color={cancelAction.color}>
           {cancelAction.label}
         </Button>
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" color={confirmAction.color}>
           {confirmAction.label}
         </Button>
       </DialogActions>
