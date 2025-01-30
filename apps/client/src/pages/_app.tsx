@@ -1,3 +1,4 @@
+import ConfirmDialog from '@components/ConfirmDialog';
 import FileManagerDialog from '@components/FileManagerDialog';
 import GlobalScrollbarStyle from '@components/GlobalScrollbarStyle';
 import LanguageCodesDialog from '@components/LanguageCodesDialog';
@@ -28,6 +29,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             <ReactQueryClientProvider>
               <Layout>
                 <Component {...pageProps} />
+
+                <ConfirmDialog />
 
                 <FileManagerDialog />
                 <NamespaceAddDialog />
