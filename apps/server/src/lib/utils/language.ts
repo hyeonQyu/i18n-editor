@@ -2,7 +2,7 @@ import { Dirent } from 'fs';
 import { LanguageCode, LANGUAGE_CODE_SET } from 'i18n-editor-common';
 import { BadRequestError } from '../defines/errors';
 import { GLOBAL } from '../defines/global';
-import { readDirectory } from './file';
+import { deleteFile, readDirectory } from './file';
 
 const isLanguageDirectory = (dirent: Dirent) => {
   return dirent.isDirectory() && LANGUAGE_CODE_SET.has(dirent.name);
@@ -21,4 +21,9 @@ export const getLanguageCodes = async (workspacePath: string): Promise<LanguageC
   if (languageCodes.length === 0) throw new BadRequestError('올바른 workspace가 아닙니다.');
 
   return languageCodes;
+};
+
+export const deleteLanguageCode = async (workspacePath: string, languageCode: LanguageCode) => {
+  const languagePath = `${workspacePath}/${languageCode}`;
+  await deleteFile(languagePath);
 };
