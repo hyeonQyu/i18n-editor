@@ -11,18 +11,16 @@ export type PostWorkspaceRequest = Pick<Workspace, 'name' | 'path'>;
 
 export type PostWorkspaceResponse = void;
 
-export interface PutWorkspaceRequest {
-  name: string;
-}
+export type PutWorkspaceRequest = PostWorkspaceRequest;
 
 export interface PutWorkspaceParams {
-  path: string;
+  id: string;
 }
 
 export type PutWorkspaceResponse = void;
 
 export interface GetWorkspaceRequest {
-  path: string;
+  id: string;
 }
 
 export interface GetWorkspaceResponse {

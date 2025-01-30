@@ -1,3 +1,5 @@
+import { createTimestamp } from './time';
+
 const getLeading = (str: string, leading: string) => {
   return str.startsWith(leading) ? str : `${leading}${str}`;
 };
@@ -17,4 +19,8 @@ export const getExtensionName = (fileName: string) => {
 export const removeExtension = (fileName: string) => {
   const lastDotIndex = fileName.lastIndexOf('.');
   return lastDotIndex > 0 ? fileName.slice(0, lastDotIndex) : fileName;
+};
+
+export const generateUniqueID = () => {
+  return `${Math.random().toString(36).substring(2, 11)}-${createTimestamp()}`;
 };

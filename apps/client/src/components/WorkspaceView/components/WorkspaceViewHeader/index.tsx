@@ -8,6 +8,7 @@ function WorkspaceViewHeader() {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
+        gap: '12px',
       }}
     >
       <WorkspaceTitle />

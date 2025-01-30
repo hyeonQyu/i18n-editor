@@ -20,9 +20,9 @@ function WorkspaceList() {
       <SidebarMenuTitle>workspace</SidebarMenuTitle>
 
       <SidebarMenuList>
-        {workspaces.map(({ name, path }) => (
+        {workspaces.map(({ id, name }) => (
           <SidebarMenuListItem
-            key={path}
+            key={id}
             menuItems={[
               {
                 label: '이름 변경',
