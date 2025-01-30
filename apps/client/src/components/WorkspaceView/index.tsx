@@ -13,7 +13,6 @@ function WorkspaceView() {
         flexDirection: 'column',
       }}
     >
-      {/* <WorkspaceViewHeader /> */}
       <WorkspaceToolbar />
       <WorkspaceTitle />
 

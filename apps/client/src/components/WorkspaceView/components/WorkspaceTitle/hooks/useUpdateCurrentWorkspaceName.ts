@@ -1,13 +1,13 @@
-import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/components/WorkspaceViewHeader/stores';
+import { useWorkspaceTitleStore } from '@components/WorkspaceView/components/WorkspaceTitle/stores';
 import useUpdateWorkspace from '@hooks/workspace/useUpdateWorkspace';
 import useWorkspace from '@hooks/workspace/useWorkspace';
 
 export default function useUpdateCurrentWorkspaceName() {
   const workspace = useWorkspace();
 
-  const editingName = useWorkspaceViewHeaderStore(({ editingName }) => editingName);
-  const setHasError = useWorkspaceViewHeaderStore(({ setHasError }) => setHasError);
-  const setIsNameEditing = useWorkspaceViewHeaderStore(({ setIsNameEditing }) => setIsNameEditing);
+  const editingName = useWorkspaceTitleStore(({ editingName }) => editingName);
+  const setHasError = useWorkspaceTitleStore(({ setHasError }) => setHasError);
+  const setIsNameEditing = useWorkspaceTitleStore(({ setIsNameEditing }) => setIsNameEditing);
   const updateWorkspaceName = useUpdateWorkspace();
 
   return async () => {

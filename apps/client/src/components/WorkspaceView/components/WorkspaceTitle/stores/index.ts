@@ -1,6 +1,6 @@
 import { create } from 'zustand/react';
 
-interface WorkspaceViewHeaderState {
+interface WorkspaceViewTitleState {
   editingName: string;
   isNameEditing: boolean;
   hasError: boolean;
@@ -9,7 +9,7 @@ interface WorkspaceViewHeaderState {
   setHasError: (hasError: boolean) => void;
 }
 
-export const useWorkspaceViewHeaderStore = create<WorkspaceViewHeaderState>((set) => ({
+export const useWorkspaceTitleStore = create<WorkspaceViewTitleState>((set) => ({
   editingName: '',
   isNameEditing: false,
   hasError: false,
