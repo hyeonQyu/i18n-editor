@@ -1,3 +1,4 @@
+import WorkspaceLanguages from '@components/WorkspaceView/components/WorkspaceLanguages';
 import { Box } from '@mui/material';
 import WorkspaceTitle from './components/WorkspaceTitle';
 import WorkspaceToolbar from './components/WorkspaceToolbar';
@@ -14,9 +15,16 @@ function WorkspaceView() {
       }}
     >
       <WorkspaceToolbar />
-      <WorkspaceTitle />
-
-      <Box sx={{ marginTop: '24px' }}>
+      <Box
+        sx={{
+          padding: '40px 36px 32px 36px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '32px',
+        }}
+      >
+        <WorkspaceTitle />
+        <WorkspaceLanguages />
         <WorkspaceViewNamespaceSelector />
       </Box>
     </Box>

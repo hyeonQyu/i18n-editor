@@ -16,7 +16,6 @@ function WorkspaceTitle() {
   return (
     <Box
       sx={{
-        padding: '40px 36px 32px 36px',
         width: '100%',
         maxWidth: '100%',
         overflow: 'auto',
