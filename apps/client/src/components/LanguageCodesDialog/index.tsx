@@ -75,7 +75,7 @@ function LanguageCodesDialog() {
         <Button variant={'text'} onClick={handleClose}>
           취소
         </Button>
-        <Button variant={'contained'} type={'submit'}>
+        <Button variant={'contained'} type={'submit'} disabled={!selectedLanguageCodes.length}>
           추가
         </Button>
       </DialogActions>
