@@ -1,4 +1,6 @@
 import {
+  DeleteNamespaceParams,
+  DeleteNamespaceResponse,
   DeleteTranslationParams,
   DeleteTranslationResponse,
   DeleteWorkspaceParams,
@@ -110,6 +112,15 @@ export default class WorkspaceController extends BaseController {
       const { id } = req.params;
       const { namespace } = req.body;
       await namespaceService.create(id, namespace);
+    },
+  };
+
+  private deleteNamespace: ControllerMethod<never, DeleteNamespaceParams, never, DeleteNamespaceResponse> = {
+    path: '/:id/namespace/:namespace',
+    method: 'delete',
+    handler: async (req) => {
+      const { id, namespace } = req.params;
+      await namespaceService.delete(id, namespace);
     },
   };
 
