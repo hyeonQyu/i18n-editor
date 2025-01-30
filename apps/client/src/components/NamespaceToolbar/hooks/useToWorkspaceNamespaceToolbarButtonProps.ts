@@ -9,7 +9,7 @@ function useToWorkspaceNamespaceToolbarButtonProps(): ToolbarButtonProps {
 
   return {
     IconComponent: ArrowBackOutlinedIcon,
-    label: '워크스페이스로 이동',
+    tooltip: '워크스페이스로 이동',
     onClick: () => toWorkspace(workspaceId),
     color: 'white',
   };
