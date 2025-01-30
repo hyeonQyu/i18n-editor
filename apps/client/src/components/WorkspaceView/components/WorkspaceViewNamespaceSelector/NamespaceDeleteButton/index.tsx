@@ -28,7 +28,7 @@ function NamespaceDeleteButton({ namespace }: NamespaceDeleteButtonProps) {
 
     const confirmed = await confirmDialog({
       title: '네임스페이스 삭제',
-      content: `네임스페이스 ${namespace}을(를) 삭제하시겠습니까?`,
+      content: `${namespace}을(를) 삭제하시겠습니까?\n워크스페이스에서 삭제됩니다.`,
       cancelAction: { label: '취소' },
       confirmAction: { label: '삭제', color: 'error' },
     });

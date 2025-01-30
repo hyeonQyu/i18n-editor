@@ -4,7 +4,6 @@ import SidebarMenuList from '@components/Layout/components/Sidebar/components/Si
 import SidebarMenuListItem from '@components/Layout/components/Sidebar/components/SidebarMenu/list/item';
 import SidebarMenuTitle from '@components/Layout/components/Sidebar/components/SidebarMenu/title';
 import WorkspaceAddButton from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceAddButton';
-import WorkspaceDeleteConfirmDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceDeleteConfirmDialog';
 import WorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog';
 import useDeleteWorkspaceHandler from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useDeleteWorkspaceHandler';
 import useOpenWorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useOpenWorkspaceNameUpdateDialog';
@@ -56,12 +55,12 @@ function WorkspaceList() {
                   {
                     label: '언어 추가',
                     IconComponent: TranslateOutlinedIcon,
-                    onClick: () => openLanguageCodesDialog(workspace.id, () => {}),
+                    onClick: () => openLanguageCodesDialog(workspace.id),
                   },
                   {
                     label: '삭제',
                     IconComponent: DeleteForeverIcon,
-                    onClick: () => deleteWorkspace(id),
+                    onClick: () => deleteWorkspace(workspace),
                     color: error.light,
                   },
                 ]}
@@ -74,7 +73,6 @@ function WorkspaceList() {
       </SidebarMenu>
 
       <WorkspaceNameUpdateDialog />
-      <WorkspaceDeleteConfirmDialog />
     </>
   );
 }

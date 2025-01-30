@@ -51,7 +51,7 @@ function ConfirmDialog() {
     <Dialog open={opened} onClose={handleCancel} PaperProps={{ component: 'form', onSubmit: handleConfirm }}>
       <DialogTitle>{title}</DialogTitle>
 
-      <DialogContent>
+      <DialogContent sx={{ whiteSpace: 'pre-line' }}>
         <DialogContentText>{content}</DialogContentText>
       </DialogContent>
 
