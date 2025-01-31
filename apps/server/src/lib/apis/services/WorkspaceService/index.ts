@@ -3,7 +3,7 @@ import {
   checkWorkspaceNameDuplicated,
   createWorkspace,
   deleteWorkspace,
-  getAllWorkspaces,
+  getAllSortedWorkspace,
   getWorkspaceById,
   getWorkspaceByPath,
   updateWorkspace,
@@ -11,7 +11,7 @@ import {
 
 const workspaceService = {
   getList: () => {
-    return getAllWorkspaces();
+    return getAllSortedWorkspace();
   },
 
   create: async ({ name, path }: Pick<Workspace, 'name' | 'path'>) => {

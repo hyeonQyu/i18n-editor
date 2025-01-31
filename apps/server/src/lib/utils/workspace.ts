@@ -10,8 +10,13 @@ const getClonedWorkspaceConfig = () => clone(getWorkspaceConfig());
 
 const saveWorkspaceConfig = configService.setWorkspace;
 
-export const getAllWorkspaces = () => {
+const getAllWorkspaces = () => {
   return Object.values(getWorkspaceConfig());
+};
+
+export const getAllSortedWorkspace = () => {
+  const workspaces = getAllWorkspaces();
+  return workspaces.sort((a, b) => b.lastOpenedAt - a.lastOpenedAt);
 };
 
 export const getWorkspaceByPath = (workspacePath: string) => {
@@ -34,24 +39,27 @@ export const createWorkspace = async (workspace: Pick<Workspace, 'name' | 'path'
   return id;
 };
 
-export const updateWorkspace = async (id: string, workspace: Omit<Workspace, 'id' | 'lastOpenedAt'>) => {
-  const workspaceConfig = getClonedWorkspaceConfig();
-
-  workspaceConfig[id] = {
-    ...workspace,
-    id,
-    lastOpenedAt: createTimestamp(),
-  };
-
-  await configService.setWorkspace(workspaceConfig);
-
-  return id;
-};
-
 export const getWorkspaceById = (id: string) => {
   const workspace = getWorkspaceConfig()[id];
   if (!workspace) throw new NotFoundError('워크스페이스를 찾을 수 없습니다. 다시 시도해주세요.');
   return workspace;
+};
+
+export const updateWorkspace = async (id: string, workspace: Omit<Workspace, 'id' | 'lastOpenedAt'>) => {
+  const updatedWorkspace: Workspace = { ...getWorkspaceById(id), ...workspace };
+  await updateWorkspaceLastOpenedAt(updatedWorkspace);
+  return id;
+};
+
+export const updateWorkspaceLastOpenedAt = async (workspace: Workspace) => {
+  const workspaceConfig = getClonedWorkspaceConfig();
+
+  workspaceConfig[workspace.id] = {
+    ...workspace,
+    lastOpenedAt: createTimestamp(),
+  };
+
+  await configService.setWorkspace(workspaceConfig);
 };
 
 export const checkWorkspaceNameDuplicated = (id: string, name: string) => {
