@@ -3,7 +3,7 @@ import { Express } from 'express';
 import { ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { getLeadingSlash, ResponseEntity } from 'i18n-editor-common';
 import { ControllerMethod, RequestHandler } from '../defines/api';
-import { BadRequestError, NotFoundError } from '../defines/errors';
+import { BadRequestError, ConflictError, NotFoundError } from '../defines/errors';
 
 abstract class BaseController {
   private readonly _baseUrl: string;
@@ -51,6 +51,7 @@ abstract class BaseController {
         const getStatusCode = () => {
           if (e instanceof NotFoundError) return HttpStatusCode.NotFound;
           if (e instanceof BadRequestError) return HttpStatusCode.BadRequest;
+          if (e instanceof ConflictError) return HttpStatusCode.Conflict;
           return HttpStatusCode.InternalServerError;
         };
 
@@ -67,10 +68,9 @@ abstract class BaseController {
     data: Omit<ResponseEntity<Res>, 'status'>,
   ) => {
     res.status(status).send({
-      // @ts-ignore
       status,
       ...data,
-    });
+    } as ResponseEntity<Res>);
   };
 
   private static getIsControllerMethod = (value: unknown): value is ControllerMethod<unknown, unknown, unknown> => {

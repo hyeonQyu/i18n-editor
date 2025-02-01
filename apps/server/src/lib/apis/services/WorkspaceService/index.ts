@@ -1,6 +1,6 @@
 import { EXTENSIONS_SUFFIX, generateUniqueID, removeExtension, Workspace } from 'i18n-editor-common';
 import { createTimestamp } from 'i18n-editor-common/lib/utils/time';
-import { BadRequestError, NotFoundError } from '../../../defines/errors';
+import { BadRequestError, ConflictError, NotFoundError } from '../../../defines/errors';
 import { getFileNames } from '../../../utils/file';
 import { getLanguageCodes } from '../../../utils/locale';
 import configService from '../ConfigService';
@@ -27,7 +27,17 @@ const createWorkspace = async ({ name, path }: Pick<Workspace, 'name' | 'path'>)
 const updateWorkspace = async (id: string, workspace: Pick<Workspace, 'name' | 'path'>) => {
   const workspaces = getWorkspaces();
 
-  const existingWorkspaceIndex = workspaces.findIndex((workspace) => workspace.id === id);
+  const { hasDuplicateName, existingWorkspaceIndex } = workspaces.reduce(
+    (acc, curr, index) => ({
+      hasDuplicateName: acc.hasDuplicateName || (curr.name === workspace.name && curr.id !== id),
+      existingWorkspaceIndex: curr.id === id ? index : acc.existingWorkspaceIndex,
+    }),
+    { hasDuplicateName: false, existingWorkspaceIndex: -1 },
+  );
+
+  if (hasDuplicateName) {
+    throw new ConflictError('Workspace name already exists');
+  }
 
   if (existingWorkspaceIndex === -1) {
     throw new NotFoundError('Workspace not found');
