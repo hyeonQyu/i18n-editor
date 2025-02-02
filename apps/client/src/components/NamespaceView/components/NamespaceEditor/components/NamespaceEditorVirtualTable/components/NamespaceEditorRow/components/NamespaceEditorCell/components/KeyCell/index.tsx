@@ -30,7 +30,7 @@ function KeyCell(props: KeyCellProps) {
   const handleComplete = useCompleteKeyCellHandler();
 
   if (!value) {
-    return <TextFieldCell cell={cell} multiline={false} placeholder={'새로운 번역을 추가하세요.'} onComplete={handleComplete} />;
+    return <TextFieldCell isKeyCell cell={cell} multiline={false} placeholder={'새로운 번역을 추가하세요.'} onComplete={handleComplete} />;
   }
 
   const handleClick = () => copyClipboard(value);

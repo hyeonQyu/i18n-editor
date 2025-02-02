@@ -1,3 +1,4 @@
+import useTextFieldCellInputRef from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/TextFieldCell/hooks/useTextFieldCellInputRef';
 import { focusNextTextFieldCell } from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/TextFieldCell/utils/focus';
 import {
   CELL_MIN_HEIGHT,
@@ -9,12 +10,14 @@ import { TextField, TextFieldProps, useTheme } from '@mui/material';
 import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';
 
 interface TextFieldCellProps extends Omit<TextFieldProps, 'value' | 'onChange' | 'maxRows'> {
+  isKeyCell?: boolean;
   cell: Cell;
   onComplete?: (value: string) => void | Promise<void>;
 }
 
 function TextFieldCell(props: TextFieldCellProps) {
   const {
+    isKeyCell,
     cell: { value: defaultValue, metadata },
     onComplete,
     fullWidth = true,
@@ -57,8 +60,11 @@ function TextFieldCell(props: TextFieldCellProps) {
 
   const cursor = disabled ? 'default' : 'pointer';
 
+  const inputRef = useTextFieldCellInputRef(Boolean(isKeyCell && metadata.new));
+
   return (
     <TextField
+      inputRef={inputRef}
       value={value}
       onChange={handleChange}
       onBlur={handleBlur}
