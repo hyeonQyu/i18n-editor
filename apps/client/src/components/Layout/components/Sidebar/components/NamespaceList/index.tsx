@@ -1,6 +1,5 @@
 import EllipsisText from '@components/EllipsisText';
 import NamespaceAddButton from '@components/Layout/components/Sidebar/components/NamespaceList/components/NamespaceAddButton';
-import NamespaceListTitleLabel from '@components/Layout/components/Sidebar/components/NamespaceList/components/NamespaceListTitleLabel';
 import SidebarMenu from '@components/Layout/components/Sidebar/components/SidebarMenu';
 import SidebarMenuList from '@components/Layout/components/Sidebar/components/SidebarMenu/list';
 import SidebarMenuListItem from '@components/Layout/components/Sidebar/components/SidebarMenu/list/item';
@@ -23,7 +22,7 @@ function NamespaceList() {
   return (
     <>
       <SidebarMenu>
-        <SidebarMenuTitle label={<NamespaceListTitleLabel />} action={<NamespaceAddButton />} />
+        <SidebarMenuTitle label={workspace.name} action={<NamespaceAddButton />} />
 
         <SidebarMenuList>
           {namespaces.map((namespace) => (
