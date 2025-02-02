@@ -16,7 +16,7 @@ export type TranslationPosition = {
 };
 
 export interface PostTranslationRequest {
-  position: TranslationPosition;
+  position?: TranslationPosition;
   translation: Translation;
 }
 

@@ -22,7 +22,7 @@ const translationService = {
   create: async (
     workspaceId: string,
     namespace: string,
-    { position: { pivotTranslationKey, direction }, translation }: { position: TranslationPosition; translation: Translation },
+    { position, translation }: { position?: TranslationPosition; translation: Translation },
   ) => {
     const workspace = getWorkspaceById(workspaceId);
     const languageCodes = await getLanguageCodes(workspace.path);
@@ -30,8 +30,8 @@ const translationService = {
 
     checkTranslationDuplicated(translations, translation);
 
-    const pivotTranslationIndex = findTranslationIndex(translations, pivotTranslationKey);
-    translations.splice(pivotTranslationIndex + direction, 0, completeTranslation(languageCodes, translation));
+    const index = position ? findTranslationIndex(translations, position.pivotTranslationKey) + position.direction : translations.length;
+    translations.splice(index, 0, completeTranslation(languageCodes, translation));
 
     await writeTranslation(workspace.path, namespace, translations);
     await updateWorkspaceLastOpenedAt(workspace);
