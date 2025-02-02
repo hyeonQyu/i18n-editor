@@ -10,9 +10,11 @@ export type GetTranslationsResponse = {
 
 export type PostTranslationParams = NamespaceParams;
 
+export type TranslationPositionDirection = 'prev' | 'next';
+
 export type TranslationPosition = {
   pivotTranslationKey: TranslationKey;
-  direction: -1 | 1;
+  direction: TranslationPositionDirection;
 };
 
 export interface PostTranslationRequest {

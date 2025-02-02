@@ -1,5 +1,5 @@
 import useSetCellError from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/hooks/useSetCellError';
-import { useRowIndex } from '@components/NamespaceView/components/NamespaceEditor/providers/RowIndexProvider';
+import { useRow } from '@components/NamespaceView/components/NamespaceEditor/providers/RowProvider';
 import useNamespace from '@hooks/namespace/useNamespace';
 import useCreateTranslation from '@hooks/translation/useCreateTranslation';
 import useInvalidateGetTranslationsQuery from '@hooks/translation/useInvalidateGetTranslationsQuery';
@@ -11,7 +11,7 @@ function useCompleteKeyCellHandler() {
   const workspace = useWorkspace();
   const namespace = useNamespace();
 
-  const rowIndex = useRowIndex();
+  const row = useRow();
 
   const createTranslation = useCreateTranslation();
 
@@ -26,7 +26,7 @@ function useCompleteKeyCellHandler() {
       await createTranslation({
         id: workspace.id,
         namespace,
-        index: rowIndex,
+        position: row.key.metadata.position,
         translation: {
           key: value,
           value: {},

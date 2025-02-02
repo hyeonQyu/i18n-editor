@@ -91,8 +91,8 @@ export default class WorkspaceAPI extends BaseAPI {
   };
 
   public postTranslation: AxiosRequestFunction<PostTranslationRequest & PostTranslationParams, PostTranslationResponse> = (req) => {
-    const { id, namespace, index, translation } = req;
-    return this.axiosInstance.post(this.getUrl(`/${id}/namespace/${namespace}/translation`), { translation, index });
+    const { id, namespace, position, translation } = req;
+    return this.axiosInstance.post(this.getUrl(`/${id}/namespace/${namespace}/translation`), { translation, position });
   };
 
   public putTranslation: AxiosRequestFunction<PutTranslationRequest & PutTranslationParams, PutTranslationResponse> = (req) => {

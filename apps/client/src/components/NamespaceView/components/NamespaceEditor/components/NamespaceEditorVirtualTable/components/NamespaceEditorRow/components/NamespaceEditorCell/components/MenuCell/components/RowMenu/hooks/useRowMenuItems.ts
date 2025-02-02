@@ -1,6 +1,6 @@
 import useAddRow from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/MenuCell/components/RowMenu/hooks/useAddRow';
 import useConfirmDeleteTranslation from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/MenuCell/components/RowMenu/hooks/useDeleteTranslation';
-import { useRowIndex } from '@components/NamespaceView/components/NamespaceEditor/providers/RowIndexProvider';
+import { useRowIndex } from '@components/NamespaceView/components/NamespaceEditor/providers/RowProvider';
 import { useRows } from '@components/NamespaceView/components/NamespaceEditor/providers/RowsProvider';
 import { MenuItemProps } from '@defines/menu';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -24,12 +24,12 @@ function useRowMenuItems(): MenuItemProps[] {
   return [
     {
       label: '위에 번역 추가',
-      onClick: () => addRow(rowIndex),
+      onClick: () => addRow(rowIndex, { pivotTranslationKey: key, direction: 'prev' }),
       IconComponent: NorthIcon,
     },
     {
       label: '아래에 번역 추가',
-      onClick: () => addRow(rowIndex + 1),
+      onClick: () => addRow(rowIndex + 1, { pivotTranslationKey: key, direction: 'next' }),
       IconComponent: SouthIcon,
     },
     {
