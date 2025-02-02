@@ -150,8 +150,8 @@ export default class WorkspaceController extends BaseController {
     method: 'post',
     handler: async (req) => {
       const { id, namespace } = req.params;
-      const { translation, index } = req.body;
-      await translationService.create(id, namespace, { index, translation });
+      const { translation, position } = req.body;
+      await translationService.create(id, namespace, { position, translation });
     },
   };
 
