@@ -1,4 +1,3 @@
-import useAddNewWorkspace from '@components/FileManagerDialog/components/FileManagerFooter/components/DirectorySelectButton/hooks/useAddNewWorkspace';
 import useFileManagerDialogCloseHandler from '@components/FileManagerDialog/hooks/useFileManagerDialogCloseHandler';
 import { useFileManagerDialogStore } from '@components/FileManagerDialog/stores';
 import useCreateAxiosErrorHandler from '@hooks/useCreateAxiosErrorHandler';
@@ -7,17 +6,16 @@ import { HttpStatusCode } from 'axios';
 
 function DirectorySelectButton() {
   const path = useFileManagerDialogStore(({ path }) => path);
+  const onConfirm = useFileManagerDialogStore(({ onConfirm }) => onConfirm);
 
   const close = useFileManagerDialogCloseHandler();
 
   const createErrorHandler = useCreateAxiosErrorHandler();
 
-  const addNewWorkspace = useAddNewWorkspace();
-
   const handleClick = async () => {
     if (!path) return;
 
-    await addNewWorkspace(path);
+    await onConfirm(path);
     close();
 
     // TODO 예외 처리 로직 이동 필요
