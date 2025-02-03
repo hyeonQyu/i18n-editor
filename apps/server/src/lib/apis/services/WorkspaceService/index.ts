@@ -36,11 +36,11 @@ const updateWorkspace = async (id: string, workspace: Pick<Workspace, 'name' | '
   );
 
   if (hasDuplicateName) {
-    throw new ConflictError('Workspace name already exists');
+    throw new ConflictError('이미 존재하는 이름입니다.');
   }
 
   if (existingWorkspaceIndex === -1) {
-    throw new NotFoundError('Workspace not found');
+    throw new NotFoundError('워크스페이스를 찾을 수 없습니다. 다시 시도해주세요.');
   }
 
   const currentWorkspace = workspaces[existingWorkspaceIndex];

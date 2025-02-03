@@ -22,7 +22,7 @@ function WorkspaceList() {
   return (
     <>
       <SidebarMenu>
-        <SidebarMenuTitle>workspace</SidebarMenuTitle>
+        <SidebarMenuTitle>워크스페이스</SidebarMenuTitle>
 
         <SidebarMenuList>
           {workspaces.map((workspace) => {

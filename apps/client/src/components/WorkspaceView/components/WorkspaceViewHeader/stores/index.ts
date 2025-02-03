@@ -1,17 +1,19 @@
 import { create } from 'zustand/react';
 
-interface WorkspaceViewHeaderStore {
-  isNameEditing: boolean;
+interface WorkspaceViewHeaderState {
   editingName: string;
-
-  setNameEditing: (isEditing: boolean) => void;
+  isNameEditing: boolean;
+  hasError: boolean;
   setEditingName: (name: string) => void;
+  setIsNameEditing: (isEditing: boolean) => void;
+  setHasError: (hasError: boolean) => void;
 }
 
-export const useWorkspaceViewHeaderStore = create<WorkspaceViewHeaderStore>((set) => ({
-  isNameEditing: false,
+export const useWorkspaceViewHeaderStore = create<WorkspaceViewHeaderState>((set) => ({
   editingName: '',
-
-  setNameEditing: (isEditing) => set(() => ({ isNameEditing: isEditing })),
-  setEditingName: (name) => set(() => ({ editingName: name })),
+  isNameEditing: false,
+  hasError: false,
+  setEditingName: (name) => set({ editingName: name }),
+  setIsNameEditing: (isEditing) => set({ isNameEditing: isEditing }),
+  setHasError: (hasError) => set({ hasError }),
 }));

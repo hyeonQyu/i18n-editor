@@ -10,6 +10,7 @@ function WorkspaceNameEditTextField() {
 
   const editingName = useWorkspaceViewHeaderStore(({ editingName }) => editingName);
   const setEditingName = useWorkspaceViewHeaderStore(({ setEditingName }) => setEditingName);
+  const hasError = useWorkspaceViewHeaderStore(({ hasError }) => hasError);
 
   const updateName = useUpdateCurrentWorkspaceName();
   const cancelEdit = useCancelEditWorkspaceName();
@@ -44,6 +45,7 @@ function WorkspaceNameEditTextField() {
       onChange={handleChange}
       autoFocus
       fullWidth
+      error={hasError}
       InputProps={{
         sx: {
           fontSize,

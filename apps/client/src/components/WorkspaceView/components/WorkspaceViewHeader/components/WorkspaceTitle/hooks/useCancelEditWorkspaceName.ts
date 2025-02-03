@@ -1,9 +1,9 @@
 import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/components/WorkspaceViewHeader/stores';
 
 function useCancelEditWorkspaceName() {
-  const setNameEditing = useWorkspaceViewHeaderStore(({ setNameEditing }) => setNameEditing);
+  const setIsNameEditing = useWorkspaceViewHeaderStore(({ setIsNameEditing }) => setIsNameEditing);
 
-  return () => setNameEditing(false);
+  return () => setIsNameEditing(false);
 }
 
 export default useCancelEditWorkspaceName;
