@@ -42,6 +42,8 @@ export const useFileManagerDialogStore = createDialogStore<FileManagerDialogStor
 
     directoryOnly: false,
 
+    onConfirm: () => {},
+
     setViewType: (viewType) => set({ viewType }),
 
     movePathTo: (path) => {

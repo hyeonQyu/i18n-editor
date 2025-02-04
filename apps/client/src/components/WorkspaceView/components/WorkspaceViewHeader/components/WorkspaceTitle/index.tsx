@@ -1,3 +1,4 @@
+import CopyableWorkspacePath from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/components/CopyableWorkspacePath';
 import WorkspaceNameEditButton from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/components/WorkspaceNameEditButton';
 import WorkspaceNameEditCancelButton from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/components/WorkspaceNameEditCancelButton';
 import WorkspaceNameEditFinishButton from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/components/WorkspaceNameEditCompleteButton';
@@ -5,7 +6,6 @@ import WorkspaceNameEditTextField from '@components/WorkspaceView/components/Wor
 import useTitleWidth from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useTitleWidth';
 import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/components/WorkspaceViewHeader/stores';
 import { Box, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import { useRef } from 'react';
 
@@ -39,9 +39,7 @@ function WorkspaceTitle() {
         )}
       </Box>
 
-      <Typography variant={'subtitle1'} color={grey[600]} sx={{ marginTop: '12px' }}>
-        {workspace?.path}
-      </Typography>
+      <CopyableWorkspacePath />
     </Box>
   );
 }
