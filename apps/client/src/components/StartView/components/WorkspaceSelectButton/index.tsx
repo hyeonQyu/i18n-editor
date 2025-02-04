@@ -1,3 +1,4 @@
+import useAddNewWorkspace from '@components/Layout/components/Header/components/WorkspaceAddButton/hooks/useAddNewWorkspace';
 import useInitialPath from '@hooks/file-system/useInitialPath';
 import useOpenFileManagerDialog from '@hooks/useOpenFileManagerDialog';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
@@ -8,7 +9,9 @@ function WorkspaceSelectButton() {
 
   const initialPath = useInitialPath();
 
-  const handleClick = () => openFileManagerDialog(initialPath);
+  const addNewWorkspace = useAddNewWorkspace();
+
+  const handleClick = () => openFileManagerDialog(initialPath, addNewWorkspace);
 
   return (
     <Button

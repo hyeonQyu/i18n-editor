@@ -17,10 +17,10 @@ import '../styles/reset.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SnackbarProvider>
-      <APIProvider>
-        <ReactQueryClientProvider>
-          <ThemeProvider>
+    <ThemeProvider>
+      <SnackbarProvider>
+        <APIProvider>
+          <ReactQueryClientProvider>
             <WorkspaceProvider>
               <Layout>
                 <Component {...pageProps} />
@@ -28,10 +28,10 @@ function MyApp({ Component, pageProps }: AppProps) {
               </Layout>
             </WorkspaceProvider>
             <ReactQueryDevtools />
-          </ThemeProvider>
-        </ReactQueryClientProvider>
-      </APIProvider>
-    </SnackbarProvider>
+          </ReactQueryClientProvider>
+        </APIProvider>
+      </SnackbarProvider>
+    </ThemeProvider>
   );
 }
 

@@ -51,5 +51,6 @@
   "bugs": {
     "url": "https://github.com/hyeonQyu/i18n-editor/issues"
   },
-  "homepage": "https://github.com/hyeonQyu/i18n-editor"
+  "homepage": "https://github.com/hyeonQyu/i18n-editor",
+  "packageManager": "yarn@3.4.1"
 }

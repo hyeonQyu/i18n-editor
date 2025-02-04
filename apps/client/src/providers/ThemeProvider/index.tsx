@@ -28,7 +28,19 @@ function ThemeProvider({ children }: { children: ReactNode }) {
           },
         },
         typography: {
-          fontFamily: 'Roboto, Arial, sans-serif',
+          fontFamily: [
+            'Pretendard',
+            '-apple-system',
+            'BlinkMacSystemFont',
+            'system-ui',
+            'Roboto',
+            '"Helvetica Neue"',
+            '"Segoe UI"',
+            '"Apple SD Gothic Neo"',
+            '"Noto Sans KR"',
+            '"Malgun Gothic"',
+            'sans-serif',
+          ].join(','),
           h1: {
             fontSize: '2rem',
             fontWeight: 500,

@@ -1,4 +1,3 @@
-import childProcess from 'child_process';
 import fs from 'fs';
 import {
   EXTENSIONS_SUFFIX,
@@ -8,16 +7,13 @@ import {
   GetFileSystemInitialPathResponse,
   GetFileSystemLocaleRequest,
   GetFileSystemLocaleResponse,
-  getLeadingSlash,
   PostFileSystemFileManagerRequest,
   PostFileSystemFileManagerResponse,
   removeExtension,
 } from 'i18n-editor-common';
 import { FileEntry, FileEntryType } from 'i18n-editor-common/lib/defines/file';
-import { CMD_BY_OS } from '../../defines/env';
 import { BadRequestError } from '../../defines/errors';
-import { getOS } from '../../utils/env';
-import { getFileNames, readDirectory } from '../../utils/file';
+import { getCurrentWorkingDirectory, getFileNames, openFileManager, readDirectory } from '../../utils/file';
 import { getLanguageCodes } from '../../utils/locale';
 
 const getFileEntryType = (item: fs.Dirent): FileEntryType => {
@@ -76,7 +72,7 @@ const getAllNamespaces = async (rootPath: string, languages: string[]) => {
 const fileSystemService = {
   async getFileSystemInitialPath(_: GetFileSystemInitialPathRequest): Promise<GetFileSystemInitialPathResponse> {
     return {
-      path: process.cwd(),
+      path: getCurrentWorkingDirectory(),
     };
   },
 
@@ -99,9 +95,7 @@ const fileSystemService = {
 
   async postFileSystemFileManager(req: PostFileSystemFileManagerRequest): Promise<PostFileSystemFileManagerResponse> {
     const { path } = req;
-
-    const { openFileManager } = CMD_BY_OS[getOS()];
-    childProcess.spawn(openFileManager, [getLeadingSlash(path)]);
+    openFileManager(path);
   },
 
   /**
