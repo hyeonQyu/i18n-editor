@@ -24,7 +24,7 @@ const createWorkspace = async ({ name, path }: Pick<Workspace, 'name' | 'path'>)
   await configService.setWorkspaces(workspaces);
 };
 
-const updateWorkspace = async (id: string, workspace: Pick<Workspace, 'name' | 'path'>) => {
+const updateWorkspace = async (id: string, workspace: Omit<Workspace, 'id'>) => {
   const workspaces = getWorkspaces();
 
   const { hasDuplicateName, existingWorkspaceIndex } = workspaces.reduce(
@@ -85,6 +85,8 @@ const getWorkspace = async (id: string) => {
   if (languages.length === 0) {
     throw new BadRequestError('올바른 workspace가 아닙니다.');
   }
+
+  updateWorkspace(id, { ...workspace, lastOpenedAt: createTimestamp() });
 
   return await getAllNamespaces(path, languages);
 };
