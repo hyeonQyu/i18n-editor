@@ -1,4 +1,6 @@
 import {
+  DeleteWorkspaceRequest,
+  DeleteWorkspaceResponse,
   GetWorkspaceRequest,
   GetWorkspaceResponse,
   GetWorkspacesRequest,
@@ -46,6 +48,15 @@ export default class WorkspaceController extends BaseController {
     handler: async (req) => {
       const namespaces = await workspaceService.getWorkspace(req.params.id);
       return { namespaces };
+    },
+  };
+
+  private deleteWorkspace: ControllerMethod<DeleteWorkspaceRequest, never, DeleteWorkspaceResponse> = {
+    path: '/:id',
+    method: 'delete',
+    handler: async (req) => {
+      const { id } = req.params;
+      return await workspaceService.deleteWorkspace(id);
     },
   };
 }

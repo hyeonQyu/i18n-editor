@@ -75,7 +75,7 @@ const getWorkspace = async (id: string) => {
   const workspace = workspaces.find((workspace) => workspace.id === id);
 
   if (!workspace) {
-    throw new NotFoundError('Workspace not found');
+    throw new NotFoundError('존재하지 않는 워크스페이스입니다.');
   }
 
   const { path } = workspace;
@@ -91,11 +91,18 @@ const getWorkspace = async (id: string) => {
   return await getAllNamespaces(path, languages);
 };
 
+const deleteWorkspace = async (id: string) => {
+  const workspaces = getWorkspaces();
+  const filteredWorkspaces = workspaces.filter((workspace) => workspace.id !== id);
+  await configService.setWorkspaces(filteredWorkspaces);
+};
+
 const workspaceService = {
   getWorkspaces,
   createWorkspace,
   updateWorkspace,
   getWorkspace,
+  deleteWorkspace,
 };
 
 export default workspaceService;
