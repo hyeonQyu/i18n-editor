@@ -1,7 +1,15 @@
 import { create } from 'zustand/react';
 
 interface WorkspaceStore {
+  /**
+   * @deprecated
+   */
   path: string | undefined;
+  /**
+   * @deprecated
+   * @param path
+   * @returns
+   */
   setPath: (path: string) => void;
   namespace: string | undefined;
   setNamespace: (namespace: string) => void;
