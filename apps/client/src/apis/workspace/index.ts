@@ -1,6 +1,8 @@
 import { AxiosRequestFunction } from '@defines/api';
 import BaseAPI from '@utils/BaseAPI';
 import {
+  DeleteWorkspaceRequest,
+  DeleteWorkspaceResponse,
   GetWorkspaceRequest,
   GetWorkspaceResponse,
   GetWorkspacesRequest,
@@ -29,5 +31,10 @@ export default class WorkspaceAPI extends BaseAPI {
   public getWorkspace: AxiosRequestFunction<GetWorkspaceRequest, GetWorkspaceResponse> = (req) => {
     const { id } = req;
     return this.axiosInstance.get(this.getUrl(`/${id}`));
+  };
+
+  public deleteWorkspace: AxiosRequestFunction<DeleteWorkspaceRequest, DeleteWorkspaceResponse> = (req) => {
+    const { id } = req;
+    return this.axiosInstance.delete(this.getUrl(`/${id}`));
   };
 }

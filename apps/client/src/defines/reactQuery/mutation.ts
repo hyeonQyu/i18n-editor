@@ -7,6 +7,7 @@ export const MUTATION_KEY = {
   workspace: {
     base: ['workspace'] as const,
     postWorkspace: () => [...MUTATION_KEY.workspace.base, 'postWorkspace'] as const,
+    deleteWorkspace: () => [...MUTATION_KEY.workspace.base, 'deleteWorkspace'] as const,
   },
 
   namespace: {

@@ -1,9 +1,9 @@
 import useFetchWorkspace from '@hooks/workspace/useQueryGetWorkspace';
 
-function useSelectWorkspace() {
+function useSelectWorkspaceHandler() {
   const fetchWorkspace = useFetchWorkspace();
 
   return (id: string) => fetchWorkspace(id);
 }
 
-export default useSelectWorkspace;
+export default useSelectWorkspaceHandler;
