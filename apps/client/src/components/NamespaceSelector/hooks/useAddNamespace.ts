@@ -1,26 +1,31 @@
-import useCreateNewNamespace from '@hooks/namespace/useCreateNewNamespace';
-import useInvalidateLocaleNamespaces from '@hooks/namespace/useInvalidateLocaleNamespaces';
-import { useWorkspaceStore } from '@stores/workspace';
+import useSelectNamespaceHandler from '@components/Layout/components/Sidebar/components/NamespaceList/hooks/useSelectNamespaceHandler';
+import useCreateNamespace from '@hooks/namespace/useCreateNamespace';
+import useInvalidateGetWorkspaceQuery from '@hooks/workspace/useInvalidateGetWorkspaceQuery';
+import { useWorkspace } from '@providers/WorkspaceProvider';
 import { enqueueClosableSnackbar } from '@utils/snackbar';
 
 function useAddNamespace() {
-  const path = useWorkspaceStore(({ path }) => path);
+  const workspace = useWorkspace();
 
-  const createNewNamespace = useCreateNewNamespace();
+  const createNewNamespace = useCreateNamespace();
 
-  const invalidateNamespaces = useInvalidateLocaleNamespaces();
+  const invalidateWorkspace = useInvalidateGetWorkspaceQuery(workspace?.id ?? '');
+
+  const selectNamespace = useSelectNamespaceHandler();
 
   return async (namespace: string) => {
-    if (!path || !namespace) return;
+    if (!workspace || !namespace) return;
 
-    await createNewNamespace({ localeDirectoryPath: path, namespace });
+    await createNewNamespace({ localeDirectoryPath: workspace.path, namespace });
 
     enqueueClosableSnackbar({
       message: '새로운 namespace가 추가되었습니다.',
       variant: 'success',
     });
 
-    await invalidateNamespaces();
+    await invalidateWorkspace();
+
+    selectNamespace(namespace);
   };
 }
 

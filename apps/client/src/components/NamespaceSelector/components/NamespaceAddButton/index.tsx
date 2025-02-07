@@ -1,6 +1,6 @@
-import { useNamespaceAddDialogStore } from '@components/NamespaceSelector/stores/namespaceAddDialogStore';
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Tooltip } from '@mui/material';
+import { useNamespaceAddDialogStore } from '@stores/namespaceAddDialogStore';
 
 function NamespaceAddButton() {
   const open = useNamespaceAddDialogStore(({ open }) => open);

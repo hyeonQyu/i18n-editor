@@ -1,5 +1,6 @@
 import FileManagerDialog from '@components/FileManagerDialog';
 import Layout from '@components/Layout';
+import NamespaceAddDialog from '@components/NamespaceAddDialog';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -24,7 +25,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             <WorkspaceProvider>
               <Layout>
                 <Component {...pageProps} />
+
                 <FileManagerDialog />
+                <NamespaceAddDialog />
               </Layout>
             </WorkspaceProvider>
             <ReactQueryDevtools />

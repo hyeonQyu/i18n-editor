@@ -2,15 +2,17 @@ import { Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 
 interface SidebarMenuTitleProps {
-  children: ReactNode;
+  label: ReactNode;
+  action?: ReactNode;
 }
 
 function SidebarMenuTitle(props: SidebarMenuTitleProps) {
-  const { children } = props;
+  const { label, action } = props;
 
   return (
-    <Box sx={{ padding: '8px 16px 0 16px' }}>
-      <Typography variant={'h6'}>{children}</Typography>
+    <Box sx={{ padding: '8px 16px 0 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <Typography variant={'h6'}>{label}</Typography>
+      {action}
     </Box>
   );
 }
