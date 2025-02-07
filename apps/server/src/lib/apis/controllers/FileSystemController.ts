@@ -3,8 +3,6 @@ import {
   GetFileSystemDirectoryResponse,
   GetFileSystemInitialPathRequest,
   GetFileSystemInitialPathResponse,
-  GetFileSystemLocaleRequest,
-  GetFileSystemLocaleResponse,
   PostFileSystemFileManagerRequest,
   PostFileSystemFileManagerResponse,
 } from 'i18n-editor-common';
@@ -34,14 +32,6 @@ export default class FileSystemController extends BaseController {
     method: 'post',
     handler: async (req) => {
       return await fileSystemService.postFileSystemFileManager(req.body);
-    },
-  };
-
-  private getFileSystemLocale: ControllerMethod<never, GetFileSystemLocaleRequest, GetFileSystemLocaleResponse> = {
-    path: '/locale',
-    method: 'get',
-    handler: async (req) => {
-      return await fileSystemService.getFileSystemLocale(req.query);
     },
   };
 }
