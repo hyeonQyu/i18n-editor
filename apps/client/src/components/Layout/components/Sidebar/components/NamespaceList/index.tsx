@@ -5,10 +5,10 @@ import SidebarMenu from '@components/Layout/components/Sidebar/components/Sideba
 import SidebarMenuList from '@components/Layout/components/Sidebar/components/SidebarMenu/list';
 import SidebarMenuListItem from '@components/Layout/components/Sidebar/components/SidebarMenu/list/item';
 import SidebarMenuTitle from '@components/Layout/components/Sidebar/components/SidebarMenu/title';
+import NamespaceAddButton from '@components/NamespaceSelector/components/NamespaceAddButton';
 import useNamespaces from '@hooks/namespace/useNamespaces';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import { useWorkspaceStore } from '@stores/workspace';
-import NamespaceAddButton from './components/NamespaceAddButton';
 
 function NamespaceList() {
   const workspace = useWorkspace();
