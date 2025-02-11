@@ -1,4 +1,4 @@
-import useAddNamespace from '@components/NamespaceSelector/hooks/useAddNamespace';
+import useAddNamespace from '@components/NamespaceAddDialog/hooks/useAddNamespace';
 import useCreateAxiosErrorHandler from '@hooks/useCreateAxiosErrorHandler';
 import { useNamespaceAddDialogStore } from '@stores/namespaceAddDialogStore';
 import { FormEventHandler } from 'react';

@@ -24,27 +24,7 @@ function HomePage() {
     );
   }
 
-  return (
-    <Box sx={{ height: '100%' }}>
-      {workspace ? <WorkspaceView /> : <StartView />}
-      {/*<Box*/}
-      {/*  sx={{*/}
-      {/*    width: '100%',*/}
-      {/*    maxWidth: `${SELECTOR_MAX_WIDTH}px`,*/}
-      {/*    margin: '0 auto',*/}
-      {/*    padding: '80px 0',*/}
-      {/*    display: 'flex',*/}
-      {/*    flexDirection: 'column',*/}
-      {/*    gap: '36px',*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <DirectorySelector />*/}
-      {/*  /!*<NamespaceSelector />*!/*/}
-      {/*</Box>*/}
-
-      {/*/!*<NamespaceEditor />*!/*/}
-    </Box>
-  );
+  return <Box sx={{ height: '100%' }}>{workspace ? <WorkspaceView /> : <StartView />}</Box>;
 }
 
 export default HomePage;

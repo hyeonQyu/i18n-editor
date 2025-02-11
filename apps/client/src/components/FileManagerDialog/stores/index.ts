@@ -12,7 +12,7 @@ interface FileManagerDialogStore {
   searchMode: boolean;
   searchKeyword: string;
   directoryOnly: boolean;
-  onConfirm: (path: string) => Promise<void>;
+  onConfirm: (path: string) => void | Promise<void>;
   setViewType: (viewType: FileManagerViewType) => void;
   movePathTo: (path: string) => void;
   moveForward: () => void;
