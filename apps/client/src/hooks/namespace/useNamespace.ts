@@ -19,8 +19,6 @@ function useNamespace(): GetNamespaceResponse | undefined {
     queryKey: QUERY_KEY.namespace.getNamespace(req),
     queryFn: async () => (await api.namespace.getNamespace(req)).data,
     enabled: Boolean(path && namespace),
-    staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   return data;

@@ -29,6 +29,7 @@ export const QUERY_KEY = {
 
   namespace: {
     base: ['namespace'] as const,
+    getNamespaceAll: () => [...QUERY_KEY.namespace.base, 'getNamespace'] as const,
     getNamespace: (req: GetNamespaceRequest) => [...QUERY_KEY.namespace.base, 'getNamespace', req] as const,
   },
 };
