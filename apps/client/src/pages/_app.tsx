@@ -1,4 +1,5 @@
 import FileManagerDialog from '@components/FileManagerDialog';
+import GlobalScrollbarStyle from '@components/GlobalScrollbarStyle';
 import Layout from '@components/Layout';
 import NamespaceAddDialog from '@components/NamespaceAddDialog';
 import '@fontsource/roboto/300.css';
@@ -18,23 +19,27 @@ import '../styles/reset.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider>
-      <SnackbarProvider>
-        <APIProvider>
-          <ReactQueryClientProvider>
-            <WorkspaceProvider>
-              <Layout>
-                <Component {...pageProps} />
+    <>
+      <ThemeProvider>
+        <GlobalScrollbarStyle />
 
-                <FileManagerDialog />
-                <NamespaceAddDialog />
-              </Layout>
-            </WorkspaceProvider>
-            <ReactQueryDevtools />
-          </ReactQueryClientProvider>
-        </APIProvider>
-      </SnackbarProvider>
-    </ThemeProvider>
+        <SnackbarProvider>
+          <APIProvider>
+            <ReactQueryClientProvider>
+              <WorkspaceProvider>
+                <Layout>
+                  <Component {...pageProps} />
+
+                  <FileManagerDialog />
+                  <NamespaceAddDialog />
+                </Layout>
+              </WorkspaceProvider>
+              <ReactQueryDevtools />
+            </ReactQueryClientProvider>
+          </APIProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </>
   );
 }
 
