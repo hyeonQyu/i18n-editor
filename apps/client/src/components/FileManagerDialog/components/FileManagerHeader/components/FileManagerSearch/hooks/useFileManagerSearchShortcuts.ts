@@ -1,30 +1,23 @@
 import { useFileManagerDialogStore } from '@components/FileManagerDialog/stores';
-import useCheckMetaKey from '@hooks/useCheckMetaKey';
 import useKeyboardEventListener from '@hooks/useKeyboardEventListener';
 import { useCallback } from 'react';
 
 function useFileManagerSearchShortcuts() {
-  const searchMode = useFileManagerDialogStore(({ searchMode }) => searchMode);
-  const startSearch = useFileManagerDialogStore(({ startSearch }) => startSearch);
-  const finishSearch = useFileManagerDialogStore(({ finishSearch }) => finishSearch);
-
-  const checkMetaKey = useCheckMetaKey();
+  const searchMode = useFileManagerDialogStore((state) => state.searchMode);
+  const startSearch = useFileManagerDialogStore((state) => state.startSearch);
+  const finishSearch = useFileManagerDialogStore((state) => state.finishSearch);
 
   const handleStartByShortcut = useCallback(
     (e: KeyboardEvent) => {
       if (searchMode) return;
 
-      const openSearch = () => {
+      if (e.key.length === 1) {
         e.preventDefault();
         e.stopPropagation();
-        startSearch();
-      };
-
-      if (checkMetaKey(e) && e.key === 'f') {
-        openSearch();
+        startSearch(e.key);
       }
     },
-    [searchMode, startSearch, checkMetaKey],
+    [searchMode, startSearch],
   );
 
   const handleFinishByShortcut = useCallback(

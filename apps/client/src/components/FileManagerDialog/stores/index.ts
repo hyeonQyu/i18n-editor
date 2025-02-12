@@ -17,7 +17,7 @@ interface FileManagerDialogStore {
   movePathTo: (path: string) => void;
   moveForward: () => void;
   moveBackward: () => void;
-  startSearch: () => void;
+  startSearch: (character: string) => void;
   finishSearch: () => void;
   setSearchKeyword: (keyword: string) => void;
   setDirectoryOnly: (directoryOnly: boolean) => void;
@@ -104,7 +104,7 @@ export const useFileManagerDialogStore = createDialogStore<FileManagerDialogStor
       });
     },
 
-    startSearch: () => set({ searchMode: true }),
+    startSearch: (character) => set({ searchMode: true, searchKeyword: character }),
 
     finishSearch: () => set({ searchMode: false, searchKeyword: '' }),
 
