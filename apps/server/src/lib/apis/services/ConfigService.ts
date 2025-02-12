@@ -1,4 +1,4 @@
-import { DEFAULT_EDITOR_CONFIG, EditorConfig, Workspace } from 'i18n-editor-common';
+import { Config, DEFAULT_CONFIG } from 'i18n-editor-common';
 import { Environment } from '../../defines/env';
 import { getEnvironment } from '../../utils/env';
 import { readFile, writeFile } from '../../utils/file';
@@ -7,49 +7,51 @@ const projectRoot = process.cwd();
 
 const env = getEnvironment();
 
-const getConfigFilePath = () => {
+const CONFIG_DIRECTORY_NAME = '.i18ne';
+
+const FILES = ['workspace'] as const;
+
+type ConfigFileName = typeof FILES[number];
+
+const configDirectoryPath = (() => {
   const CONFIG_PATH_BY_ENV: Record<Environment, string> = {
-    production: `${projectRoot}/node_modules/i18n-editor/i18n-editor-config.json`,
-    development: `${projectRoot}/../../i18n-editor-config.json`,
+    production: `${projectRoot}/node_modules/i18n-editor/${CONFIG_DIRECTORY_NAME}`,
+    development: `${projectRoot}/../../${CONFIG_DIRECTORY_NAME}`,
   };
 
   return CONFIG_PATH_BY_ENV[env];
+})();
+
+const getConfigFilePath = (fileName: ConfigFileName) => {
+  return `${configDirectoryPath}/${fileName}.json`;
 };
 
-let editorConfig = DEFAULT_EDITOR_CONFIG;
-
-const readConfig = async () => {
-  return (await readFile(getConfigFilePath())) as EditorConfig;
-};
-
-const writeConfig = async (config: EditorConfig) => {
-  return await writeFile(getConfigFilePath(), config);
-};
+const config: Config = DEFAULT_CONFIG;
 
 const refreshConfig = async () => {
-  editorConfig = await readConfig();
+  config.workspace = await readFile(getConfigFilePath('workspace'));
 };
-
-const getConfig = () => editorConfig;
 
 const initConfig = async () => {
   try {
     await refreshConfig();
-  } catch (e) {
-    editorConfig = DEFAULT_EDITOR_CONFIG;
-  }
+  } catch (e) {}
 };
 
-const setWorkspaces = async (workspaces: Workspace[]) => {
-  editorConfig.workspaces = workspaces;
-  await writeConfig(editorConfig);
+const getWorkspace = (): Config['workspace'] => {
+  return { ...config.workspace };
+};
+
+const setWorkspace = async (workspace: Config['workspace']) => {
+  config.workspace = workspace;
+  await writeFile(getConfigFilePath('workspace'), workspace);
 };
 
 const configService = {
   initConfig,
-  getConfig,
   refreshConfig,
-  setWorkspaces,
+  getWorkspace,
+  setWorkspace,
 };
 
 export default configService;

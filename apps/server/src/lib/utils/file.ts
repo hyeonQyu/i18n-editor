@@ -1,7 +1,7 @@
 import { spawn } from 'child_process';
 import fs from 'fs';
 import { getExtensionName, getLeadingSlash } from 'i18n-editor-common';
-import { normalize } from 'path';
+import { dirname, normalize } from 'path';
 import { CMD_BY_OS } from '../defines/env';
 import { getOS } from './env';
 
@@ -26,7 +26,10 @@ export const readFile = async (filePath: string) => {
 };
 
 export const writeFile = async (filePath: string, content: object) => {
-  await fs.promises.writeFile(getNormalizedPath(filePath), JSON.stringify(content));
+  const path = getNormalizedPath(filePath);
+
+  await fs.promises.mkdir(dirname(path), { recursive: true });
+  await fs.promises.writeFile(path, JSON.stringify(content, null, 2));
 };
 
 export const readDirectory: typeof fs.promises.readdir = async (path, options) => {

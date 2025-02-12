@@ -1,18 +1,18 @@
 import { Workspace } from './workspace';
 
-export interface EditorConfig {
-  workspaces: Workspace[];
+export interface Config {
+  workspace: Record<string, Workspace>;
 }
 
-export const DEFAULT_EDITOR_CONFIG: EditorConfig = {
-  workspaces: [],
+export const DEFAULT_CONFIG: Config = {
+  workspace: {},
 };
 
 /**
  * @deprecated
  */
-export interface ConfigMeta {
-  path: string;
+export interface EditorConfig {
+  workspaces: Workspace[];
 }
 
 export interface ServerConfig {
