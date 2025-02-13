@@ -14,13 +14,6 @@ export const DEFAULT_CONFIG: Config = {
   },
 };
 
-/**
- * @deprecated
- */
-export interface EditorConfig {
-  workspaces: Workspace[];
-}
-
 export interface ServerConfig {
   port: number;
 }
