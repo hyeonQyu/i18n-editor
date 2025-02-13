@@ -1,17 +1,18 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Box, IconButton } from '@mui/material';
+import { ReactNode } from 'react';
 
 interface AddablePaperSectionTitleProps {
-  title: string;
   onClick: () => void;
+  children: ReactNode;
 }
 
 function AddablePaperSectionTitle(props: AddablePaperSectionTitleProps) {
-  const { title, onClick } = props;
+  const { children, onClick } = props;
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <span>{title}</span>
+      {children}
       <IconButton onClick={onClick}>
         <AddIcon />
       </IconButton>

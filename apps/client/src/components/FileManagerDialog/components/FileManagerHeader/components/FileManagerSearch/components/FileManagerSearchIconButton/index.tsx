@@ -6,9 +6,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, Tooltip } from '@mui/material';
 
 function FileManagerSearchIconButton() {
-  const { searchMode, startSearch: handleClick } = useFileManagerDialogStore();
+  const { searchMode, startSearch } = useFileManagerDialogStore();
   const right = useFileManagerSearchInputWidth();
   const metaKey = useMetaKeyLabel();
+
+  const handleClick = () => startSearch('');
 
   return (
     <Tooltip title={searchMode ? undefined : `검색창 열기 (${metaKey} + F)`}>

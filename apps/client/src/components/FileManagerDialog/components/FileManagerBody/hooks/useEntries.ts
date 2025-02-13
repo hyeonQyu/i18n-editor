@@ -5,9 +5,9 @@ import { throttle } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 function useEntries() {
-  const path = useFileManagerDialogStore(({ path }) => path) ?? '';
-  const keyword = useFileManagerDialogStore(({ searchKeyword }) => searchKeyword);
-  const directoryOnly = useFileManagerDialogStore(({ directoryOnly }) => directoryOnly);
+  const path = useFileManagerDialogStore((state) => state.path) ?? '';
+  const keyword = useFileManagerDialogStore((state) => state.searchKeyword);
+  const directoryOnly = useFileManagerDialogStore((state) => state.directoryOnly);
 
   const filterDirectories = useCallback(
     (entries: FileEntry[]) => {
