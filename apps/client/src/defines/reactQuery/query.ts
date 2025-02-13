@@ -25,11 +25,7 @@ export const QUERY_KEY = {
     getWorkspaces: () => [...QUERY_KEY.workspace.base, 'getWorkspaces'] as const,
     getAnyWorkspace: () => [...QUERY_KEY.workspace.base, 'getWorkspace'] as const,
     getWorkspace: (req: GetWorkspaceRequest) => [...QUERY_KEY.workspace.getAnyWorkspace(), req] as const,
-  },
-
-  namespace: {
-    base: ['namespace'] as const,
-    getNamespaceAll: () => [...QUERY_KEY.namespace.base, 'getNamespace'] as const,
-    getNamespace: (req: GetNamespaceRequest) => [...QUERY_KEY.namespace.base, 'getNamespace', req] as const,
+    getNamespaceAll: () => [...QUERY_KEY.workspace.base, 'getNamespace'] as const,
+    getNamespace: (req: GetNamespaceRequest) => [...QUERY_KEY.workspace.getNamespaceAll(), req] as const,
   },
 };

@@ -7,8 +7,8 @@ function useCreateNamespace() {
   const api = useAPI();
 
   const { mutateAsync } = useMutation({
-    mutationKey: MUTATION_KEY.namespace.postNamespace(),
-    mutationFn: async (req: PostNamespaceRequest) => (await api.namespace.postNamespace(req)).data,
+    mutationKey: MUTATION_KEY.workspace.postNamespace(),
+    mutationFn: async (req: PostNamespaceRequest) => (await api.workspace.postNamespace(req)).data,
   });
 
   return mutateAsync;

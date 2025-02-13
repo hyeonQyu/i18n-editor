@@ -11,14 +11,14 @@ function useNamespace(): GetNamespaceResponse | undefined {
   const workspace = useWorkspace();
   const namespace = useWorkspaceStore(({ namespace }) => namespace) ?? '';
 
-  const path = workspace?.path ?? '';
+  const id = workspace?.id ?? '';
 
-  const req: GetNamespaceRequest = { localeDirectoryPath: path, namespace };
+  const req: GetNamespaceRequest = { id, namespace };
 
   const { data: { data } = {} } = useQuery({
-    queryKey: QUERY_KEY.namespace.getNamespace(req),
-    queryFn: async () => (await api.namespace.getNamespace(req)).data,
-    enabled: Boolean(path && namespace),
+    queryKey: QUERY_KEY.workspace.getNamespace(req),
+    queryFn: async () => (await api.workspace.getNamespace(req)).data,
+    enabled: Boolean(id && namespace),
   });
 
   return data;

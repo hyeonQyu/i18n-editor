@@ -1,9 +1,9 @@
 import { getNamespace } from './getNamespace';
-import { postNamespace } from './postNamespace';
+import { createNamespace } from './postNamespace';
 
 const namespaceService = {
   getNamespace,
-  postNamespace,
+  createNamespace,
 };
 
 export default namespaceService;

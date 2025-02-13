@@ -1,6 +1,5 @@
 import ConfigAPI from '@apis/config';
 import FileSystemAPI from '@apis/file-system';
-import NamespaceAPI from '@apis/namespace';
 import WorkspaceAPI from '@apis/workspace';
 import { enqueueClosableSnackbar } from '@utils/snackbar';
 import axios, { AxiosInstance } from 'axios';
@@ -12,7 +11,6 @@ interface API {
   config: ConfigAPI;
   fileSystem: FileSystemAPI;
   workspace: WorkspaceAPI;
-  namespace: NamespaceAPI;
 }
 
 const createAxiosInstance = (port: number) => axios.create({ baseURL: `http://localhost:${port}/api` });
@@ -23,7 +21,6 @@ const createAPI = (axiosInstance: AxiosInstance): API => {
     config: new ConfigAPI(axiosInstance, '/config'),
     fileSystem: new FileSystemAPI(axiosInstance, '/file-system'),
     workspace: new WorkspaceAPI(axiosInstance, '/workspace'),
-    namespace: new NamespaceAPI(axiosInstance, '/namespace'),
   };
 };
 const defaultAPI = createAPI(defaultAxiosInstance);

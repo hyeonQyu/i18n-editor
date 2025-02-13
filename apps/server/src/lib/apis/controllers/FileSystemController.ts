@@ -11,7 +11,7 @@ import BaseController from '../../utils/BaseController';
 import fileSystemService from '../services/FileSystemService';
 
 export default class FileSystemController extends BaseController {
-  private getFileSystemInitialPath: ControllerMethod<never, GetFileSystemInitialPathRequest, GetFileSystemInitialPathResponse> = {
+  private getFileSystemInitialPath: ControllerMethod<never, never, GetFileSystemInitialPathRequest, GetFileSystemInitialPathResponse> = {
     path: '/initial-path',
     method: 'get',
     handler: async (req) => {
@@ -19,7 +19,7 @@ export default class FileSystemController extends BaseController {
     },
   };
 
-  private getFileSystemDirectory: ControllerMethod<never, GetFileSystemDirectoryRequest, GetFileSystemDirectoryResponse> = {
+  private getFileSystemDirectory: ControllerMethod<never, never, GetFileSystemDirectoryRequest, GetFileSystemDirectoryResponse> = {
     path: '/directory',
     method: 'get',
     handler: async (req) => {
@@ -27,7 +27,7 @@ export default class FileSystemController extends BaseController {
     },
   };
 
-  private postFileSystemFileManager: ControllerMethod<PostFileSystemFileManagerRequest, never, PostFileSystemFileManagerResponse> = {
+  private postFileSystemFileManager: ControllerMethod<PostFileSystemFileManagerRequest, never, never, PostFileSystemFileManagerResponse> = {
     path: '/file-manager',
     method: 'post',
     handler: async (req) => {
