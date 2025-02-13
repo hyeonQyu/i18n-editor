@@ -11,7 +11,7 @@ function AddablePaperSectionTitle(props: AddablePaperSectionTitleProps) {
   const { children, onClick } = props;
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
       {children}
       <IconButton onClick={onClick}>
         <AddIcon />
