@@ -3,7 +3,7 @@ import { AppOption } from './defines/appOption';
 import { startCheckMemoryInterval } from './utils/memory';
 import { startResponse } from './utils/response';
 import { createServer } from './utils/server';
-import { UiExecutor } from './utils/uiExecutor';
+import { openUI } from './utils/ui';
 
 const { program } = require('commander');
 
@@ -25,7 +25,7 @@ module.exports = {
         });
 
         if (env === 'production') {
-          UiExecutor.runHtmlUi(port);
+          openUI(port);
         } else {
           startCheckMemoryInterval(TIME_UNIT.unitOfMs.asSecond * 30);
         }
