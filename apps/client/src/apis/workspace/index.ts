@@ -3,12 +3,13 @@ import BaseAPI from '@utils/BaseAPI';
 import {
   DeleteWorkspaceRequest,
   DeleteWorkspaceResponse,
-  GetNamespaceRequest,
+  GetNamespaceParams,
   GetNamespaceResponse,
   GetWorkspaceRequest,
   GetWorkspaceResponse,
   GetWorkspacesRequest,
   GetWorkspacesResponse,
+  PostNamespaceParams,
   PostNamespaceRequest,
   PostNamespaceResponse,
   PostWorkspaceRequest,
@@ -42,13 +43,13 @@ export default class WorkspaceAPI extends BaseAPI {
     return this.axiosInstance.delete(this.getUrl(`/${id}`));
   };
 
-  public getNamespace: AxiosRequestFunction<GetNamespaceRequest, GetNamespaceResponse> = (req) => {
+  public postNamespace: AxiosRequestFunction<PostNamespaceParams & PostNamespaceRequest, PostNamespaceResponse> = (req) => {
     const { id, namespace } = req;
-    return this.axiosInstance.get(this.getUrl(`/${id}/${namespace}`));
+    return this.axiosInstance.post(this.getUrl(`/${id}`), { namespace });
   };
 
-  public postNamespace: AxiosRequestFunction<PostNamespaceRequest, PostNamespaceResponse> = (req) => {
+  public getNamespace: AxiosRequestFunction<GetNamespaceParams, GetNamespaceResponse> = (req) => {
     const { id, namespace } = req;
-    return this.axiosInstance.post(this.getUrl(`/${id}/${namespace}`));
+    return this.axiosInstance.get(this.getUrl(`/${id}/${namespace}`));
   };
 }

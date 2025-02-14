@@ -1,20 +1,26 @@
 import {
   DeleteWorkspaceRequest,
   DeleteWorkspaceResponse,
+  GetNamespaceParams,
+  GetNamespaceResponse,
   GetWorkspaceRequest,
   GetWorkspaceResponse,
   GetWorkspacesRequest,
   GetWorkspacesResponse,
+  PostNamespaceParams,
+  PostNamespaceRequest,
+  PostNamespaceResponse,
   PostWorkspaceRequest,
   PostWorkspaceResponse,
   PutWorkspaceParams,
   PutWorkspaceRequest,
   PutWorkspaceResponse,
-  type GetNamespaceRequest,
-  type GetNamespaceResponse,
-  type PostNamespaceRequest,
-  type PostNamespaceResponse,
 } from 'i18n-editor-common';
+import {
+  PostTranslationParams,
+  PostTranslationRequest,
+  PostTranslationResponse,
+} from 'i18n-editor-common/lib/defines/api/models/worksapce/translation';
 import { ControllerMethod } from '../../defines/api';
 import BaseController from '../../utils/BaseController';
 import namespaceService from '../services/NamespaceService';
@@ -65,7 +71,17 @@ export default class WorkspaceController extends BaseController {
     },
   };
 
-  private getNamespace: ControllerMethod<never, GetNamespaceRequest, never, GetNamespaceResponse> = {
+  private postNamespace: ControllerMethod<PostNamespaceRequest, PostNamespaceParams, never, PostNamespaceResponse> = {
+    path: '/:id',
+    method: 'post',
+    handler: async (req) => {
+      const { id } = req.params;
+      const { namespace } = req.body;
+      return await namespaceService.createNamespace(id, namespace);
+    },
+  };
+
+  private getNamespace: ControllerMethod<never, GetNamespaceParams, never, GetNamespaceResponse> = {
     path: '/:id/:namespace',
     method: 'get',
     handler: async (req) => {
@@ -74,12 +90,13 @@ export default class WorkspaceController extends BaseController {
     },
   };
 
-  private postNamespace: ControllerMethod<never, PostNamespaceRequest, never, PostNamespaceResponse> = {
+  private postTranslation: ControllerMethod<PostTranslationRequest, PostTranslationParams, never, PostTranslationResponse> = {
     path: '/:id/:namespace',
     method: 'post',
     handler: async (req) => {
       const { id, namespace } = req.params;
-      return await namespaceService.createNamespace(id, namespace);
+      const { translation, index } = req.body;
+      return await namespaceService.createTranslation(id, namespace, translation, index);
     },
   };
 }
