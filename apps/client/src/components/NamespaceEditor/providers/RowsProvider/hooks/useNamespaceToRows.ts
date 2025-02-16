@@ -8,13 +8,27 @@ function useNamespaceToRows(): RowData[] {
   return useMemo(() => {
     if (!namespace) return EMPTY_ROWS;
 
-    return namespace.translations.map((translation) => ({
+    const { translations, languageCodes } = namespace;
+
+    const rows: RowData[] = translations.map((translation) => ({
       key: translation.key,
       ...namespace.languageCodes.reduce((acc, code) => {
         acc[code] = translation.value[code] || '';
         return acc;
       }, {} as Partial<Record<string, string>>),
     }));
+
+    const emptyRow: RowData = languageCodes.reduce(
+      (acc, code) => {
+        acc[code] = '';
+        return acc;
+      },
+      {
+        key: '',
+      } as RowData,
+    );
+
+    return [...rows, emptyRow];
   }, [namespace]);
 }
 
