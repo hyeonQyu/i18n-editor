@@ -1,6 +1,5 @@
 import TextFieldCell from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/TextFieldCell';
-import { useRowIndex } from '@components/NamespaceEditor/providers/RowIndexProvider';
-import { useRows } from '@components/NamespaceEditor/providers/RowsProvider';
+import useIsVirtualRow from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/hooks/useIsVirtualRow';
 
 interface ValueCellProps {
   value: string;
@@ -9,12 +8,9 @@ interface ValueCellProps {
 function ValueCell(props: ValueCellProps) {
   const { value } = props;
 
-  const rows = useRows();
-  const rowIndex = useRowIndex();
+  const isVirtualRow = useIsVirtualRow();
 
-  const hasKey = Boolean(rows[rowIndex]?.key);
-
-  return <TextFieldCell value={value} multiline={true} disabled={!hasKey} />;
+  return <TextFieldCell value={value} multiline={true} disabled={isVirtualRow} />;
 }
 
 export default ValueCell;

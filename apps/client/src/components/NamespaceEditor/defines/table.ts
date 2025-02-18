@@ -5,7 +5,7 @@ export type RowData = {
 } & Partial<Record<LanguageCode, string>>;
 
 export interface ColumnData {
-  label: keyof RowData;
+  label: keyof RowData | '';
 }
 
 export const EMPTY_ROWS: RowData[] = [];

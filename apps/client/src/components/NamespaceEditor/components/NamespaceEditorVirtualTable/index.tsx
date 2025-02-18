@@ -6,10 +6,13 @@ import NamespaceEditorTableBody from '@components/NamespaceEditor/components/Nam
 import NamespaceEditorTableHead from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorTableHead';
 import { useRows } from '@components/NamespaceEditor/providers/RowsProvider';
 import { TableRow } from '@mui/material';
+import { useWorkspaceStore } from '@stores/workspace';
 import { TableVirtuoso } from 'react-virtuoso';
 
 function NamespaceEditorVirtualTable() {
   const rows = useRows();
+
+  const namespace = useWorkspaceStore(({ namespace }) => namespace);
 
   return (
     <TableVirtuoso
@@ -22,7 +25,7 @@ function NamespaceEditorVirtualTable() {
         TableBody: NamespaceEditorTableBody,
       }}
       fixedHeaderContent={NamespaceEditorFixedHeaderContent}
-      itemContent={(rowIndex, row) => <NamespaceEditorRow rowIndex={rowIndex} row={row} />}
+      itemContent={(rowIndex, row) => <NamespaceEditorRow key={`${namespace}-${rowIndex}`} rowIndex={rowIndex} row={row} />}
     />
   );
 }

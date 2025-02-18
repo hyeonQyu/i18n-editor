@@ -1,14 +1,13 @@
-import { ColumnData, EMPTY_COLUMNS } from '@components/NamespaceEditor/defines/table';
-import useNamespace from '@hooks/namespace/useNamespace';
+import { ColumnData } from '@components/NamespaceEditor/defines/table';
+import { GetNamespaceResponse } from 'i18n-editor-common';
 import { useMemo } from 'react';
 
-function useNamespaceToColumns(): ColumnData[] {
-  const namespace = useNamespace();
-
+function useNamespaceToColumns(namespace: GetNamespaceResponse): ColumnData[] {
   return useMemo(() => {
-    if (!namespace) return EMPTY_COLUMNS;
-
     return [
+      {
+        label: '',
+      },
       {
         label: 'key',
       },

@@ -1,0 +1,11 @@
+import { useRowIndex } from '@components/NamespaceEditor/providers/RowIndexProvider';
+import { useRows } from '@components/NamespaceEditor/providers/RowsProvider';
+
+function useIsVirtualRow() {
+  const rowIndex = useRowIndex();
+  const rows = useRows();
+
+  return !rows[rowIndex]?.key;
+}
+
+export default useIsVirtualRow;
