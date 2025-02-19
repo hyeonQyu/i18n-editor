@@ -1,10 +1,11 @@
 import useCompleteKeyCellHandler from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/KeyCell/hooks/useCompleteKeyCellHandler';
 import TextFieldCell from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/TextFieldCell';
 import { CELL_PADDING } from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/defines/styles';
+import { Cell } from '@components/NamespaceEditor/defines/table';
 import { Box } from '@mui/material';
 
 interface KeyCellProps {
-  value: string;
+  cell: Cell;
 }
 
 const createHtmlString = (str: string) => {
@@ -12,12 +13,13 @@ const createHtmlString = (str: string) => {
 };
 
 function KeyCell(props: KeyCellProps) {
-  const { value } = props;
+  const { cell } = props;
+  const { value } = cell;
 
   const handleComplete = useCompleteKeyCellHandler();
 
   if (!value) {
-    return <TextFieldCell value={value} multiline={false} placeholder={'새로운 번역을 추가하세요.'} onComplete={handleComplete} />;
+    return <TextFieldCell cell={cell} multiline={false} placeholder={'새로운 번역을 추가하세요.'} onComplete={handleComplete} />;
   }
 
   return (

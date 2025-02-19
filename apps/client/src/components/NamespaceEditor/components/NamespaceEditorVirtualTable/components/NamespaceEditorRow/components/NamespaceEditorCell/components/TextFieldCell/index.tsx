@@ -1,19 +1,41 @@
 import { CELL_PADDING } from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/defines/styles';
-import { TextField, TextFieldProps } from '@mui/material';
+import useClearCellError from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/hooks/useClearCellError';
+import { Cell } from '@components/NamespaceEditor/defines/table';
+import { TextField, TextFieldProps, useTheme } from '@mui/material';
 import { ChangeEventHandler, useState } from 'react';
 
 interface TextFieldCellProps extends Omit<TextFieldProps, 'value' | 'onChange' | 'maxRows'> {
-  value: string;
+  cell: Cell;
   onComplete?: (value: string) => void | Promise<void>;
 }
 
 function TextFieldCell(props: TextFieldCellProps) {
-  const { value: defaultValue, onComplete, fullWidth = true, multiline = true, disabled, ...textFieldProps } = props;
+  const {
+    cell: { value: defaultValue, metadata },
+    onComplete,
+    fullWidth = true,
+    multiline = true,
+    disabled,
+    ...textFieldProps
+  } = props;
+
+  const {
+    palette: { error },
+  } = useTheme();
+
+  const clearCellError = useClearCellError();
+
+  const errorMessage = metadata.error?.message;
+  const hasError = Boolean(errorMessage);
 
   const [value, setValue] = useState(defaultValue);
 
   const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setValue(e.target.value);
+
+    if (hasError) {
+      clearCellError();
+    }
   };
 
   const handleBlur = async () => {
@@ -31,6 +53,8 @@ function TextFieldCell(props: TextFieldCellProps) {
       multiline={multiline}
       maxRows={8}
       disabled={disabled}
+      error={hasError}
+      helperText={errorMessage}
       InputProps={{
         sx: {
           padding: `${CELL_PADDING}px`,
@@ -59,14 +83,18 @@ function TextFieldCell(props: TextFieldCellProps) {
           minHeight: '88px',
         },
 
+        '& .MuiFormHelperText-root': {
+          position: 'absolute',
+          right: 0,
+          bottom: 0,
+        },
+
         '& .MuiOutlinedInput-notchedOutline': {
-          border: 'none',
+          border: hasError ? '1px solid' : 'none',
         },
-        '& .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline': {
-          border: 'none',
-        },
+
         '& .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-          border: '1px solid',
+          border: `1px solid ${hasError ? error.main : ''}`,
         },
       }}
       {...textFieldProps}

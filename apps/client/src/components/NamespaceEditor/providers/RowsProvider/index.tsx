@@ -1,5 +1,6 @@
 import { EMPTY_ROWS, RowData } from '@components/NamespaceEditor/defines/table';
 import useNamespaceToRows from '@components/NamespaceEditor/providers/RowsProvider/hooks/useNamespaceToRows';
+import { createCell } from '@components/NamespaceEditor/utils/cell';
 import useNamespace from '@hooks/namespace/useNamespace';
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 
@@ -38,11 +39,11 @@ function RowsProvider(props: RowsProviderProps) {
     () =>
       languageCodes.reduce(
         (acc, code) => {
-          acc[code] = '';
+          acc[code] = createCell('');
           return acc;
         },
         {
-          key: '',
+          key: createCell(''),
         } as RowData,
       ),
     [languageCodes],

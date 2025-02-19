@@ -1,16 +1,16 @@
 import KeyCell from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/KeyCell';
 import MenuCell from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/MenuCell';
 import ValueCell from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/ValueCell';
-import { ColumnData } from '@components/NamespaceEditor/defines/table';
+import { Cell, ColumnData } from '@components/NamespaceEditor/defines/table';
 import { TableCell } from '@mui/material';
 
 interface NamespaceEditorCellProps {
   label: ColumnData['label'];
-  value: string;
+  cell: Cell;
 }
 
 function NamespaceEditorCell(props: NamespaceEditorCellProps) {
-  const { label, value } = props;
+  const { label, cell } = props;
 
   return (
     <TableCell sx={{ padding: 0 }}>
@@ -19,9 +19,9 @@ function NamespaceEditorCell(props: NamespaceEditorCellProps) {
           case '':
             return <MenuCell />;
           case 'key':
-            return <KeyCell value={value} />;
+            return <KeyCell cell={cell} />;
           default:
-            return <ValueCell value={value} />;
+            return <ValueCell cell={cell} />;
         }
       })()}
     </TableCell>
