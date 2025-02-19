@@ -1,9 +1,9 @@
 import { Translation } from 'i18n-editor-common';
-import { ConflictError } from '../../../defines/errors';
+import { BadRequestError } from '../../../defines/errors';
 import { namespaceContainer } from '../../../utils/namespaceContainer';
 import { completeTranslation, getLanguageCodesByWorkspacePath, getWorkspacePath, readTranslations, writeTranslation } from './common/utils';
 
-export const createTranslation = async (workspaceId: string, namespace: string, translation: Translation, index: number) => {
+export const updateTranslation = async (workspaceId: string, namespace: string, translation: Translation) => {
   const path = getWorkspacePath(workspaceId);
 
   const languageCodes = await getLanguageCodesByWorkspacePath(path);
@@ -11,13 +11,13 @@ export const createTranslation = async (workspaceId: string, namespace: string, 
   const translations =
     namespaceContainer.getTranslations(workspaceId, namespace) ?? (await readTranslations(path, namespace, languageCodes));
 
-  const isDuplicated = Boolean(translations.find(({ key }) => translation.key === key));
+  const index = translations.findIndex(({ key }) => key === translation.key);
 
-  if (isDuplicated) {
-    throw new ConflictError('이미 동일한 번역키가 존재합니다.');
+  if (index === -1) {
+    throw new BadRequestError('수정하려는 번역키가 없습니다.');
   }
 
-  translations.splice(index, 0, completeTranslation(languageCodes, translation));
+  translations[index] = completeTranslation(languageCodes, translation);
 
   await writeTranslation(path, namespace, translations);
 
