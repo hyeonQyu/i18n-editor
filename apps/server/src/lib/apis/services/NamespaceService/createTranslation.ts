@@ -3,7 +3,17 @@ import { ConflictError } from '../../../defines/errors';
 import { namespaceContainer } from '../../../utils/namespaceContainer';
 import { completeTranslation, getLanguageCodesByWorkspacePath, getWorkspacePath, readTranslations, writeTranslation } from './common/utils';
 
-export const createTranslation = async (workspaceId: string, namespace: string, translation: Translation, index: number) => {
+interface Key {
+  workspaceId: string;
+  namespace: string;
+}
+
+interface Value {
+  index: number;
+  translation: Translation;
+}
+
+export const createTranslation = async ({ workspaceId, namespace }: Key, { index, translation }: Value) => {
   const path = getWorkspacePath(workspaceId);
 
   const languageCodes = await getLanguageCodesByWorkspacePath(path);

@@ -21,7 +21,7 @@ function NamespaceEditorCell(props: NamespaceEditorCellProps) {
           case 'key':
             return <KeyCell cell={cell} />;
           default:
-            return <ValueCell cell={cell} />;
+            return <ValueCell cell={cell} languageCode={label} />;
         }
       })()}
     </TableCell>

@@ -1,8 +1,9 @@
+import { focusNextTextFieldCell } from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/TextFieldCell/utils/focus';
 import { CELL_PADDING } from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/defines/styles';
 import useClearCellError from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/hooks/useClearCellError';
 import { Cell } from '@components/NamespaceEditor/defines/table';
 import { TextField, TextFieldProps, useTheme } from '@mui/material';
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';
 
 interface TextFieldCellProps extends Omit<TextFieldProps, 'value' | 'onChange' | 'maxRows'> {
   cell: Cell;
@@ -42,6 +43,15 @@ function TextFieldCell(props: TextFieldCellProps) {
     await onComplete?.(value);
   };
 
+  const handleKeyDown: KeyboardEventHandler = (e) => {
+    if (e.key === 'Enter') {
+      if (e.shiftKey) return;
+
+      e.preventDefault();
+      focusNextTextFieldCell(e.currentTarget);
+    }
+  };
+
   const cursor = disabled ? 'default' : 'pointer';
 
   return (
@@ -49,6 +59,7 @@ function TextFieldCell(props: TextFieldCellProps) {
       value={value}
       onChange={handleChange}
       onBlur={handleBlur}
+      onKeyDown={handleKeyDown}
       fullWidth={fullWidth}
       multiline={multiline}
       maxRows={8}

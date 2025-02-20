@@ -1,3 +1,4 @@
+import { LanguageCode } from '../../../language';
 import { Translation } from '../../../translation';
 import { NamespaceParams } from './namespace';
 
@@ -10,10 +11,13 @@ export interface PostTranslationRequest {
 
 export type PostTranslationResponse = void;
 
-export type PutTranslationParams = NamespaceParams;
+export type PutTranslationParams = PostTranslationParams & {
+  translationKey: string;
+};
 
 export interface PutTranslationRequest {
-  translation: Translation;
+  languageCode: LanguageCode;
+  value: string;
 }
 
 export type PutTranslationResponse = void;
