@@ -1,7 +1,6 @@
 import { Translation } from 'i18n-editor-common';
 import { ConflictError } from '../../../defines/errors';
-import { namespaceContainer } from '../../../utils/namespaceContainer';
-import { completeTranslation, getLanguageCodesByWorkspacePath, getWorkspacePath, readTranslations, writeTranslation } from './common/utils';
+import { completeTranslation, getNamespaceDetails, saveNamespaceDetails } from './common/utils';
 
 interface Key {
   workspaceId: string;
@@ -14,12 +13,7 @@ interface Value {
 }
 
 export const createTranslation = async ({ workspaceId, namespace }: Key, { index, translation }: Value) => {
-  const path = getWorkspacePath(workspaceId);
-
-  const languageCodes = await getLanguageCodesByWorkspacePath(path);
-
-  const translations =
-    namespaceContainer.getTranslations(workspaceId, namespace) ?? (await readTranslations(path, namespace, languageCodes));
+  const { languageCodes, translations } = await getNamespaceDetails(workspaceId, namespace);
 
   const isDuplicated = Boolean(translations.find(({ key }) => translation.key === key));
 
@@ -29,7 +23,5 @@ export const createTranslation = async ({ workspaceId, namespace }: Key, { index
 
   translations.splice(index, 0, completeTranslation(languageCodes, translation));
 
-  await writeTranslation(path, namespace, translations);
-
-  namespaceContainer.setTranslations(workspaceId, namespace, translations);
+  await saveNamespaceDetails(workspaceId, namespace, translations);
 };

@@ -1,4 +1,3 @@
-import { LanguageCode } from 'i18n-editor-common';
 import { BadRequestError } from '../../../defines/errors';
 import { getNamespaceDetails, saveNamespaceDetails } from './common/utils';
 
@@ -8,12 +7,7 @@ interface Key {
   translationKey: string;
 }
 
-interface Value {
-  languageCode: LanguageCode;
-  value: string;
-}
-
-export const updateTranslation = async ({ workspaceId, namespace, translationKey }: Key, { languageCode, value }: Value) => {
+export const deleteTranslation = async ({ workspaceId, namespace, translationKey }: Key) => {
   const { translations } = await getNamespaceDetails(workspaceId, namespace);
 
   const index = translations.findIndex(({ key }) => key === translationKey);
@@ -22,7 +16,7 @@ export const updateTranslation = async ({ workspaceId, namespace, translationKey
     throw new BadRequestError('수정하려는 번역키가 없습니다.');
   }
 
-  translations[index].value[languageCode] = value;
+  translations.splice(index, 1);
 
   await saveNamespaceDetails(workspaceId, namespace, translations);
 };

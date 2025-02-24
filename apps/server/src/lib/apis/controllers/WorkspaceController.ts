@@ -1,4 +1,6 @@
 import {
+  DeleteTranslationParams,
+  DeleteTranslationResponse,
   DeleteWorkspaceRequest,
   DeleteWorkspaceResponse,
   GetNamespaceParams,
@@ -124,6 +126,14 @@ export default class WorkspaceController extends BaseController {
         },
         { languageCode, value },
       );
+    },
+  };
+
+  private deleteTranslation: ControllerMethod<never, DeleteTranslationParams, never, DeleteTranslationResponse> = {
+    path: '/:id/:namespace/:translationKey',
+    method: 'delete',
+    handler: async (req) => {
+      const { id, namespace, translationKey } = req.params;
     },
   };
 }

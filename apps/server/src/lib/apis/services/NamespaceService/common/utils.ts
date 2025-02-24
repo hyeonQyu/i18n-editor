@@ -10,6 +10,7 @@ import {
 import { BadRequestError, NotFoundError } from '../../../../defines/errors';
 import { createFileWhenNotExist, readFile, writeFile } from '../../../../utils/file';
 import { getLanguageCodes } from '../../../../utils/locale';
+import { namespaceContainer } from '../../../../utils/namespaceContainer';
 import configService from '../../ConfigService';
 
 const languageCodeToNamespaceContent = async (workspacePath: string, namespace: string, languageCode: LanguageCode) => {
@@ -63,7 +64,7 @@ const getTranslationsByLanguageContentPairs = (
   });
 };
 
-export const getLanguageCodesByWorkspacePath = async (workspacePath: string) => {
+const getLanguageCodesByWorkspacePath = async (workspacePath: string) => {
   const languageCodes = await getLanguageCodes(workspacePath);
 
   if (languageCodes.length === 0) {
@@ -89,7 +90,7 @@ export const getWorkspacePath = (workspaceId: string) => {
   return workspace.path;
 };
 
-export const readTranslations = async (workspacePath: string, namespace: string, languageCodes: LanguageCode[]) => {
+const readTranslations = async (workspacePath: string, namespace: string, languageCodes: LanguageCode[]) => {
   const languageContentPairs: Array<KeyValuePair<LanguageCode, NamespaceContent>> = await Promise.all(
     languageCodes.map(async (languageCode) => {
       try {
@@ -108,6 +109,22 @@ export const readTranslations = async (workspacePath: string, namespace: string,
   return getTranslationsByLanguageContentPairs(languageContentPairs);
 };
 
+export const getNamespaceDetails = async (workspaceId: string, namespace: string) => {
+  const cachedTranslations = namespaceContainer.getTranslations(workspaceId, namespace);
+  const cachedLanguageCodes = namespaceContainer.getLanguageCodes(workspaceId, namespace);
+
+  if (cachedTranslations && cachedLanguageCodes) {
+    return { languageCodes: cachedLanguageCodes, translations: cachedTranslations };
+  }
+
+  const workspacePath = getWorkspacePath(workspaceId);
+
+  const languageCodes = await getLanguageCodesByWorkspacePath(workspacePath);
+  const translations = await readTranslations(workspacePath, namespace, languageCodes);
+
+  return { languageCodes, translations };
+};
+
 const translationsToNamespaceContentByLanguageCode = (translations: Translation[]): Partial<Record<LanguageCode, NamespaceContent>> => {
   const namespaceContentByLanguageCode: Partial<Record<LanguageCode, NamespaceContent>> = {};
 
@@ -124,7 +141,7 @@ const translationsToNamespaceContentByLanguageCode = (translations: Translation[
   return namespaceContentByLanguageCode;
 };
 
-export const writeTranslation = async (workspacePath: string, namespace: string, translations: Translation[]) => {
+const writeTranslation = async (workspacePath: string, namespace: string, translations: Translation[]) => {
   const namespaceContentByLanguageCode = translationsToNamespaceContentByLanguageCode(translations);
 
   await Promise.all(
@@ -133,6 +150,12 @@ export const writeTranslation = async (workspacePath: string, namespace: string,
       return writeFile(namespaceFilePath, namespaceContent);
     }),
   );
+};
+
+export const saveNamespaceDetails = async (workspaceId: string, namespace: string, translations: Translation[]) => {
+  const workspacePath = getWorkspacePath(workspaceId);
+  await writeTranslation(workspacePath, namespace, translations);
+  namespaceContainer.setTranslations(workspaceId, namespace, translations);
 };
 
 export const completeTranslation = (languageCodes: LanguageCode[], translation: Translation): Translation => {

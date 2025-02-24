@@ -1,6 +1,6 @@
+import { createNamespace } from './createNamespace';
 import { createTranslation } from './createTranslation';
 import { getNamespace } from './getNamespace';
-import { createNamespace } from './postNamespace';
 import { updateTranslation } from './updateTranslation';
 
 const namespaceService = {
