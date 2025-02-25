@@ -1,6 +1,8 @@
 import { AxiosRequestFunction } from '@defines/api';
 import BaseAPI from '@utils/BaseAPI';
 import {
+  DeleteTranslationParams,
+  DeleteTranslationResponse,
   DeleteWorkspaceRequest,
   DeleteWorkspaceResponse,
   GetNamespaceParams,
@@ -67,5 +69,10 @@ export default class WorkspaceAPI extends BaseAPI {
   public putTranslation: AxiosRequestFunction<PutTranslationRequest & PutTranslationParams, PutTranslationResponse> = (req) => {
     const { id, namespace, translationKey, languageCode, value } = req;
     return this.axiosInstance.put(this.getUrl(`/${id}/${namespace}/${translationKey}`), { languageCode, value });
+  };
+
+  public deleteTranslation: AxiosRequestFunction<DeleteTranslationParams, DeleteTranslationResponse> = (req) => {
+    const { id, namespace, translationKey } = req;
+    return this.axiosInstance.delete(this.getUrl(`/${id}/${namespace}/${translationKey}`));
   };
 }
