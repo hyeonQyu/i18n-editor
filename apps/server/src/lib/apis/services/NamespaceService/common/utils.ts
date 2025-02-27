@@ -7,11 +7,12 @@ import {
   TranslationValue,
   TranslationValueByLanguageCode,
 } from 'i18n-editor-common';
-import { BadRequestError, NotFoundError } from '../../../../defines/errors';
-import { createFileWhenNotExist, readFile, writeFile } from '../../../../utils/file';
+import { difference } from 'lodash';
+import { BadRequestError } from '../../../../defines/errors';
+import { createFileWhenNotExist, deleteFile, readFile, writeFile } from '../../../../utils/file';
 import { getLanguageCodes } from '../../../../utils/locale';
 import { namespaceContainer } from '../../../../utils/namespaceContainer';
-import configService from '../../ConfigService';
+import { getWorkspacePath } from '../../WorkspaceService/common/utils';
 
 const languageCodeToNamespaceContent = async (workspacePath: string, namespace: string, languageCode: LanguageCode) => {
   const namespaceFilePath = languageCodeToNamespaceFilePath(workspacePath, namespace, languageCode);
@@ -64,7 +65,7 @@ const getTranslationsByLanguageContentPairs = (
   });
 };
 
-const getLanguageCodesByWorkspacePath = async (workspacePath: string) => {
+export const getLanguageCodesByWorkspacePath = async (workspacePath: string) => {
   const languageCodes = await getLanguageCodes(workspacePath);
 
   if (languageCodes.length === 0) {
@@ -78,19 +79,7 @@ export const languageCodeToNamespaceFilePath = (workspacePath: string, namespace
   return `${workspacePath}/${languageCode}/${namespace}.json`;
 };
 
-export const getWorkspacePath = (workspaceId: string) => {
-  const workspaceConfig = configService.getWorkspace();
-
-  const workspace = workspaceConfig[workspaceId];
-
-  if (!workspace) {
-    throw new NotFoundError('워크스페이스가 없습니다.');
-  }
-
-  return workspace.path;
-};
-
-const readTranslations = async (workspacePath: string, namespace: string, languageCodes: LanguageCode[]) => {
+export const readTranslations = async (workspacePath: string, namespace: string, languageCodes: LanguageCode[]) => {
   const languageContentPairs: Array<KeyValuePair<LanguageCode, NamespaceContent>> = await Promise.all(
     languageCodes.map(async (languageCode) => {
       try {
@@ -141,15 +130,24 @@ const translationsToNamespaceContentByLanguageCode = (translations: Translation[
   return namespaceContentByLanguageCode;
 };
 
-const writeTranslation = async (workspacePath: string, namespace: string, translations: Translation[]) => {
+export const writeTranslation = async (workspacePath: string, namespace: string, translations: Translation[]) => {
   const namespaceContentByLanguageCode = translationsToNamespaceContentByLanguageCode(translations);
 
-  await Promise.all(
-    Object.entries(namespaceContentByLanguageCode).map(([languageCode, namespaceContent]) => {
+  const prevLanguageCodes = await getLanguageCodesByWorkspacePath(workspacePath);
+  const languageCodes = Object.keys(namespaceContentByLanguageCode) as LanguageCode[];
+
+  const removedLanguageCodes = difference(prevLanguageCodes, languageCodes);
+
+  await Promise.all([
+    ...Object.entries(namespaceContentByLanguageCode).map(([languageCode, namespaceContent]) => {
       const namespaceFilePath = languageCodeToNamespaceFilePath(workspacePath, namespace, languageCode as LanguageCode);
       return writeFile(namespaceFilePath, namespaceContent);
     }),
-  );
+    ...removedLanguageCodes.map((languageCode) => {
+      const namespaceFilePath = languageCodeToNamespaceFilePath(workspacePath, namespace, languageCode);
+      return deleteFile(namespaceFilePath);
+    }),
+  ]);
 };
 
 export const saveNamespaceDetails = async (workspaceId: string, namespace: string, translations: Translation[]) => {

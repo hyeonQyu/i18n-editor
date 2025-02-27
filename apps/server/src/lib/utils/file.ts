@@ -64,3 +64,8 @@ export const openFileManager = (path: string) => {
   const { openFileManager } = CMD_BY_OS[getOS()];
   spawn(openFileManager, [getNormalizedPath(path)]);
 };
+
+export const deleteFile = async (filePath: string) => {
+  const path = getNormalizedPath(filePath);
+  await fs.promises.rm(path, { recursive: true, force: true });
+};
