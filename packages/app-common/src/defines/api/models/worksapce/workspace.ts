@@ -20,12 +20,6 @@ export type PutWorkspaceParams = WorkspaceParams;
 
 export type PutWorkspaceResponse = void;
 
-export type GetWorkspaceParams = WorkspaceParams;
-
-export interface GetWorkspaceResponse {
-  namespaces: string[];
-}
-
 export type DeleteWorkspaceParams = WorkspaceParams;
 
 export type DeleteWorkspaceResponse = void;

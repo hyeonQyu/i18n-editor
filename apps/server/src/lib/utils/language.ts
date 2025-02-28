@@ -1,19 +1,15 @@
-import fs from 'fs';
+import { Dirent } from 'fs';
 import { LanguageCode, LANGUAGE_CODE_SET } from 'i18n-editor-common';
+import { BadRequestError } from '../defines/errors';
 import { GLOBAL } from '../defines/global';
 import { readDirectory } from './file';
 
-const isLanguageDirectory = (dirent: fs.Dirent) => {
+const isLanguageDirectory = (dirent: Dirent) => {
   return dirent.isDirectory() && LANGUAGE_CODE_SET.has(dirent.name);
 };
 
-/**
- * @deprecated
- * @param workspacePath
- * @returns
- */
-export const getLanguageCodes = async (workspacePath: string) => {
-  return (await readDirectory(workspacePath, { withFileTypes: true }))
+export const getLanguageCodes = async (workspacePath: string): Promise<LanguageCode[]> => {
+  const languageCodes = (await readDirectory(workspacePath, { withFileTypes: true }))
     .filter(isLanguageDirectory)
     .map((dirent) => dirent.name as LanguageCode)
     .sort((a, b) => {
@@ -21,4 +17,8 @@ export const getLanguageCodes = async (workspacePath: string) => {
       if (b === GLOBAL.defaultLanguage) return 1;
       return a.localeCompare(b);
     });
+
+  if (languageCodes.length === 0) throw new BadRequestError('올바른 workspace가 아닙니다.');
+
+  return languageCodes;
 };

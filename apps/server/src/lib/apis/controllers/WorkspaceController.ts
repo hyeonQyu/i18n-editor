@@ -3,15 +3,17 @@ import {
   DeleteTranslationResponse,
   DeleteWorkspaceParams,
   DeleteWorkspaceResponse,
-  GetNamespaceParams,
-  GetNamespaceResponse,
-  GetWorkspaceParams,
-  GetWorkspaceResponse,
+  GetLanguagesParams,
+  GetLanguagesResponse,
+  GetNamespacesParams,
+  GetNamespacesResponse,
+  GetTranslationsParams,
+  GetTranslationsResponse,
   GetWorkspacesRequest,
   GetWorkspacesResponse,
-  PostLanguageCodesParams,
-  PostLanguageCodesRequest,
-  PostLanguageCodesResponse,
+  PostLanguagesParams,
+  PostLanguagesRequest,
+  PostLanguagesResponse,
   PostNamespaceParams,
   PostNamespaceRequest,
   PostNamespaceResponse,
@@ -29,7 +31,9 @@ import {
 } from 'i18n-editor-common';
 import { ControllerMethod } from '../../defines/api';
 import BaseController from '../../utils/BaseController';
+import languageService from '../services/LanguageService';
 import namespaceService from '../services/NamespaceService';
+import translationService from '../services/TranslationService';
 import workspaceService from '../services/WorkspaceService';
 
 export default class WorkspaceController extends BaseController {
@@ -37,7 +41,7 @@ export default class WorkspaceController extends BaseController {
     path: '/',
     method: 'get',
     handler: async () => {
-      const workspaces = workspaceService.getWorkspaces();
+      const workspaces = workspaceService.getList();
       return { workspaces };
     },
   };
@@ -46,7 +50,7 @@ export default class WorkspaceController extends BaseController {
     path: '/',
     method: 'post',
     handler: async (req) => {
-      return await workspaceService.createWorkspace(req.body);
+      return await workspaceService.create(req.body);
     },
   };
 
@@ -55,16 +59,7 @@ export default class WorkspaceController extends BaseController {
     method: 'put',
     handler: async (req) => {
       const { id } = req.params;
-      return await workspaceService.updateWorkspace(id, req.body);
-    },
-  };
-
-  private getWorkspace: ControllerMethod<never, GetWorkspaceParams, never, GetWorkspaceResponse> = {
-    path: '/:id',
-    method: 'get',
-    handler: async (req) => {
-      const namespaces = await workspaceService.getWorkspace(req.params.id);
-      return { namespaces };
+      return await workspaceService.update(id, req.body);
     },
   };
 
@@ -73,7 +68,37 @@ export default class WorkspaceController extends BaseController {
     method: 'delete',
     handler: async (req) => {
       const { id } = req.params;
-      return await workspaceService.deleteWorkspace(id);
+      return await workspaceService.delete(id);
+    },
+  };
+
+  private getLanguages: ControllerMethod<never, GetLanguagesParams, never, GetLanguagesResponse> = {
+    path: '/:id/language',
+    method: 'get',
+    handler: async (req) => {
+      const { id } = req.params;
+      const languageCodes = await languageService.getList(id);
+      return { languageCodes };
+    },
+  };
+
+  private postLanguages: ControllerMethod<PostLanguagesRequest, PostLanguagesParams, never, PostLanguagesResponse> = {
+    path: '/:id/language',
+    method: 'post',
+    handler: async (req) => {
+      const { id } = req.params;
+      const { languageCodes } = req.body;
+      await languageService.create(id, languageCodes);
+    },
+  };
+
+  private getNamespaces: ControllerMethod<never, GetNamespacesParams, never, GetNamespacesResponse> = {
+    path: '/:id/namespace',
+    method: 'get',
+    handler: async (req) => {
+      const { id } = req.params;
+      const namespaces = await namespaceService.getList(id);
+      return { namespaces };
     },
   };
 
@@ -83,16 +108,17 @@ export default class WorkspaceController extends BaseController {
     handler: async (req) => {
       const { id } = req.params;
       const { namespace } = req.body;
-      return await namespaceService.createNamespace(id, namespace);
+      await namespaceService.create(id, namespace);
     },
   };
 
-  private getNamespace: ControllerMethod<never, GetNamespaceParams, never, GetNamespaceResponse> = {
-    path: '/:id/namespace/:namespace',
+  private getTranslations: ControllerMethod<never, GetTranslationsParams, never, GetTranslationsResponse> = {
+    path: '/:id/namespace/:namespace/translation',
     method: 'get',
     handler: async (req) => {
       const { id, namespace } = req.params;
-      return await namespaceService.getNamespace(id, namespace);
+      const translations = await translationService.getList(id, namespace);
+      return { translations };
     },
   };
 
@@ -102,16 +128,7 @@ export default class WorkspaceController extends BaseController {
     handler: async (req) => {
       const { id, namespace } = req.params;
       const { translation, index } = req.body;
-      return await namespaceService.createTranslation(
-        {
-          workspaceId: id,
-          namespace,
-        },
-        {
-          translation,
-          index,
-        },
-      );
+      await translationService.create(id, namespace, { index, translation });
     },
   };
 
@@ -121,14 +138,7 @@ export default class WorkspaceController extends BaseController {
     handler: async (req) => {
       const { id, namespace, translationKey } = req.params;
       const { languageCode, value } = req.body;
-      return await namespaceService.updateTranslation(
-        {
-          workspaceId: id,
-          namespace,
-          translationKey,
-        },
-        { languageCode, value },
-      );
+      await translationService.update(id, namespace, translationKey, { languageCode, value });
     },
   };
 
@@ -137,21 +147,7 @@ export default class WorkspaceController extends BaseController {
     method: 'delete',
     handler: async (req) => {
       const { id, namespace, translationKey } = req.params;
-      return await namespaceService.deleteTranslation({
-        workspaceId: id,
-        namespace,
-        translationKey,
-      });
-    },
-  };
-
-  private postLanguage: ControllerMethod<PostLanguageCodesRequest, PostLanguageCodesParams, never, PostLanguageCodesResponse> = {
-    path: '/:id/language',
-    method: 'post',
-    handler: async (req) => {
-      const { id } = req.params;
-      const { languageCodes } = req.body;
-      return await workspaceService.createLanguage({ workspaceId: id }, { languageCodes });
+      await translationService.delete(id, namespace, translationKey);
     },
   };
 }
