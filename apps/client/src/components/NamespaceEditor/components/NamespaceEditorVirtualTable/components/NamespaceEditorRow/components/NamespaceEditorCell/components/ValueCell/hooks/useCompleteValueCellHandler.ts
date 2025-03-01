@@ -1,6 +1,6 @@
 import { useRowIndex } from '@components/NamespaceEditor/providers/RowIndexProvider';
 import { useRows } from '@components/NamespaceEditor/providers/RowsProvider';
-import useInvalidateGetNamespaceQuery from '@hooks/namespace/useInvalidateGetNamespaceQuery';
+import useInvalidateGetTranslationsQuery from '@hooks/translation/useInvalidateGetTranslationsQuery';
 import useUpdateTranslation from '@hooks/translation/useUpdateTranslation';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import { useWorkspaceStore } from '@stores/workspace';
@@ -17,7 +17,7 @@ function useCompleteValueCellHandler(languageCode: LanguageCode) {
 
   const updateTranslation = useUpdateTranslation();
 
-  const invalidateGetNamespaceQuery = useInvalidateGetNamespaceQuery();
+  const invalidateGetTranslationsQuery = useInvalidateGetTranslationsQuery();
 
   return async (value: string) => {
     if (!workspace || !namespace || !translation) return;
@@ -33,7 +33,7 @@ function useCompleteValueCellHandler(languageCode: LanguageCode) {
         value,
       });
 
-      await invalidateGetNamespaceQuery(workspace.id, namespace);
+      await invalidateGetTranslationsQuery(workspace.id, namespace);
     } catch (e) {}
   };
 }

@@ -1,6 +1,6 @@
 import useSelectNamespaceHandler from '@components/Layout/components/Sidebar/components/NamespaceList/hooks/useSelectNamespaceHandler';
 import useCreateNamespace from '@hooks/namespace/useCreateNamespace';
-import useInvalidateGetWorkspaceQuery from '@hooks/workspace/useInvalidateGetWorkspaceQuery';
+import useInvalidateGetNamespacesQuery from '@hooks/namespace/useInvalidateGetNamespacesQuery';
 import { useWorkspace } from '@providers/WorkspaceProvider';
 import { enqueueClosableSnackbar } from '@utils/snackbar';
 
@@ -9,7 +9,7 @@ function useAddNamespace() {
 
   const createNewNamespace = useCreateNamespace();
 
-  const invalidateWorkspace = useInvalidateGetWorkspaceQuery(workspace?.id ?? '');
+  const invalidateNamespaces = useInvalidateGetNamespacesQuery();
 
   const selectNamespace = useSelectNamespaceHandler();
 
@@ -23,7 +23,7 @@ function useAddNamespace() {
       variant: 'success',
     });
 
-    await invalidateWorkspace();
+    await invalidateNamespaces(workspace.id);
 
     selectNamespace(namespace);
   };

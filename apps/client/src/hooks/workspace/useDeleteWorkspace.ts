@@ -2,7 +2,7 @@ import { MUTATION_KEY } from '@defines/reactQuery';
 import useInvalidateGetWorkspacesQuery from '@hooks/workspace/useInvalidateGetWorkspacesQuery';
 import { useAPI } from '@providers/APIProvider';
 import { useMutation } from '@tanstack/react-query';
-import { DeleteWorkspaceRequest } from 'i18n-editor-common';
+import { DeleteWorkspaceParams } from 'i18n-editor-common';
 
 function useDeleteWorkspace() {
   const api = useAPI();
@@ -11,10 +11,10 @@ function useDeleteWorkspace() {
 
   const { mutateAsync } = useMutation({
     mutationKey: MUTATION_KEY.workspace.deleteWorkspace(),
-    mutationFn: async (req: DeleteWorkspaceRequest) => (await api.workspace.deleteWorkspace(req)).data,
+    mutationFn: async (req: DeleteWorkspaceParams) => (await api.workspace.deleteWorkspace(req)).data,
   });
 
-  return async (req: DeleteWorkspaceRequest) => {
+  return async (req: DeleteWorkspaceParams) => {
     await mutateAsync(req);
     await invalidateWorkspaces();
   };
