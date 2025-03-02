@@ -5,14 +5,14 @@ import NamespaceEditorTable from '@components/NamespaceEditor/components/Namespa
 import NamespaceEditorTableBody from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorTableBody';
 import NamespaceEditorTableHead from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorTableHead';
 import { useRows } from '@components/NamespaceEditor/providers/RowsProvider';
+import useNamespace from '@hooks/namespace/useNamespace';
 import { TableRow } from '@mui/material';
-import { useWorkspaceStore } from '@stores/workspace';
 import { TableVirtuoso } from 'react-virtuoso';
 
 function NamespaceEditorVirtualTable() {
   const rows = useRows();
 
-  const namespace = useWorkspaceStore(({ namespace }) => namespace);
+  const namespace = useNamespace();
 
   return (
     <TableVirtuoso

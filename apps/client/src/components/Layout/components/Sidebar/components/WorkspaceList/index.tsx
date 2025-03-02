@@ -8,7 +8,7 @@ import WorkspaceDeleteConfirmDialog from '@components/Layout/components/Sidebar/
 import WorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog';
 import useDeleteWorkspaceHandler from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useDeleteWorkspaceHandler';
 import useOpenWorkspaceNameUpdateDialog from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useOpenWorkspaceNameUpdateDialog';
-import useSelectWorkspaceHandler from '@components/Layout/components/Sidebar/components/WorkspaceList/hooks/useSelectWorkspaceHandler';
+import useRouteWorkspacePage from '@hooks/workspace/useRouteWorkspacePage';
 import useWorkspaces from '@hooks/workspace/useWorkspaces';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
@@ -24,7 +24,7 @@ function WorkspaceList() {
   } = useTheme();
 
   const openNameUpdateDialog = useOpenWorkspaceNameUpdateDialog();
-  const selectWorkspace = useSelectWorkspaceHandler();
+  const selectWorkspace = useRouteWorkspacePage();
   const deleteWorkspace = useDeleteWorkspaceHandler();
 
   return (

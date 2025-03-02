@@ -15,8 +15,9 @@ function useCreateWorkspace() {
   });
 
   return async (req: PostWorkspaceRequest) => {
-    await mutateAsync(req);
+    const { data: { id } = {} } = await mutateAsync(req);
     await invalidateWorkspaces();
+    return id;
   };
 }
 

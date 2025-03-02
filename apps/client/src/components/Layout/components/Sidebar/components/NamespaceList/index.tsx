@@ -1,22 +1,22 @@
 import EllipsisText from '@components/EllipsisText';
 import NamespaceAddButton from '@components/Layout/components/Sidebar/components/NamespaceList/components/NamespaceAddButton';
 import NamespaceListTitleLabel from '@components/Layout/components/Sidebar/components/NamespaceList/components/NamespaceListTitleLabel';
-import useSelectNamespaceHandler from '@components/Layout/components/Sidebar/components/NamespaceList/hooks/useSelectNamespaceHandler';
 import SidebarMenu from '@components/Layout/components/Sidebar/components/SidebarMenu';
 import SidebarMenuList from '@components/Layout/components/Sidebar/components/SidebarMenu/list';
 import SidebarMenuListItem from '@components/Layout/components/Sidebar/components/SidebarMenu/list/item';
 import SidebarMenuTitle from '@components/Layout/components/Sidebar/components/SidebarMenu/title';
+import useNamespace from '@hooks/namespace/useNamespace';
 import useNamespaces from '@hooks/namespace/useNamespaces';
+import useRouteNamespacePage from '@hooks/namespace/useRouteNamespacePage';
 import { useWorkspace } from '@providers/WorkspaceProvider';
-import { useWorkspaceStore } from '@stores/workspace';
 
 function NamespaceList() {
   const workspace = useWorkspace();
   const namespaces = useNamespaces();
 
-  const currentNamespace = useWorkspaceStore(({ namespace }) => namespace);
+  const currentNamespace = useNamespace();
 
-  const selectNamespace = useSelectNamespaceHandler();
+  const selectNamespace = useRouteNamespacePage();
 
   if (!workspace || namespaces.length === 0) return null;
 

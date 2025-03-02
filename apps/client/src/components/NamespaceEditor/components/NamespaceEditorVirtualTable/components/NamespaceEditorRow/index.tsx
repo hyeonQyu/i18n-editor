@@ -3,7 +3,7 @@ import { Cell, RowData } from '@components/NamespaceEditor/defines/table';
 import { useColumns } from '@components/NamespaceEditor/providers/ColumnProvider';
 import RowIndexProvider from '@components/NamespaceEditor/providers/RowIndexProvider';
 import { createCell } from '@components/NamespaceEditor/utils/cell';
-import { useWorkspaceStore } from '@stores/workspace';
+import useNamespace from '@hooks/namespace/useNamespace';
 
 interface NamespaceEditorRowProps {
   rowIndex: number;
@@ -15,7 +15,7 @@ function NamespaceEditorRow(props: NamespaceEditorRowProps) {
 
   const columns = useColumns();
 
-  const namespace = useWorkspaceStore(({ namespace }) => namespace);
+  const namespace = useNamespace();
 
   return (
     <RowIndexProvider rowIndex={rowIndex}>

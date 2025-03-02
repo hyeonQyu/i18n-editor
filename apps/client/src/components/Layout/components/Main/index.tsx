@@ -21,6 +21,7 @@ function Main(props: MainProps) {
         flexGrow: 1,
         transition: `width ${SIDEBAR_TRANSITION_DURATION}s ease`,
         width: `calc(100% - ${sidebarWidth}px)`,
+        height: '100%',
       }}
     >
       {children}

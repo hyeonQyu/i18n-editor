@@ -1,10 +1,10 @@
 import { QUERY_KEY } from '@defines/reactQuery';
 import { useAPI } from '@providers/APIProvider';
-import { useWorkspaceStore } from '@stores/workspace';
+import { useWorkspace } from '@providers/WorkspaceProvider';
 import { useQuery } from '@tanstack/react-query';
 
 function useInitialPath() {
-  const pathFromStore = useWorkspaceStore(({ path }) => path);
+  const workspace = useWorkspace();
 
   const api = useAPI();
 
@@ -12,7 +12,7 @@ function useInitialPath() {
     queryKey: QUERY_KEY.fileSystem.getInitialPath(),
     queryFn: async () => (await api.fileSystem.getFileSystemInitialPath()).data,
     refetchOnWindowFocus: false,
-    enabled: !pathFromStore,
+    enabled: !workspace?.path,
     staleTime: Infinity,
   });
 
