@@ -1,8 +1,8 @@
 import WorkspaceMenuButton from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceMenu/components/WorkspaceMenuButton';
 import useOpenNativeFileManager from '@hooks/useOpenNativeFileManager';
 import useOS from '@hooks/useOS';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { useWorkspace } from '@providers/WorkspaceProvider';
 import { OS } from 'i18n-editor-common';
 
 const getFileManagerNameByOS = (os: OS | undefined) => {

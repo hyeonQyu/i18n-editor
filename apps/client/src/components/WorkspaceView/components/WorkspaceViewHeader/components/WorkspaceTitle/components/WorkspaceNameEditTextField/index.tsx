@@ -1,8 +1,8 @@
 import useCancelEditWorkspaceName from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useCancelEditWorkspaceName';
 import useUpdateCurrentWorkspaceName from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useUpdateCurrentWorkspaceName';
 import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/components/WorkspaceViewHeader/stores';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { TextField, useTheme } from '@mui/material';
-import { useWorkspace } from '@providers/WorkspaceProvider';
 import { ChangeEventHandler, KeyboardEventHandler, useEffect } from 'react';
 
 function WorkspaceNameEditTextField() {

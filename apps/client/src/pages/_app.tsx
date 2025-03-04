@@ -12,7 +12,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { AppProps } from 'next/app';
 import { SnackbarProvider } from 'notistack';
 import APIProvider from 'providers/APIProvider';
-import WorkspaceProvider from 'providers/WorkspaceProvider';
 import '../styles/animations.css';
 import '../styles/globals.css';
 import '../styles/reset.css';
@@ -26,14 +25,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         <SnackbarProvider>
           <APIProvider>
             <ReactQueryClientProvider>
-              <WorkspaceProvider>
-                <Layout>
-                  <Component {...pageProps} />
+              <Layout>
+                <Component {...pageProps} />
 
-                  <FileManagerDialog />
-                  <NamespaceAddDialog />
-                </Layout>
-              </WorkspaceProvider>
+                <FileManagerDialog />
+                <NamespaceAddDialog />
+              </Layout>
               <ReactQueryDevtools />
             </ReactQueryClientProvider>
           </APIProvider>

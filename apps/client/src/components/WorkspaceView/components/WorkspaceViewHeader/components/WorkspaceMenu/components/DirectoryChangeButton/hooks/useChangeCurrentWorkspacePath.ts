@@ -1,5 +1,5 @@
 import useUpdateWorkspace from '@hooks/workspace/useUpdateWorkspace';
-import { useWorkspace } from '@providers/WorkspaceProvider';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 
 function useChangeCurrentWorkspacePath() {
   const workspace = useWorkspace();

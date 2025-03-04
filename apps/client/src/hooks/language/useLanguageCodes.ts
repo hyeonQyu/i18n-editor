@@ -1,5 +1,5 @@
 import useQueryGetLanguages from '@hooks/language/useQueryGetLanguages';
-import { useWorkspace } from '@providers/WorkspaceProvider';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { LanguageCode, TIME_UNIT } from 'i18n-editor-common';
 
 const DEFAULT_LANGUAGE_CODES: LanguageCode[] = [];

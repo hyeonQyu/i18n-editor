@@ -1,8 +1,8 @@
 import useCopyClipboard from '@hooks/useCopyClipboard';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { ContentCopy } from '@mui/icons-material';
 import { Button, Tooltip, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { useWorkspace } from '@providers/WorkspaceProvider';
 
 function CopyableWorkspacePath() {
   const workspace = useWorkspace();

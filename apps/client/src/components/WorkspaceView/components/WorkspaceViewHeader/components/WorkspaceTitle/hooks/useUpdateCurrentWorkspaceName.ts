@@ -1,6 +1,6 @@
 import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/components/WorkspaceViewHeader/stores';
 import useUpdateWorkspace from '@hooks/workspace/useUpdateWorkspace';
-import { useWorkspace } from '@providers/WorkspaceProvider';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 
 export default function useUpdateCurrentWorkspaceName() {
   const workspace = useWorkspace();

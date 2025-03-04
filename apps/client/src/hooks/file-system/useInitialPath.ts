@@ -1,6 +1,6 @@
 import { QUERY_KEY } from '@defines/reactQuery';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { useAPI } from '@providers/APIProvider';
-import { useWorkspace } from '@providers/WorkspaceProvider';
 import { useQuery } from '@tanstack/react-query';
 
 function useInitialPath() {

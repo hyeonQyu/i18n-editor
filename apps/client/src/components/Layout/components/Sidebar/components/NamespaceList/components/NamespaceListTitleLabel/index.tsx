@@ -1,5 +1,5 @@
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { Typography, useTheme } from '@mui/material';
-import { useWorkspace } from '@providers/WorkspaceProvider';
 
 function NamespaceListTitleLabel() {
   const {

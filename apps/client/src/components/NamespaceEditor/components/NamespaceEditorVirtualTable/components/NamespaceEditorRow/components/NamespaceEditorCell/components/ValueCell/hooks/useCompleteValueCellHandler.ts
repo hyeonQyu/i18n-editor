@@ -3,7 +3,7 @@ import { useRows } from '@components/NamespaceEditor/providers/RowsProvider';
 import useNamespace from '@hooks/namespace/useNamespace';
 import useInvalidateGetTranslationsQuery from '@hooks/translation/useInvalidateGetTranslationsQuery';
 import useUpdateTranslation from '@hooks/translation/useUpdateTranslation';
-import { useWorkspace } from '@providers/WorkspaceProvider';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { LanguageCode } from 'i18n-editor-common';
 
 function useCompleteValueCellHandler(languageCode: LanguageCode) {

@@ -1,5 +1,4 @@
-import { FileManagerViewType } from '@components/DirectorySelector/stores/fileManagerStore';
-import { useFileManagerDialogStore } from '@components/FileManagerDialog/stores';
+import { FileManagerViewType, useFileManagerDialogStore } from '@components/FileManagerDialog/stores';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import WindowIcon from '@mui/icons-material/Window';
 import { Button, ButtonGroup, Tooltip } from '@mui/material';
