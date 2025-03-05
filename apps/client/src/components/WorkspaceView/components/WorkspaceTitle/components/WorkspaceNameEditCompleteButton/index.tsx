@@ -1,4 +1,4 @@
-import useUpdateCurrentWorkspaceName from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useUpdateCurrentWorkspaceName';
+import useUpdateCurrentWorkspaceName from '@components/WorkspaceView/components/WorkspaceTitle/hooks/useUpdateCurrentWorkspaceName';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { IconButton } from '@mui/material';
 

@@ -1,4 +1,4 @@
-import useCancelEditWorkspaceName from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle/hooks/useCancelEditWorkspaceName';
+import useCancelEditWorkspaceName from '@components/WorkspaceView/components/WorkspaceTitle/hooks/useCancelEditWorkspaceName';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { IconButton } from '@mui/material';
 

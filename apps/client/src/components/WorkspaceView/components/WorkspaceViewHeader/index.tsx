@@ -1,5 +1,5 @@
+import WorkspaceTitle from '@components/WorkspaceView/components/WorkspaceTitle';
 import WorkspaceMenu from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceMenu';
-import WorkspaceTitle from '@components/WorkspaceView/components/WorkspaceViewHeader/components/WorkspaceTitle';
 import { Box } from '@mui/material';
 
 function WorkspaceViewHeader() {
