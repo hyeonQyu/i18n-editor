@@ -1,0 +1,1 @@
+export const NAMESPACE_TOOLBAR_HEIGHT = 48;

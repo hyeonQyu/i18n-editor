@@ -1,4 +1,4 @@
-import { WorkspaceToolbarButtonProps } from '@components/WorkspaceView/components/WorkspaceToolbar/components/WorkspaceToolbarButton';
+import { ToolbarButtonProps } from '@components/Toolbar/components/ToolbarButton';
 import useOpenNativeFileManager from '@hooks/useOpenNativeFileManager';
 import useOS from '@hooks/useOS';
 import useWorkspace from '@hooks/workspace/useWorkspace';
@@ -16,7 +16,7 @@ const getFileManagerNameByOS = (os: OS | undefined) => {
   }
 };
 
-function useOpenNativeFileManagerToolbarButtonProps(): WorkspaceToolbarButtonProps {
+function useOpenNativeFileManagerToolbarButtonProps(): ToolbarButtonProps {
   const os = useOS();
 
   const workspace = useWorkspace();

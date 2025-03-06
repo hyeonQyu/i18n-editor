@@ -5,6 +5,7 @@ import NamespaceEditorTable from '@components/NamespaceEditor/components/Namespa
 import NamespaceEditorTableBody from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorTableBody';
 import NamespaceEditorTableHead from '@components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorTableHead';
 import { useRows } from '@components/NamespaceEditor/providers/RowsProvider';
+import { NAMESPACE_TOOLBAR_HEIGHT } from '@components/NamespaceToolbar/defines/size';
 import useNamespace from '@hooks/namespace/useNamespace';
 import { TableRow } from '@mui/material';
 import { TableVirtuoso } from 'react-virtuoso';
@@ -16,6 +17,7 @@ function NamespaceEditorVirtualTable() {
 
   return (
     <TableVirtuoso
+      style={{ height: `calc(100% - ${NAMESPACE_TOOLBAR_HEIGHT + 16}px)` }}
       data={rows}
       components={{
         Scroller: NamespaceEditorScroller,

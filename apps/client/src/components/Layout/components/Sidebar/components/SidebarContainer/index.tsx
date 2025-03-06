@@ -1,17 +1,20 @@
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from '@components/Layout/defines/size';
 import { SIDEBAR_TRANSITION_DURATION } from '@components/Layout/defines/transitions';
 import { useLayoutStore } from '@components/Layout/stores';
-import { Drawer } from '@mui/material';
+import { Box, Drawer } from '@mui/material';
 import { ReactNode } from 'react';
 
 interface SidebarContainerProps {
+  displayIndex: number;
   children: ReactNode;
 }
 
 function SidebarContainer(props: SidebarContainerProps) {
-  const { children } = props;
+  const { children, displayIndex } = props;
 
   const opened = useLayoutStore(({ sidebarOpened }) => sidebarOpened);
+
+  const marginLeft = `-${displayIndex * SIDEBAR_WIDTH}px`;
 
   return (
     <Drawer
@@ -28,7 +31,6 @@ function SidebarContainer(props: SidebarContainerProps) {
       PaperProps={{
         sx: {
           width: SIDEBAR_WIDTH,
-          overflow: 'hidden',
           top: `${HEADER_HEIGHT}px`,
           height: `calc(100% - ${HEADER_HEIGHT}px)`,
           boxSizing: 'borderBox',
@@ -37,7 +39,17 @@ function SidebarContainer(props: SidebarContainerProps) {
         },
       }}
     >
-      {children}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          overflow: 'hidden',
+          marginLeft,
+          transition: 'margin-left 0.3s ease-in-out',
+        }}
+      >
+        {children}
+      </Box>
     </Drawer>
   );
 }

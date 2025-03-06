@@ -1,8 +1,8 @@
-import { WorkspaceToolbarButtonProps } from '@components/WorkspaceView/components/WorkspaceToolbar/components/WorkspaceToolbarButton';
+import { ToolbarButtonProps } from '@components/Toolbar/components/ToolbarButton';
 import useAddNamespaceClickHandler from '@hooks/namespace/useAddNamespaceClickHandler';
 import AddIcon from '@mui/icons-material/Add';
 
-function useAddNamespaceToolbarButtonProps(): WorkspaceToolbarButtonProps {
+function useAddNamespaceToolbarButtonProps(): ToolbarButtonProps {
   const addNamespace = useAddNamespaceClickHandler();
 
   return {
