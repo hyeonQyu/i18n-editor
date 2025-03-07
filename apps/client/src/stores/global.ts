@@ -1,37 +1,20 @@
 import { create } from 'zustand/react';
 
-export interface Workspace {
-  name: string;
-  path: string;
+interface GlobalStates {
+  workspaceId: string;
+  namespace: string;
 }
 
-interface GlobalStore {
-  workspaces: Map<string, Workspace>;
-  selectWorkspace: (path: string) => void;
+interface GlobalActions {
+  setWorkspaceId: (workspaceId: string) => void;
+  setNamespace: (namespace: string) => void;
 }
 
-export const useGlobalStore = create<GlobalStore>((set) => {
-  return {
-    workspaces: new Map<string, Workspace>(),
+interface GlobalStore extends GlobalStates, GlobalActions {}
 
-    selectWorkspace: (path) => {
-      set(({ workspaces }) => {
-        const newWorkspaces = new Map(workspaces);
-
-        if (newWorkspaces.has(path)) {
-          const workspace = newWorkspaces.get(path);
-
-          newWorkspaces.delete(path);
-
-          if (workspace) {
-            newWorkspaces.set(path, workspace);
-          }
-        } else {
-          newWorkspaces.set(path, { name: path, path });
-        }
-
-        return { workspaces: newWorkspaces };
-      });
-    },
-  };
-});
+export const useGlobalStore = create<GlobalStore>((set) => ({
+  workspaceId: '',
+  namespace: '',
+  setWorkspaceId: (workspaceId: string) => set({ workspaceId, namespace: '' }),
+  setNamespace: (namespace: string) => set({ namespace }),
+}));

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  assetPrefix: '.',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '.' : '',
   experimental: {
     modularizeImports: {
       lodash: {

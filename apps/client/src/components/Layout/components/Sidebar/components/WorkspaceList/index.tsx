@@ -71,7 +71,6 @@ function WorkspaceList() {
           })}
         </SidebarMenuList>
       </SidebarMenu>
-
       <WorkspaceNameUpdateDialog />
     </>
   );

@@ -1,13 +1,7 @@
-import { useRouter } from 'next/router';
+import { useGlobalStore } from '@stores/global';
 
 function useRouteWorkspacePage() {
-  const router = useRouter();
-
-  return (workspaceId: string) =>
-    router.push({
-      pathname: '/[workspace]',
-      query: { workspace: workspaceId },
-    });
+  return useGlobalStore((state) => state.setWorkspaceId);
 }
 
 export default useRouteWorkspacePage;

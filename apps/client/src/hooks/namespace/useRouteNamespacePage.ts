@@ -1,17 +1,7 @@
-import useWorkspace from '@hooks/workspace/useWorkspace';
-import { useRouter } from 'next/router';
+import { useGlobalStore } from '@stores/global';
 
 function useRouteNamespacePage() {
-  const router = useRouter();
-  const workspace = useWorkspace();
-
-  return (namespace: string) => {
-    if (!workspace?.id) return;
-    return router.push({
-      pathname: '/[workspace]/[namespace]',
-      query: { workspace: workspace.id, namespace },
-    });
-  };
+  return useGlobalStore((state) => state.setNamespace);
 }
 
 export default useRouteNamespacePage;
