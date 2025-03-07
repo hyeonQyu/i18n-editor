@@ -17,6 +17,7 @@
     "declaration": true,
     "declarationMap": true,
     "isolatedModules": true,
+    "baseUrl": "./",
     "tsBuildInfoFile": "./lib/tsconfig.build.tsbuildinfo"
   },
   "include": ["src/**/*.ts"],

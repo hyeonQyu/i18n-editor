@@ -1,5 +1,7 @@
 import fs from 'fs';
 import {
+  FileEntry,
+  FileEntryType,
   GetFileSystemDirectoryRequest,
   GetFileSystemDirectoryResponse,
   GetFileSystemInitialPathRequest,
@@ -7,7 +9,6 @@ import {
   PostFileSystemFileManagerRequest,
   PostFileSystemFileManagerResponse,
 } from 'i18n-editor-common';
-import { FileEntry, FileEntryType } from 'i18n-editor-common/lib/defines/file';
 import { getCurrentWorkingDirectory, openFileManager, readDirectory } from '../../utils/file';
 
 const getFileEntryType = (item: fs.Dirent): FileEntryType => {

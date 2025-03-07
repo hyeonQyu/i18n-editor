@@ -1,6 +1,6 @@
-import { HttpStatusCode } from 'axios';
 import { Express } from 'express';
 import { Request, Response } from 'express-serve-static-core';
+import { StatusCodes } from 'http-status-codes';
 import { getLeadingSlash, ResponseEntity } from 'i18n-editor-common';
 import { ControllerMethod, RequestHandler } from '../defines/api';
 import { BadRequestError, ConflictError, NotFoundError } from '../defines/errors';
@@ -44,15 +44,15 @@ abstract class BaseController {
       try {
         const response = await onRequest(req);
 
-        BaseController.sendResponse(res, HttpStatusCode.Ok, {
+        BaseController.sendResponse(res, StatusCodes.OK, {
           data: response,
         });
       } catch (e) {
         const getStatusCode = () => {
-          if (e instanceof NotFoundError) return HttpStatusCode.NotFound;
-          if (e instanceof BadRequestError) return HttpStatusCode.BadRequest;
-          if (e instanceof ConflictError) return HttpStatusCode.Conflict;
-          return HttpStatusCode.InternalServerError;
+          if (e instanceof NotFoundError) return StatusCodes.NOT_FOUND;
+          if (e instanceof BadRequestError) return StatusCodes.BAD_REQUEST;
+          if (e instanceof ConflictError) return StatusCodes.CONFLICT;
+          return StatusCodes.INTERNAL_SERVER_ERROR;
         };
 
         BaseController.sendResponse(res, getStatusCode(), {
@@ -64,7 +64,7 @@ abstract class BaseController {
 
   private static sendResponse = <Res>(
     res: Response<ResponseEntity<Res>>,
-    status: HttpStatusCode,
+    status: StatusCodes,
     data: Omit<ResponseEntity<Res>, 'status'>,
   ) => {
     res.status(status).send({

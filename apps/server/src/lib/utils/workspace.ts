@@ -1,5 +1,4 @@
-import { generateUniqueID, Workspace } from 'i18n-editor-common';
-import { createTimestamp } from 'i18n-editor-common/lib/utils/time';
+import { createTimestamp, generateUniqueID, Workspace } from 'i18n-editor-common';
 import { clone } from 'lodash';
 import configService from '../apis/services/ConfigService';
 import { ConflictError, NotFoundError } from '../defines/errors';

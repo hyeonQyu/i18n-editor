@@ -3,7 +3,7 @@ import fs from 'fs';
 import { getExtensionName, getLeadingSlash } from 'i18n-editor-common';
 import { dirname, normalize } from 'path';
 import { CMD_BY_OS } from '../defines/env';
-import { getOS } from './env';
+import { getOS } from './os';
 
 const getNormalizedPath = (path: string) => {
   const os = getOS();

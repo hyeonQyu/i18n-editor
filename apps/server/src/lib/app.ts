@@ -3,6 +3,7 @@ import { AppOption } from './defines/appOption';
 import { startCheckMemoryInterval } from './utils/memory';
 import { startResponse } from './utils/response';
 import { createServer } from './utils/server';
+import { setEnvironment } from './utils/store';
 import { openUI } from './utils/ui';
 
 const { program } = require('commander');
@@ -15,6 +16,8 @@ module.exports = {
       .action(() => {
         const options: AppOption = program.opts();
         const { port = defaultOption.port, env = defaultOption.env } = options;
+
+        setEnvironment(env);
 
         const server = createServer();
 

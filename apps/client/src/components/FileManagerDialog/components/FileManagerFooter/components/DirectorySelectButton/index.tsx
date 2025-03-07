@@ -2,7 +2,7 @@ import useFileManagerDialogCloseHandler from '@components/FileManagerDialog/hook
 import { useFileManagerDialogStore } from '@components/FileManagerDialog/stores';
 import useCreateAxiosErrorHandler from '@hooks/useCreateAxiosErrorHandler';
 import { Button } from '@mui/material';
-import { HttpStatusCode } from 'axios';
+import { StatusCodes } from 'http-status-codes';
 
 function DirectorySelectButton() {
   const path = useFileManagerDialogStore(({ path }) => path);
@@ -22,7 +22,7 @@ function DirectorySelectButton() {
     try {
     } catch (e) {
       createErrorHandler({
-        [HttpStatusCode.BadRequest]: ({ errorMessage }) => {
+        [StatusCodes.BAD_REQUEST]: ({ errorMessage }) => {
           // TODO locale 디렉토리 아닌 경우 에러 처리
           console.log(errorMessage);
         },

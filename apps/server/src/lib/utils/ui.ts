@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import { exec } from 'child_process';
+import { readFile } from 'fs/promises';
 import { CMD_BY_OS } from '../defines/env';
-import { getOS } from './env';
-import { readFile } from './file';
+import { getOS } from './os';
 
 const addPortToHTML = async (htmlPath: string, port: number) => {
-  const html = await readFile(htmlPath);
+  const html = await readFile(htmlPath, 'utf-8');
 
   const $ = load(html);
   const $port = $('#port');
@@ -17,11 +17,11 @@ const addPortToHTML = async (htmlPath: string, port: number) => {
   }
 };
 
-export const openUI = (port: number) => {
+export const openUI = async (port: number) => {
   const appName = 'i18n-editor';
   const htmlPath = `${process.cwd()}/node_modules/${appName}/ui/index.html`;
 
-  addPortToHTML(htmlPath, port);
+  await addPortToHTML(htmlPath, port);
 
   exec(`${CMD_BY_OS[getOS()].openUI} ${htmlPath}`);
 };
