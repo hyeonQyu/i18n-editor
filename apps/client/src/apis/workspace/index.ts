@@ -13,6 +13,9 @@ import {
   GetTranslationsResponse,
   GetWorkspacesRequest,
   GetWorkspacesResponse,
+  PostLanguagesParams,
+  PostLanguagesRequest,
+  PostLanguagesResponse,
   PostNamespaceParams,
   PostNamespaceRequest,
   PostNamespaceResponse,
@@ -51,6 +54,11 @@ export default class WorkspaceAPI extends BaseAPI {
   public getLanguages: AxiosRequestFunction<GetLanguagesParams, GetLanguagesResponse> = (req) => {
     const { id } = req;
     return this.axiosInstance.get(this.getUrl(`/${id}/language`));
+  };
+
+  public postLanguages: AxiosRequestFunction<PostLanguagesParams & PostLanguagesRequest, PostLanguagesResponse> = (req) => {
+    const { id, languageCodes } = req;
+    return this.axiosInstance.post(this.getUrl(`/${id}/language`), { languageCodes });
   };
 
   public getNamespaces: AxiosRequestFunction<GetNamespacesParams, GetNamespacesResponse> = (req) => {

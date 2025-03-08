@@ -9,8 +9,8 @@ import { Box, Dialog } from '@mui/material';
 const width = 800;
 
 function FileManagerDialog() {
-  const opened = useFileManagerDialogStore(({ opened }) => opened);
-  const searchMode = useFileManagerDialogStore(({ searchMode }) => searchMode);
+  const opened = useFileManagerDialogStore((state) => state.opened);
+  const searchMode = useFileManagerDialogStore((state) => state.searchMode);
 
   const handleClose = useFileManagerDialogCloseHandler();
 

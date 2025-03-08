@@ -1,5 +1,6 @@
 import FileManagerDialog from '@components/FileManagerDialog';
 import GlobalScrollbarStyle from '@components/GlobalScrollbarStyle';
+import LanguageCodesDialog from '@components/LanguageCodesDialog';
 import Layout from '@components/Layout';
 import NamespaceAddDialog from '@components/NamespaceAddDialog';
 import '@fontsource/roboto/300.css';
@@ -30,6 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <FileManagerDialog />
                 <NamespaceAddDialog />
+                <LanguageCodesDialog />
               </Layout>
               <ReactQueryDevtools />
             </ReactQueryClientProvider>
