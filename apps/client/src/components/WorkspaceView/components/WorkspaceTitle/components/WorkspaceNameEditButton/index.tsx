@@ -1,9 +1,9 @@
-import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/components/WorkspaceViewHeader/stores';
+import { useWorkspaceTitleStore } from '@components/WorkspaceView/components/WorkspaceTitle/stores';
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
 
 function WorkspaceNameEditButton() {
-  const setIsNameEditing = useWorkspaceViewHeaderStore(({ setIsNameEditing }) => setIsNameEditing);
+  const setIsNameEditing = useWorkspaceTitleStore(({ setIsNameEditing }) => setIsNameEditing);
 
   const handleClick = () => setIsNameEditing(true);
 

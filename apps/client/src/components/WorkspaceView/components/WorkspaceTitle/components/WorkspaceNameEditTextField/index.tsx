@@ -1,6 +1,6 @@
 import useCancelEditWorkspaceName from '@components/WorkspaceView/components/WorkspaceTitle/hooks/useCancelEditWorkspaceName';
 import useUpdateCurrentWorkspaceName from '@components/WorkspaceView/components/WorkspaceTitle/hooks/useUpdateCurrentWorkspaceName';
-import { useWorkspaceViewHeaderStore } from '@components/WorkspaceView/components/WorkspaceViewHeader/stores';
+import { useWorkspaceTitleStore } from '@components/WorkspaceView/components/WorkspaceTitle/stores';
 import useWorkspace from '@hooks/workspace/useWorkspace';
 import { TextField, useTheme } from '@mui/material';
 import { ChangeEventHandler, KeyboardEventHandler, useEffect } from 'react';
@@ -8,9 +8,9 @@ import { ChangeEventHandler, KeyboardEventHandler, useEffect } from 'react';
 function WorkspaceNameEditTextField() {
   const workspace = useWorkspace();
 
-  const editingName = useWorkspaceViewHeaderStore(({ editingName }) => editingName);
-  const setEditingName = useWorkspaceViewHeaderStore(({ setEditingName }) => setEditingName);
-  const hasError = useWorkspaceViewHeaderStore(({ hasError }) => hasError);
+  const editingName = useWorkspaceTitleStore(({ editingName }) => editingName);
+  const setEditingName = useWorkspaceTitleStore(({ setEditingName }) => setEditingName);
+  const hasError = useWorkspaceTitleStore(({ hasError }) => hasError);
 
   const updateName = useUpdateCurrentWorkspaceName();
   const cancelEdit = useCancelEditWorkspaceName();
