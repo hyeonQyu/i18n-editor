@@ -15,6 +15,8 @@ function useConfirmDeleteTranslation() {
       confirmAction: { label: '삭제' },
     });
 
+    if (!confirmed) return;
+
     await deleteRow(rowIndex);
 
     enqueueClosableSnackbar({
