@@ -6,6 +6,7 @@ import {
 } from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/defines/styles';
 import useClearCellError from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/hooks/useClearCellError';
 import { Cell } from '@components/NamespaceView/components/NamespaceEditor/defines/table';
+import { IME_ACTIVATION_KEYCODE } from '@defines/keyboard';
 import { TextField, TextFieldProps, useTheme } from '@mui/material';
 import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';
 
@@ -61,6 +62,8 @@ function TextFieldCell(props: TextFieldCellProps) {
   const handleKeyDown: KeyboardEventHandler = (e) => {
     if (e.key === 'Enter') {
       if (e.shiftKey) return;
+
+      if (e.keyCode === IME_ACTIVATION_KEYCODE) return;
 
       e.preventDefault();
 
