@@ -1,5 +1,5 @@
 import { getLanguageCodes } from '../../../utils/language';
-import { checkNamespaceDuplicated, createNamespace, getNamespaceNames } from '../../../utils/namespace';
+import { checkNamespaceDuplicated, createNamespace, deleteNamespace, getNamespaceNames } from '../../../utils/namespace';
 import { getWorkspaceById } from '../../../utils/workspace';
 
 const namespaceService = {
@@ -14,6 +14,12 @@ const namespaceService = {
     const languageCodes = await getLanguageCodes(workspace.path);
     await checkNamespaceDuplicated(workspace.path, namespace, languageCodes);
     return createNamespace(workspace.path, namespace, languageCodes);
+  },
+
+  delete: async (workspaceId: string, namespace: string) => {
+    const workspace = getWorkspaceById(workspaceId);
+    const languageCodes = await getLanguageCodes(workspace.path);
+    return deleteNamespace(workspace.path, namespace, languageCodes);
   },
 };
 
