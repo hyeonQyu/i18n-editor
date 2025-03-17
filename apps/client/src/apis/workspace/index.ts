@@ -1,6 +1,8 @@
 import { AxiosRequestFunction } from '@defines/api';
 import BaseAPI from '@utils/BaseAPI';
 import {
+  DeleteNamespaceParams,
+  DeleteNamespaceResponse,
   DeleteTranslationParams,
   DeleteTranslationResponse,
   DeleteWorkspaceParams,
@@ -69,6 +71,11 @@ export default class WorkspaceAPI extends BaseAPI {
   public postNamespace: AxiosRequestFunction<PostNamespaceParams & PostNamespaceRequest, PostNamespaceResponse> = (req) => {
     const { id, namespace } = req;
     return this.axiosInstance.post(this.getUrl(`/${id}/namespace`), { namespace });
+  };
+
+  public deleteNamespace: AxiosRequestFunction<DeleteNamespaceParams, DeleteNamespaceResponse> = (req) => {
+    const { id, namespace } = req;
+    return this.axiosInstance.delete(this.getUrl(`/${id}/namespace/${namespace}`));
   };
 
   public getTranslations: AxiosRequestFunction<GetTranslationsParams, GetTranslationsResponse> = (req) => {

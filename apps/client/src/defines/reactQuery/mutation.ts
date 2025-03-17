@@ -10,6 +10,7 @@ export const MUTATION_KEY = {
     deleteWorkspace: () => [...MUTATION_KEY.workspace.base, 'deleteWorkspace'] as const,
     postLanguageCodes: () => [...MUTATION_KEY.workspace.base, 'postLanguageCodes'] as const,
     postNamespace: () => [...MUTATION_KEY.workspace.base, 'postNamespace'] as const,
+    deleteNamespace: () => [...MUTATION_KEY.workspace.base, 'deleteNamespace'] as const,
     postTranslation: () => [...MUTATION_KEY.workspace.base, 'postTranslation'] as const,
     putTranslation: () => [...MUTATION_KEY.workspace.base, 'putTranslation'] as const,
     deleteTranslation: () => [...MUTATION_KEY.workspace.base, 'deleteTranslation'] as const,
