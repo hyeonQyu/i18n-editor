@@ -14,3 +14,9 @@ export interface PostLanguagesRequest {
 }
 
 export type PostLanguagesResponse = void;
+
+export type DeleteLanguageParams = WorkspaceParams & {
+  languageCode: LanguageCode;
+};
+
+export type DeleteLanguageResponse = void;

@@ -1,4 +1,6 @@
 import {
+  DeleteLanguageParams,
+  DeleteLanguageResponse,
   DeleteNamespaceParams,
   DeleteNamespaceResponse,
   DeleteTranslationParams,
@@ -92,6 +94,15 @@ export default class WorkspaceController extends BaseController {
       const { id } = req.params;
       const { languageCodes } = req.body;
       await languageService.create(id, languageCodes);
+    },
+  };
+
+  private deleteLanguage: ControllerMethod<never, DeleteLanguageParams, never, DeleteLanguageResponse> = {
+    path: '/:id/language/:languageCode',
+    method: 'delete',
+    handler: async (req) => {
+      const { id, languageCode } = req.params;
+      await languageService.delete(id, languageCode);
     },
   };
 
