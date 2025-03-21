@@ -1,23 +1,39 @@
 import { SvgIconComponent } from '@mui/icons-material';
-import { IconButton, Tooltip } from '@mui/material';
+import { Button, IconButton, Tooltip } from '@mui/material';
 import { MouseEventHandler } from 'react';
 
-export interface ToolbarButtonProps {
+export type ToolbarButtonProps = {
   IconComponent: SvgIconComponent;
-  label: string;
   onClick: MouseEventHandler;
   color?: string;
-}
+} & (
+  | {
+      label: string;
+      tooltip?: never;
+    }
+  | {
+      label?: never;
+      tooltip: string;
+    }
+);
 
 function ToolbarButton(props: ToolbarButtonProps) {
-  const { IconComponent, label, onClick, color = 'primary' } = props;
+  const { IconComponent, label, tooltip, onClick, color = 'primary' } = props;
+
+  if (tooltip) {
+    return (
+      <Tooltip title={tooltip}>
+        <IconButton onClick={onClick} sx={{ color }}>
+          <IconComponent />
+        </IconButton>
+      </Tooltip>
+    );
+  }
 
   return (
-    <Tooltip title={label}>
-      <IconButton onClick={onClick} sx={{ color }}>
-        <IconComponent />
-      </IconButton>
-    </Tooltip>
+    <Button startIcon={<IconComponent />} onClick={onClick} sx={{ color }}>
+      {label}
+    </Button>
   );
 }
 

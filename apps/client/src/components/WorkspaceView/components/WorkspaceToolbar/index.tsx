@@ -1,7 +1,7 @@
 import Toolbar from '@components/Toolbar';
-import useChangeDirectoryClickHandler from '@components/WorkspaceView/components/WorkspaceToolbar/hooks/useChangeDirectoryClickHandler';
-import useOpenAddLanguagesClickHandler from '@components/WorkspaceView/components/WorkspaceToolbar/hooks/useOpenAddLanguagesClickHandler';
-import useOpenNativeFileManagerClickHandler from '@components/WorkspaceView/components/WorkspaceToolbar/hooks/useOpenNativeFileManagerClickHandler';
+import useChangeDirectoryClickHandler from '@components/WorkspaceView/hooks/useChangeDirectoryClickHandler';
+import useOpenAddLanguagesDialogClickHandler from '@components/WorkspaceView/hooks/useOpenAddLanguagesDialogClickHandler';
+import useOpenNativeFileManagerClickHandler from '@components/WorkspaceView/hooks/useOpenNativeFileManagerClickHandler';
 import useAddNamespaceClickHandler from '@hooks/namespace/useAddNamespaceClickHandler';
 import useFileManagerName from '@hooks/useFileManagerName';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
@@ -18,7 +18,7 @@ function WorkspaceToolbar() {
   const handleClickChangeDirectory = useChangeDirectoryClickHandler();
   const handleClickOpenNativeFileManager = useOpenNativeFileManagerClickHandler();
   const handleClickAddNamespace = useAddNamespaceClickHandler();
-  const handleClickOpenAddLanguages = useOpenAddLanguagesClickHandler();
+  const handleClickOpenAddLanguagesDialog = useOpenAddLanguagesDialogClickHandler();
 
   const fileManagerName = useFileManagerName();
 
@@ -47,7 +47,7 @@ function WorkspaceToolbar() {
         {
           IconComponent: TranslateIcon,
           label: '언어 추가',
-          onClick: handleClickOpenAddLanguages,
+          onClick: handleClickOpenAddLanguagesDialog,
         },
       ]}
     />

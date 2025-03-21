@@ -1,7 +1,7 @@
 import useOpenLanguageCodesDialog from '@hooks/useOpenLanguageCodesDialog';
 import useWorkspaceId from '@hooks/workspace/useWorkspaceId';
 
-function useOpenAddLanguagesClickHandler() {
+function useOpenAddLanguagesDialogClickHandler() {
   const workspaceId = useWorkspaceId();
   const openLanguageCodesDialog = useOpenLanguageCodesDialog();
 
@@ -11,4 +11,4 @@ function useOpenAddLanguagesClickHandler() {
   };
 }
 
-export default useOpenAddLanguagesClickHandler;
+export default useOpenAddLanguagesDialogClickHandler;

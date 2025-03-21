@@ -15,6 +15,7 @@ function WorkspaceView() {
       }}
     >
       <WorkspaceToolbar />
+
       <Box
         sx={{
           padding: '40px 36px 32px 36px',

@@ -4,7 +4,7 @@ import useQueryGetLanguages from '@hooks/language/useQueryGetLanguages';
 import { Autocomplete, Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { enqueueClosableSnackbar } from '@utils/snackbar';
 import { LanguageCode, LANGUAGE_CODES } from 'i18n-editor-common';
-import { FormEventHandler, useMemo, useState } from 'react';
+import { FormEventHandler, SyntheticEvent, useMemo, useState } from 'react';
 
 const DEFAULT_LANGUAGE_CODES: LanguageCode[] = [];
 
@@ -41,7 +41,7 @@ function LanguageCodesDialog() {
     handleClose();
   };
 
-  const handleChange = (_, value: LanguageCode[]) => setSelectedLanguageCodes(value);
+  const handleChange = (_: SyntheticEvent, value: LanguageCode[]) => setSelectedLanguageCodes(value);
 
   return (
     <Dialog open={opened} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: handleSubmit, sx: { width: '500px' } }}>
@@ -75,7 +75,7 @@ function LanguageCodesDialog() {
         <Button variant={'text'} onClick={handleClose}>
           취소
         </Button>
-        <Button variant={'contained'} type={'submit'}>
+        <Button variant={'contained'} type={'submit'} disabled={!selectedLanguageCodes.length}>
           추가
         </Button>
       </DialogActions>
