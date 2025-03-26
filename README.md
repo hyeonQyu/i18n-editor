@@ -1,70 +1,111 @@
 # i18n-editor
+
 [![npm](https://img.shields.io/npm/v/i18n-editor.svg)](https://www.npmjs.com/package/i18n-editor) [![npm-downloads](https://img.shields.io/npm/dm/i18n-editor.svg)](https://www.npmjs.com/package/i18n-editor)
 
-i18n-editor를 사용하여 여러개로 분리되어 있는 다국어 `JSON` 번역 파일을 한 화면에서 관리하고 편집할 수 있습니다.
+i18n-editor는 다국어 JSON 번역 파일을 효율적으로 관리할 수 있는 데스크톱 에디터입니다. 여러 워크스페이스를 전환하면서 다양한 프로젝트의 번역 파일을 한 곳에서 관리할 수 있습니다.
 
-# Content
-- [Features](#features)
-- [Getting started](#getting-started)
-    - [Installation](#installation)
-    - [Run](#run)
-- [Usage](#usage)
-    - [Locale 디렉토리 선택](#locale-디렉토리-선택)
-    - [Locale 디렉토리 생성](#locale-디렉토리-생성)
-    - [다국어 번역 파일 선택 및 생성](#다국어-번역-파일-선택-및-생성)
-    - [다국어 번역 파일 편집](#다국어-번역-파일-편집)
-- [Features to be added](#features-to-be-added)
+![워크스페이스](https://github.com/user-attachments/assets/6b3f3c9e-8022-42bd-b1ae-6add39456ec1)
 
-# Features
+![네임스페이스](https://github.com/user-attachments/assets/54ae4148-1579-40c4-ad22-05133724de65)
 
-- 다국어 번역 파일을 관리하는 최상위 디렉토리인 **Locale 디렉토리**를 선택하거나 생성합니다.
-- Locale 디렉토리 하위에 존재하는 다국어 번역 파일을 선택해서 편집하거나 새로운 파일을 생성할 수 있습니다.
-- 새로운 언어를 편리하게 추가할 수 있습니다.
-- 새로운 번역 정보 (`번역 key - 번역 value`) 추가 시 여러 언어에 대한 파일을 각각 수정하는 번거로움을 해결합니다. 편리하게 새로운 번역 정보를 추가할 수 있습니다.
+# 목차
 
-# Getting started
-## Installation
-npm
+- [주요 개념](#주요-개념)
+  - [워크스페이스](#워크스페이스-workspace)
+  - [네임스페이스](#네임스페이스-namespace)
+- [주요 기능](#주요-기능)
+- [시작하기](#시작하기)
+  - [설치](#설치)
+  - [실행](#실행)
+- [사용 방법](#사용-방법)
+  - [워크스페이스 관리](#워크스페이스-관리)
+  - [네임스페이스 관리](#네임스페이스-관리)
+
+# 주요 개념
+
+## 워크스페이스 (Workspace)
+
+워크스페이스는 하나의 프로젝트에서 사용되는 다국어 번역 파일들의 집합을 의미합니다. 각 워크스페이스는 다음과 같은 특징을 가집니다:
+
+- 독립적인 언어 설정: 각 워크스페이스는 자신만의 지원 언어 목록을 가질 수 있습니다.
+- 여러 네임스페이스 관리: 하나의 워크스페이스 안에서 여러 개의 네임스페이스를 관리할 수 있습니다.
+
+## 네임스페이스 (Namespace)
+
+네임스페이스는 번역 파일을 논리적으로 구분하는 단위입니다. 예를 들어:
+
+- common: 공통으로 사용되는 번역
+- auth: 인증 관련 번역
+- product: 상품 관련 번역
+
+각 네임스페이스는 지원하는 모든 언어의 번역을 포함하며, JSON 파일로 관리됩니다.
+
+# 주요 기능
+
+- **워크스페이스 관리**
+
+  - 여러 프로젝트의 번역 파일을 별도의 워크스페이스로 관리
+  - 워크스페이스 간 빠른 전환 지원
+  - 마지막으로 작업한 워크스페이스 자동 복원
+
+- **네임스페이스 편집**
+
+  - 모든 언어의 번역을 한 화면에서 관리
+  - 새로운 번역 키-값 쌍 추가 및 삭제
+  - 번역 실시간 수정
+
+- **언어 관리**
+  - 새로운 언어 추가 및 삭제
+  - 언어별 번역 파일 자동 동기화
+
+# 시작하기
+
+## 설치
+
+npm을 사용하는 경우:
+
 ```bash
 npm install -D i18n-editor
 ```
 
-yarn
+yarn을 사용하는 경우:
+
 ```bash
 yarn add -D i18n-editor
 ```
 
-## Run
+## 실행
 
-Terminal에 `i18n-editor` 명령어를 입력하여 애플리케이션을 실행시킬 수 있습니다. 이때, 포트 번호를 옵션으로 지정할 수 있습니다.
+기본 설정으로 실행 (포트 5252 사용):
 
-기본 옵션으로 실행 (4848번 포트 사용)
 ```bash
-i18n-editor
+npx i18n-editor
 ```
 
-실행 포트 옵션 (9000번 포트 사용)
+커스텀 포트로 실행:
+
 ```bash
 i18n-editor -p 9000
 ```
+
+또는
+
 ```bash
 i18n-editor --port 9000
 ```
 
-명령어를 실행하면 브라우저 창이 새로 열리면서 애플리케이션이 실행됩니다.
+명령어를 실행하면 자동으로 브라우저 창이 열리면서 애플리케이션이 실행됩니다. 기본적으로 시스템의 기본 브라우저를 사용하여 실행됩니다.
 
-# Usage
+# 사용 방법
 
-## Locale 디렉토리 선택
+## 워크스페이스 관리
 
-가장 먼저 다국어 번역 파일을 관리하는 최상위 디렉토리인 Locale 디렉토리를 선택합니다.
+### 워크스페이스 구조
 
-![Locale 디렉토리 선택](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4e59ddf0-21b9-4181-a1b5-1209329c3b3e/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230315%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230315T135327Z&X-Amz-Expires=86400&X-Amz-Signature=54aa3255a114ae98920ec37861edb3b12601bd612b0ba9973dcc6f7d920b81f5&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
-
-Locale 디렉토리의 구조는 다음과 같아야 합니다.
+워크스페이스는 다음과 같은 구조를 가져야 합니다:
 
 ```
-📂locale directory
+📂workspace
   📂ko
     🗒️common.json
     🗒️...
@@ -75,80 +116,35 @@ Locale 디렉토리의 구조는 다음과 같아야 합니다.
     🗒️common.json
     🗒️...
   📂... (언어 코드명)
-  ```
-
-- Locale 디렉토리 내에는 **언어 코드로 된 이름**을 가진 디렉토리가 하나 이상 존재해야 합니다.
-- 언어 코드로 된 이름을 가진 디렉토리 하위에 다국어 번역 파일이 존재합니다.
-
-## Locale 디렉토리 생성
-
-만약 위 조건에 맞지 않는 **유효하지 않은 디렉토리를 선택**하는 경우 선택한 디렉토리를 **Locale 디렉토리 조건에 맞도록** 만들 수 있습니다.
-
-선택한 디렉토리 하위에 언어 코드로 된 이름을 가진 디렉토리가 없으면 **언어 코드명 디렉토리를 새로 생성**할 수 있습니다. 이 떄, 언어 코드명 디렉토리와 함께 **언어 코드명 디렉토리 하위**에 위치할 **다국어 번역 파일도 함께 생성**합니다.
-
-## 다국어 번역 파일 선택 및 생성
-
-선택한 Locale 디렉토리 하위 언어코드명 폴더 하위에 있는 다국어 번역 파일 중 편집할 파일을 선택합니다.
-
-새로운 파일을 생성할 수도 있습니다. 새로 생성한 파일은 Locale 디렉토리에 존재하는 **모든 언어코드명 폴더 하위에 생성**됩니다.
-
-![편집할 번역 파일 선택](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/2a954482-231c-4ca4-b387-925358b3cfe2/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230315%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230315T135448Z&X-Amz-Expires=86400&X-Amz-Signature=8c96e03fd137a201edf66be13b50d2baa159e02e7940c7f9b6cf853c2f66ba9e&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
-
-💡 Locale 디렉토리 선택 후 편집할 다국어 번역 파일까지 선택하면 **다음 실행부터 마지막으로 선택된 Locale 디렉토리가 자동으로 선택**됩니다.
-
-## 다국어 번역 파일 편집
-
-### 번역 값 편집 (행 편집)
-
-다국어 번역 파일을 선택하면 파일을 편집할 수 있는 표가 나타납니다. 파일에 번역 값이 없는 경우 새로운 번역 키를 추가합니다.
-
-![새 번역 추가](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/68b1dd82-c3fa-481a-b9ee-02ccd862e8ec/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230315%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230315T135531Z&X-Amz-Expires=86400&X-Amz-Signature=ae4a9f710c73d92dae601388bc9489fd4c9877b51fa489aed7efa20fd441bbfe&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
-
-번역 키를 추가하면 해당 키에 대한 번역 값을 편집할 수 있습니다. **편집하려는 셀을 클릭**하면 Textarea가 활성화됩니다.
-
-단, **번역 키값은 수정할 수 없습니다**.
-
-![번역 값 편집](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/403d5f45-21bf-4441-b263-04dcd491e7f0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230315%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230315T135611Z&X-Amz-Expires=86400&X-Amz-Signature=dc3d965bc999a26ca3d0cb15ee5eca4cbca338c09f37063eff480d74245aefa9&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
-
-편집하려는 행의 번역 key 셀(가장 좌측 열)의 우측 상단 버튼을 클릭하면 행 편집 옵션이 나타납니다.
-
-![번역 편집](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7e10b8aa-cac7-4353-9328-150425d3d5ff/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230315%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230315T135653Z&X-Amz-Expires=86400&X-Amz-Signature=3eb7b1fac8b2a44c6b3edd04d519c1e275d3a7668504559dc064e0fbfbad7558&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
-
-`위쪽에 새 번역 추가`, `아래쪽에 새 번역 추가`를 클릭하여 원하는 위치에 **새 행을 추가**합니다.
-
-`번역 값 지우기`를 클릭하여 선택된 행의 **모든 번역 값을 지웁니다**. 번역 키는 지워지지 않습니다.
-
-`번역 삭제`를 클릭하여 **선택된 행을 삭제**합니다.
-
-### 언어 편집 (열 편집)
-
-Locale 디렉토리 하위에 있는 **언어코드명 디렉토리가 파일 편집 표의 열(Column)이 됩니다.**
-
-```
-📂locale directory	
-  📂ko
-    🗒️animal.json
-  📂en
-    🗒️animal.json
 ```
 
-위 구조와 같이 Locale 디렉토리 내에 `en`, `ko` 언어코드명 디렉토리가 있다면 아래와 같이 다국어 편집 표에서 `en`과 `ko` 열을 확인할 수 있습니다.
+### 워크스페이스 선택
 
-![열 보기](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/92a94596-35b2-460b-9fea-70762d3e0d23/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230315%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230315T135716Z&X-Amz-Expires=86400&X-Amz-Signature=9c2825cbe28a34bd607bf4f54cc0ed56bd149b36b2792cb5560456726d768f1e&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
+1. 홈 화면에서 "디렉토리 선택하고 시작" 버튼을 클릭합니다.
+2. 번역 파일이 있는 디렉토리를 선택합니다.
+3. 선택한 디렉토리가 워크스페이스로 등록됩니다.
 
-표 좌측 상단의 `+ 언어 추가` 버튼을 클릭하여 새 언어를 추가할 수 있습니다.
+### 워크스페이스 전환
 
-언어 코드 셀(열 헤더)의 우측 상단 버튼을 클릭하면 열 편집 옵션이 나타납니다. **번역 키 열은 수정할 수 없습니다.**
+- 사이드바의 워크스페이스 목록에서 원하는 워크스페이스를 클릭하여 전환할 수 있습니다.
+- 최근 사용한 워크스페이스는 자동으로 저장되어 다음 실행 시 복원됩니다.
 
-![언어 편집](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3009d691-dd3a-4ef8-8117-387b79404524/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230315%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230315T135735Z&X-Amz-Expires=86400&X-Amz-Signature=60cfefdd6b994952a0e60194ace0f532a2df7cf5fd7a9687b511b184ffa0199e&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
+### 워크스페이스 수정
 
-`언어 삭제`를 클릭하여 선택된 열의 언어를 삭제할 수 있습니다.
+- 워크스페이스의 기본 정보를 수정할 수 있습니다
+  - 디렉토리 변경
+  - 워크스페이스명
+  - 언어 추가 및 삭제
+  - 네임스페이스 추가 및 삭제
 
-🚨언어를 삭제하면 **Locale 디렉토리 하위의 언어 코드명 디렉토리가 삭제**되기 때문에 현재 편집하고 있는 파일 외에 **다른 모든 파일에서도 선택된 언어가 삭제**됩니다.
+## 네임스페이스 관리
 
-# Features to be added
+### 네임스페이스 편집
 
-- 행 순서 변경
-- 언어 다중 추가
-- 애플리케이션의 국제화 (다국어 지원)
-- CSV import, export
+1. 워크스페이스에서 편집할 네임스페이스를 선택합니다.
+2. 표 형식의 에디터에서 번역을 관리할 수 있습니다:
+   - 새 번역 추가
+     - 특정 번역의 행 옵션 메뉴에서 "위에 번역 추가" 혹은 "아래에 번역 추가" 선택
+     - 네임스페이스 최하단에 번역 키값을 입력하여 번역 추가
+   - 번역 수정: 셀을 클릭하여 직접 편집
+   - 번역 삭제: 행 옵션 메뉴에서 "삭제" 선택
