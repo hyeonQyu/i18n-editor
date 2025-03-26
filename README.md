@@ -6,7 +6,7 @@ i18n-editor는 다국어 JSON 번역 파일을 효율적으로 관리할 수 있
 
 ![워크스페이스](https://github.com/user-attachments/assets/8095596c-3820-4c6d-8741-b960d431c415)
 
-![네임스페이스](https://github.com/user-attachments/assets/8ebcb8c5-8f67-4da9-a8ca-6d6f87408c54)
+![네임스페이스](https://github.com/user-attachments/assets/6fbad164-c7a9-4c8c-91f5-a025efe266b0)
 
 # 목차
 
