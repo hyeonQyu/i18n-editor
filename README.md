@@ -4,9 +4,9 @@
 
 i18n-editor는 다국어 JSON 번역 파일을 효율적으로 관리할 수 있는 데스크톱 에디터입니다. 여러 워크스페이스를 전환하면서 다양한 프로젝트의 번역 파일을 한 곳에서 관리할 수 있습니다.
 
-![워크스페이스](https://github.com/user-attachments/assets/6b3f3c9e-8022-42bd-b1ae-6add39456ec1)
+![워크스페이스](https://github.com/user-attachments/assets/8095596c-3820-4c6d-8741-b960d431c415)
 
-![네임스페이스](https://github.com/user-attachments/assets/54ae4148-1579-40c4-ad22-05133724de65)
+![네임스페이스](https://github.com/user-attachments/assets/8ebcb8c5-8f67-4da9-a8ca-6d6f87408c54)
 
 # 목차
 
