@@ -33,6 +33,8 @@ const copyPackageJson = () => {
     ...commonPackageJson.dependencies,
   };
 
+  delete dependencies['i18n-editor-common'];
+
   const packageConfig = {
     private: false,
     name,
