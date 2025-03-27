@@ -18,23 +18,35 @@ const removeDistDirectoryName = (config, propNames) => {
 };
 
 const copyPackageJson = () => {
-  const root = packageJsonToObj(path.join(__dirname, '/package.json'));
-  const server = packageJsonToObj(path.join(__dirname, '/apps/server/package.json'));
+  const rootPackageJson = packageJsonToObj(path.join(__dirname, '/package.json'));
+  const clientPackageJson = packageJsonToObj(path.join(__dirname, '/apps/client/package.json'));
+  const serverPackageJson = packageJsonToObj(path.join(__dirname, '/apps/server/package.json'));
+  const commonPackageJson = packageJsonToObj(path.join(__dirname, '/packages/app-common/package.json'));
 
-  const { name, version, author, licenses, keywords, bugs, homepage } = root;
+  const { name, version, author, licenses, keywords, bugs, homepage } = rootPackageJson;
+  const { main, bin } = serverPackageJson;
+
+  const dependencies = {
+    ...rootPackageJson.dependencies,
+    ...serverPackageJson.dependencies,
+    ...clientPackageJson.dependencies,
+    ...commonPackageJson.dependencies,
+  };
 
   const packageConfig = {
-    ...server,
+    private: false,
     name,
     version,
+    main,
+    bin,
     author,
     licenses,
     keywords,
     bugs,
     homepage,
     scripts: {},
+    dependencies,
     devDependencies: {},
-    private: false,
   };
 
   removeDistDirectoryName(packageConfig, ['main', 'types']);
