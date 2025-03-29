@@ -1,16 +1,22 @@
-import { useLayoutStore } from '@components/Layout/stores';
-import MenuIcon from '@mui/icons-material/Menu';
-import { IconButton } from '@mui/material';
+import useSidebarOpened from '@hooks/ui/useSidebarOpened';
+import useUpdatePartialUIConfig from '@hooks/ui/useUpdatePartialUIConfig';
+import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
+import { IconButton, Tooltip } from '@mui/material';
 
 function SidebarController() {
-  const { toggleSidebar } = useLayoutStore();
+  const sidebarOpened = useSidebarOpened();
+  const updatePartialUIConfig = useUpdatePartialUIConfig();
 
-  const handleClick = () => toggleSidebar();
+  const handleClick = () => updatePartialUIConfig({ ui: { sidebarOpened: !sidebarOpened } });
+
+  const tooltipMessage = sidebarOpened ? '사이드바 닫기' : '사이드바 열기';
 
   return (
-    <IconButton size={'large'} edge={'start'} color={'inherit'} aria-label={'open drawer'} onClick={handleClick}>
-      <MenuIcon />
-    </IconButton>
+    <Tooltip title={tooltipMessage}>
+      <IconButton size={'large'} edge={'start'} color={'inherit'} aria-label={'open drawer'} onClick={handleClick}>
+        <SpaceDashboardOutlinedIcon />
+      </IconButton>
+    </Tooltip>
   );
 }
 

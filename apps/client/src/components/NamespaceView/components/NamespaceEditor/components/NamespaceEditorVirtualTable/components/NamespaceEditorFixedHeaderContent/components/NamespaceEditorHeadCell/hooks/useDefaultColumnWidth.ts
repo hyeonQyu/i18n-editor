@@ -1,13 +1,13 @@
 import { SIDEBAR_WIDTH } from '@components/Layout/defines/size';
-import { useLayoutStore } from '@components/Layout/stores';
 import { useColumns } from '@components/NamespaceView/components/NamespaceEditor/providers/ColumnProvider';
+import useSidebarOpened from '@hooks/ui/useSidebarOpened';
 import { useEffect, useState } from 'react';
 
 const MENU_COLUMN_WIDTH = 66;
 
 function useDefaultColumnWidth(isMenuColumn: boolean) {
   const columns = useColumns();
-  const sidebarOpened = useLayoutStore(({ sidebarOpened }) => sidebarOpened);
+  const sidebarOpened = useSidebarOpened();
   const [columnWidth, setColumnWidth] = useState(isMenuColumn ? `${MENU_COLUMN_WIDTH}px` : '0%');
 
   useEffect(() => {

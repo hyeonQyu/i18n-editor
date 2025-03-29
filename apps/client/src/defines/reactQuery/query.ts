@@ -16,7 +16,7 @@ export type QueryOption<TResponse, TQueryKey extends (...args: any) => readonly 
 export const QUERY_KEY = {
   config: {
     base: ['config'] as const,
-    getConfig: () => [...QUERY_KEY.config.base, 'getConfig'] as const,
+    getUI: () => [...QUERY_KEY.config.base, 'getUI'] as const,
   },
 
   fileSystem: {

@@ -3,12 +3,9 @@ import useInitialLoading from '@hooks/useInitialLoading';
 import useRouteWorkspacePage from '@hooks/workspace/useRouteWorkspacePage';
 import useWorkspace from '@hooks/workspace/useWorkspace';
 import { Box, CircularProgress } from '@mui/material';
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 function HomePage() {
-  const router = useRouter();
-
   const loading = useInitialLoading();
 
   const workspace = useWorkspace();

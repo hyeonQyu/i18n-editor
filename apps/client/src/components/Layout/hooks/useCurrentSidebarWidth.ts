@@ -1,8 +1,8 @@
 import { SIDEBAR_WIDTH } from '@components/Layout/defines/size';
-import { useLayoutStore } from '@components/Layout/stores';
+import useSidebarOpened from '@hooks/ui/useSidebarOpened';
 
 function useCurrentSidebarWidth() {
-  const sidebarOpened = useLayoutStore((state) => state.sidebarOpened);
+  const sidebarOpened = useSidebarOpened();
   return sidebarOpened ? SIDEBAR_WIDTH : 0;
 }
 

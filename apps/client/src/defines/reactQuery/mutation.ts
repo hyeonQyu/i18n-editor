@@ -1,4 +1,9 @@
 export const MUTATION_KEY = {
+  config: {
+    base: ['config'] as const,
+    patchUI: () => [...MUTATION_KEY.config.base, 'patchUI'] as const,
+  },
+
   fileSystem: {
     base: ['fileSystem'] as const,
     postFileManager: () => [...MUTATION_KEY.fileSystem.base, 'postFileManager'] as const,

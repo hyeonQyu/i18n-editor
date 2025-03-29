@@ -1,6 +1,6 @@
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from '@components/Layout/defines/size';
 import { SIDEBAR_TRANSITION_DURATION } from '@components/Layout/defines/transitions';
-import { useLayoutStore } from '@components/Layout/stores';
+import useSidebarOpened from '@hooks/ui/useSidebarOpened';
 import { Box, Drawer } from '@mui/material';
 import { ReactNode } from 'react';
 
@@ -12,7 +12,7 @@ interface SidebarContainerProps {
 function SidebarContainer(props: SidebarContainerProps) {
   const { children, displayIndex } = props;
 
-  const opened = useLayoutStore(({ sidebarOpened }) => sidebarOpened);
+  const opened = useSidebarOpened();
 
   const marginLeft = `-${displayIndex * SIDEBAR_WIDTH}px`;
 
