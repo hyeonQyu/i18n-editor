@@ -2,7 +2,7 @@ import { LanguageCode } from 'i18n-editor-common';
 import { deleteLanguageCode, getLanguageCodes } from '../../../utils/language';
 import { getNamespaceNames } from '../../../utils/namespace';
 import { completeTranslation, getTranslations, writeTranslation } from '../../../utils/translation';
-import { getWorkspaceById } from '../../../utils/workspace';
+import { getWorkspaceById, updateWorkspaceLastOpenedAt } from '../../../utils/workspace';
 
 const languageService = {
   getList: async (workspaceId: string) => {
@@ -23,11 +23,15 @@ const languageService = {
         await writeTranslation(workspace.path, namespace, translations);
       }),
     );
+
+    await updateWorkspaceLastOpenedAt(workspace);
   },
 
   delete: async (workspaceId: string, languageCode: LanguageCode) => {
     const workspace = getWorkspaceById(workspaceId);
+
     await deleteLanguageCode(workspace.path, languageCode);
+    await updateWorkspaceLastOpenedAt(workspace);
   },
 };
 

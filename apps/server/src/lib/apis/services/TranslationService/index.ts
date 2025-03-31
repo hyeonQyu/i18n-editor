@@ -7,13 +7,16 @@ import {
   getTranslations,
   writeTranslation,
 } from '../../../utils/translation';
-import { getWorkspaceById } from '../../../utils/workspace';
+import { getWorkspaceById, updateWorkspaceLastOpenedAt } from '../../../utils/workspace';
 
 const translationService = {
   getList: async (workspaceId: string, namespace: string) => {
     const workspace = getWorkspaceById(workspaceId);
     const languageCodes = await getLanguageCodes(workspace.path);
-    return getTranslations(workspace.path, namespace, languageCodes);
+
+    const result = await getTranslations(workspace.path, namespace, languageCodes);
+    await updateWorkspaceLastOpenedAt(workspace);
+    return result;
   },
 
   create: async (workspaceId: string, namespace: string, { index, translation }: { index: number; translation: Translation }) => {
@@ -25,6 +28,7 @@ const translationService = {
 
     translations.splice(index, 0, completeTranslation(languageCodes, translation));
     await writeTranslation(workspace.path, namespace, translations);
+    await updateWorkspaceLastOpenedAt(workspace);
   },
 
   update: async (
@@ -41,6 +45,7 @@ const translationService = {
 
     translations[index].value[languageCode] = value;
     await writeTranslation(workspace.path, namespace, translations);
+    await updateWorkspaceLastOpenedAt(workspace);
   },
 
   delete: async (workspaceId: string, namespace: string, translationKey: TranslationKey) => {
@@ -52,6 +57,7 @@ const translationService = {
 
     translations.splice(index, 1);
     await writeTranslation(workspace.path, namespace, translations);
+    await updateWorkspaceLastOpenedAt(workspace);
   },
 };
 
