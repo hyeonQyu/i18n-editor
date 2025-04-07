@@ -1,15 +1,25 @@
-import ClearIcon from '@mui/icons-material/Clear';
+import ClearSearchKeywordIconButton from '@components/NamespaceView/components/NamespaceToolbar/components/TranslationSearchBar/components/ClearSearchKeywordIconButton';
+import { NAMESPACE_SEARCH_FOCUS_EVENT } from '@components/NamespaceView/defines/events';
+import { useNamespaceViewSearchStore } from '@components/NamespaceView/stores/search';
 import SearchIcon from '@mui/icons-material/Search';
-import { IconButton, TextField } from '@mui/material';
-import { useRef, useState } from 'react';
+import { TextField } from '@mui/material';
+import { ChangeEventHandler, useEffect, useRef } from 'react';
 
 function TranslationSearchBar() {
-  const [searchText, setSearchText] = useState('');
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleClear = () => {
-    setSearchText('');
-    inputRef.current?.focus();
+  const keyword = useNamespaceViewSearchStore((state) => state.keyword);
+  const setKeyword = useNamespaceViewSearchStore((state) => state.setKeyword);
+
+  useEffect(() => {
+    const handleSearchFocus = () => inputRef.current?.focus();
+
+    window.addEventListener(NAMESPACE_SEARCH_FOCUS_EVENT, handleSearchFocus);
+    return () => window.removeEventListener(NAMESPACE_SEARCH_FOCUS_EVENT, handleSearchFocus);
+  }, []);
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setKeyword(e.target.value);
   };
 
   return (
@@ -18,9 +28,9 @@ function TranslationSearchBar() {
       size={'small'}
       variant={'filled'}
       placeholder={'검색'}
-      value={searchText}
+      value={keyword}
       fullWidth
-      onChange={(e) => setSearchText(e.target.value)}
+      onChange={handleChange}
       InputProps={{
         startAdornment: (
           <SearchIcon
@@ -31,20 +41,7 @@ function TranslationSearchBar() {
             }}
           />
         ),
-        endAdornment: searchText && (
-          <IconButton
-            onClick={handleClear}
-            size="small"
-            sx={{
-              color: 'rgba(255, 255, 255, 0.7)',
-              '&:hover': {
-                color: 'white',
-              },
-            }}
-          >
-            <ClearIcon fontSize="small" />
-          </IconButton>
-        ),
+        endAdornment: keyword && <ClearSearchKeywordIconButton />,
         sx: {
           color: 'white',
 
