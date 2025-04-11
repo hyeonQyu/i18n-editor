@@ -1,5 +1,5 @@
 import { LanguageCode } from '../../../language';
-import { Translation } from '../../../translation';
+import { Translation, TranslationKey } from '../../../translation';
 import { NamespaceParams } from './namespace';
 
 export type GetTranslationsParams = NamespaceParams;
@@ -10,8 +10,13 @@ export type GetTranslationsResponse = {
 
 export type PostTranslationParams = NamespaceParams;
 
+export type TranslationPosition = {
+  pivotTranslationKey: TranslationKey;
+  direction: -1 | 1;
+};
+
 export interface PostTranslationRequest {
-  index: number;
+  position?: TranslationPosition;
   translation: Translation;
 }
 

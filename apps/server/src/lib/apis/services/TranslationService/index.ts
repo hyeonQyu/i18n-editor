@@ -1,4 +1,4 @@
-import { LanguageCode, Translation, TranslationKey } from 'i18n-editor-common';
+import { LanguageCode, Translation, TranslationKey, TranslationPosition } from 'i18n-editor-common';
 import { getLanguageCodes } from '../../../utils/language';
 import {
   checkTranslationDuplicated,
@@ -19,14 +19,20 @@ const translationService = {
     return result;
   },
 
-  create: async (workspaceId: string, namespace: string, { index, translation }: { index: number; translation: Translation }) => {
+  create: async (
+    workspaceId: string,
+    namespace: string,
+    { position, translation }: { position?: TranslationPosition; translation: Translation },
+  ) => {
     const workspace = getWorkspaceById(workspaceId);
     const languageCodes = await getLanguageCodes(workspace.path);
     const translations = await getTranslations(workspace.path, namespace, languageCodes);
 
     checkTranslationDuplicated(translations, translation);
 
+    const index = position ? findTranslationIndex(translations, position.pivotTranslationKey) + position.direction : translations.length;
     translations.splice(index, 0, completeTranslation(languageCodes, translation));
+
     await writeTranslation(workspace.path, namespace, translations);
     await updateWorkspaceLastOpenedAt(workspace);
   },
