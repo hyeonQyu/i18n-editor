@@ -4,6 +4,7 @@ import {
   checkTranslationDuplicated,
   completeTranslation,
   findTranslationIndex,
+  getIndexWithDirection,
   getTranslations,
   writeTranslation,
 } from '../../../utils/translation';
@@ -30,7 +31,10 @@ const translationService = {
 
     checkTranslationDuplicated(translations, translation);
 
-    const index = position ? findTranslationIndex(translations, position.pivotTranslationKey) + position.direction : translations.length;
+    const index = position
+      ? getIndexWithDirection(findTranslationIndex(translations, position.pivotTranslationKey), position.direction)
+      : translations.length;
+
     translations.splice(index, 0, completeTranslation(languageCodes, translation));
 
     await writeTranslation(workspace.path, namespace, translations);

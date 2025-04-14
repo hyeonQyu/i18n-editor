@@ -4,6 +4,7 @@ import {
   NamespaceContent,
   Translation,
   TranslationKey,
+  TranslationPositionDirection,
   TranslationValue,
   TranslationValueByLanguageCode,
 } from 'i18n-editor-common';
@@ -145,4 +146,16 @@ export const findTranslationIndex = (translations: readonly Translation[], trans
   const index = translations.findIndex(({ key }) => key === translationKey);
   if (index === -1) throw new NotFoundError('수정하려는 번역이 존재하지 않습니다.');
   return index;
+};
+
+export const getIndexWithDirection = (pivotIndex: number, direction: TranslationPositionDirection) => {
+  return (
+    pivotIndex +
+    (
+      {
+        prev: 0,
+        next: 1,
+      } as Record<TranslationPositionDirection, number>
+    )[direction]
+  );
 };

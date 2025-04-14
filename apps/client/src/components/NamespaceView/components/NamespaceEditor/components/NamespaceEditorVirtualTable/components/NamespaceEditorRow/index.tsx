@@ -1,7 +1,7 @@
 import NamespaceEditorCell from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell';
 import { Cell, RowData } from '@components/NamespaceView/components/NamespaceEditor/defines/table';
 import { useColumns } from '@components/NamespaceView/components/NamespaceEditor/providers/ColumnProvider';
-import RowIndexProvider from '@components/NamespaceView/components/NamespaceEditor/providers/RowIndexProvider';
+import RowProvider from '@components/NamespaceView/components/NamespaceEditor/providers/RowProvider';
 import { createCell } from '@components/NamespaceView/components/NamespaceEditor/utils/cell';
 import useNamespace from '@hooks/namespace/useNamespace';
 
@@ -18,12 +18,12 @@ function NamespaceEditorRow(props: NamespaceEditorRowProps) {
   const namespace = useNamespace();
 
   return (
-    <RowIndexProvider rowIndex={rowIndex}>
+    <RowProvider rowIndex={rowIndex} row={row}>
       {columns.map(({ label }) => {
         const cell: Cell = label === '' || !row[label] ? createCell('') : row[label]!;
         return <NamespaceEditorCell key={`${namespace}-${rowIndex}-${label}-${cell.value}`} label={label} cell={cell} />;
       })}
-    </RowIndexProvider>
+    </RowProvider>
   );
 }
 

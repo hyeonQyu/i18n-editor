@@ -1,4 +1,4 @@
-import { LanguageCode } from 'i18n-editor-common';
+import { LanguageCode, TranslationPosition } from 'i18n-editor-common';
 
 export interface CellError {
   message: string;
@@ -8,6 +8,7 @@ export interface Cell {
   value: string;
   metadata: {
     error?: CellError;
+    position?: TranslationPosition;
   };
 }
 

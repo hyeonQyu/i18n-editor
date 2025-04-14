@@ -1,4 +1,4 @@
-import { useRowIndex } from '@components/NamespaceView/components/NamespaceEditor/providers/RowIndexProvider';
+import { useRowIndex } from '@components/NamespaceView/components/NamespaceEditor/providers/RowProvider';
 import { useSetRows } from '@components/NamespaceView/components/NamespaceEditor/providers/RowsProvider';
 
 function useDeleteVirtualRow() {

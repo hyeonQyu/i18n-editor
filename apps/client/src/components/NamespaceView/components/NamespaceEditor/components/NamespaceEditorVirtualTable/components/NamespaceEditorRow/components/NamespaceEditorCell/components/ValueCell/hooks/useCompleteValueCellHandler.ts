@@ -1,4 +1,4 @@
-import { useRowIndex } from '@components/NamespaceView/components/NamespaceEditor/providers/RowIndexProvider';
+import { useRowIndex } from '@components/NamespaceView/components/NamespaceEditor/providers/RowProvider';
 import { useRows } from '@components/NamespaceView/components/NamespaceEditor/providers/RowsProvider';
 import useNamespace from '@hooks/namespace/useNamespace';
 import useInvalidateGetTranslationsQuery from '@hooks/translation/useInvalidateGetTranslationsQuery';
