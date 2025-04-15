@@ -9,6 +9,7 @@ export interface Cell {
   metadata: {
     error?: CellError;
     position?: TranslationPosition;
+    new?: boolean;
   };
 }
 

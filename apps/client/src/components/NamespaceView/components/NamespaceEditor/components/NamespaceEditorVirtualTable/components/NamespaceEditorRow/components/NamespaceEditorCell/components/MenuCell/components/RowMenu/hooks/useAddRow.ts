@@ -9,7 +9,7 @@ function useAddRow() {
     setRows((prevRows) => {
       const rows = [...prevRows];
       rows.splice(index, 0, {
-        key: createCell('', { position }),
+        key: createCell('', { position, new: true }),
       });
       return rows;
     });
