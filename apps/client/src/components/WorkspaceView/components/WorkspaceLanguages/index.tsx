@@ -14,7 +14,7 @@ function WorkspaceLanguages() {
   return (
     <PaperSection
       titleProps={{
-        children: <AddablePaperSectionTitle title="언어" onClick={handleClickAddLanguages} />,
+        children: <AddablePaperSectionTitle onClick={handleClickAddLanguages}>언어</AddablePaperSectionTitle>,
       }}
       sx={{ padding: '16px' }}
     >
