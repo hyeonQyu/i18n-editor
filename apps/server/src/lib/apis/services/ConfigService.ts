@@ -1,7 +1,7 @@
 import { Config, DEFAULT_CONFIG } from 'i18n-editor-common';
 import { Environment } from '../../defines/env';
-import { getEnvironment } from '../../utils/env';
 import { readFile, writeFile } from '../../utils/file';
+import { getEnvironment } from '../../utils/store';
 
 const projectRoot = process.cwd();
 

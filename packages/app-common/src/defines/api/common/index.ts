@@ -1,15 +1,15 @@
-import { HttpStatusCode } from 'axios';
+import { StatusCodes } from 'http-status-codes';
 
 export type ResponseEntity<T> =
   | {
-      status: HttpStatusCode.Ok;
+      status: StatusCodes.OK;
       errorMessage?: never | undefined;
       data: T;
     }
   | ErrorResponseEntity;
 
 export type ErrorResponseEntity = {
-  status: Exclude<HttpStatusCode, HttpStatusCode.Ok>;
+  status: Exclude<StatusCodes, StatusCodes.OK>;
   errorMessage: string;
   data?: never;
 };
