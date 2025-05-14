@@ -2,11 +2,17 @@ import NamespaceEditor from '@components/NamespaceView/components/NamespaceEdito
 import NamespaceToolbar from '@components/NamespaceView/components/NamespaceToolbar';
 import useSearchFocusKeyboardEventHandler from '@components/NamespaceView/hooks/useSearchFocusKeyboardEventHandler';
 import { useNamespaceViewSearchStore } from '@components/NamespaceView/stores/search';
+import useNamespace from '@hooks/namespace/useNamespace';
 import useKeyboardEventListener from '@hooks/useKeyboardEventListener';
+import useWorkspace from '@hooks/workspace/useWorkspace';
 import { Box } from '@mui/material';
+import Head from 'next/head';
 import { useEffect } from 'react';
 
 function NamespaceView() {
+  const workspace = useWorkspace();
+  const namespace = useNamespace();
+
   const handleSearchFocus = useSearchFocusKeyboardEventHandler();
   useKeyboardEventListener(handleSearchFocus);
 
@@ -19,19 +25,27 @@ function NamespaceView() {
   }, [reset]);
 
   return (
-    <Box
-      style={{ height: '100%' }}
-      sx={{
-        position: 'relative',
+    <>
+      <Head>
+        <title>
+          {workspace?.name} / {namespace}
+        </title>
+      </Head>
 
-        '& > div': {
-          borderRadius: 0,
-        },
-      }}
-    >
-      <NamespaceToolbar />
-      <NamespaceEditor />
-    </Box>
+      <Box
+        style={{ height: '100%' }}
+        sx={{
+          position: 'relative',
+
+          '& > div': {
+            borderRadius: 0,
+          },
+        }}
+      >
+        <NamespaceToolbar />
+        <NamespaceEditor />
+      </Box>
+    </>
   );
 }
 

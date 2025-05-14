@@ -1,7 +1,7 @@
+import WorkspaceSelectButton from '@components/StartView/components/WorkspaceSelectButton';
 import GTranslateIcon from '@mui/icons-material/GTranslate';
 import { Box, Paper, Typography, useTheme } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import WorkspaceSelectButton from 'components/StartView/components/WorkspaceSelectButton';
 
 function StartView() {
   const {

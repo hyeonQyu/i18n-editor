@@ -18,8 +18,8 @@ function Toolbar(props: ToolbarProps) {
         ...sx,
       }}
     >
-      {buttons.map((button) => (
-        <ToolbarButton key={button.label} {...button} />
+      {buttons.map((button, i) => (
+        <ToolbarButton key={i} {...button} />
       ))}
     </MuiToolbar>
   );

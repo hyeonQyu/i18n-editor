@@ -1,8 +1,7 @@
-import { useRouter } from 'next/router';
+import { useGlobalStore } from '@stores/global';
 
 function useWorkspaceId() {
-  const router = useRouter();
-  return router.query.workspace as string;
+  return useGlobalStore((state) => state.workspaceId);
 }
 
 export default useWorkspaceId;

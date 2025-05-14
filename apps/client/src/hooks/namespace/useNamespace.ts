@@ -1,8 +1,7 @@
-import { useRouter } from 'next/router';
+import { useGlobalStore } from '@stores/global';
 
 function useNamespace() {
-  const router = useRouter();
-  return router.query.namespace as string;
+  return useGlobalStore((state) => state.namespace);
 }
 
 export default useNamespace;

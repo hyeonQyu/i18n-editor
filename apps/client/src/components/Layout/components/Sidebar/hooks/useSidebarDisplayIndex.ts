@@ -1,11 +1,14 @@
-import { useRouter } from 'next/router';
+import useNamespace from '@hooks/namespace/useNamespace';
+import useWorkspaceId from '@hooks/workspace/useWorkspaceId';
 
 function useSidebarDisplayIndex() {
-  const router = useRouter();
+  const workspaceId = useWorkspaceId();
+  const namespace = useNamespace();
 
-  if (router.pathname === '/[workspace]') return 0;
-
-  if (router.pathname === '/[workspace]/[namespace]') return 1;
+  if (workspaceId) {
+    if (namespace) return 1;
+    return 0;
+  }
 
   return -1;
 }
