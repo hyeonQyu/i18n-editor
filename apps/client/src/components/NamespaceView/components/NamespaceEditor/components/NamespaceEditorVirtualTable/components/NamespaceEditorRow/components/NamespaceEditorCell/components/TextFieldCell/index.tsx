@@ -49,11 +49,26 @@ function TextFieldCell(props: TextFieldCellProps) {
     await onComplete?.(value);
   };
 
+  const addLineBreak = (textarea: HTMLTextAreaElement) => {
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+
+    textarea.value = textarea.value.substring(0, start) + '\n' + textarea.value.substring(end);
+    textarea.selectionStart = textarea.selectionEnd = start + 1;
+    setValue(textarea.value);
+  };
+
   const handleKeyDown: KeyboardEventHandler = (e) => {
     if (e.key === 'Enter') {
       if (e.shiftKey) return;
 
       e.preventDefault();
+
+      if (e.altKey) {
+        addLineBreak(e.target as HTMLTextAreaElement);
+        return;
+      }
+
       focusNextTextFieldCell(e.currentTarget);
     }
   };
