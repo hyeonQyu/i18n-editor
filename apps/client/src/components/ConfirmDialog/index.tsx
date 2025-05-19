@@ -1,5 +1,5 @@
 import { Button, ButtonOwnProps, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { FormEventHandler, ReactNode } from 'react';
+import { FormEventHandler, ReactNode, useRef, useState } from 'react';
 import { create } from 'zustand';
 
 export interface ConfirmDialogAction {
@@ -31,7 +31,15 @@ export const useConfirmDialogStore = create<ConfirmDialogState>((set) => ({
 }));
 
 function ConfirmDialog() {
-  const { opened, title, content, cancelAction, confirmAction, close, resolve } = useConfirmDialogStore();
+  const { opened, title, content, cancelAction, confirmAction, close: onClose, resolve } = useConfirmDialogStore();
+  const confirmButtonRef = useRef<HTMLButtonElement>(null);
+
+  const [focusInitialized, setFocusInitialized] = useState(false);
+
+  const close = () => {
+    setFocusInitialized(false);
+    onClose();
+  };
 
   const handleCancel = async () => {
     await cancelAction.onClick?.();
@@ -47,8 +55,15 @@ function ConfirmDialog() {
     close();
   };
 
+  const handleFocus = () => {
+    if (focusInitialized) return true;
+
+    confirmButtonRef.current?.focus();
+    setFocusInitialized(true);
+  };
+
   return (
-    <Dialog open={opened} onClose={handleCancel} PaperProps={{ component: 'form', onSubmit: handleConfirm }}>
+    <Dialog open={opened} onClose={handleCancel} PaperProps={{ component: 'form', onSubmit: handleConfirm }} onFocus={handleFocus}>
       <DialogTitle>{title}</DialogTitle>
 
       <DialogContent sx={{ whiteSpace: 'pre-line' }}>
@@ -59,7 +74,7 @@ function ConfirmDialog() {
         <Button onClick={handleCancel} variant={'text'} color={cancelAction.color}>
           {cancelAction.label}
         </Button>
-        <Button variant="contained" type="submit" color={confirmAction.color}>
+        <Button variant="contained" type="submit" color={confirmAction.color} ref={confirmButtonRef}>
           {confirmAction.label}
         </Button>
       </DialogActions>
