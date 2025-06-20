@@ -1,0 +1,1 @@
+export const IME_ACTIVATION_KEYCODE = 229;

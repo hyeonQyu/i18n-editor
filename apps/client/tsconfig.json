@@ -14,7 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
       "@components/*": ["./components/*"],
       "@defines/*": ["./defines/*"],
@@ -25,6 +25,7 @@
       "@icons/*": ["./icons/*"],
       "@utils/*": ["./utils/*"],
       "@contexts/*": ["./contexts/*"],
+      "@providers/*": ["./providers/*"],
       "@public/*": ["../public/*"]
     }
   },

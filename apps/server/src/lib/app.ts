@@ -1,12 +1,11 @@
+import { TIME_UNIT } from 'i18n-editor-common';
 import { AppOption } from './defines/appOption';
-import { UiExecutor } from './utils/uiExecutor';
-import { Controller } from './apis/controller';
-import { ConfigUtil } from './utils/configUtil';
+import { startCheckMemoryInterval } from './utils/memory';
+import { startResponse } from './utils/response';
+import { createServer } from './utils/server';
+import { setEnvironment } from './utils/store';
+import { openUI } from './utils/ui';
 
-const express = require('express');
-const server = express();
-const cors = require('cors');
-const bodyParser = require('body-parser');
 const { program } = require('commander');
 
 module.exports = {
@@ -17,25 +16,21 @@ module.exports = {
       .action(() => {
         const options: AppOption = program.opts();
         const { port = defaultOption.port, env = defaultOption.env } = options;
-        const limit = '1000mb';
 
-        server.use(cors());
-        server.use(bodyParser.json({ limit }));
-        server.use(
-          bodyParser.urlencoded({
-            extended: true,
-            limit,
-          }),
-        );
+        setEnvironment(env);
 
-        server.listen(port, () => {
+        const server = createServer();
+
+        server.listen(port, async () => {
           console.log(`i18n editor started with port ${port}`);
-          ConfigUtil.init(env);
-          Controller.response(server);
+
+          await startResponse(server);
         });
 
         if (env === 'production') {
-          UiExecutor.runHtmlUi(port);
+          openUI(port);
+        } else {
+          startCheckMemoryInterval(TIME_UNIT.unitOfMs.asSecond * 30);
         }
       })
       .parse(process.argv);

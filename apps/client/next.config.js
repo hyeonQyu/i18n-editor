@@ -1,19 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
-  images: {
-    loader: 'akamai',
-    path: '/',
+  reactStrictMode: true,
+  assetPrefix: process.env.NODE_ENV === 'production' ? '.' : '',
+  experimental: {
+    modularizeImports: {
+      lodash: {
+        transform: 'lodash/{{member}}',
+      },
+    },
   },
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack'],
-    });
-
-    return config;
-  },
-  assetPrefix: '.',
 };
 
 module.exports = nextConfig;

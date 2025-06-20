@@ -1,6 +1,6 @@
 {
   "name": "i18n-editor",
-  "version": "1.1.3",
+  "version": "2.1.1",
   "private": true,
   "workspaces": {
     "packages": [
@@ -9,24 +9,26 @@
     ]
   },
   "scripts": {
-    "dev:client": "yarn --cwd apps/client run dev",
-    "dev:server": "yarn --cwd apps/server run dev",
-    "watch:common": "yarn --cwd packages/app-common run watch",
-    "build:common": "yarn --cwd packages/app-common run build",
-    "build:client": "yarn --cwd apps/client run build",
-    "build:server": "yarn --cwd apps/server run build",
-    "build": "yarn build:common && yarn build:client && yarn build:server && node setupPackage.js",
-    "publish:dist": "yarn --cwd dist publish",
+    "client": "yarn workspace i18n-editor-client",
+    "server": "yarn workspace i18n-editor-server",
+    "common": "yarn workspace i18n-editor-common",
+    "build": "yarn common build && yarn client build && yarn server build && node setupPackage.js",
+    "publish:dist": "yarn --cwd dist npm publish",
     "build-publish": "yarn build && yarn publish:dist"
   },
   "dependencies": {
-    "axios": "^0.27.2",
-    "i18n-editor-common": "0.1.0"
+    "axios": "^1.7.7",
+    "http-status-codes": "^2.3.0",
+    "i18n-editor-common": "0.1.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.13",
     "@types/node": "^18.11.17",
+    "cross-env": "^7.0.3",
     "path": "^0.12.7",
     "prettier": "^2.8.1",
+    "prettier-plugin-organize-imports": "^3.2.4",
     "typescript": "^4.9.4"
   },
   "repository": {
@@ -50,5 +52,6 @@
   "bugs": {
     "url": "https://github.com/hyeonQyu/i18n-editor/issues"
   },
-  "homepage": "https://github.com/hyeonQyu/i18n-editor"
+  "homepage": "https://github.com/hyeonQyu/i18n-editor",
+  "packageManager": "yarn@3.4.1"
 }

@@ -1,33 +1,47 @@
-import '../styles/globals.css';
-import '../styles/animations.css';
-import '../styles/reset.css';
+import ConfirmDialog from '@components/ConfirmDialog';
+import FileManagerDialog from '@components/FileManagerDialog';
+import GlobalScrollbarStyle from '@components/GlobalScrollbarStyle';
+import LanguageCodesDialog from '@components/LanguageCodesDialog';
+import Layout from '@components/Layout';
+import NamespaceAddDialog from '@components/NamespaceAddDialog';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import ReactQueryClientProvider from '@providers/ReactQueryClientProvider';
+import ThemeProvider from '@providers/ThemeProvider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { AppProps } from 'next/app';
-import { RecoilRoot } from 'recoil';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { Toast } from 'primereact/toast';
-import { ToastContext } from '@contexts/toastContext';
-import { ConfirmDialog } from 'primereact/confirmdialog';
-import { Portal } from '@components/portal';
-import useApp from '@hooks/pages/useApp';
-import 'primeicons/primeicons.css';
-import 'primereact/resources/primereact.min.css';
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import { SnackbarProvider } from 'notistack';
+import APIProvider from 'providers/APIProvider';
+import '../styles/animations.css';
+import '../styles/globals.css';
+import '../styles/reset.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const { queryClient, toastRef } = useApp();
-
   return (
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <Portal.Provider>
-          <ToastContext.Provider value={{ toastRef }}>
-            <Component {...pageProps} />
-            <Toast ref={toastRef} />
-            <ConfirmDialog />
-          </ToastContext.Provider>
-        </Portal.Provider>
-      </QueryClientProvider>
-    </RecoilRoot>
+    <>
+      <ThemeProvider>
+        <GlobalScrollbarStyle />
+
+        <SnackbarProvider>
+          <APIProvider>
+            <ReactQueryClientProvider>
+              <Layout>
+                <Component {...pageProps} />
+
+                <ConfirmDialog />
+
+                <FileManagerDialog />
+                <NamespaceAddDialog />
+                <LanguageCodesDialog />
+              </Layout>
+              <ReactQueryDevtools />
+            </ReactQueryClientProvider>
+          </APIProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </>
   );
 }
 

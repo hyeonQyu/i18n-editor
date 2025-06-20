@@ -1,0 +1,143 @@
+import useTextFieldCellInputRef from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/TextFieldCell/hooks/useTextFieldCellInputRef';
+import { focusNextTextFieldCell } from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/components/TextFieldCell/utils/focus';
+import {
+  CELL_MIN_HEIGHT,
+  CELL_PADDING,
+} from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/defines/styles';
+import useClearCellError from '@components/NamespaceView/components/NamespaceEditor/components/NamespaceEditorVirtualTable/components/NamespaceEditorRow/components/NamespaceEditorCell/hooks/useClearCellError';
+import { Cell } from '@components/NamespaceView/components/NamespaceEditor/defines/table';
+import { IME_ACTIVATION_KEYCODE } from '@defines/keyboard';
+import { TextField, TextFieldProps, useTheme } from '@mui/material';
+import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';
+
+interface TextFieldCellProps extends Omit<TextFieldProps, 'value' | 'onChange' | 'maxRows'> {
+  isKeyCell?: boolean;
+  cell: Cell;
+  onComplete?: (value: string) => void | Promise<void>;
+}
+
+function TextFieldCell(props: TextFieldCellProps) {
+  const {
+    isKeyCell,
+    cell: { value: defaultValue, metadata },
+    onComplete,
+    fullWidth = true,
+    multiline = true,
+    disabled,
+    ...textFieldProps
+  } = props;
+
+  const {
+    palette: { error },
+  } = useTheme();
+
+  const clearCellError = useClearCellError();
+
+  const errorMessage = metadata.error?.message;
+  const hasError = Boolean(errorMessage);
+
+  const [value, setValue] = useState(defaultValue);
+
+  const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    setValue(e.target.value);
+
+    if (hasError) {
+      clearCellError();
+    }
+  };
+
+  const handleBlur = async () => {
+    await onComplete?.(value);
+  };
+
+  const addLineBreak = (textarea: HTMLTextAreaElement) => {
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+
+    textarea.value = textarea.value.substring(0, start) + '\n' + textarea.value.substring(end);
+    textarea.selectionStart = textarea.selectionEnd = start + 1;
+    setValue(textarea.value);
+  };
+
+  const handleKeyDown: KeyboardEventHandler = (e) => {
+    if (e.key === 'Enter') {
+      if (e.shiftKey) return;
+
+      if (e.keyCode === IME_ACTIVATION_KEYCODE) return;
+
+      e.preventDefault();
+
+      if (e.altKey) {
+        addLineBreak(e.target as HTMLTextAreaElement);
+        return;
+      }
+
+      focusNextTextFieldCell(e.currentTarget);
+    }
+  };
+
+  const cursor = disabled ? 'default' : 'pointer';
+
+  const inputRef = useTextFieldCellInputRef(Boolean(isKeyCell && metadata.new));
+
+  return (
+    <TextField
+      inputRef={inputRef}
+      value={value}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      onKeyDown={handleKeyDown}
+      fullWidth={fullWidth}
+      multiline={multiline}
+      maxRows={8}
+      disabled={disabled}
+      error={hasError}
+      helperText={errorMessage}
+      InputProps={{
+        sx: {
+          padding: `${CELL_PADDING}px`,
+          cursor,
+          borderRadius: 0,
+          transition: 'all 0.1s ease-in-out',
+          '&.Mui-focused': {
+            cursor: 'text',
+            borderRadius: 1,
+          },
+          '& .MuiInputBase-input': {
+            cursor,
+          },
+          '&.Mui-focused .MuiInputBase-input': {
+            cursor: 'text',
+          },
+          '&:hover:not(.Mui-focused):not(.Mui-disabled)': {
+            backgroundColor: (theme) => theme.palette.action.hover,
+          },
+        },
+      }}
+      sx={{
+        width: '100%',
+
+        '& .MuiInputBase-root': {
+          minHeight: `${CELL_MIN_HEIGHT}px`,
+        },
+
+        '& .MuiFormHelperText-root': {
+          position: 'absolute',
+          right: 0,
+          bottom: 0,
+        },
+
+        '& .MuiOutlinedInput-notchedOutline': {
+          border: hasError ? '1px solid' : 'none',
+        },
+
+        '& .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+          border: `1px solid ${hasError ? error.main : ''}`,
+        },
+      }}
+      {...textFieldProps}
+    />
+  );
+}
+
+export default TextFieldCell;
