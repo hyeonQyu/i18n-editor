@@ -1,1 +1,0 @@
-export const SIDEBAR_TRANSITION_DURATION = 0.3;
