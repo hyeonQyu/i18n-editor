@@ -1,6 +1,8 @@
 {
   "name": "i18n-editor",
   "version": "3.0.0",
+  "main": "dist-electron/electron/main.js",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/hyeonQyu/i18n-editor"
@@ -24,8 +26,32 @@
   },
   "homepage": "https://github.com/hyeonQyu/i18n-editor",
   "packageManager": "yarn@4.9.2",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:electron": "tsc -p tsconfig.node.json",
+    "preview": "vite preview",
+    "type": "tsc --noEmit",
+    "electron": "yarn build:electron && electron .",
+    "electron:dev": "yarn build:electron && NODE_ENV=development electron .",
+    "app:dev": "concurrently \"yarn dev\" \"wait-on http://localhost:3000 && yarn electron:dev\""
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
   "devDependencies": {
+    "@types/electron": "^1.6.12",
+    "@types/node": "^22.10.9",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "concurrently": "^9.1.2",
+    "electron": "^36.5.0",
     "prettier": "^3.5.3",
-    "prettier-plugin-organize-imports": "^4.1.0"
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.3.5",
+    "wait-on": "^8.0.3"
   }
 }
