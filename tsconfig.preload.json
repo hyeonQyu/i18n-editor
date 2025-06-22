@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
@@ -12,6 +12,6 @@
     "rootDir": ".",
     "types": ["node", "electron"]
   },
-  "include": ["electron/**/*", "vite.config.ts"],
-  "exclude": ["node_modules", "dist", "src", "electron/preload.ts"]
+  "include": ["electron/preload.ts"],
+  "exclude": ["node_modules", "dist", "src"]
 }

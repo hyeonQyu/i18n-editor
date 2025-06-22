@@ -22,9 +22,8 @@ function createWindow(): void {
   const isDev = process.env.NODE_ENV === 'development';
   if (isDev) {
     mainWindow.loadURL('http://localhost:3000');
-    mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.loadFile(join(__dirname, '../../dist/index.html'));
+    mainWindow.loadFile(join(__dirname, '../../../dist/renderer/index.html'));
   }
 
   mainWindow.on('closed', () => {
