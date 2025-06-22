@@ -6,3 +6,8 @@ dist
 i18n-editor-config.json
 .yarn/install-state.gz
 .DS_Store
+
+# Platform-specific native binaries
+.yarn/cache/@esbuild-*
+.yarn/cache/@rollup-rollup-*
+.yarn/cache/@swc-*
