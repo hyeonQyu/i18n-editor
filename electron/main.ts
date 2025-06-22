@@ -1,7 +1,8 @@
-import { app, BrowserWindow, dialog, ipcMain, IpcMainInvokeEvent } from 'electron';
+import { app, BrowserWindow, dialog, globalShortcut, ipcMain, IpcMainInvokeEvent } from 'electron';
 import { readFile, writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import { toggleDevTools } from './utils/devtools';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -22,6 +23,7 @@ function createWindow(): void {
   const isDev = process.env.NODE_ENV === 'development';
   if (isDev) {
     mainWindow.loadURL('http://localhost:3000');
+    mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadFile(join(__dirname, '../../../dist/renderer/index.html'));
   }
@@ -95,6 +97,16 @@ function setupIpcHandlers(): void {
 app.whenReady().then(() => {
   createWindow();
   setupIpcHandlers();
+
+  if (process.env.NODE_ENV === 'development') {
+    globalShortcut.register('F12', () => {
+      toggleDevTools();
+    });
+
+    globalShortcut.register('CommandOrControl+Shift+I', () => {
+      toggleDevTools();
+    });
+  }
 });
 
 app.on('window-all-closed', () => {
@@ -107,4 +119,8 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
 });
