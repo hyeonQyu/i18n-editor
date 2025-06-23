@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc -p tsconfig.main.json && tsc -p tsconfig.preload.json && node ../../scripts/fix-esm-imports.js ./dist",
-    "dev": "yarn build && NODE_ENV=development electron .",
+    "dev": "concurrently \"tsc -p tsconfig.main.json --watch\" \"tsc -p tsconfig.preload.json --watch\" \"nodemon --watch dist --exec 'node ../../scripts/fix-esm-imports.js ./dist && NODE_ENV=development electron .'\"",
     "type-check": "tsc -p tsconfig.main.json --noEmit && tsc -p tsconfig.preload.json --noEmit"
   },
   "dependencies": {
