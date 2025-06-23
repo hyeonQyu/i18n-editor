@@ -1,6 +1,17 @@
-node_modules
-dist
-release
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+release/
+
+# Environment files
+.env
+.env.local
+
+# Symlinks (platform-specific)
+electron/shared
+
 .idea
 .vscode
 .i18ne
