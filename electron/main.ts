@@ -9,7 +9,7 @@ const __dirname = dirname(__filename);
 
 let mainWindow: BrowserWindow | null = null;
 
-function createWindow(): void {
+const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
@@ -31,9 +31,9 @@ function createWindow(): void {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-}
+};
 
-function setupIpcHandlers(): void {
+const setupIpcHandlers = () => {
   ipcMain.handle('dialog:openFile', async (): Promise<Electron.OpenDialogReturnValue> => {
     if (!mainWindow) throw new Error('Main window not available');
 
@@ -92,7 +92,7 @@ function setupIpcHandlers(): void {
       }
     },
   );
-}
+};
 
 app.whenReady().then(() => {
   createWindow();

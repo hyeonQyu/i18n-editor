@@ -1,21 +1,68 @@
 import { contextBridge, ipcRenderer } from 'electron';
+import { findObjectPath } from '../shared/utils/object.utils';
 
-// Electron API 타입 정의
-export interface ElectronAPI {
-  openFile: () => Promise<Electron.OpenDialogReturnValue>;
-  saveFile: (data: any) => Promise<{ success: boolean; filePath?: string }>;
-  getVersion: () => Promise<string>;
-  readFile: (filePath: string) => Promise<{ success: boolean; data?: string; error?: string }>;
-  writeFile: (filePath: string, data: string) => Promise<{ success: boolean; error?: string }>;
+type Leaf = NonNullable<unknown>;
+
+interface ElectronAPIMetadata {
+  config: {
+    readUI: Leaf;
+    updateUI: Leaf;
+  };
+
+  app: {
+    getVersion: Leaf;
+  };
 }
 
-// 렌더러 프로세스에서 사용할 API를 안전하게 노출
-const electronAPI: ElectronAPI = {
+const metadata: ElectronAPIMetadata = {
+  config: {
+    readUI: {},
+    updateUI: {},
+  },
+
+  app: {
+    getVersion: {},
+  },
+};
+
+// export interface ElectronAPI {
+//   config: {
+//     readUI: () => Promise<{}>;
+//     updateUI: (data: {}) => Promise<{}>;
+//   };
+
+//   openFile: () => Promise<Electron.OpenDialogReturnValue>;
+//   saveFile: (data: any) => Promise<{ success: boolean; filePath?: string }>;
+//   getVersion: () => Promise<string>;
+//   readFile: (filePath: string) => Promise<{ success: boolean; data?: string; error?: string }>;
+//   writeFile: (filePath: string, data: string) => Promise<{ success: boolean; error?: string }>;
+// }
+
+const getAPI =
+  <TResponse, TRequest = void>(api: Leaf): ((data: TRequest) => Promise<TResponse>) =>
+  (data?: TRequest) => {
+    const path = findObjectPath(metadata, api, ':');
+    if (!path) throw new Error('API not found');
+    return ipcRenderer.invoke(path, data);
+  };
+
+const electronAPI = {
+  config: {
+    readUI: getAPI<{}>(metadata.config.readUI),
+    updateUI: getAPI<{}>(metadata.config.updateUI),
+  },
+
   openFile: () => ipcRenderer.invoke('dialog:openFile'),
   saveFile: (data: any) => ipcRenderer.invoke('dialog:saveFile', data),
-  getVersion: () => ipcRenderer.invoke('app:getVersion'),
+  app: {
+    getVersion: getAPI<string>(metadata.app.getVersion),
+  },
   readFile: (filePath: string) => ipcRenderer.invoke('fs:readFile', filePath),
   writeFile: (filePath: string, data: string) => ipcRenderer.invoke('fs:writeFile', filePath, data),
-};
+} as const;
+
+console.log('electronAPI!!!!!!!!!!!!!!!!', electronAPI);
+
+export type ElectronAPI = typeof electronAPI;
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI);
