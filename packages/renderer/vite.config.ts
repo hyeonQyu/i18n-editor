@@ -9,12 +9,11 @@ export default defineConfig({
     port: 3000,
   },
   build: {
-    outDir: 'dist/renderer',
+    outDir: 'dist',
   },
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
-      '@shared': resolve(__dirname, './shared'),
     },
   },
 });

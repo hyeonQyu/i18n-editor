@@ -23,12 +23,11 @@
     /* Path mapping */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@shared/*": ["shared/*"]
+      "@/*": ["src/*"]
     },
 
     /* Types */
     "types": ["node"]
   },
-  "include": ["src", "shared"]
+  "include": ["src"]
 }

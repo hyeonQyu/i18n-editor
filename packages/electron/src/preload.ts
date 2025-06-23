@@ -1,5 +1,5 @@
+import { findObjectPath } from '@i18n-editor/shared/utils/object.utils';
 import { contextBridge, ipcRenderer } from 'electron';
-import { findObjectPath } from '../shared/utils/object.utils';
 
 type Leaf = NonNullable<unknown>;
 

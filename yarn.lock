@@ -560,6 +560,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@i18n-editor/electron@workspace:packages/electron":
+  version: 0.0.0-use.local
+  resolution: "@i18n-editor/electron@workspace:packages/electron"
+  dependencies:
+    "@i18n-editor/shared": "workspace:*"
+    "@types/electron": "npm:^1.6.12"
+    "@types/node": "npm:^22.10.9"
+    electron: "npm:^36.5.0"
+  languageName: unknown
+  linkType: soft
+
+"@i18n-editor/renderer@workspace:packages/renderer":
+  version: 0.0.0-use.local
+  resolution: "@i18n-editor/renderer@workspace:packages/renderer"
+  dependencies:
+    "@i18n-editor/shared": "workspace:*"
+    "@types/react": "npm:^19.1.8"
+    "@types/react-dom": "npm:^19.1.6"
+    "@vitejs/plugin-react": "npm:^4.5.2"
+    react: "npm:^19.1.0"
+    react-dom: "npm:^19.1.0"
+    vite: "npm:^6.3.5"
+  languageName: unknown
+  linkType: soft
+
+"@i18n-editor/shared@workspace:*, @i18n-editor/shared@workspace:packages/shared":
+  version: 0.0.0-use.local
+  resolution: "@i18n-editor/shared@workspace:packages/shared"
+  languageName: unknown
+  linkType: soft
+
 "@isaacs/balanced-match@npm:^4.0.1":
   version: 4.0.1
   resolution: "@isaacs/balanced-match@npm:4.0.1"
@@ -2657,21 +2688,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "i18n-editor@workspace:."
   dependencies:
-    "@types/electron": "npm:^1.6.12"
-    "@types/node": "npm:^22.10.9"
-    "@types/react": "npm:^19.1.8"
-    "@types/react-dom": "npm:^19.1.6"
-    "@vitejs/plugin-react": "npm:^4.5.2"
     concurrently: "npm:^9.1.2"
     electron: "npm:^36.5.0"
     electron-builder: "npm:^26.0.12"
     glob: "npm:^11.0.3"
     prettier: "npm:^3.5.3"
     prettier-plugin-organize-imports: "npm:^4.1.0"
-    react: "npm:^19.1.0"
-    react-dom: "npm:^19.1.0"
     typescript: "npm:^5.8.3"
-    vite: "npm:^6.3.5"
     wait-on: "npm:^8.0.3"
   languageName: unknown
   linkType: soft
