@@ -1,3 +1,4 @@
+import { LANGUAGE_CODES } from '@i18n-editor/shared';
 import { app, BrowserWindow, dialog, globalShortcut, ipcMain, IpcMainInvokeEvent } from 'electron';
 import { readFile, writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
@@ -8,6 +9,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 let mainWindow: BrowserWindow | null = null;
+
+console.log(LANGUAGE_CODES);
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({

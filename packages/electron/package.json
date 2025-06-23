@@ -2,10 +2,10 @@
   "name": "@i18n-editor/electron",
   "version": "3.0.0",
   "type": "module",
-  "main": "dist/main.js",
+  "main": "../../dist/electron/main.js",
   "scripts": {
-    "build": "tsc -p tsconfig.main.json && tsc -p tsconfig.preload.json && node ../../scripts/fix-esm-imports.js ./dist",
-    "dev": "concurrently \"tsc -p tsconfig.main.json --watch\" \"tsc -p tsconfig.preload.json --watch\" \"nodemon --watch dist --exec 'node ../../scripts/fix-esm-imports.js ./dist && NODE_ENV=development electron .'\"",
+    "build": "tsc -p tsconfig.main.json && tsc -p tsconfig.preload.json && node ../../scripts/fix-esm-imports.js ../../dist/electron",
+    "dev": "concurrently \"tsc -p tsconfig.main.json --watch\" \"tsc -p tsconfig.preload.json --watch\" \"nodemon --watch ../../dist/electron --exec 'node ../../scripts/fix-esm-imports.js ../../dist/electron && cd ../.. && NODE_ENV=development electron dist/electron'\"",
     "type-check": "tsc -p tsconfig.main.json --noEmit && tsc -p tsconfig.preload.json --noEmit"
   },
   "dependencies": {

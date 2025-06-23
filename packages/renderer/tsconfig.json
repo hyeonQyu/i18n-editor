@@ -23,7 +23,8 @@
     /* Path mapping */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@i18n-editor/shared": ["../shared/src/index.ts"]
     },
 
     /* Types */

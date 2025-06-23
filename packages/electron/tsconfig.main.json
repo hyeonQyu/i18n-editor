@@ -8,9 +8,13 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
+    "outDir": "../../dist/electron",
     "rootDir": "./src",
-    "types": ["node", "electron"]
+    "types": ["node", "electron"],
+    "baseUrl": "./src",
+    "paths": {
+      "@i18n-editor/shared": ["../../../dist/shared/index.d.ts"]
+    }
   },
   "include": ["src/main.ts", "src/utils/**/*"],
   "exclude": ["node_modules", "dist", "src/preload.ts"]

@@ -1,9 +1,11 @@
+import { LANGUAGE_CODES } from '@i18n-editor/shared';
 import React from 'react';
 import './App.css';
 import IPCTestComponent from './components/IPCTestComponent';
 import './types/electron.d.ts';
 
 function App(): React.JSX.Element {
+  console.log(LANGUAGE_CODES);
   return (
     <div className="App">
       <header className="App-header">
