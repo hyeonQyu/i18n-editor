@@ -589,7 +589,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@i18n-editor/shared@workspace:packages/shared"
   dependencies:
-    concurrently: "npm:^9.1.2"
     nodemon: "npm:^3.1.10"
   languageName: unknown
   linkType: soft

@@ -31,40 +31,37 @@ if (files.length === 0) {
 
 console.log(`🔧 Fixing ESM imports in ${targetDir}...`);
 
-// 경로 변환 함수
-function convertPath(importPath, currentFileDir) {
-  // 이미 .js나 .json으로 끝나면 그대로 반환
+const convertPath = (importPath, currentFileDir) => {
+  if (importPath === '@i18n-editor/shared') {
+    return '../shared/index.js';
+  }
+
   if (importPath.endsWith('.js') || importPath.endsWith('.json')) {
     return importPath;
   }
 
-  // 절대 경로나 node_modules 패키지는 그대로 반환
   if (!importPath.startsWith('./') && !importPath.startsWith('../')) {
     return importPath;
   }
 
-  // 상대 경로 처리 (./ 또는 ../)
   const fullPath = resolve(currentFileDir, importPath);
 
-  // 디렉토리인지 확인 (index.js 존재)
   if (existsSync(fullPath + '/index.js')) {
     return importPath + '/index.js';
   }
 
-  // 파일인지 확인 (.js 파일 존재)
   if (existsSync(fullPath + '.js')) {
     return importPath + '.js';
   }
 
-  // 둘 다 없으면 .js 추가 (기본값)
   return importPath + '.js';
-}
+};
 
-// import/export 문 정규식과 변환
+// Regular expressions for import/export statements and conversion
 const patterns = [
   // import ... from '...'
   /import\s+([^'"`]+)\s+from\s+['"`]([^'"`]+)['"`]/g,
-  // from '...' (단독)
+  // from '...' (standalone)
   /from\s+['"`]([^'"`]+)['"`]/g,
   // export ... from '...'
   /export\s+([^'"`]*?)\s+from\s+['"`]([^'"`]+)['"`]/g,
@@ -79,7 +76,7 @@ files.forEach((file) => {
 
   patterns.forEach((pattern) => {
     content = content.replace(pattern, (match, ...groups) => {
-      const pathIndex = groups.length === 2 ? 1 : 0; // 경로가 있는 그룹 인덱스
+      const pathIndex = groups.length === 2 ? 1 : 0;
       const importPath = groups[pathIndex];
       const newPath = convertPath(importPath, fileDir);
 

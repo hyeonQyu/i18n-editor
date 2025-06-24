@@ -16,7 +16,6 @@
     "clean": "rm -rf ../../dist/shared"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2",
     "nodemon": "^3.1.10"
   }
 }
