@@ -1,16 +1,22 @@
 {
   "name": "@i18n-editor/shared",
   "version": "3.0.0",
+  "private": true,
   "type": "module",
   "main": "../../dist/shared/index.js",
   "types": "../../dist/shared/index.d.ts",
   "exports": {
-    ".": "../../dist/shared/index.js",
-    "./*": "../../dist/shared/*"
+    ".": "./../../dist/shared/index.js",
+    "./*": "./../../dist/shared/*"
   },
   "scripts": {
-    "build": "tsc && node ../../scripts/fix-esm-imports.js ../../dist/shared",
-    "dev": "tsc --watch",
+    "build": "yarn clean && tsc -p . && yarn fix-imports",
+    "dev": "concurrently \"tsc -p . --watch\" \"nodemon --watch ../../dist/shared --ext js --exec 'yarn fix-imports'\"",
+    "fix-imports": "node ../../scripts/fix-esm-imports.js ../../dist/shared",
     "clean": "rm -rf ../../dist/shared"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.10"
   }
 }

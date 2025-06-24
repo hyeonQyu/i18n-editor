@@ -1,33 +1,34 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { glob } from 'glob';
-import { dirname, join, relative } from 'path';
+import { dirname, relative, resolve } from 'path';
 
-const arg = process.argv[2];
-let targetDir, packageName;
+const targetDir = process.argv[2];
 
-// 패키지 이름인지 경로인지 판단
-if (arg && (arg.startsWith('./') || arg.startsWith('packages/') || arg === 'dist')) {
-  // 기존 방식: 직접 경로 지정
-  targetDir = arg;
-  packageName = null;
-} else {
-  // 새로운 방식: 패키지 이름 지정
-  packageName = arg;
-  targetDir = packageName ? `packages/${packageName}/dist` : 'dist';
+if (!targetDir) {
+  console.log('❌ Usage: node fix-esm-imports.js <target-directory>');
+  process.exit(1);
 }
 
-if (!existsSync(targetDir)) {
-  console.log(`⚠️  Target directory ${targetDir} does not exist, creating it...`);
+const resolvedTargetDir = resolve(targetDir);
+
+if (!existsSync(resolvedTargetDir)) {
+  console.log(`⚠️  Target directory ${resolvedTargetDir} does not exist, creating it...`);
   try {
-    mkdirSync(targetDir, { recursive: true });
-    console.log(`✅ Created directory: ${targetDir}`);
+    mkdirSync(resolvedTargetDir, { recursive: true });
+    console.log(`✅ Created directory: ${resolvedTargetDir}`);
   } catch (error) {
-    console.log(`❌ Failed to create directory ${targetDir}:`, error.message);
+    console.log(`❌ Failed to create directory ${resolvedTargetDir}:`, error.message);
     process.exit(1);
   }
 }
 
-const files = glob.sync(`${targetDir}/**/*.js`);
+const files = glob.sync(`${resolvedTargetDir}/**/*.js`);
+
+if (files.length === 0) {
+  console.log(`⚠️  No .js files found in ${targetDir}`);
+  process.exit(0);
+}
+
 console.log(`🔧 Fixing ESM imports in ${targetDir}...`);
 
 // 경로 변환 함수
@@ -37,43 +38,26 @@ function convertPath(importPath, currentFileDir) {
     return importPath;
   }
 
-  // 상대 경로 처리 (./ 또는 ../)
-  if (importPath.startsWith('./') || importPath.startsWith('../')) {
-    const fullPath = join(currentFileDir, importPath);
+  // 절대 경로나 node_modules 패키지는 그대로 반환
+  if (!importPath.startsWith('./') && !importPath.startsWith('../')) {
+    return importPath;
+  }
 
-    // 디렉토리인지 확인 (index.js 존재)
-    if (existsSync(fullPath + '/index.js')) {
-      return importPath + '/index.js';
-    }
-    // 파일인지 확인 (.js 파일 존재)
-    if (existsSync(fullPath + '.js')) {
-      return importPath + '.js';
-    }
-    // 둘 다 없으면 .js 추가 (기본값)
+  // 상대 경로 처리 (./ 또는 ../)
+  const fullPath = resolve(currentFileDir, importPath);
+
+  // 디렉토리인지 확인 (index.js 존재)
+  if (existsSync(fullPath + '/index.js')) {
+    return importPath + '/index.js';
+  }
+
+  // 파일인지 확인 (.js 파일 존재)
+  if (existsSync(fullPath + '.js')) {
     return importPath + '.js';
   }
 
-  // 워크스페이스 패키지 경로 처리 (@i18n-editor/shared/...)
-  if (importPath.startsWith('@i18n-editor/shared')) {
-    const subPath = importPath.replace('@i18n-editor/shared', '').replace(/^\//, '');
-
-    if (!subPath) {
-      // @i18n-editor/shared 자체
-      return '../shared/index.js';
-    }
-
-    // 서브패스가 있는 경우
-    const sharedPath = join(currentFileDir, '../shared', subPath);
-    if (existsSync(sharedPath + '/index.js')) {
-      return `../shared/${subPath}/index.js`;
-    }
-    if (existsSync(sharedPath + '.js')) {
-      return `../shared/${subPath}.js`;
-    }
-    return `../shared/${subPath}/index.js`; // 기본값
-  }
-
-  return importPath;
+  // 둘 다 없으면 .js 추가 (기본값)
+  return importPath + '.js';
 }
 
 // import/export 문 정규식과 변환
@@ -85,6 +69,8 @@ const patterns = [
   // export ... from '...'
   /export\s+([^'"`]*?)\s+from\s+['"`]([^'"`]+)['"`]/g,
 ];
+
+let fixedCount = 0;
 
 files.forEach((file) => {
   let content = readFileSync(file, 'utf8');
@@ -107,8 +93,9 @@ files.forEach((file) => {
 
   if (modified) {
     writeFileSync(file, content);
+    fixedCount++;
     console.log(`  ✅ Fixed: ${relative(process.cwd(), file)}`);
   }
 });
 
-console.log(`🎉 ESM import fixing completed for ${packageName || targetDir}!`);
+console.log(`🎉 ESM import fixing completed! Fixed ${fixedCount} files in ${targetDir}`);

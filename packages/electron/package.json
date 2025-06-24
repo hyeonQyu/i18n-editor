@@ -2,6 +2,7 @@
   "name": "@i18n-editor/electron",
   "version": "3.0.0",
   "type": "module",
+  "private": true,
   "main": "../../dist/electron/main.js",
   "scripts": {
     "build": "tsc -p tsconfig.main.json && tsc -p tsconfig.preload.json && node ../../scripts/fix-esm-imports.js ../../dist/electron",
