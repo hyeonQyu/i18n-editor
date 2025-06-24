@@ -1,6 +1,5 @@
-import type { ElectronAPI } from '../../electron/preload';
+import { ElectronAPI } from '@i18n-editor/shared';
 
-// Electron API 타입 정의
 declare global {
   interface Window {
     electronAPI?: ElectronAPI;

@@ -51,7 +51,7 @@ const createWindow = () => {
 };
 
 const setupIpcHandlers = () => {
-  ipcMain.handle('dialog:openFile', async (): Promise<Electron.OpenDialogReturnValue> => {
+  ipcMain.handle('openFile', async (): Promise<Electron.OpenDialogReturnValue> => {
     if (!mainWindow) throw new Error('Main window not available');
 
     const result = await dialog.showOpenDialog(mainWindow, {
@@ -64,7 +64,7 @@ const setupIpcHandlers = () => {
     return result;
   });
 
-  ipcMain.handle('dialog:saveFile', async (event: IpcMainInvokeEvent, data: any): Promise<{ success: boolean; filePath?: string }> => {
+  ipcMain.handle('saveFile', async (event: IpcMainInvokeEvent, data: any): Promise<{ success: boolean; filePath?: string }> => {
     if (!mainWindow) throw new Error('Main window not available');
 
     const result = await dialog.showSaveDialog(mainWindow, {
@@ -82,12 +82,12 @@ const setupIpcHandlers = () => {
     return { success: false };
   });
 
-  ipcMain.handle('app:getVersion', (): string => {
+  ipcMain.handle('getVersion', (): string => {
     return app.getVersion();
   });
 
   ipcMain.handle(
-    'fs:readFile',
+    'readFile',
     async (event: IpcMainInvokeEvent, filePath: string): Promise<{ success: boolean; data?: string; error?: string }> => {
       try {
         const data = await readFile(filePath, 'utf-8');
@@ -99,7 +99,7 @@ const setupIpcHandlers = () => {
   );
 
   ipcMain.handle(
-    'fs:writeFile',
+    'writeFile',
     async (event: IpcMainInvokeEvent, filePath: string, data: string): Promise<{ success: boolean; error?: string }> => {
       try {
         await writeFile(filePath, data, 'utf-8');

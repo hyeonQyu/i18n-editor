@@ -16,7 +16,7 @@ const IPCTestComponent: React.FC<IPCTestComponentProps> = () => {
 
     try {
       setIsLoading(true);
-      const appVersion = await window.electronAPI.app.getVersion();
+      const appVersion = await window.electronAPI.getVersion();
       setVersion(appVersion);
       setTestResult('✅ 앱 버전 가져오기 성공!');
     } catch (error) {
