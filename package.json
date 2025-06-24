@@ -35,7 +35,6 @@
   "scripts": {
     "list": "echo '{}' || yarn info --all --json",
     "copy-build": "node scripts/copy-dist-for-package.js",
-    "copy-dev": "node scripts/copy-dist-dev.js",
     "dev:shared": "yarn workspace @i18n-editor/shared dev",
     "dev:renderer": "yarn workspace @i18n-editor/renderer dev",
     "dev:electron": "yarn workspace @i18n-editor/electron dev",
