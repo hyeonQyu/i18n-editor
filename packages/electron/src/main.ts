@@ -10,6 +10,19 @@ const __dirname = dirname(__filename);
 
 let mainWindow: BrowserWindow | null = null;
 
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+  app.quit();
+} else {
+  app.on('second-instance', () => {
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+    }
+  });
+}
+
 console.log(LANGUAGE_CODES);
 
 const createWindow = () => {
@@ -19,6 +32,7 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      sandbox: false,
       preload: join(__dirname, 'preload.js'),
     },
   });
