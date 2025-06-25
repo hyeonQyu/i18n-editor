@@ -1,10 +1,3 @@
-export interface KeyValuePair<K, V> {
-  key: K;
-  value: V;
-}
-
-export type OS = 'win' | 'linux' | 'macos';
-
 export type TimeUnitType = 'Ms' | 'Second' | 'Minute' | 'Hour' | 'Day';
 
 export const TIME_UNIT: Record<`unitOf${TimeUnitType}`, Record<`as${TimeUnitType}`, number>> = {

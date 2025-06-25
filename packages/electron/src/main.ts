@@ -4,6 +4,7 @@ import { readFile, writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { toggleDevTools } from './utils/devtools';
+import { addIPCRequestHandler } from './utils/ipc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -51,6 +52,10 @@ const createWindow = () => {
 };
 
 const setupIpcHandlers = () => {
+  addIPCRequestHandler<object, number>('config.readUI', async (e) => {
+    return {};
+  });
+
   ipcMain.handle('openFile', async (): Promise<Electron.OpenDialogReturnValue> => {
     if (!mainWindow) throw new Error('Main window not available');
 

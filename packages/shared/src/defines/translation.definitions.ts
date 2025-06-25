@@ -1,5 +1,5 @@
 import { LanguageCode } from './language.definitions';
-import { KeyValuePair } from './utils.definitions';
+import { KeyValuePair } from './utils.types';
 
 export type TranslationKey = string;
 export type TranslationValue = string;

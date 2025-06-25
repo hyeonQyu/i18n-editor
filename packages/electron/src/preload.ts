@@ -1,7 +1,7 @@
-import { ElectronAPI, ElectronAPIPath, ElectronIndividualAPI } from '@i18n-editor/shared';
+import { APICall, ElectronAPI, ElectronAPIPath } from '@i18n-editor/shared';
 import { contextBridge, ipcRenderer } from 'electron';
 
-const getAPIWithPath = <TResponse, TRequest = void>(path: ElectronAPIPath): ElectronIndividualAPI<TResponse, TRequest> => {
+const getAPIWithPath = <TResponse, TRequest = void>(path: ElectronAPIPath): APICall<TResponse, TRequest> => {
   return (data: TRequest) => ipcRenderer.invoke(path, data);
 };
 
