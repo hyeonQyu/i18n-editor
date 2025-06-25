@@ -7,8 +7,10 @@ const getAPIWithPath = <TResponse, TRequest = void>(path: ElectronAPIPath): APIC
 
 const electronAPI: ElectronAPI = {
   config: {
-    readUI: getAPIWithPath<{}>('config.readUI'),
-    updateUI: getAPIWithPath<{}>('config.updateUI'),
+    ui: {
+      read: getAPIWithPath<{}>('config:ui:read'),
+      update: getAPIWithPath<{}>('config:ui:update'),
+    },
   },
 
   saveFile: getAPIWithPath<{ success: boolean; filePath?: string }, string>('saveFile'),

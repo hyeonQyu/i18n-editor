@@ -1,13 +1,15 @@
-import { ObjectPaths } from './path.types';
+import { ObjectPathsWithSeparator } from './path.types';
 
 export type APICall<TResponse, TRequest = void> = (data: TRequest) => Promise<TResponse>;
 
-export type ElectronAPIPath = ObjectPaths<ElectronAPI>;
+export type ElectronAPIPath = ObjectPathsWithSeparator<ElectronAPI, ':'>;
 
 export interface ElectronAPI {
   config: {
-    readUI: APICall<{}>;
-    updateUI: APICall<{}>;
+    ui: {
+      read: APICall<{}>;
+      update: APICall<{}>;
+    };
   };
 
   saveFile: APICall<{ success: boolean; filePath?: string }, string>;

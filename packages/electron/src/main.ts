@@ -52,7 +52,7 @@ const createWindow = () => {
 };
 
 const setupIpcHandlers = () => {
-  addIPCRequestHandler<object, number>('config.readUI', async (e) => {
+  addIPCRequestHandler<object, number>('config:ui:read', async (e) => {
     return {};
   });
 
