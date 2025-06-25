@@ -12,12 +12,6 @@ const electronAPI: ElectronAPI = {
       update: getAPIWithPath<UIUpdateResponse, UIUpdateRequest>('config:ui:update'),
     },
   },
-
-  saveFile: getAPIWithPath<{ success: boolean; filePath?: string }, string>('saveFile'),
-  openFile: getAPIWithPath<Electron.OpenDialogReturnValue>('openFile'),
-  getVersion: getAPIWithPath<string>('getVersion'),
-  readFile: getAPIWithPath<{ success: boolean; data?: string; error?: string }, string>('readFile'),
-  writeFile: getAPIWithPath<{ success: boolean; error?: string }, { filePath: string; data: string }>('writeFile'),
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI);

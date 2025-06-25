@@ -1,6 +1,5 @@
 import { LANGUAGE_CODES } from '@i18n-editor/shared';
-import { app, BrowserWindow, dialog, globalShortcut, ipcMain, IpcMainInvokeEvent } from 'electron';
-import { readFile, writeFile } from 'fs/promises';
+import { app, BrowserWindow, globalShortcut } from 'electron';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { configCache } from './caches/config.cache';
@@ -56,65 +55,6 @@ const createWindow = () => {
 const setupIpcHandlers = () => {
   addIPCRequestHandler('config:ui:read', readConfigUI);
   addIPCRequestHandler('config:ui:update', updateConfigUI);
-
-  ipcMain.handle('openFile', async (): Promise<Electron.OpenDialogReturnValue> => {
-    if (!mainWindow) throw new Error('Main window not available');
-
-    const result = await dialog.showOpenDialog(mainWindow, {
-      properties: ['openFile'],
-      filters: [
-        { name: 'JSON Files', extensions: ['json'] },
-        { name: 'All Files', extensions: ['*'] },
-      ],
-    });
-    return result;
-  });
-
-  ipcMain.handle('saveFile', async (event: IpcMainInvokeEvent, data: any): Promise<{ success: boolean; filePath?: string }> => {
-    if (!mainWindow) throw new Error('Main window not available');
-
-    const result = await dialog.showSaveDialog(mainWindow, {
-      filters: [
-        { name: 'JSON Files', extensions: ['json'] },
-        { name: 'All Files', extensions: ['*'] },
-      ],
-    });
-
-    if (!result.canceled && result.filePath) {
-      await writeFile(result.filePath, JSON.stringify(data, null, 2));
-      return { success: true, filePath: result.filePath };
-    }
-
-    return { success: false };
-  });
-
-  ipcMain.handle('getVersion', (): string => {
-    return app.getVersion();
-  });
-
-  ipcMain.handle(
-    'readFile',
-    async (event: IpcMainInvokeEvent, filePath: string): Promise<{ success: boolean; data?: string; error?: string }> => {
-      try {
-        const data = await readFile(filePath, 'utf-8');
-        return { success: true, data };
-      } catch (error) {
-        return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
-      }
-    },
-  );
-
-  ipcMain.handle(
-    'writeFile',
-    async (event: IpcMainInvokeEvent, filePath: string, data: string): Promise<{ success: boolean; error?: string }> => {
-      try {
-        await writeFile(filePath, data, 'utf-8');
-        return { success: true };
-      } catch (error) {
-        return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
-      }
-    },
-  );
 };
 
 app.whenReady().then(async () => {
