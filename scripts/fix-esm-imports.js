@@ -33,7 +33,9 @@ console.log(`🔧 Fixing ESM imports in ${targetDir}...`);
 
 const convertPath = (importPath, currentFileDir) => {
   if (importPath === '@i18n-editor/shared') {
-    return '../shared/index.js';
+    // 현재 파일이 dist/electron 내의 어느 깊이에 있든 상위로 올라가서 shared 찾기
+    const relativePath = relative(currentFileDir, resolve(resolvedTargetDir, '../shared'));
+    return relativePath + '/index.js';
   }
 
   if (importPath.endsWith('.js') || importPath.endsWith('.json')) {

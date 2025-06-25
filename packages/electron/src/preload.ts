@@ -1,4 +1,4 @@
-import { APICall, ElectronAPI, ElectronAPIPath } from '@i18n-editor/shared';
+import { APICall, ElectronAPI, ElectronAPIPath, UIReadResponse, UIUpdateRequest, UIUpdateResponse } from '@i18n-editor/shared';
 import { contextBridge, ipcRenderer } from 'electron';
 
 const getAPIWithPath = <TResponse, TRequest = void>(path: ElectronAPIPath): APICall<TResponse, TRequest> => {
@@ -8,8 +8,8 @@ const getAPIWithPath = <TResponse, TRequest = void>(path: ElectronAPIPath): APIC
 const electronAPI: ElectronAPI = {
   config: {
     ui: {
-      read: getAPIWithPath<{}>('config:ui:read'),
-      update: getAPIWithPath<{}>('config:ui:update'),
+      read: getAPIWithPath<UIReadResponse>('config:ui:read'),
+      update: getAPIWithPath<UIUpdateResponse, UIUpdateRequest>('config:ui:update'),
     },
   },
 

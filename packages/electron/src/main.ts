@@ -3,8 +3,10 @@ import { app, BrowserWindow, dialog, globalShortcut, ipcMain, IpcMainInvokeEvent
 import { readFile, writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-import { toggleDevTools } from './utils/devtools';
-import { addIPCRequestHandler } from './utils/ipc';
+import { configCache } from './caches/config.cache';
+import { readConfigUI, updateConfigUI } from './handlers/config.ui.handlers';
+import { toggleDevTools } from './utils/devtools.utils';
+import { addIPCRequestHandler } from './utils/ipc.utils';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -52,9 +54,8 @@ const createWindow = () => {
 };
 
 const setupIpcHandlers = () => {
-  addIPCRequestHandler<object, number>('config:ui:read', async (e) => {
-    return {};
-  });
+  addIPCRequestHandler('config:ui:read', readConfigUI);
+  addIPCRequestHandler('config:ui:update', updateConfigUI);
 
   ipcMain.handle('openFile', async (): Promise<Electron.OpenDialogReturnValue> => {
     if (!mainWindow) throw new Error('Main window not available');
@@ -116,8 +117,9 @@ const setupIpcHandlers = () => {
   );
 };
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   createWindow();
+  await configCache.init();
   setupIpcHandlers();
 
   if (process.env.NODE_ENV === 'development') {
