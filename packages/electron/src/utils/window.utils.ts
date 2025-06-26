@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { getEnvironment } from './env.utils';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = dirname(dirname(__filename));
 
 let mainWindow: BrowserWindow | null = null;
 
