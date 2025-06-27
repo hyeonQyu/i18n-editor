@@ -85,3 +85,5 @@ export const LANGUAGE_NAME_BY_CODE: Record<LanguageCode, string> = {
   'zh-chs': '중국어(간체)',
   'zh-cht': '중국어(번체)',
 };
+
+export const DEFAULT_LANGUAGE: LanguageCode = 'en';

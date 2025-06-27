@@ -1,144 +1,320 @@
 .ipc-test-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
 }
 
 .ipc-test-header {
   text-align: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 30px;
 }
 
 .ipc-test-header h2 {
-  color: #2c3e50;
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+  color: #333;
+  margin-bottom: 10px;
 }
 
 .ipc-test-header p {
-  color: #6c757d;
-  font-size: 1.1rem;
-  margin: 0;
+  color: #666;
+  font-size: 14px;
 }
 
 .api-status {
-  margin-bottom: 2rem;
-  padding: 1rem;
+  background: #f5f5f5;
+  padding: 15px;
   border-radius: 8px;
-  background: #f8f9fa;
+  margin-bottom: 20px;
 }
 
 .api-status h3 {
-  margin-bottom: 1rem;
-  color: #495057;
+  margin: 0 0 10px 0;
+  color: #333;
 }
 
 .status-success {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 5px;
+}
+
+.status-success span {
   color: #28a745;
   font-weight: 500;
 }
 
-.status-error {
+.status-error span {
   color: #dc3545;
   font-weight: 500;
 }
 
 .version-info {
-  font-size: 0.9rem;
   color: #6c757d !important;
+  font-size: 12px;
+  font-weight: normal !important;
 }
 
 .test-controls {
-  margin-bottom: 2rem;
+  margin-bottom: 20px;
 }
 
 .test-controls h3 {
-  margin-bottom: 1rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.test-section {
+  margin-bottom: 25px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.test-section h4 {
+  margin: 0 0 15px 0;
   color: #495057;
+  font-size: 16px;
 }
 
 .test-buttons {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .test-btn {
-  padding: 1rem;
+  padding: 8px 16px;
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 120px;
 }
 
 .test-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-  transform: none !important;
-}
-
-.test-btn:not(:disabled):hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.test-btn.primary {
-  background: linear-gradient(135deg, #007bff, #0056b3);
-  color: white;
-}
-
-.test-btn.secondary {
-  background: linear-gradient(135deg, #28a745, #1e7e34);
-  color: white;
-}
-
-.test-btn.tertiary {
-  background: linear-gradient(135deg, #ffc107, #e0a800);
-  color: #212529;
-}
-
-.test-btn.clear {
-  background: linear-gradient(135deg, #6c757d, #5a6268);
-  color: white;
 }
 
 .test-btn.config-read {
-  background: linear-gradient(135deg, #17a2b8, #138496);
+  background: #007bff;
   color: white;
 }
 
+.test-btn.config-read:hover:not(:disabled) {
+  background: #0056b3;
+}
+
 .test-btn.config-update {
-  background: linear-gradient(135deg, #6f42c1, #5a34a1);
+  background: #28a745;
   color: white;
+}
+
+.test-btn.config-update:hover:not(:disabled) {
+  background: #1e7e34;
+}
+
+.test-btn.filesystem-init {
+  background: #17a2b8;
+  color: white;
+}
+
+.test-btn.filesystem-init:hover:not(:disabled) {
+  background: #117a8b;
+}
+
+.test-btn.filesystem-dir {
+  background: #fd7e14;
+  color: white;
+}
+
+.test-btn.filesystem-dir:hover:not(:disabled) {
+  background: #e55100;
+}
+
+.test-btn.filesystem-open {
+  background: #6f42c1;
+  color: white;
+}
+
+.test-btn.filesystem-open:hover:not(:disabled) {
+  background: #5a32a3;
+}
+
+/* Workspace 관련 버튼 스타일 */
+.test-btn.workspace-list {
+  background: #20c997;
+  color: white;
+}
+
+.test-btn.workspace-list:hover:not(:disabled) {
+  background: #1a9e7e;
+}
+
+.test-btn.workspace-create {
+  background: #198754;
+  color: white;
+}
+
+.test-btn.workspace-create:hover:not(:disabled) {
+  background: #146c43;
+}
+
+.test-btn.workspace-update {
+  background: #0d6efd;
+  color: white;
+}
+
+.test-btn.workspace-update:hover:not(:disabled) {
+  background: #0a58ca;
+}
+
+.test-btn.workspace-delete {
+  background: #dc3545;
+  color: white;
+}
+
+.test-btn.workspace-delete:hover:not(:disabled) {
+  background: #b02a37;
+}
+
+/* Language 관련 버튼 스타일 */
+.test-btn.language-list {
+  background: #6610f2;
+  color: white;
+}
+
+.test-btn.language-list:hover:not(:disabled) {
+  background: #520dc2;
+}
+
+.test-btn.language-create {
+  background: #6f42c1;
+  color: white;
+}
+
+.test-btn.language-create:hover:not(:disabled) {
+  background: #59359a;
+}
+
+/* Namespace 관련 버튼 스타일 */
+.test-btn.namespace-list {
+  background: #d63384;
+  color: white;
+}
+
+.test-btn.namespace-list:hover:not(:disabled) {
+  background: #b02a5b;
+}
+
+.test-btn.namespace-create {
+  background: #e91e63;
+  color: white;
+}
+
+.test-btn.namespace-create:hover:not(:disabled) {
+  background: #c2185b;
+}
+
+/* Translation 관련 버튼 스타일 */
+.test-btn.translation-list {
+  background: #795548;
+  color: white;
+}
+
+.test-btn.translation-list:hover:not(:disabled) {
+  background: #5d4037;
+}
+
+.test-btn.dynamic-read {
+  background: #e91e63;
+  color: white;
+}
+
+.test-btn.dynamic-read:hover:not(:disabled) {
+  background: #c2185b;
+}
+
+.test-btn.dynamic-update {
+  background: #9c27b0;
+  color: white;
+}
+
+.test-btn.dynamic-update:hover:not(:disabled) {
+  background: #7b1fa2;
+}
+
+.test-btn.clear {
+  background: #6c757d;
+  color: white;
+}
+
+.test-btn.clear:hover:not(:disabled) {
+  background: #545b62;
+}
+
+.test-btn.debug {
+  background: #ffc107;
+  color: #212529;
+}
+
+.test-btn.debug:hover:not(:disabled) {
+  background: #e0a800;
+}
+
+.dynamic-controls,
+.workspace-controls {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.dynamic-controls label,
+.workspace-controls label {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #495057;
+}
+
+.dynamic-controls input,
+.workspace-controls select {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.dynamic-controls input {
+  width: 100px;
+}
+
+.dynamic-controls input:focus,
+.workspace-controls select:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 .loading-indicator {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
-  background: #e3f2fd;
+  gap: 10px;
+  padding: 20px;
+  background: #f8f9fa;
   border-radius: 8px;
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
 }
 
 .spinner {
-  width: 24px;
-  height: 24px;
-  border: 3px solid #e3f2fd;
-  border-top: 3px solid #2196f3;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e9ecef;
+  border-top: 2px solid #007bff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -154,31 +330,33 @@
 
 .test-results {
   background: #f8f9fa;
+  border: 1px solid #e9ecef;
   border-radius: 8px;
-  padding: 1.5rem;
-  border-left: 4px solid #28a745;
+  padding: 20px;
 }
 
 .test-results h3 {
-  margin-bottom: 1rem;
-  color: #495057;
+  margin: 0 0 15px 0;
+  color: #333;
 }
 
 .result-content {
-  background: white;
-  padding: 1rem;
-  border-radius: 6px;
+  background: #ffffff;
   border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 15px;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .result-content pre {
   margin: 0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  line-height: 1.4;
   white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', monospace;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: #212529;
+  word-break: break-word;
+  color: #333;
 }
 
 /* 반응형 디자인 */

@@ -3,14 +3,14 @@ import { Dirent } from 'fs';
 import { IPCHandler } from '../defines/handler.definitions';
 import { readDirectory } from '../utils/file.utils';
 
-const getFileEntryType = (item: Dirent): FileEntryType => {
+const handleGetFileEntryType = (item: Dirent): FileEntryType => {
   if (item.isDirectory()) return 'directory';
   if (item.isFile()) return 'file';
   return 'unknown';
 };
 
-const direntToFileEntry = (item: Dirent): FileEntry => {
-  const type = getFileEntryType(item);
+const handleDirentToFileEntry = (item: Dirent): FileEntry => {
+  const type = handleGetFileEntryType(item);
   return {
     name: item.name,
     type,
@@ -42,7 +42,7 @@ export const readFileSystemDirectory: IPCHandler<DirectoryReadResponse, Director
       withFileTypes: true,
     })
   )
-    .map(direntToFileEntry)
+    .map(handleDirentToFileEntry)
     .sort(compareFileEntry);
 
   return {

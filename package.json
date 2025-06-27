@@ -55,6 +55,10 @@
     "package": "yarn build && electron-builder",
     "package:dev": "yarn build && electron-builder --dir"
   },
+  "dependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "lodash-es": "^4.17.21"
+  },
   "devDependencies": {
     "concurrently": "^9.1.2",
     "electron": "^36.5.0",

@@ -1,0 +1,70 @@
+import { LanguageDeleteRequest, LanguageDeleteResponse } from '@i18n-editor/shared';
+
+import {
+  LanguageCreateMultipleRequest,
+  LanguageCreateMultipleResponse,
+  LanguageGetAllRequest,
+  LanguageGetAllResponse,
+} from '@i18n-editor/shared';
+import { IPCHandler } from '../defines/handler.definitions';
+import { deleteFile } from '../utils/file.utils';
+import { getAllLanguageCodes } from '../utils/langauge.utils';
+import { getAllNamespaces } from '../utils/namespace.utils';
+import { completeTranslation, getAllTranslations, writeTranslation } from '../utils/translation.utils';
+import { getWorkspaceById, updateWorkspace } from '../utils/workspace.utils';
+
+export const handleGetAllLanguages: IPCHandler<LanguageGetAllResponse, LanguageGetAllRequest> = async (_, { workspaceId }) => {
+  const workspace = getWorkspaceById(workspaceId);
+
+  if (!workspace) {
+    throw new Error('Workspace not found');
+  }
+
+  const languageCodes = await getAllLanguageCodes(workspace);
+
+  if (languageCodes.length === 0) {
+    throw new Error('Invalid workspace');
+  }
+
+  return {
+    languageCodes,
+  };
+};
+
+export const handleCreateMultipleLanguages: IPCHandler<LanguageCreateMultipleResponse, LanguageCreateMultipleRequest> = async (
+  _,
+  { workspaceId, languageCodes },
+) => {
+  const workspace = getWorkspaceById(workspaceId);
+
+  if (!workspace) {
+    throw new Error('Workspace not found');
+  }
+
+  const existingLanguageCodes = await getAllLanguageCodes(workspace);
+  const namespaces = await getAllNamespaces(workspace.path, languageCodes);
+  const mergedLanguageCodes = [...new Set([...existingLanguageCodes, ...languageCodes])];
+
+  await Promise.all(
+    namespaces.map(async (namespace) => {
+      const prevTranslations = await getAllTranslations(workspace.path, namespace, mergedLanguageCodes);
+      const translations = prevTranslations.map((translation) => completeTranslation(languageCodes, translation));
+      await writeTranslation(workspace, namespace, translations);
+    }),
+  );
+
+  await updateWorkspace(workspace);
+};
+
+export const handleDeleteLanguage: IPCHandler<LanguageDeleteResponse, LanguageDeleteRequest> = async (_, { workspaceId, languageCode }) => {
+  const workspace = getWorkspaceById(workspaceId);
+
+  if (!workspace) {
+    throw new Error('Workspace not found');
+  }
+
+  const languagePath = `${workspace.path}/${languageCode}`;
+  await deleteFile(languagePath);
+
+  await updateWorkspace(workspace);
+};

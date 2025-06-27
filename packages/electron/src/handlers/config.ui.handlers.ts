@@ -2,10 +2,10 @@ import { UIReadResponse, UIUpdateRequest, UIUpdateResponse } from '@i18n-editor/
 import { configCache } from '../caches/config.cache';
 import { IPCHandler } from '../defines/handler.definitions';
 
-export const readConfigUI: IPCHandler<UIReadResponse> = async () => {
+export const handleReadConfigUI: IPCHandler<UIReadResponse> = async () => {
   return configCache.getConfig().ui;
 };
 
-export const updateConfigUI: IPCHandler<UIUpdateResponse, UIUpdateRequest> = async (_, request) => {
+export const handleUpdateConfigUI: IPCHandler<UIUpdateResponse, UIUpdateRequest> = async (_, request) => {
   await configCache.updatePartialUI(request);
 };

@@ -3,12 +3,32 @@ import './IPCTestComponent.css';
 
 interface IPCTestComponentProps {}
 
+// 동적 API 타입 정의
+declare global {
+  interface Window {
+    dynamicAPI?: {
+      invoke: <TResponse, TRequest = void>(
+        pathTemplate: string,
+        pathParams: Record<string, string | number>,
+        data?: TRequest,
+      ) => Promise<TResponse>;
+    };
+  }
+}
+
 const IPCTestComponent: React.FC<IPCTestComponentProps> = () => {
   const [testResult, setTestResult] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [sidebarOpened, setSidebarOpened] = useState<boolean | null>(null);
   const [currentPath, setCurrentPath] = useState<string>('');
   const [directoryFiles, setDirectoryFiles] = useState<string[]>([]);
+
+  // Workspace 테스트용 state
+  const [workspaces, setWorkspaces] = useState<any[]>([]);
+  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string>('');
+  const [languages, setLanguages] = useState<string[]>([]);
+  const [namespaces, setNamespaces] = useState<string[]>([]);
+  const [translations, setTranslations] = useState<any[]>([]);
 
   const testUIConfigRead = async () => {
     if (!window.electronAPI) {
@@ -122,11 +142,213 @@ const IPCTestComponent: React.FC<IPCTestComponentProps> = () => {
     }
   };
 
+  // Workspace API 테스트 함수들
+  const testWorkspaceGetAll = async () => {
+    if (!window.electronAPI) {
+      setTestResult('❌ Electron API를 사용할 수 없습니다');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await window.electronAPI.workspace.getAll();
+      setWorkspaces(response.workspaces);
+      setTestResult(
+        `✅ 워크스페이스 목록 조회 성공!\n개수: ${response.workspaces.length}개\n\n워크스페이스:\n${response.workspaces.map((w) => `- ${w.name} (${w.path})`).join('\n')}`,
+      );
+    } catch (error) {
+      setTestResult(`❌ 워크스페이스 목록 조회 오류: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const testWorkspaceCreate = async () => {
+    if (!window.electronAPI) {
+      setTestResult('❌ Electron API를 사용할 수 없습니다');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await window.electronAPI.workspace.create({
+        name: `테스트 워크스페이스 ${Date.now()}`,
+        path: currentPath || '/tmp/test-workspace',
+      });
+      setTestResult(`✅ 워크스페이스 생성 성공!\nID: ${response.id}`);
+      // 생성 후 목록 새로고침
+      setTimeout(() => testWorkspaceGetAll(), 1000);
+    } catch (error) {
+      setTestResult(`❌ 워크스페이스 생성 오류: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const testWorkspaceUpdate = async () => {
+    if (!window.electronAPI || !selectedWorkspaceId) {
+      setTestResult('❌ Electron API를 사용할 수 없거나 워크스페이스가 선택되지 않았습니다');
+      return;
+    }
+
+    const selectedWorkspace = workspaces.find((w) => w.id === selectedWorkspaceId);
+    if (!selectedWorkspace) {
+      setTestResult('❌ 선택된 워크스페이스를 찾을 수 없습니다');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await window.electronAPI.workspace.update({
+        ...selectedWorkspace,
+        name: `${selectedWorkspace.name} (수정됨)`,
+      });
+      setTestResult(`✅ 워크스페이스 업데이트 성공!\nID: ${selectedWorkspaceId}`);
+      // 업데이트 후 목록 새로고침
+      setTimeout(() => testWorkspaceGetAll(), 1000);
+    } catch (error) {
+      setTestResult(`❌ 워크스페이스 업데이트 오류: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const testWorkspaceDelete = async () => {
+    if (!window.electronAPI || !selectedWorkspaceId) {
+      setTestResult('❌ Electron API를 사용할 수 없거나 워크스페이스가 선택되지 않았습니다');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await window.electronAPI.workspace.delete({ id: selectedWorkspaceId });
+      setTestResult(`✅ 워크스페이스 삭제 성공!\nID: ${selectedWorkspaceId}`);
+      setSelectedWorkspaceId('');
+      // 삭제 후 목록 새로고침
+      setTimeout(() => testWorkspaceGetAll(), 1000);
+    } catch (error) {
+      setTestResult(`❌ 워크스페이스 삭제 오류: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const testLanguageGetAll = async () => {
+    if (!window.electronAPI || !selectedWorkspaceId) {
+      setTestResult('❌ Electron API를 사용할 수 없거나 워크스페이스가 선택되지 않았습니다');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await window.electronAPI.workspace.language.getAll({ workspaceId: selectedWorkspaceId });
+      setLanguages(response.languageCodes);
+      setTestResult(`✅ 언어 목록 조회 성공!\n개수: ${response.languageCodes.length}개\n\n언어:\n${response.languageCodes.join(', ')}`);
+    } catch (error) {
+      setTestResult(`❌ 언어 목록 조회 오류: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const testLanguageCreateMultiple = async () => {
+    if (!window.electronAPI || !selectedWorkspaceId) {
+      setTestResult('❌ Electron API를 사용할 수 없거나 워크스페이스가 선택되지 않았습니다');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await window.electronAPI.workspace.language.createMultiple({
+        workspaceId: selectedWorkspaceId,
+        languageCodes: ['ko', 'en', 'ja'],
+      });
+      setTestResult(`✅ 언어 생성 성공!\n생성된 언어: ko, en, ja`);
+      // 생성 후 목록 새로고침
+      setTimeout(() => testLanguageGetAll(), 1000);
+    } catch (error) {
+      setTestResult(`❌ 언어 생성 오류: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const testNamespaceGetAll = async () => {
+    if (!window.electronAPI || !selectedWorkspaceId) {
+      setTestResult('❌ Electron API를 사용할 수 없거나 워크스페이스가 선택되지 않았습니다');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await window.electronAPI.workspace.namespace.getAll({ workspaceId: selectedWorkspaceId });
+      setNamespaces(response.namespaces);
+      setTestResult(
+        `✅ 네임스페이스 목록 조회 성공!\n개수: ${response.namespaces.length}개\n\n네임스페이스:\n${response.namespaces.join(', ')}`,
+      );
+    } catch (error) {
+      setTestResult(`❌ 네임스페이스 목록 조회 오류: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const testNamespaceCreate = async () => {
+    if (!window.electronAPI || !selectedWorkspaceId) {
+      setTestResult('❌ Electron API를 사용할 수 없거나 워크스페이스가 선택되지 않았습니다');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const namespaceName = `test-namespace-${Date.now()}`;
+      await window.electronAPI.workspace.namespace.create({
+        workspaceId: selectedWorkspaceId,
+        namespace: namespaceName,
+      });
+      setTestResult(`✅ 네임스페이스 생성 성공!\n네임스페이스: ${namespaceName}`);
+      // 생성 후 목록 새로고침
+      setTimeout(() => testNamespaceGetAll(), 1000);
+    } catch (error) {
+      setTestResult(`❌ 네임스페이스 생성 오류: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const testTranslationGetAll = async () => {
+    if (!window.electronAPI || !selectedWorkspaceId || namespaces.length === 0) {
+      setTestResult('❌ Electron API를 사용할 수 없거나 워크스페이스/네임스페이스가 선택되지 않았습니다');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await window.electronAPI.workspace.translation.getAll({
+        workspaceId: selectedWorkspaceId,
+        namespace: namespaces[0], // 첫 번째 네임스페이스 사용
+      });
+      setTranslations(response.translations);
+      setTestResult(
+        `✅ 번역 목록 조회 성공!\n네임스페이스: ${namespaces[0]}\n개수: ${response.translations.length}개\n\n번역:\n${response.translations.map((t) => `- ${t.key}`).join('\n')}`,
+      );
+    } catch (error) {
+      setTestResult(`❌ 번역 목록 조회 오류: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const clearResults = () => {
     setTestResult('');
     setSidebarOpened(null);
     setCurrentPath('');
     setDirectoryFiles([]);
+    setWorkspaces([]);
+    setSelectedWorkspaceId('');
+    setLanguages([]);
+    setNamespaces([]);
+    setTranslations([]);
   };
 
   const debugWindowAPI = () => {
@@ -146,7 +368,7 @@ const IPCTestComponent: React.FC<IPCTestComponentProps> = () => {
     <div className="ipc-test-container">
       <div className="ipc-test-header">
         <h2>🧪 Electron API 테스트</h2>
-        <p>UI 설정 및 파일 시스템 API를 테스트합니다.</p>
+        <p>UI 설정, 파일 시스템 및 워크스페이스 API를 테스트합니다.</p>
       </div>
 
       <div className="api-status">
@@ -157,6 +379,8 @@ const IPCTestComponent: React.FC<IPCTestComponentProps> = () => {
             {sidebarOpened !== null && <span className="version-info">🎛️ 사이드바 상태: {sidebarOpened ? '열림 🟢' : '닫힘 🔴'}</span>}
             {currentPath && <span className="version-info">📁 현재 경로: {currentPath}</span>}
             {directoryFiles.length > 0 && <span className="version-info">📄 파일 개수: {directoryFiles.length}개</span>}
+            {workspaces.length > 0 && <span className="version-info">🏢 워크스페이스: {workspaces.length}개</span>}
+            {selectedWorkspaceId && <span className="version-info">🎯 선택된 워크스페이스: {selectedWorkspaceId}</span>}
           </div>
         ) : (
           <div className="status-error">
@@ -206,6 +430,107 @@ const IPCTestComponent: React.FC<IPCTestComponentProps> = () => {
               className="test-btn filesystem-open"
             >
               🗂️ 파일 매니저 열기
+            </button>
+          </div>
+        </div>
+
+        <div className="test-section">
+          <h4>🏢 Workspace API</h4>
+          <div className="workspace-controls">
+            <label>
+              워크스페이스 선택:
+              <select
+                value={selectedWorkspaceId}
+                onChange={(e) => setSelectedWorkspaceId(e.target.value)}
+                style={{ marginLeft: '8px', padding: '4px' }}
+              >
+                <option value="">워크스페이스를 선택하세요</option>
+                {workspaces.map((workspace) => (
+                  <option key={workspace.id} value={workspace.id}>
+                    {workspace.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className="test-buttons">
+            <button onClick={testWorkspaceGetAll} disabled={isLoading || !window.electronAPI} className="test-btn workspace-list">
+              📋 워크스페이스 목록
+            </button>
+
+            <button onClick={testWorkspaceCreate} disabled={isLoading || !window.electronAPI} className="test-btn workspace-create">
+              ➕ 워크스페이스 생성
+            </button>
+
+            <button
+              onClick={testWorkspaceUpdate}
+              disabled={isLoading || !window.electronAPI || !selectedWorkspaceId}
+              className="test-btn workspace-update"
+            >
+              ✏️ 워크스페이스 수정
+            </button>
+
+            <button
+              onClick={testWorkspaceDelete}
+              disabled={isLoading || !window.electronAPI || !selectedWorkspaceId}
+              className="test-btn workspace-delete"
+            >
+              🗑️ 워크스페이스 삭제
+            </button>
+          </div>
+        </div>
+
+        <div className="test-section">
+          <h4>🌐 Language API</h4>
+          <div className="test-buttons">
+            <button
+              onClick={testLanguageGetAll}
+              disabled={isLoading || !window.electronAPI || !selectedWorkspaceId}
+              className="test-btn language-list"
+            >
+              📋 언어 목록
+            </button>
+
+            <button
+              onClick={testLanguageCreateMultiple}
+              disabled={isLoading || !window.electronAPI || !selectedWorkspaceId}
+              className="test-btn language-create"
+            >
+              ➕ 언어 생성 (ko,en,ja)
+            </button>
+          </div>
+        </div>
+
+        <div className="test-section">
+          <h4>📦 Namespace API</h4>
+          <div className="test-buttons">
+            <button
+              onClick={testNamespaceGetAll}
+              disabled={isLoading || !window.electronAPI || !selectedWorkspaceId}
+              className="test-btn namespace-list"
+            >
+              📋 네임스페이스 목록
+            </button>
+
+            <button
+              onClick={testNamespaceCreate}
+              disabled={isLoading || !window.electronAPI || !selectedWorkspaceId}
+              className="test-btn namespace-create"
+            >
+              ➕ 네임스페이스 생성
+            </button>
+          </div>
+        </div>
+
+        <div className="test-section">
+          <h4>🔤 Translation API</h4>
+          <div className="test-buttons">
+            <button
+              onClick={testTranslationGetAll}
+              disabled={isLoading || !window.electronAPI || !selectedWorkspaceId || namespaces.length === 0}
+              className="test-btn translation-list"
+            >
+              📋 번역 목록
             </button>
           </div>
         </div>
