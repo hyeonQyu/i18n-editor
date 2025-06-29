@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import IPCTestComponent from './components/IPCTestComponent';
+import IPCTestComponent from './components/deprecated/IPCTestComponent.tsx';
+import GlobalScrollbarStyle from './components/GlobalScrollbarStyle';
 import ThemeProvider from './providers/ThemeProvider';
 import './styles/reset.css';
 import './types/electron.d.ts';
@@ -8,6 +9,7 @@ import './types/electron.d.ts';
 function App(): React.JSX.Element {
   return (
     <ThemeProvider>
+      <GlobalScrollbarStyle />
       <div className="App">
         <header className="App-header">
           <h1>🌍 i18n Editor</h1>
