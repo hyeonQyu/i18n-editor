@@ -1,4 +1,5 @@
 import {
+  DuplicatedTranslationError,
   TranslationCreateRequest,
   TranslationCreateResponse,
   TranslationDeleteRequest,
@@ -25,17 +26,7 @@ export const handleGetAllTranslations: IPCHandler<TranslationGetAllResponse, Tra
   { workspaceId, namespace },
 ) => {
   const workspace = getWorkspaceById(workspaceId);
-
-  if (!workspace) {
-    throw new Error('Workspace not found');
-  }
-
   const languageCodes = await getAllLanguageCodes(workspace);
-
-  if (languageCodes.length === 0) {
-    throw new Error('Invalid workspace');
-  }
-
   const translations = await getAllTranslations(workspace.path, namespace, languageCodes);
 
   return {
@@ -60,21 +51,11 @@ export const handleCreateTranslation: IPCHandler<TranslationCreateResponse, Tran
   };
 
   const workspace = getWorkspaceById(workspaceId);
-
-  if (!workspace) {
-    throw new Error('Workspace not found');
-  }
-
   const languageCodes = await getAllLanguageCodes(workspace);
-
-  if (languageCodes.length === 0) {
-    throw new Error('Invalid workspace');
-  }
-
   const translations = await getAllTranslations(workspace.path, namespace, languageCodes);
 
   if (checkTranslationDuplicated(translations, translation)) {
-    throw new Error('Translation already exists');
+    throw new DuplicatedTranslationError('Translation already exists');
   }
 
   const index = position
@@ -92,21 +73,10 @@ export const handleUpdateTranslation: IPCHandler<TranslationUpdateResponse, Tran
   { workspaceId, namespace, translationKey, languageCode, value },
 ) => {
   const workspace = getWorkspaceById(workspaceId);
-
-  if (!workspace) {
-    throw new Error('Workspace not found');
-  }
-
   const languageCodes = await getAllLanguageCodes(workspace);
-
-  if (languageCodes.length === 0) {
-    throw new Error('Invalid workspace');
-  }
-
   const translations = await getAllTranslations(workspace.path, namespace, languageCodes);
 
   const index = findTranslationIndex(translations, translationKey);
-
   translations[index].value[languageCode] = value;
 
   await writeTranslation(workspace, namespace, translations);
@@ -118,21 +88,10 @@ export const handleDeleteTranslation: IPCHandler<TranslationDeleteResponse, Tran
   { workspaceId, namespace, translationKey },
 ) => {
   const workspace = getWorkspaceById(workspaceId);
-
-  if (!workspace) {
-    throw new Error('Workspace not found');
-  }
-
   const languageCodes = await getAllLanguageCodes(workspace);
-
-  if (languageCodes.length === 0) {
-    throw new Error('Invalid workspace');
-  }
-
   const translations = await getAllTranslations(workspace.path, namespace, languageCodes);
 
   const index = findTranslationIndex(translations, translationKey);
-
   translations.splice(index, 1);
 
   await writeTranslation(workspace, namespace, translations);

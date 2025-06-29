@@ -1,4 +1,5 @@
 import {
+  DuplicatedWorkspaceError,
   generateUniqueID,
   WorkspaceCreateRequest,
   WorkspaceCreateResponse,
@@ -29,7 +30,7 @@ export const handleCreateWorkspace: IPCHandler<WorkspaceCreateResponse, Workspac
   const workspace = getWorkspaceByPath(path);
 
   if (workspace) {
-    throw new Error('Workspace already exists');
+    throw new DuplicatedWorkspaceError('Workspace already exists');
   }
 
   const id = generateUniqueID();
@@ -45,12 +46,8 @@ export const handleUpdateWorkspace: IPCHandler<WorkspaceUpdateResponse, Workspac
   const workspaceConfig = clone(configCache.getConfig().workspace);
   const workspace = workspaceConfig[id];
 
-  if (!workspace) {
-    throw new Error('Workspace not found');
-  }
-
   if (checkWorkspaceNameDuplicated(id, name)) {
-    throw new Error('Workspace name already exists');
+    throw new DuplicatedWorkspaceError('Workspace name already exists');
   }
 
   await updateWorkspace({ ...workspace, name, path });

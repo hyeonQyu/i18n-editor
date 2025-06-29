@@ -1,4 +1,4 @@
-import { DEFAULT_LANGUAGE, LANGUAGE_CODE_SET, LanguageCode, Workspace } from '@i18n-editor/shared';
+import { DEFAULT_LANGUAGE, InvalidWorkspaceError, LANGUAGE_CODE_SET, LanguageCode, Workspace } from '@i18n-editor/shared';
 import { Dirent } from 'fs';
 import { readDirectory } from './file.utils';
 
@@ -7,7 +7,7 @@ const checkIsLanguageDirectory = (dirent: Dirent) => {
 };
 
 export const getAllLanguageCodes = async ({ path, defaultLanguage = DEFAULT_LANGUAGE }: Workspace) => {
-  return (await readDirectory(path, { withFileTypes: true }))
+  const languageCodes = (await readDirectory(path, { withFileTypes: true }))
     .filter(checkIsLanguageDirectory)
     .map((dirent) => dirent.name as LanguageCode)
     .sort((a, b) => {
@@ -15,4 +15,10 @@ export const getAllLanguageCodes = async ({ path, defaultLanguage = DEFAULT_LANG
       if (b === defaultLanguage) return 1;
       return a.localeCompare(b);
     });
+
+  if (languageCodes.length === 0) {
+    throw new InvalidWorkspaceError('Workspace has no language');
+  }
+
+  return languageCodes;
 };

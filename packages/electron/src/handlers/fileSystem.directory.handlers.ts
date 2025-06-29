@@ -1,4 +1,4 @@
-import { DirectoryReadRequest, DirectoryReadResponse, FileEntry, FileEntryType } from '@i18n-editor/shared';
+import { DirectoryReadRequest, DirectoryReadResponse, FileEntry, FileEntryType, InvalidRequestError } from '@i18n-editor/shared';
 import { Dirent } from 'fs';
 import { IPCHandler } from '../defines/handler.definitions';
 import { readDirectory } from '../utils/file.utils';
@@ -35,7 +35,7 @@ const compareFileEntry = (a: FileEntry, b: FileEntry) => {
 };
 
 export const readFileSystemDirectory: IPCHandler<DirectoryReadResponse, DirectoryReadRequest> = async (_, { path }) => {
-  if (!path) throw new Error('Path is required');
+  if (!path) throw new InvalidRequestError('Path is required');
 
   const entries: FileEntry[] = (
     await readDirectory(path, {

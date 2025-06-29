@@ -4,6 +4,7 @@ import {
   NamespaceContent,
   Translation,
   TranslationKey,
+  TranslationNotFoundError,
   TranslationValue,
   TranslationValueByLanguageCode,
   Workspace,
@@ -135,6 +136,6 @@ export const checkTranslationDuplicated = (translations: readonly Translation[],
 
 export const findTranslationIndex = (translations: readonly Translation[], translationKey: TranslationKey) => {
   const index = translations.findIndex(({ key }) => key === translationKey);
-  if (index === -1) throw new Error('Translation not found');
+  if (index === -1) throw new TranslationNotFoundError('Translation not found');
   return index;
 };

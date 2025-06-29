@@ -1,4 +1,4 @@
-import { Workspace } from '@i18n-editor/shared';
+import { Workspace, WorkspaceNotFoundError } from '@i18n-editor/shared';
 import { clone } from 'lodash-es';
 import { configCache } from '../caches/config.cache';
 
@@ -11,7 +11,13 @@ export const getWorkspaceByPath = (path: string) => {
 };
 
 export const getWorkspaceById = (id: string) => {
-  return configCache.getConfig().workspace[id];
+  const workspace = configCache.getConfig().workspace[id];
+
+  if (!workspace) {
+    throw new WorkspaceNotFoundError('Workspace not found');
+  }
+
+  return workspace;
 };
 
 export const checkWorkspaceNameDuplicated = (id: string, name: string) => {

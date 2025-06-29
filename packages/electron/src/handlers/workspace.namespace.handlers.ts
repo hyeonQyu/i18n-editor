@@ -1,4 +1,5 @@
 import {
+  DuplicatedNamespaceError,
   NamespaceCreateRequest,
   NamespaceCreateResponse,
   NamespaceDeleteRequest,
@@ -14,18 +15,9 @@ import { getWorkspaceById, updateWorkspace } from '../utils/workspace.utils';
 
 export const handleGetAllNamespaces: IPCHandler<NamespaceGetAllResponse, NamespaceGetAllRequest> = async (_, { workspaceId }) => {
   const workspace = getWorkspaceById(workspaceId);
-
-  if (!workspace) {
-    throw new Error('Workspace not found');
-  }
-
   const languageCodes = await getAllLanguageCodes(workspace);
-
-  if (languageCodes.length === 0) {
-    throw new Error('Invalid workspace');
-  }
-
   const namespaces = await getAllNamespaces(workspace.path, languageCodes);
+
   await updateWorkspace(workspace);
 
   return {
@@ -35,19 +27,10 @@ export const handleGetAllNamespaces: IPCHandler<NamespaceGetAllResponse, Namespa
 
 export const handleCreateNamespace: IPCHandler<NamespaceCreateResponse, NamespaceCreateRequest> = async (_, { workspaceId, namespace }) => {
   const workspace = getWorkspaceById(workspaceId);
-
-  if (!workspace) {
-    throw new Error('Workspace not found');
-  }
-
   const languageCodes = await getAllLanguageCodes(workspace);
 
-  if (languageCodes.length === 0) {
-    throw new Error('Invalid workspace');
-  }
-
   if (await checkNamespaceDuplicated(workspace.path, namespace, languageCodes)) {
-    throw new Error('Namespace already exists');
+    throw new DuplicatedNamespaceError('Namespace already exists');
   }
 
   await Promise.all(
@@ -62,16 +45,7 @@ export const handleCreateNamespace: IPCHandler<NamespaceCreateResponse, Namespac
 
 export const handleDeleteNamespace: IPCHandler<NamespaceDeleteResponse, NamespaceDeleteRequest> = async (_, { workspaceId, namespace }) => {
   const workspace = getWorkspaceById(workspaceId);
-
-  if (!workspace) {
-    throw new Error('Workspace not found');
-  }
-
   const languageCodes = await getAllLanguageCodes(workspace);
-
-  if (languageCodes.length === 0) {
-    throw new Error('Invalid workspace');
-  }
 
   await Promise.all(
     languageCodes.map((languageCode) => {
