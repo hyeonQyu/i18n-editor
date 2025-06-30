@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useElectronAPI } from '../../hooks/useElectronAPI';
 import './IPCTestComponent.css';
 
 interface IPCTestComponentProps {}
@@ -30,6 +31,8 @@ const IPCTestComponent: React.FC<IPCTestComponentProps> = () => {
   const [namespaces, setNamespaces] = useState<string[]>([]);
   const [translations, setTranslations] = useState<any[]>([]);
 
+  const electronAPI = useElectronAPI();
+
   const testUIConfigRead = async () => {
     if (!window.electronAPI) {
       setTestResult('❌ Electron API를 사용할 수 없습니다');
@@ -38,7 +41,7 @@ const IPCTestComponent: React.FC<IPCTestComponentProps> = () => {
 
     try {
       setIsLoading(true);
-      const response = await window.electronAPI.config.ui.read();
+      const response = await electronAPI.config.ui.read();
       setSidebarOpened(response.sidebarOpened);
       setTestResult(`✅ UI 설정 읽기 성공!\n사이드바 열림 상태: ${response.sidebarOpened ? '열림' : '닫힘'}`);
     } catch (error) {
@@ -63,7 +66,7 @@ const IPCTestComponent: React.FC<IPCTestComponentProps> = () => {
       setIsLoading(true);
       const newSidebarState = !sidebarOpened;
 
-      await window.electronAPI.config.ui.update({ sidebarOpened: newSidebarState });
+      await electronAPI.config.ui.update({ sidebarOpened: newSidebarState });
 
       setSidebarOpened(newSidebarState);
       setTestResult(`✅ UI 설정 업데이트 성공!\n사이드바 상태를 ${newSidebarState ? '열림' : '닫힘'}으로 변경했습니다.`);
@@ -82,7 +85,7 @@ const IPCTestComponent: React.FC<IPCTestComponentProps> = () => {
 
     try {
       setIsLoading(true);
-      const response = await window.electronAPI.fileSystem.initialPath.read();
+      const response = await electronAPI.fileSystem.initialPath.read();
       setCurrentPath(response.path);
       setTestResult(`✅ 초기 경로 읽기 성공!\n경로: ${response.path}`);
     } catch (error) {
