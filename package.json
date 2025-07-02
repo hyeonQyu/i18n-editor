@@ -1,7 +1,7 @@
 {
   "name": "i18n-editor",
   "version": "3.0.0",
-  "main": "dist-electron/electron/main.js",
+  "main": "dist/electron/electron/main.js",
   "type": "module",
   "repository": {
     "type": "git",
@@ -28,11 +28,12 @@
   "packageManager": "yarn@4.9.2",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "build:electron": "tsc -p tsconfig.node.json",
+    "build:renderer": "tsc && vite build",
+    "build:electron": "tsc -p tsconfig.node.json && tsc -p tsconfig.preload.json",
+    "build": "yarn build:renderer && yarn build:electron",
     "preview": "vite preview",
     "type": "tsc --noEmit",
-    "electron": "yarn build:electron && electron .",
+    "electron": "electron .",
     "electron:dev": "yarn build:electron && NODE_ENV=development electron .",
     "app:dev": "concurrently \"yarn dev\" \"wait-on http://localhost:3000 && yarn electron:dev\""
   },

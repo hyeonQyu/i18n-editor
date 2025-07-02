@@ -4,11 +4,12 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
+  base: './',
   server: {
     port: 3000,
   },
   build: {
-    outDir: 'dist',
+    outDir: 'dist/renderer',
   },
   resolve: {
     alias: {
