@@ -27,15 +27,17 @@
   "homepage": "https://github.com/hyeonQyu/i18n-editor",
   "packageManager": "yarn@4.9.2",
   "scripts": {
-    "dev": "vite",
+    "dev:renderer": "vite",
+    "dev:electron": "yarn build:electron && NODE_ENV=development electron .",
+    "dev": "concurrently \"yarn dev:renderer\" \"wait-on http://localhost:3000 && yarn dev:electron\"",
     "build:renderer": "tsc && vite build",
     "build:electron": "tsc -p tsconfig.node.json && tsc -p tsconfig.preload.json",
     "build": "yarn build:renderer && yarn build:electron",
-    "preview": "vite preview",
-    "type": "tsc --noEmit",
-    "electron": "electron .",
-    "electron:dev": "yarn build:electron && NODE_ENV=development electron .",
-    "app:dev": "concurrently \"yarn dev\" \"wait-on http://localhost:3000 && yarn electron:dev\""
+    "type:renderer": "tsc --noEmit",
+    "type:electron": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.preload.json --noEmit",
+    "type": "yarn type:renderer && yarn type:electron",
+    "start": "electron .",
+    "preview": "vite preview"
   },
   "dependencies": {
     "react": "^19.1.0",
