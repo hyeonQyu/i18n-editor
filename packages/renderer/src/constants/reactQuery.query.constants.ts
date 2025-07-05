@@ -20,4 +20,9 @@ export const QUERY_KEY = {
       read: (request: DirectoryReadRequest) => [...QUERY_KEY.fileSystem.directory.base(), 'read', request] as const,
     },
   },
+
+  workspace: {
+    base: () => ['workspace'] as const,
+    getAll: () => [...QUERY_KEY.workspace.base(), 'getAll'] as const,
+  },
 };
