@@ -1,4 +1,4 @@
-import { DirectoryReadRequest } from '@i18n-editor/shared';
+import { DirectoryReadRequest, LanguageGetAllRequest } from '@i18n-editor/shared';
 
 export const QUERY_KEY = {
   config: {
@@ -24,5 +24,10 @@ export const QUERY_KEY = {
   workspace: {
     base: () => ['workspace'] as const,
     getAll: () => [...QUERY_KEY.workspace.base(), 'getAll'] as const,
+
+    language: {
+      base: () => [...QUERY_KEY.workspace.base(), 'language'] as const,
+      getAll: (request: LanguageGetAllRequest) => [...QUERY_KEY.workspace.language.base(), 'getAll', request] as const,
+    },
   },
 };
