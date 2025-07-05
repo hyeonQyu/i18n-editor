@@ -1,4 +1,4 @@
-import { useElectronAPI } from '@/hooks/common/useElectronAPI';
+import { useElectronAPI } from '@/hooks/common';
 import { TranslationUpdateRequest } from '@i18n-editor/shared';
 import { useMutation } from '@tanstack/react-query';
 import { useInvalidateGetAllTranslationsQuery } from './useInvalidateGetAllTranslationsQuery';

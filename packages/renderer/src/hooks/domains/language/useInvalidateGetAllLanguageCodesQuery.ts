@@ -1,6 +1,6 @@
+import { QUERY_KEY } from '@/constants/reactQuery.query.constants';
 import { LanguageGetAllRequest } from '@i18n-editor/shared';
 import { useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEY } from '../../../constants/reactQuery.query.constants';
 
 export const useInvalidateGetAllLanguageCodesQuery = () => {
   const queryClient = useQueryClient();

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useElectronAPI } from '../../hooks/common/useElectronAPI';
+import { useElectronAPI } from '../../hooks/common';
 import './IPCTestComponent.css';
 
 interface IPCTestComponentProps {}

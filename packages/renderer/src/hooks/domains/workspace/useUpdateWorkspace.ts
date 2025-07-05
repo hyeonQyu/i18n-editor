@@ -1,4 +1,4 @@
-import { useElectronAPI } from '@/hooks/common/useElectronAPI';
+import { useElectronAPI } from '@/hooks/common';
 import { useInvalidateGetAllWorkspacesQuery } from '@/hooks/domains/workspace/useInvalidateGetAllWorkspacesQuery';
 import { WorkspaceUpdateRequest } from '@i18n-editor/shared';
 import { useMutation } from '@tanstack/react-query';
