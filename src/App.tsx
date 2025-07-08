@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import IPCTestComponent from './components/IPCTestComponent';
 import './types/electron.d.ts';
 
 function App(): React.JSX.Element {
@@ -23,6 +24,10 @@ function App(): React.JSX.Element {
           </div>
         )}
       </header>
+
+      <main className="App-main">
+        <IPCTestComponent />
+      </main>
     </div>
   );
 }
