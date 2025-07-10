@@ -37,7 +37,12 @@
     "type:electron": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.preload.json --noEmit",
     "type": "yarn type:renderer && yarn type:electron",
     "start": "electron .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "package:mac": "yarn build && electron-builder --mac",
+    "package:win": "yarn build && electron-builder --win",
+    "package:linux": "yarn build && electron-builder --linux",
+    "package": "yarn build && electron-builder",
+    "package:dev": "yarn build && electron-builder --dir"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -51,11 +56,70 @@
     "@vitejs/plugin-react": "^4.5.2",
     "concurrently": "^9.1.2",
     "electron": "^36.5.0",
+    "electron-builder": "^26.0.12",
     "glob": "^11.0.3",
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "^5.7.3",
     "vite": "^6.3.5",
     "wait-on": "^8.0.3"
+  },
+  "build": {
+    "productName": "i18n Editor",
+    "appId": "io.github.hyeonQyu.i18n-editor",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "linux": {
+      "category": "Development",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "afterAllArtifactBuild": "scripts/organize-build.cjs"
   }
 }

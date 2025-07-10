@@ -1,5 +1,6 @@
 node_modules
 dist
+release
 .idea
 .vscode
 .i18ne
