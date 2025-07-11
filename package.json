@@ -27,6 +27,7 @@
   "homepage": "https://github.com/hyeonQyu/i18n-editor",
   "packageManager": "yarn@4.9.2",
   "scripts": {
+    "postinstall": "node scripts/setup.cjs",
     "dev:renderer": "vite",
     "dev:electron": "yarn build:electron && NODE_ENV=development electron .",
     "dev": "concurrently \"yarn dev:renderer\" \"wait-on http://localhost:3000 && yarn dev:electron\"",
@@ -60,7 +61,7 @@
     "glob": "^11.0.3",
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "wait-on": "^8.0.3"
   },
@@ -72,6 +73,7 @@
     },
     "files": [
       "dist/**/*",
+      "shared/**/*",
       "node_modules/**/*",
       "package.json"
     ],

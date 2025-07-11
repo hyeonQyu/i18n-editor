@@ -10,8 +10,12 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist/electron",
     "rootDir": ".",
-    "types": ["node", "electron"]
+    "types": ["node", "electron"],
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["shared/*"]
+    }
   },
-  "include": ["electron/preload.ts"],
+  "include": ["electron/preload.ts", "shared"],
   "exclude": ["node_modules", "dist", "src"]
 }
