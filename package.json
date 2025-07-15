@@ -28,6 +28,7 @@
   "packageManager": "yarn@4.9.2",
   "scripts": {
     "postinstall": "node scripts/setup.cjs",
+    "list": "echo '{}' || yarn info --all --json",
     "dev:renderer": "vite",
     "dev:electron": "yarn build:electron && NODE_ENV=development electron .",
     "dev": "concurrently \"yarn dev:renderer\" \"wait-on http://localhost:3000 && yarn dev:electron\"",
@@ -74,7 +75,6 @@
     "files": [
       "dist/**/*",
       "shared/**/*",
-      "node_modules/**/*",
       "package.json"
     ],
     "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
