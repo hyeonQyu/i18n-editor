@@ -1,8 +1,14 @@
 {
   "name": "i18n-editor",
   "version": "3.0.0",
-  "main": "dist/electron/electron/main.js",
+  "main": "dist/electron/main.js",
   "type": "module",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/hyeonQyu/i18n-editor"
@@ -27,43 +33,36 @@
   "homepage": "https://github.com/hyeonQyu/i18n-editor",
   "packageManager": "yarn@4.9.2",
   "scripts": {
-    "postinstall": "node scripts/setup.cjs",
     "list": "echo '{}' || yarn info --all --json",
-    "dev:renderer": "vite",
-    "dev:electron": "yarn build:electron && NODE_ENV=development electron .",
-    "dev": "concurrently \"yarn dev:renderer\" \"wait-on http://localhost:3000 && yarn dev:electron\"",
-    "build:renderer": "tsc && vite build",
-    "build:electron": "tsc -p tsconfig.node.json && tsc -p tsconfig.preload.json && node scripts/fix-imports.js",
-    "build": "yarn build:renderer && yarn build:electron",
-    "type:renderer": "tsc --noEmit",
-    "type:electron": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.preload.json --noEmit",
+    "copy-build": "node scripts/copy-dist-for-package.js",
+    "dev:shared": "yarn workspace @i18n-editor/shared dev",
+    "dev:renderer": "yarn workspace @i18n-editor/renderer dev",
+    "dev:electron": "yarn workspace @i18n-editor/electron dev",
+    "dev": "concurrently \"yarn dev:shared\" \"yarn dev:renderer\" \"wait-on http://localhost:3000 && yarn dev:electron\"",
+    "build:shared": "yarn workspace @i18n-editor/shared build",
+    "build:renderer": "yarn workspace @i18n-editor/renderer build",
+    "build:electron": "yarn workspace @i18n-editor/electron build",
+    "build": "yarn build:shared && yarn build:renderer && yarn build:electron && yarn copy-build",
+    "type:renderer": "yarn workspace @i18n-editor/renderer type-check",
+    "type:electron": "yarn workspace @i18n-editor/electron type-check",
     "type": "yarn type:renderer && yarn type:electron",
-    "start": "electron .",
-    "preview": "vite preview",
+    "start": "electron dist/electron/main.js",
+    "preview": "yarn workspace @i18n-editor/renderer preview",
     "package:mac": "yarn build && electron-builder --mac",
     "package:win": "yarn build && electron-builder --win",
     "package:linux": "yarn build && electron-builder --linux",
     "package": "yarn build && electron-builder",
     "package:dev": "yarn build && electron-builder --dir"
   },
-  "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
-  },
   "devDependencies": {
-    "@types/electron": "^1.6.12",
-    "@types/node": "^22.10.9",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.5.2",
     "concurrently": "^9.1.2",
     "electron": "^36.5.0",
     "electron-builder": "^26.0.12",
     "glob": "^11.0.3",
+    "nodemon": "^3.1.10",
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5",
     "wait-on": "^8.0.3"
   },
   "build": {
@@ -74,7 +73,6 @@
     },
     "files": [
       "dist/**/*",
-      "shared/**/*",
       "package.json"
     ],
     "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",

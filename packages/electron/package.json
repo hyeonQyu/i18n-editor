@@ -1,0 +1,22 @@
+{
+  "name": "@i18n-editor/electron",
+  "version": "3.0.0",
+  "type": "module",
+  "private": true,
+  "main": "../../dist/electron/main.js",
+  "scripts": {
+    "build": "yarn clean && tsc -p tsconfig.main.json && tsc -p tsconfig.preload.json && yarn fix-imports",
+    "dev": "concurrently \"tsc -p tsconfig.main.json --watch\" \"tsc -p tsconfig.preload.json --watch\" \"nodemon --watch ../../dist/electron --ext js --ignore '**/*.d.ts' --delay 1000ms --exec 'yarn fix-imports && NODE_ENV=development yarn electron ../../dist/electron/main.js'\"",
+    "type-check": "tsc -p tsconfig.main.json --noEmit && tsc -p tsconfig.preload.json --noEmit",
+    "fix-imports": "node ../../scripts/fix-esm-imports.js ../../dist/electron",
+    "clean": "rm -rf ../../dist/electron"
+  },
+  "dependencies": {
+    "@i18n-editor/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/electron": "^1.6.12",
+    "@types/node": "^22.10.9",
+    "electron": "^36.5.0"
+  }
+}

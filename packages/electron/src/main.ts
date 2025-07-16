@@ -1,3 +1,4 @@
+import { LANGUAGE_CODES } from '@i18n-editor/shared';
 import { app, BrowserWindow, dialog, globalShortcut, ipcMain, IpcMainInvokeEvent } from 'electron';
 import { readFile, writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
@@ -9,7 +10,9 @@ const __dirname = dirname(__filename);
 
 let mainWindow: BrowserWindow | null = null;
 
-function createWindow(): void {
+console.log(LANGUAGE_CODES);
+
+const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
@@ -25,15 +28,15 @@ function createWindow(): void {
     mainWindow.loadURL('http://localhost:3000');
     mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.loadFile(join(__dirname, '../../../dist/renderer/index.html'));
+    mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
   }
 
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-}
+};
 
-function setupIpcHandlers(): void {
+const setupIpcHandlers = () => {
   ipcMain.handle('dialog:openFile', async (): Promise<Electron.OpenDialogReturnValue> => {
     if (!mainWindow) throw new Error('Main window not available');
 
@@ -92,7 +95,7 @@ function setupIpcHandlers(): void {
       }
     },
   );
-}
+};
 
 app.whenReady().then(() => {
   createWindow();
