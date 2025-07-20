@@ -1,4 +1,5 @@
 import { usePopover } from '@/hooks/common';
+import { useSelectNewWorkspaceDirectory } from '@/hooks/domains/workspace';
 import AddIcon from '@mui/icons-material/Add';
 import { IconButton, Menu, MenuItem, Typography, useTheme } from '@mui/material';
 
@@ -9,13 +10,15 @@ function AddButton() {
 
   const { anchorElement, handleOpen, handleClose } = usePopover();
 
+  const selectNewWorkspaceDirectory = useSelectNewWorkspaceDirectory();
+
   const handleClickAddWorkspace = () => {
-    // addWorkspace();
+    selectNewWorkspaceDirectory();
     handleClose();
   };
 
   const handleClickAddNamespace = () => {
-    // addNamespace();
+    selectNewWorkspaceDirectory();
     handleClose();
   };
 
