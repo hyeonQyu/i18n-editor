@@ -1,7 +1,7 @@
+import { PortalActionHandler } from '@/types/portal.types';
+import { getDefaultActionHandler } from '@/utils/portal.utils';
 import { create } from 'zustand/react';
 import { StateCreator } from 'zustand/vanilla';
-import { PortalActionHandler } from '../../types/portal.types';
-import { getDefaultActionHandler } from '../../utils/portal.utils';
 
 type DialogActionHandler<T extends object> = PortalActionHandler<DialogStore<T>>;
 

@@ -1,4 +1,10 @@
 export { useCheckMetaKey } from './useCheckMetaKey';
 export { useClickOutside } from './useClickOutside';
+export { useConfirmDialog } from './useConfirmDialog';
+export { useCopyClipboard } from './useCopyClipboard';
 export { useElectronAPI } from './useElectronAPI';
+export { useFileManagerName } from './useFileManagerName';
+export { useKeyboardEventListener } from './useKeyboardEventListener';
+export { useMetaKeyLabel } from './useMetaKeyLabel';
 export { useOS } from './useOS';
+export { usePopover } from './usePopover';
