@@ -16,6 +16,6 @@
       "@i18n-editor/shared": ["../../../dist/shared/index.d.ts"]
     }
   },
-  "include": ["src/main.ts", "src/utils/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "src/preload.ts"]
 }

@@ -6,8 +6,11 @@
   "main": "../../dist/shared/index.js",
   "types": "../../dist/shared/index.d.ts",
   "exports": {
-    ".": "./../../dist/shared/index.js",
-    "./*": "./../../dist/shared/*"
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    },
+    "./*": "./src/*"
   },
   "scripts": {
     "build": "yarn clean && tsc -p . && yarn fix-imports",

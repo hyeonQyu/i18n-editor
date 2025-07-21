@@ -14,6 +14,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
+      '@i18n-editor/shared': resolve(__dirname, '../shared/src'),
     },
   },
 });

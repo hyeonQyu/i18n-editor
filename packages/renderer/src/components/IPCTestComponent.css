@@ -113,6 +113,16 @@
   color: white;
 }
 
+.test-btn.config-read {
+  background: linear-gradient(135deg, #17a2b8, #138496);
+  color: white;
+}
+
+.test-btn.config-update {
+  background: linear-gradient(135deg, #6f42c1, #5a34a1);
+  color: white;
+}
+
 .loading-indicator {
   display: flex;
   align-items: center;

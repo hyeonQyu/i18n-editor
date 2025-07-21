@@ -33,7 +33,8 @@ console.log(`🔧 Fixing ESM imports in ${targetDir}...`);
 
 const convertPath = (importPath, currentFileDir) => {
   if (importPath === '@i18n-editor/shared') {
-    return '../shared/index.js';
+    const relativePath = relative(currentFileDir, resolve(resolvedTargetDir, '../shared'));
+    return relativePath + '/index.js';
   }
 
   if (importPath.endsWith('.js') || importPath.endsWith('.json')) {
