@@ -15,6 +15,7 @@
   "scripts": {
     "build": "yarn clean && tsc -p . && yarn fix-imports",
     "dev": "concurrently \"tsc -p . --watch\" \"nodemon --watch ../../dist/shared --ext js --exec 'yarn fix-imports'\"",
+    "type-check": "tsc -p . --noEmit",
     "fix-imports": "node ../../scripts/fix-esm-imports.js ../../dist/shared",
     "clean": "rm -rf ../../dist/shared"
   },
