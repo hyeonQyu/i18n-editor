@@ -1,7 +1,40 @@
-import { UIReadResponse, UIUpdateRequest, UIUpdateResponse } from '../models';
-import { DirectoryReadRequest, DirectoryReadResponse } from '../models/fileSystem.directory.models';
-import { FileManagerOpenRequest, FileManagerOpenResponse } from '../models/fileSystem.fileManager.models';
-import { InitialPathReadResponse } from '../models/fileSystem.initialPath.models';
+import {
+  DirectoryReadRequest,
+  DirectoryReadResponse,
+  FileManagerOpenRequest,
+  FileManagerOpenResponse,
+  InitialPathReadResponse,
+  LanguageCreateMultipleRequest,
+  LanguageCreateMultipleResponse,
+  LanguageDeleteRequest,
+  LanguageDeleteResponse,
+  LanguageGetAllRequest,
+  LanguageGetAllResponse,
+  NamespaceCreateRequest,
+  NamespaceCreateResponse,
+  NamespaceDeleteRequest,
+  NamespaceDeleteResponse,
+  NamespaceGetAllRequest,
+  NamespaceGetAllResponse,
+  TranslationCreateRequest,
+  TranslationCreateResponse,
+  TranslationDeleteRequest,
+  TranslationDeleteResponse,
+  TranslationGetAllRequest,
+  TranslationGetAllResponse,
+  TranslationUpdateRequest,
+  TranslationUpdateResponse,
+  UIReadResponse,
+  UIUpdateRequest,
+  UIUpdateResponse,
+  WorkspaceCreateRequest,
+  WorkspaceCreateResponse,
+  WorkspaceDeleteRequest,
+  WorkspaceDeleteResponse,
+  WorkspaceGetAllResponse,
+  WorkspaceUpdateRequest,
+  WorkspaceUpdateResponse,
+} from '../models';
 import { ObjectPathsWithSeparator } from './path.types';
 
 export type APICall<TResponse, TRequest = void> = (data: TRequest) => Promise<TResponse>;
@@ -25,6 +58,32 @@ export interface ElectronAPI {
     };
     fileManager: {
       open: APICall<FileManagerOpenResponse, FileManagerOpenRequest>;
+    };
+  };
+
+  workspace: {
+    getAll: APICall<WorkspaceGetAllResponse>;
+    create: APICall<WorkspaceCreateResponse, WorkspaceCreateRequest>;
+    update: APICall<WorkspaceUpdateResponse, WorkspaceUpdateRequest>;
+    delete: APICall<WorkspaceDeleteResponse, WorkspaceDeleteRequest>;
+
+    language: {
+      getAll: APICall<LanguageGetAllResponse, LanguageGetAllRequest>;
+      createMultiple: APICall<LanguageCreateMultipleResponse, LanguageCreateMultipleRequest>;
+      delete: APICall<LanguageDeleteResponse, LanguageDeleteRequest>;
+    };
+
+    namespace: {
+      getAll: APICall<NamespaceGetAllResponse, NamespaceGetAllRequest>;
+      create: APICall<NamespaceCreateResponse, NamespaceCreateRequest>;
+      delete: APICall<NamespaceDeleteResponse, NamespaceDeleteRequest>;
+    };
+
+    translation: {
+      getAll: APICall<TranslationGetAllResponse, TranslationGetAllRequest>;
+      create: APICall<TranslationCreateResponse, TranslationCreateRequest>;
+      update: APICall<TranslationUpdateResponse, TranslationUpdateRequest>;
+      delete: APICall<TranslationDeleteResponse, TranslationDeleteRequest>;
     };
   };
 }

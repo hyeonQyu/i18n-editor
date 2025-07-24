@@ -26,6 +26,10 @@ const getConfigFilePath = (fileName: ConfigFileName) => {
   return `${configDirectoryPath}/${fileName}.json`;
 };
 
+const writeConfigFile = async (fileName: ConfigFileName, newConfig: Config[ConfigFileName]) => {
+  await writeFile(getConfigFilePath(fileName), newConfig);
+};
+
 const config: Config = DEFAULT_CONFIG;
 
 export const configCache = {
@@ -45,6 +49,12 @@ export const configCache = {
       ...ui,
     };
 
-    await writeFile(getConfigFilePath('ui'), config.ui);
+    await writeConfigFile('ui', config.ui);
+  },
+
+  updateWorkspace: async (workspace: Config['workspace']) => {
+    config.workspace = workspace;
+
+    await writeConfigFile('workspace', config.workspace);
   },
 };
