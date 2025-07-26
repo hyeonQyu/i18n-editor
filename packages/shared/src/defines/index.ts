@@ -1,5 +1,6 @@
 export * from './api.types';
 export * from './config.definitions';
+export * from './errors.definitions';
 export * from './file.definitions';
 export * from './language.definitions';
 export * from './path.types';

@@ -15,16 +15,7 @@ import { getWorkspaceById, updateWorkspace } from '../utils/workspace.utils';
 
 export const handleGetAllLanguages: IPCHandler<LanguageGetAllResponse, LanguageGetAllRequest> = async (_, { workspaceId }) => {
   const workspace = getWorkspaceById(workspaceId);
-
-  if (!workspace) {
-    throw new Error('Workspace not found');
-  }
-
   const languageCodes = await getAllLanguageCodes(workspace);
-
-  if (languageCodes.length === 0) {
-    throw new Error('Invalid workspace');
-  }
 
   return {
     languageCodes,
@@ -36,11 +27,6 @@ export const handleCreateMultipleLanguages: IPCHandler<LanguageCreateMultipleRes
   { workspaceId, languageCodes },
 ) => {
   const workspace = getWorkspaceById(workspaceId);
-
-  if (!workspace) {
-    throw new Error('Workspace not found');
-  }
-
   const existingLanguageCodes = await getAllLanguageCodes(workspace);
   const namespaces = await getAllNamespaces(workspace.path, languageCodes);
   const mergedLanguageCodes = [...new Set([...existingLanguageCodes, ...languageCodes])];
@@ -58,10 +44,6 @@ export const handleCreateMultipleLanguages: IPCHandler<LanguageCreateMultipleRes
 
 export const handleDeleteLanguage: IPCHandler<LanguageDeleteResponse, LanguageDeleteRequest> = async (_, { workspaceId, languageCode }) => {
   const workspace = getWorkspaceById(workspaceId);
-
-  if (!workspace) {
-    throw new Error('Workspace not found');
-  }
 
   const languagePath = `${workspace.path}/${languageCode}`;
   await deleteFile(languagePath);
