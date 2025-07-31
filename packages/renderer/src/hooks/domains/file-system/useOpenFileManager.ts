@@ -1,4 +1,4 @@
-import { useElectronAPI } from '@/hooks/common/useElectronAPI';
+import { useElectronAPI } from '@/hooks/common';
 
 export const useOpenFileManager = () => {
   const electronAPI = useElectronAPI();

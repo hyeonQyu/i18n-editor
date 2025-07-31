@@ -1,4 +1,4 @@
-import { useElectronAPI } from '@/hooks/common/useElectronAPI';
+import { useElectronAPI } from '@/hooks/common';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '../../../constants/reactQuery.query.constants';
 

@@ -1,3 +1,4 @@
+import ConfirmDialog from '@/components/ConfirmDialog/ConfirmDialog.tsx';
 import ReactQueryClientProvider from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider.tsx';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SnackbarProvider } from 'notistack';
@@ -15,6 +16,7 @@ function App(): React.JSX.Element {
       <GlobalScrollbarStyle />
       <ReactQueryClientProvider>
         <SnackbarProvider>
+          <ConfirmDialog />
           <div className="App">
             <header className="App-header">
               <h1>🌍 i18n Editor</h1>

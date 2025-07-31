@@ -1,4 +1,4 @@
-import { useElectronAPI } from '@/hooks/common/useElectronAPI';
+import { useElectronAPI } from '@/hooks/common';
 import { useInvalidateGetAllNamespacesQuery } from '@/hooks/domains/namespace/useInvalidateGetAllNamespacesQuery';
 import { NamespaceCreateRequest } from '@i18n-editor/shared';
 import { useMutation } from '@tanstack/react-query';
