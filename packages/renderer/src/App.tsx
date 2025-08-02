@@ -1,3 +1,4 @@
+import AppRouter from '@/components/AppRouter/AppRouter.tsx';
 import ConfirmDialog from '@/components/ConfirmDialog/ConfirmDialog.tsx';
 import FileManagerDialog from '@/components/FileManagerDialog/FileManagerDialog.tsx';
 import Layout from '@/components/Layout/Layout.tsx';
@@ -7,7 +8,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import './App.css';
-import IPCTestComponent from './components/deprecated/IPCTestComponent.tsx';
 import GlobalScrollbarStyle from './components/GlobalScrollbarStyle';
 import ThemeProvider from './providers/ThemeProvider';
 import './styles/reset.css';
@@ -24,7 +24,9 @@ function App(): React.JSX.Element {
             <FileManagerDialog />
             <NamespaceAddDialog />
 
-            <div className="App">
+            <AppRouter />
+
+            {/* <div className="App">
               <header className="App-header">
                 <h1>🌍 i18n Editor</h1>
                 <p>Electron + React + TypeScript 환경이 성공적으로 구성되었습니다!</p>
@@ -47,7 +49,7 @@ function App(): React.JSX.Element {
               <main className="App-main">
                 <IPCTestComponent />
               </main>
-            </div>
+            </div> */}
           </Layout>
         </SnackbarProvider>
         <ReactQueryDevtools />
