@@ -5,11 +5,12 @@ import {
   FILE_MANAGER_SEARCH_TRANSITION_SECONDS,
 } from '@/components/FileManagerDialog/constants/fileManagerDialog.style.constants';
 import { useFileManagerDialogStore } from '@/components/FileManagerDialog/stores/fileManagerDialog.store';
-import { TextField } from '@mui/material';
+import { TextField, useTheme } from '@mui/material';
 import { ChangeEventHandler, useEffect, useRef } from 'react';
 
 function FileManagerSearchInput() {
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const theme = useTheme();
 
   const searchMode = useFileManagerDialogStore(({ searchMode }) => searchMode);
   const keyword = useFileManagerDialogStore(({ searchKeyword }) => searchKeyword);
@@ -32,15 +33,17 @@ function FileManagerSearchInput() {
       size={'small'}
       variant={'outlined'}
       placeholder={'검색'}
-      inputProps={{
-        style: {
-          paddingLeft: `${FILE_MANAGER_SEARCH_ICON_WIDTH + FILE_MANAGER_HEADER_GAP}px`,
-          width: `calc(100% - ${FILE_MANAGER_SEARCH_ICON_WIDTH + FILE_MANAGER_HEADER_GAP * 3}px)`,
+      slotProps={{
+        input: {
+          style: {
+            paddingLeft: `${FILE_MANAGER_SEARCH_ICON_WIDTH + FILE_MANAGER_HEADER_GAP}px`,
+            width: `calc(100% - ${FILE_MANAGER_SEARCH_ICON_WIDTH + FILE_MANAGER_HEADER_GAP * 3}px)`,
+          },
         },
       }}
       sx={{
         position: 'absolute',
-        background: '#fff',
+        backgroundColor: theme.palette.background.paper,
         overflow: 'hidden',
         width,
         height: searchMode ? '42px' : 0,
@@ -50,6 +53,10 @@ function FileManagerSearchInput() {
 
         '& > div': {
           display: 'block',
+        },
+
+        '& .MuiOutlinedInput-root': {
+          backgroundColor: theme.palette.background.paper,
         },
       }}
     />
