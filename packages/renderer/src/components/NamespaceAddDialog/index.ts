@@ -1,2 +1,2 @@
-export * from './hooks/useOpenNamespaceAddDialog';
+export { useOpenNamespaceAddDialog } from './hooks';
 export { default as NamespaceAddDialog } from './NamespaceAddDialog';
