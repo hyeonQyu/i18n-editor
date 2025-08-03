@@ -1,4 +1,4 @@
-import { QUERY_KEY } from '@/constants/reactQuery.query.constants';
+import { QUERY_KEY } from '@/constants';
 import { LanguageGetAllRequest } from '@i18n-editor/shared';
 import { useQueryClient } from '@tanstack/react-query';
 

@@ -1,0 +1,1 @@
+export const WORKSPACE_TITLE_MIN_WIDTH = 200;
