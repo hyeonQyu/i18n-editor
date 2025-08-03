@@ -5,10 +5,10 @@ import { useQuery } from '@tanstack/react-query';
 
 const DEFAULT_RESPONSE: NamespaceGetAllResponse = { namespaces: [] };
 
-export const useNamespaces = (workspaceId?: string) => {
+export const useNamespaces = (workspaceId: string) => {
   const electronAPI = useElectronAPI();
 
-  const request: NamespaceGetAllRequest = { workspaceId: workspaceId ?? '' };
+  const request: NamespaceGetAllRequest = { workspaceId };
 
   const { data: { namespaces } = DEFAULT_RESPONSE } = useQuery({
     queryKey: QUERY_KEY.workspace.namespace.getAll(request),

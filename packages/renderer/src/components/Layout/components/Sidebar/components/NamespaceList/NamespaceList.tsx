@@ -11,7 +11,7 @@ import { useWorkspace } from '@/hooks/domains/workspace';
 
 function NamespaceList() {
   const workspace = useWorkspace();
-  const namespaces = useNamespaces(workspace?.id);
+  const namespaces = useNamespaces(workspace?.id ?? '');
 
   const currentNamespace = useNamespace();
 

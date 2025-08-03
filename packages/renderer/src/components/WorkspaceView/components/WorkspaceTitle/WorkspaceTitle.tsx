@@ -6,9 +6,13 @@ import { WorkspaceNameEditFinishButton } from '@/components/WorkspaceView/compon
 import { WorkspaceNameEditTextField } from '@/components/WorkspaceView/components/WorkspaceTitle/components/WorkspaceNameEditTextField';
 import { useWorkspaceTitleStore } from '@/components/WorkspaceView/components/WorkspaceTitle/stores/workspaceTitle.store';
 import { useWorkspace } from '@/hooks/domains/workspace';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 
 function WorkspaceTitle() {
+  const {
+    palette: { text },
+  } = useTheme();
+
   const workspace = useWorkspace();
 
   const isNameEditing = useWorkspaceTitleStore((store) => store.isNameEditing);
@@ -32,7 +36,11 @@ function WorkspaceTitle() {
           </>
         ) : (
           <>
-            <EllipsisText label={workspace?.name ?? ''} variant={'h2'} sx={{ width: 'fit-content', maxWidth: '100%' }} />
+            <EllipsisText
+              label={workspace?.name ?? ''}
+              variant={'h2'}
+              sx={{ width: 'fit-content', maxWidth: '100%', color: text.secondary }}
+            />
             <WorkspaceNameEditButton />
           </>
         )}

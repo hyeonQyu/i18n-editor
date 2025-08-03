@@ -1,6 +1,6 @@
 import { SIDEBAR_TRANSITION_DURATION } from '@/components/Layout/constants/layout.style.constants';
 import { useCurrentSidebarWidth } from '@/components/Layout/hooks/useCurrentSidebarWidth';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { ReactNode } from 'react';
 
 interface MainProps {
@@ -9,6 +9,7 @@ interface MainProps {
 
 function Main(props: MainProps) {
   const { children } = props;
+  const theme = useTheme();
 
   const sidebarWidth = useCurrentSidebarWidth();
 
@@ -22,6 +23,7 @@ function Main(props: MainProps) {
         transition: `width ${SIDEBAR_TRANSITION_DURATION}s ease`,
         width: `calc(100% - ${sidebarWidth}px)`,
         height: '100%',
+        backgroundColor: theme.palette.background.default,
       }}
     >
       {children}
