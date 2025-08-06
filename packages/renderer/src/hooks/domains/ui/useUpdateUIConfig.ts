@@ -1,8 +1,8 @@
+import { MUTATION_KEY } from '@/constants/reactQuery.mutation.constants';
+import { useElectronAPI } from '@/hooks/common';
 import { useInvalidateReadUIConfigQuery } from '@/hooks/domains/ui/useInvalidateReadUIConfigQuery';
 import { UIUpdateRequest } from '@i18n-editor/shared';
 import { useMutation } from '@tanstack/react-query';
-import { MUTATION_KEY } from '../../../constants/reactQuery.mutation.constants';
-import { useElectronAPI } from '../../../hooks/common';
 
 export const useUpdateUIConfig = () => {
   const electronAPI = useElectronAPI();
