@@ -5,9 +5,10 @@ import SidebarMenu, {
   SidebarMenuListItem,
   SidebarMenuTitle,
 } from '@/components/Layout/components/Sidebar/components/SidebarMenu';
+import WorkspaceNameUpdateDialog from '@/components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog';
+import { useOpenWorkspaceNameUpdateDialog } from '@/components/Layout/components/Sidebar/components/WorkspaceList/hooks';
 import { useSetWorkspace, useWorkspace, useWorkspaces } from '@/hooks/domains/workspace';
 import { useConfirmDeleteWorkspace } from '@/hooks/domains/workspace/useConfirmDeleteWorkspace';
-import { Workspace } from '@i18n-editor/shared';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
@@ -21,9 +22,8 @@ function WorkspaceList() {
     palette: { error },
   } = useTheme();
 
-  // const openNameUpdateDialog = useOpenWorkspaceNameUpdateDialog();
+  const openNameUpdateDialog = useOpenWorkspaceNameUpdateDialog();
   // const openLanguageCodesDialog = useOpenLanguageCodesDialog();
-  const openNameUpdateDialog = (workspace: Workspace) => {};
   const openLanguageCodesDialog = (workspaceId: string) => {};
   const selectWorkspace = useSetWorkspace();
   const confirmDeleteWorkspace = useConfirmDeleteWorkspace();
@@ -74,7 +74,8 @@ function WorkspaceList() {
           })}
         </SidebarMenuList>
       </SidebarMenu>
-      {/* <WorkspaceNameUpdateDialog /> */}
+
+      <WorkspaceNameUpdateDialog />
     </>
   );
 }
