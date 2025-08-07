@@ -1,6 +1,4 @@
-import Header from '@/components/Layout/components/Header';
-import Main from '@/components/Layout/components/Main';
-import Sidebar from '@/components/Layout/components/Sidebar';
+import { Header, Main, Sidebar } from '@/components/Layout/components';
 import { HEADER_HEIGHT, SIDEBAR_TRANSITION_DURATION } from '@/components/Layout/constants/layout.style.constants';
 import { useCurrentSidebarWidth } from '@/components/Layout/hooks/useCurrentSidebarWidth';
 import { Box } from '@mui/material';

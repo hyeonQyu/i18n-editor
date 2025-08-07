@@ -1,5 +1,4 @@
-import AddButton from '@/components/Layout/components/Header/components/AddButton';
-import SidebarController from '@/components/Layout/components/Header/components/SidebarController';
+import { AddButton, SidebarController } from '@/components/Layout/components/Header/components';
 import { AppBar, Toolbar, Typography, useTheme } from '@mui/material';
 
 function Header() {

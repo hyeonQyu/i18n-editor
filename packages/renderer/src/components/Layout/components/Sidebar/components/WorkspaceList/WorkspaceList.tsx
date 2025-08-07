@@ -7,7 +7,7 @@ import SidebarMenu, {
 } from '@/components/Layout/components/Sidebar/components/SidebarMenu';
 import WorkspaceNameUpdateDialog from '@/components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog';
 import { useOpenWorkspaceNameUpdateDialog } from '@/components/Layout/components/Sidebar/components/WorkspaceList/hooks';
-import { useSetWorkspace, useWorkspace, useWorkspaces } from '@/hooks/domains/workspace';
+import { useSelectNewWorkspaceDirectory, useSetWorkspace, useWorkspace, useWorkspaces } from '@/hooks/domains/workspace';
 import { useConfirmDeleteWorkspace } from '@/hooks/domains/workspace/useConfirmDeleteWorkspace';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
@@ -22,20 +22,18 @@ function WorkspaceList() {
     palette: { error },
   } = useTheme();
 
+  const selectNewWorkspaceDirectory = useSelectNewWorkspaceDirectory();
+
   const openNameUpdateDialog = useOpenWorkspaceNameUpdateDialog();
   // const openLanguageCodesDialog = useOpenLanguageCodesDialog();
   const openLanguageCodesDialog = (workspaceId: string) => {};
   const selectWorkspace = useSetWorkspace();
   const confirmDeleteWorkspace = useConfirmDeleteWorkspace();
 
-  const handleClickAddButton = () => {
-    // workspace 추가
-  };
-
   return (
     <>
       <SidebarMenu>
-        <SidebarMenuTitle label={'워크스페이스'} action={<SidebarMenuAddButton onClick={handleClickAddButton} />} />
+        <SidebarMenuTitle label={'워크스페이스'} action={<SidebarMenuAddButton onClick={selectNewWorkspaceDirectory} />} />
 
         <SidebarMenuList>
           {workspaces.map((workspace) => {

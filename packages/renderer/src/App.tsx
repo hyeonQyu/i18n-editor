@@ -1,4 +1,5 @@
 import ConfirmDialog from '@/components/ConfirmDialog/ConfirmDialog.tsx';
+import FileManagerDialog from '@/components/FileManagerDialog/FileManagerDialog.tsx';
 import Layout from '@/components/Layout/Layout.tsx';
 import ReactQueryClientProvider from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider.tsx';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -19,6 +20,7 @@ function App(): React.JSX.Element {
         <SnackbarProvider>
           <Layout>
             <ConfirmDialog />
+            <FileManagerDialog />
 
             <div className="App">
               <header className="App-header">
