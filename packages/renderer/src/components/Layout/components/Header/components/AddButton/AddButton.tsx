@@ -1,3 +1,4 @@
+import { useOpenNamespaceAddDialog } from '@/components/NamespaceAddDialog';
 import { usePopover } from '@/hooks/common';
 import { useSelectNewWorkspaceDirectory } from '@/hooks/domains/workspace';
 import AddIcon from '@mui/icons-material/Add';
@@ -11,6 +12,7 @@ function AddButton() {
   const { anchorElement, handleOpen, handleClose } = usePopover();
 
   const selectNewWorkspaceDirectory = useSelectNewWorkspaceDirectory();
+  const openNamespaceAddDialog = useOpenNamespaceAddDialog();
 
   const handleClickAddWorkspace = () => {
     selectNewWorkspaceDirectory();
@@ -18,7 +20,7 @@ function AddButton() {
   };
 
   const handleClickAddNamespace = () => {
-    selectNewWorkspaceDirectory();
+    openNamespaceAddDialog();
     handleClose();
   };
 

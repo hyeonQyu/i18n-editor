@@ -5,6 +5,7 @@ import SidebarMenu, {
   SidebarMenuListItem,
   SidebarMenuTitle,
 } from '@/components/Layout/components/Sidebar/components/SidebarMenu';
+import { useOpenNamespaceAddDialog } from '@/components/NamespaceAddDialog';
 import { useNamespace, useNamespaces, useSetNamespace } from '@/hooks/domains/namespace';
 import { useWorkspace } from '@/hooks/domains/workspace';
 
@@ -16,16 +17,14 @@ function NamespaceList() {
 
   const setNamespace = useSetNamespace();
 
-  if (!workspace || namespaces.length === 0) return null;
+  const openNamespaceAddDialog = useOpenNamespaceAddDialog();
 
-  const handleClickAddButton = () => {
-    // namespace 추가
-  };
+  if (!workspace || namespaces.length === 0) return null;
 
   return (
     <>
       <SidebarMenu>
-        <SidebarMenuTitle label={workspace.name} action={<SidebarMenuAddButton onClick={handleClickAddButton} />} />
+        <SidebarMenuTitle label={workspace.name} action={<SidebarMenuAddButton onClick={openNamespaceAddDialog} />} />
 
         <SidebarMenuList>
           {namespaces.map((namespace) => (

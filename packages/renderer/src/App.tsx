@@ -1,6 +1,7 @@
 import ConfirmDialog from '@/components/ConfirmDialog/ConfirmDialog.tsx';
 import FileManagerDialog from '@/components/FileManagerDialog/FileManagerDialog.tsx';
 import Layout from '@/components/Layout/Layout.tsx';
+import NamespaceAddDialog from '@/components/NamespaceAddDialog/NamespaceAddDialog.tsx';
 import ReactQueryClientProvider from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider.tsx';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SnackbarProvider } from 'notistack';
@@ -21,6 +22,7 @@ function App(): React.JSX.Element {
           <Layout>
             <ConfirmDialog />
             <FileManagerDialog />
+            <NamespaceAddDialog />
 
             <div className="App">
               <header className="App-header">
