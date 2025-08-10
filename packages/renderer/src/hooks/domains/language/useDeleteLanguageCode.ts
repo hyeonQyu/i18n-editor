@@ -14,6 +14,6 @@ export const useDeleteLanguageCode = () => {
 
   return async (request: LanguageDeleteRequest) => {
     await mutateAsync(request);
-    await invalidateGetAllLanguageCodesQuery(request);
+    await invalidateGetAllLanguageCodesQuery(request.workspaceId);
   };
 };

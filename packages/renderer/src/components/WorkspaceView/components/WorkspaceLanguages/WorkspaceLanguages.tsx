@@ -1,7 +1,6 @@
 import { PaperSection } from '@/components/PaperSection';
 import { AddablePaperSectionTitle } from '@/components/WorkspaceView/components/AddablePaperSectionTitle';
-import { useOpenWorkspaceLanguageCodesDialog } from '@/components/WorkspaceView/hooks';
-import { useConfirmDeleteWorkspaceLanguage } from '@/components/WorkspaceView/hooks/useConfirmDeleteWorkspaceLanguage';
+import { useConfirmDeleteWorkspaceLanguage, useOpenWorkspaceLanguageCodesDialog } from '@/components/WorkspaceView/hooks';
 import { useLanguageCodes } from '@/hooks/domains/language';
 import { useWorkspaceId } from '@/hooks/domains/workspace';
 import { Box, Chip } from '@mui/material';

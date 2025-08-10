@@ -2,9 +2,14 @@ import { WorkspaceLanguages } from '@/components/WorkspaceView/components/Worksp
 import { WorkspaceTitle } from '@/components/WorkspaceView/components/WorkspaceTitle';
 import { WorkspaceToolbar } from '@/components/WorkspaceView/components/WorkspaceToolbar';
 import { WorkspaceViewNamespaceSelector } from '@/components/WorkspaceView/components/WorkspaceViewNamespaceSelector';
+import { useWorkspaceId } from '@/hooks/domains/workspace';
 import { Box } from '@mui/material';
 
 function WorkspaceView() {
+  const workspaceId = useWorkspaceId();
+
+  if (!workspaceId) return null;
+
   return (
     <>
       <Box
