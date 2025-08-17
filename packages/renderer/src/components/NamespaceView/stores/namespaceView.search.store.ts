@@ -1,4 +1,4 @@
-import { NAMESPACE_SEARCH_FOCUS_EVENT } from '@/components/NamespaceView/constants/namespaceView.constants';
+import { NAMESPACE_SEARCH_FOCUS_EVENT } from '@/components/NamespaceView/constants/namespaceView.event.constants';
 import { create } from 'zustand';
 
 interface NamespaceViewSearchStates {
