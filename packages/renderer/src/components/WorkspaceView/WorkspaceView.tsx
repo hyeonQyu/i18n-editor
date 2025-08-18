@@ -3,9 +3,13 @@ import { WorkspaceTitle } from '@/components/WorkspaceView/components/WorkspaceT
 import { WorkspaceToolbar } from '@/components/WorkspaceView/components/WorkspaceToolbar';
 import { WorkspaceViewNamespaceSelector } from '@/components/WorkspaceView/components/WorkspaceViewNamespaceSelector';
 import { useWorkspaceId } from '@/hooks/domains/workspace';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 
 function WorkspaceView() {
+  const {
+    palette: { background },
+  } = useTheme();
+
   const workspaceId = useWorkspaceId();
 
   if (!workspaceId) return null;
@@ -28,6 +32,7 @@ function WorkspaceView() {
             display: 'flex',
             flexDirection: 'column',
             gap: '32px',
+            backgroundColor: background.default,
           }}
         >
           <WorkspaceTitle />
