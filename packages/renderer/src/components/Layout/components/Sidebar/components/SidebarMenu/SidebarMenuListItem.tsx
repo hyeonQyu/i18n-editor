@@ -56,8 +56,10 @@ function SidebarMenuListItem(props: SidebarMenuListItemProps) {
           anchorEl={anchorElement}
           open={Boolean(anchorElement)}
           onClose={handleMenuClose}
-          MenuListProps={{
-            sx: { width: '200px' },
+          slotProps={{
+            list: {
+              sx: { width: '200px' },
+            },
           }}
         >
           {menuItems?.map(({ label, IconComponent, onClick, color = text.secondary }, i) => (
