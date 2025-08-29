@@ -1,4 +1,5 @@
 import NamespaceToolbar from '@/components/NamespaceView/components/NamespaceToolbar';
+import NamespaceTranslation from '@/components/NamespaceView/components/NamespaceTranslation/NamespaceTranslation';
 import { useSearchFocusKeyboardEventHandler } from '@/components/NamespaceView/hooks';
 import { useNamespaceViewSearchStore } from '@/components/NamespaceView/stores/namespaceView.search.store';
 import { useKeyboardEventListener } from '@/hooks/common';
@@ -29,6 +30,7 @@ function NamespaceView() {
       }}
     >
       <NamespaceToolbar />
+      <NamespaceTranslation />
     </Box>
   );
 }
