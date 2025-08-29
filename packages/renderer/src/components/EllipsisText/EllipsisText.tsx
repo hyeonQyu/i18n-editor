@@ -8,7 +8,6 @@ interface EllipsisTextProps {
   className?: string;
   sx?: SxProps;
   reverse?: boolean;
-  hideTooltip?: boolean;
 }
 
 const CLASSNAME = {
@@ -17,12 +16,12 @@ const CLASSNAME = {
 };
 
 function EllipsisText(props: EllipsisTextProps) {
-  const { label, variant, maxLines = 1, className, sx, reverse, hideTooltip = false } = props;
+  const { label, variant, maxLines = 1, className, sx, reverse } = props;
 
   const lineClassName = maxLines === 1 ? CLASSNAME.single : CLASSNAME.multi;
 
   return (
-    <Tooltip title={label} disableHoverListener={hideTooltip}>
+    <Tooltip title={label}>
       <Typography
         variant={variant}
         className={classNames(lineClassName, className)}

@@ -1,14 +1,13 @@
 import { PaperSection } from '@/components/PaperSection';
 import { AddablePaperSectionTitle } from '@/components/WorkspaceView/components/AddablePaperSectionTitle';
-import {
-  useConfirmDeleteWorkspaceLanguage,
-  useOpenWorkspaceLanguageCodesDialog,
-  useWorkspaceLanguageCodes,
-} from '@/components/WorkspaceView/hooks';
+import { useConfirmDeleteWorkspaceLanguage, useOpenWorkspaceLanguageCodesDialog } from '@/components/WorkspaceView/hooks';
+import { useLanguageCodes } from '@/hooks/domains/language';
+import { useWorkspaceId } from '@/hooks/domains/workspace';
 import { Box, Chip } from '@mui/material';
 
 function WorkspaceLanguages() {
-  const languageCodes = useWorkspaceLanguageCodes();
+  const workspaceId = useWorkspaceId();
+  const languageCodes = useLanguageCodes(workspaceId);
 
   const openLanguageCodesDialog = useOpenWorkspaceLanguageCodesDialog();
   const confirmDeleteLanguage = useConfirmDeleteWorkspaceLanguage();
