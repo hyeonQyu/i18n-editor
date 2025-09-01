@@ -1,7 +1,8 @@
 import { SxProps, Tooltip, Typography, TypographyProps } from '@mui/material';
 import classNames from 'classnames';
+import { forwardRef, ReactNode } from 'react';
 
-interface EllipsisTextProps {
+export interface EllipsisTextProps {
   label: string;
   variant: TypographyProps['variant'];
   maxLines?: number;
@@ -9,6 +10,7 @@ interface EllipsisTextProps {
   sx?: SxProps;
   reverse?: boolean;
   hideTooltip?: boolean;
+  children?: ReactNode;
 }
 
 const CLASSNAME = {
@@ -16,14 +18,15 @@ const CLASSNAME = {
   multi: 'multiline-ellipsis',
 };
 
-function EllipsisText(props: EllipsisTextProps) {
-  const { label, variant, maxLines = 1, className, sx, reverse, hideTooltip = false } = props;
+const EllipsisText = forwardRef<HTMLParagraphElement, EllipsisTextProps>(function EllipsisText(props, ref) {
+  const { label, variant, maxLines = 1, className, sx, reverse, hideTooltip = false, children } = props;
 
   const lineClassName = maxLines === 1 ? CLASSNAME.single : CLASSNAME.multi;
 
   return (
     <Tooltip title={label} disableHoverListener={hideTooltip}>
       <Typography
+        ref={ref}
         variant={variant}
         className={classNames(lineClassName, className)}
         sx={{
@@ -46,10 +49,10 @@ function EllipsisText(props: EllipsisTextProps) {
           ...sx,
         }}
       >
-        {label}
+        {children || label}
       </Typography>
     </Tooltip>
   );
-}
+});
 
 export default EllipsisText;

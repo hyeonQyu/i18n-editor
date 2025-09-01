@@ -1,5 +1,6 @@
 import EllipsisText from '@/components/EllipsisText';
-import { useNamespaceTranslations } from '@/components/NamespaceView/hooks/useNamespaceTranslations';
+import HighlightedTranslationText from '@/components/NamespaceView/components/NamespaceTranslation/components/HighlightedTranslationText';
+import { useNamespaceFilteredTranslations } from '@/components/NamespaceView/hooks';
 import { Box, ListItemButton, Stack, Typography, useTheme } from '@mui/material';
 import { FixedSizeList } from 'react-window';
 
@@ -12,7 +13,7 @@ const displayLanguageSize = 2;
 function TranslationList({ height }: TranslationListProps) {
   const { palette } = useTheme();
 
-  const translations = useNamespaceTranslations();
+  const { translations, keyword } = useNamespaceFilteredTranslations();
 
   return (
     <FixedSizeList
@@ -27,8 +28,17 @@ function TranslationList({ height }: TranslationListProps) {
       {({ index, style }) => {
         const { key, value: translationValue } = translations[index];
         const languageValues = Object.entries(translationValue);
-        const displayLanguageValues = languageValues.slice(0, displayLanguageSize);
-        const restLanguageValues = languageValues.slice(displayLanguageSize);
+
+        const keywordMatchedLanguageValues = languageValues.filter(([_, value]) => value.toLowerCase().includes(keyword.toLowerCase()));
+        const nonMatchedLanguageValues = languageValues.filter(([_, value]) => !value.toLowerCase().includes(keyword.toLowerCase()));
+
+        const displayLanguageValues = [
+          ...keywordMatchedLanguageValues.slice(0, displayLanguageSize),
+          ...nonMatchedLanguageValues.slice(0, Math.max(0, displayLanguageSize - keywordMatchedLanguageValues.length)),
+        ];
+        const restLanguageValues = languageValues.filter(
+          ([language]) => !displayLanguageValues.some(([displayLanguage]) => displayLanguage === language),
+        );
 
         return (
           <ListItemButton
@@ -38,7 +48,7 @@ function TranslationList({ height }: TranslationListProps) {
             }}
           >
             <Stack sx={{ width: '100%' }}>
-              <EllipsisText label={key} variant="body1" sx={{ color: palette.text.primary }} />
+              <HighlightedTranslationText text={key} keyword={keyword} variant="body1" sx={{ color: palette.text.primary }} />
 
               <Box sx={{ marginTop: '8px', marginBottom: '4px' }}>
                 {displayLanguageValues.map(([language, value]) => (
@@ -46,7 +56,13 @@ function TranslationList({ height }: TranslationListProps) {
                     <Typography variant="body2" sx={{ color: palette.text.secondary, fontWeight: 600 }}>
                       ({language})
                     </Typography>
-                    <EllipsisText key={language} label={value} variant="body2" sx={{ color: palette.text.secondary }} hideTooltip />
+                    <HighlightedTranslationText
+                      text={value}
+                      keyword={keyword}
+                      variant="body2"
+                      sx={{ color: palette.text.secondary }}
+                      hideTooltip
+                    />
                   </Box>
                 ))}
               </Box>

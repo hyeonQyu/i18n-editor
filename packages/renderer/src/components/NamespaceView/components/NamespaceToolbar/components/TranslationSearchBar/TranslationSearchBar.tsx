@@ -1,5 +1,6 @@
 import ClearSearchKeywordIconButton from '@/components/NamespaceView/components/NamespaceToolbar/components/TranslationSearchBar/components/ClearSearchKeywordIconButton';
 import { NAMESPACE_SEARCH_FOCUS_EVENT } from '@/components/NamespaceView/constants/namespaceView.event.constants';
+import { useTranslationSearchKeyword } from '@/components/NamespaceView/hooks';
 import { useNamespaceViewSearchStore } from '@/components/NamespaceView/stores/namespaceView.search.store';
 import SearchIcon from '@mui/icons-material/Search';
 import { TextField } from '@mui/material';
@@ -8,7 +9,7 @@ import { ChangeEventHandler, useEffect, useRef } from 'react';
 function TranslationSearchBar() {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const keyword = useNamespaceViewSearchStore((store) => store.keyword);
+  const keyword = useTranslationSearchKeyword();
   const setKeyword = useNamespaceViewSearchStore((store) => store.setKeyword);
 
   useEffect(() => {
