@@ -1,5 +1,4 @@
-import { useNamespaceAddFormSubmit } from '@/components/NamespaceAddDialog/hooks/useNamespaceAddFormSubmit';
-import { useNamespaceDuplicated } from '@/components/NamespaceAddDialog/hooks/useNamespaceDuplicated';
+import { useNamespaceAddFormSubmit, useNamespaceDuplicated } from '@/components/NamespaceAddDialog/hooks';
 import { useNamespaceAddDialogStore } from '@/components/NamespaceAddDialog/stores/namespaceAddDailog.store';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { useEffect } from 'react';

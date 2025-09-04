@@ -1,6 +1,7 @@
 import AppRouter from '@/components/AppRouter/AppRouter.tsx';
 import ConfirmDialog from '@/components/ConfirmDialog/ConfirmDialog.tsx';
 import FileManagerDialog from '@/components/FileManagerDialog/FileManagerDialog.tsx';
+import LanguageCodesDialog from '@/components/LanguageCodesDialog/LanguageCodesDialog.tsx';
 import Layout from '@/components/Layout/Layout.tsx';
 import NamespaceAddDialog from '@/components/NamespaceAddDialog/NamespaceAddDialog.tsx';
 import ReactQueryClientProvider from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider.tsx';
@@ -23,6 +24,7 @@ function App(): React.JSX.Element {
             <ConfirmDialog />
             <FileManagerDialog />
             <NamespaceAddDialog />
+            <LanguageCodesDialog />
 
             <AppRouter />
 

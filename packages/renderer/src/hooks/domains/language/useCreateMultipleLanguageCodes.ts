@@ -14,6 +14,6 @@ export const useCreateMultipleLanguageCodes = () => {
 
   return async (request: LanguageCreateMultipleRequest) => {
     await mutateAsync(request);
-    await invalidateGetAllLanguageCodesQuery(request);
+    await invalidateGetAllLanguageCodesQuery(request.workspaceId);
   };
 };

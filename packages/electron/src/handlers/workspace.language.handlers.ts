@@ -28,13 +28,13 @@ export const handleCreateMultipleLanguages: IPCHandler<LanguageCreateMultipleRes
 ) => {
   const workspace = getWorkspaceById(workspaceId);
   const existingLanguageCodes = await getAllLanguageCodes(workspace);
-  const namespaces = await getAllNamespaces(workspace.path, languageCodes);
+  const namespaces = await getAllNamespaces(workspace.path, existingLanguageCodes);
   const mergedLanguageCodes = [...new Set([...existingLanguageCodes, ...languageCodes])];
 
   await Promise.all(
     namespaces.map(async (namespace) => {
-      const prevTranslations = await getAllTranslations(workspace.path, namespace, mergedLanguageCodes);
-      const translations = prevTranslations.map((translation) => completeTranslation(languageCodes, translation));
+      const prevTranslations = await getAllTranslations(workspace.path, namespace, existingLanguageCodes);
+      const translations = prevTranslations.map((translation) => completeTranslation(mergedLanguageCodes, translation));
       await writeTranslation(workspace, namespace, translations);
     }),
   );

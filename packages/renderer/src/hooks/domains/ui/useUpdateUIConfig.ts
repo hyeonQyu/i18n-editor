@@ -1,4 +1,4 @@
-import { MUTATION_KEY } from '@/constants/reactQuery.mutation.constants';
+import { MUTATION_KEY } from '@/constants';
 import { useElectronAPI } from '@/hooks/common';
 import { useInvalidateReadUIConfigQuery } from '@/hooks/domains/ui/useInvalidateReadUIConfigQuery';
 import { UIUpdateRequest } from '@i18n-editor/shared';

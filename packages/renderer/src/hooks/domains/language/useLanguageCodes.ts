@@ -1,4 +1,4 @@
-import { QUERY_KEY } from '@/constants/reactQuery.query.constants';
+import { QUERY_KEY } from '@/constants';
 import { useElectronAPI } from '@/hooks/common';
 import { LanguageGetAllRequest, LanguageGetAllResponse } from '@i18n-editor/shared';
 import { useQuery } from '@tanstack/react-query';

@@ -1,4 +1,4 @@
-import { QUERY_KEY } from '@/constants/reactQuery.query.constants';
+import { QUERY_KEY } from '@/constants';
 import { useIsFetching } from '@tanstack/react-query';
 
 export const useLoadingWorkspaces = () => {

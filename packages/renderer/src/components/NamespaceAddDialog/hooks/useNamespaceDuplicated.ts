@@ -1,11 +1,13 @@
 import { useNamespaces } from '@/hooks/domains/namespace/useNamespaces';
+import { useWorkspaceId } from '@/hooks/domains/workspace';
 import { debounce } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 
 export const useNamespaceDuplicated = (namespace: string) => {
   const [duplicated, setDuplicated] = useState(false);
 
-  const namespaces = useNamespaces();
+  const workspaceId = useWorkspaceId();
+  const namespaces = useNamespaces(workspaceId);
 
   const debounceCheckDuplicated = useMemo(
     () =>

@@ -1,4 +1,4 @@
-import { QUERY_KEY } from '@/constants/reactQuery.query.constants';
+import { QUERY_KEY } from '@/constants';
 import { useElectronAPI } from '@/hooks/common';
 import { DirectoryReadRequest, FileEntry } from '@i18n-editor/shared';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
