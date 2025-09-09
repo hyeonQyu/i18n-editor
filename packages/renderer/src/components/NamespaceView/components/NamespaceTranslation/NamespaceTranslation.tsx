@@ -1,6 +1,7 @@
 import TranslationEditor from '@/components/NamespaceView/components/NamespaceTranslation/components/TranslationEditor';
 import TranslationList from '@/components/NamespaceView/components/NamespaceTranslation/components/TranslationList';
 import { NAMESPACE_TOOLBAR_HEIGHT } from '@/components/NamespaceView/constants/namespaceView.size.constants';
+import { useNamespaceFilteredTranslations } from '@/components/NamespaceView/hooks';
 import { Box } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 
@@ -27,6 +28,8 @@ function NamespaceTranslation() {
     };
   }, []);
 
+  const { translations, keyword } = useNamespaceFilteredTranslations();
+
   return (
     <Box
       ref={containerRef}
@@ -36,7 +39,7 @@ function NamespaceTranslation() {
         display: 'flex',
       }}
     >
-      <TranslationList height={containerHeight} />
+      <TranslationList height={containerHeight} translations={translations} keyword={keyword} />
       <TranslationEditor />
     </Box>
   );
