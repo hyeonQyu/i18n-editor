@@ -1,5 +1,5 @@
 import TranslationEditor from '@/components/NamespaceView/components/NamespaceTranslation/components/TranslationEditor';
-import TranslationList from '@/components/NamespaceView/components/TranslationList';
+import TranslationList from '@/components/NamespaceView/components/NamespaceTranslation/components/TranslationList';
 import { NAMESPACE_TOOLBAR_HEIGHT } from '@/components/NamespaceView/constants/namespaceView.size.constants';
 import { Box } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
