@@ -1,4 +1,4 @@
-import { useNamespaceViewSearchStore } from '@/components/NamespaceView/stores/namespaceView.search.store';
+import { useNamespaceViewSearchStore } from '@/components/NamespaceView/stores';
 import { useCheckMetaKey } from '@/hooks/common';
 import { useCallback } from 'react';
 

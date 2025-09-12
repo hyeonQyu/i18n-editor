@@ -1,5 +1,7 @@
 import EllipsisText from '@/components/EllipsisText';
 import HighlightedTranslationText from '@/components/NamespaceView/components/NamespaceTranslation/components/HighlightedTranslationText';
+import { NAMESPACE_TRANSLATION_LIST_WIDTH } from '@/components/NamespaceView/constants';
+import { useNamespaceViewTranslationStore } from '@/components/NamespaceView/stores';
 import { Translation } from '@i18n-editor/shared/defines/translation.definitions.js';
 import { Box, ListItemButton, Stack, Typography, useTheme } from '@mui/material';
 import { memo } from 'react';
@@ -16,9 +18,11 @@ const displayLanguageSize = 2;
 function TranslationList({ height, translations, keyword }: TranslationListProps) {
   const { palette } = useTheme();
 
+  const setSelectedTranslationKey = useNamespaceViewTranslationStore((store) => store.setSelectedTranslationKey);
+
   return (
     <FixedSizeList
-      width={400}
+      width={NAMESPACE_TRANSLATION_LIST_WIDTH}
       height={height}
       itemCount={translations.length}
       itemSize={120}
@@ -41,19 +45,22 @@ function TranslationList({ height, translations, keyword }: TranslationListProps
           ([language]) => !displayLanguageValues.some(([displayLanguage]) => displayLanguage === language),
         );
 
+        const handleClick = () => setSelectedTranslationKey(key);
+
         return (
           <ListItemButton
             style={style}
             sx={{
               padding: '16px',
             }}
+            onClick={handleClick}
           >
             <Stack sx={{ width: '100%' }}>
               <HighlightedTranslationText text={key} keyword={keyword} variant="body1" sx={{ color: palette.text.primary }} />
 
               <Box sx={{ marginTop: '8px', marginBottom: '4px' }}>
                 {displayLanguageValues.map(([language, value]) => (
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <Box key={language} sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <Typography variant="body2" sx={{ color: palette.text.secondary, fontWeight: 600 }}>
                       ({language})
                     </Typography>

@@ -1,4 +1,4 @@
-import { useNamespaceViewSearchStore } from '@/components/NamespaceView/stores/namespaceView.search.store';
+import { useNamespaceViewSearchStore } from '@/components/NamespaceView/stores';
 import ClearIcon from '@mui/icons-material/Clear';
 import { IconButton } from '@mui/material';
 
