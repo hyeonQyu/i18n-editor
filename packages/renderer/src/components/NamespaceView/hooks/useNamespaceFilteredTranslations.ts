@@ -37,7 +37,7 @@ export const useNamespaceFilteredTranslations = () => {
           }),
           keyword,
         });
-      }, TIME_UNIT.unitOfMs.asSecond * 0.5),
+      }, TIME_UNIT.unitOfMs.asSecond * 0.6),
     [],
   );
 

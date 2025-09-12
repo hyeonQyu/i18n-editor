@@ -1,19 +1,20 @@
 import EllipsisText from '@/components/EllipsisText';
 import HighlightedTranslationText from '@/components/NamespaceView/components/NamespaceTranslation/components/HighlightedTranslationText';
-import { useNamespaceFilteredTranslations } from '@/components/NamespaceView/hooks';
+import { Translation } from '@i18n-editor/shared/defines/translation.definitions.js';
 import { Box, ListItemButton, Stack, Typography, useTheme } from '@mui/material';
+import { memo } from 'react';
 import { FixedSizeList } from 'react-window';
 
 interface TranslationListProps {
   height: number;
+  translations: Translation[];
+  keyword: string;
 }
 
 const displayLanguageSize = 2;
 
-function TranslationList({ height }: TranslationListProps) {
+function TranslationList({ height, translations, keyword }: TranslationListProps) {
   const { palette } = useTheme();
-
-  const { translations, keyword } = useNamespaceFilteredTranslations();
 
   return (
     <FixedSizeList
@@ -82,4 +83,4 @@ function TranslationList({ height }: TranslationListProps) {
   );
 }
 
-export default TranslationList;
+export default memo(TranslationList);
