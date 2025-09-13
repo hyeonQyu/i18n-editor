@@ -1,7 +1,7 @@
 import NamespaceToolbar from '@/components/NamespaceView/components/NamespaceToolbar';
 import NamespaceTranslation from '@/components/NamespaceView/components/NamespaceTranslation/NamespaceTranslation';
 import { useSearchFocusKeyboardEventHandler } from '@/components/NamespaceView/hooks';
-import { useNamespaceViewSearchStore } from '@/components/NamespaceView/stores/namespaceView.search.store';
+import { useNamespaceViewSearchStore } from '@/components/NamespaceView/stores';
 import { useKeyboardEventListener } from '@/hooks/common';
 import { Box } from '@mui/material';
 import { useEffect } from 'react';

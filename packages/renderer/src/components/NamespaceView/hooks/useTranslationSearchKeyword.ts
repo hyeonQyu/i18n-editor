@@ -1,4 +1,4 @@
-import { useNamespaceViewSearchStore } from '@/components/NamespaceView/stores/namespaceView.search.store';
+import { useNamespaceViewSearchStore } from '@/components/NamespaceView/stores';
 
 export const useTranslationSearchKeyword = () => {
   return useNamespaceViewSearchStore((store) => store.keyword);

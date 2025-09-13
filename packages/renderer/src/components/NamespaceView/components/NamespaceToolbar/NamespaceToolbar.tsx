@@ -1,6 +1,6 @@
 import TranslationSearchBar from '@/components/NamespaceView/components/NamespaceToolbar/components/TranslationSearchBar';
 import { useWorkspaceNamespaceToolbarButtonProps } from '@/components/NamespaceView/components/NamespaceToolbar/hooks/useWorkspaceNamespaceToolbarButtonProps';
-import { NAMESPACE_TOOLBAR_HEIGHT } from '@/components/NamespaceView/constants/namespaceView.size.constants';
+import { NAMESPACE_TOOLBAR_HEIGHT } from '@/components/NamespaceView/constants';
 import { Toolbar } from '@/components/Toolbar';
 import { Box, useTheme } from '@mui/material';
 
