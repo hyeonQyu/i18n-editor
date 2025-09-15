@@ -1,11 +1,11 @@
 import { TranslationDeleteButton } from '@/components/NamespaceView/components/TranslationDeleteButton';
 import { NAMESPACE_TRANSLATION_LIST_WIDTH } from '@/components/NamespaceView/constants';
-import { useNamespaceViewTranslationStore } from '@/components/NamespaceView/stores';
+import { useSelectedTranslationKey } from '@/components/NamespaceView/hooks/useSelectedTranslationKey';
 import { useNamespace } from '@/hooks/domains/namespace';
-import { useInvalidateGetAllTranslationsQuery, useUpdateTranslation } from '@/hooks/domains/translation';
+import { useUpdateTranslation } from '@/hooks/domains/translation';
 import { useWorkspaceId } from '@/hooks/domains/workspace';
 import { LanguageCode, Translation } from '@i18n-editor/shared';
-import { Stack, TextField, Typography } from '@mui/material';
+import { Box, Stack, TextField, Typography } from '@mui/material';
 import { FocusEventHandler, useMemo } from 'react';
 
 interface TranslationEditorProps {
@@ -16,16 +16,22 @@ function TranslationEditor({ translations }: TranslationEditorProps) {
   const workspaceId = useWorkspaceId();
   const namespace = useNamespace();
 
-  const selectedTranslationKey = useNamespaceViewTranslationStore((store) => store.selectedTranslationKey);
+  const selectedTranslationKey = useSelectedTranslationKey();
 
   const translationValueByLanguageCode = useMemo(() => {
     return translations.find((translation) => translation.key === selectedTranslationKey);
   }, [translations, selectedTranslationKey])?.value;
 
   const updateTranslation = useUpdateTranslation();
-  const invalidateGetAllTranslationsQuery = useInvalidateGetAllTranslationsQuery();
 
-  if (!translationValueByLanguageCode) return null;
+  if (!translationValueByLanguageCode)
+    return (
+      <Box sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Typography variant="body1" color="textSecondary" sx={{ padding: '0 32px' }}>
+          번역키를 선택하세요.
+        </Typography>
+      </Box>
+    );
 
   const getEditFinishHandler =
     (languageCode: LanguageCode): FocusEventHandler<HTMLTextAreaElement> =>
@@ -41,8 +47,6 @@ function TranslationEditor({ translations }: TranslationEditorProps) {
         translationKey: selectedTranslationKey,
         value: e.target.value,
       });
-
-      await invalidateGetAllTranslationsQuery({ workspaceId, namespace });
     };
 
   return (

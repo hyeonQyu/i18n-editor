@@ -2,6 +2,7 @@ import EllipsisText from '@/components/EllipsisText';
 import HighlightedTranslationText from '@/components/NamespaceView/components/NamespaceTranslation/components/HighlightedTranslationText';
 import { NAMESPACE_TRANSLATION_LIST_WIDTH } from '@/components/NamespaceView/constants';
 import { useSelectTranslationKey } from '@/components/NamespaceView/hooks';
+import { useSelectedTranslationKey } from '@/components/NamespaceView/hooks/useSelectedTranslationKey';
 import { Translation } from '@i18n-editor/shared/defines/translation.definitions.js';
 import { Box, ListItemButton, Stack, Typography, useTheme } from '@mui/material';
 import { memo } from 'react';
@@ -18,6 +19,7 @@ const displayLanguageSize = 2;
 function TranslationList({ height, translations, keyword }: TranslationListProps) {
   const { palette } = useTheme();
 
+  const selectedTranslationKey = useSelectedTranslationKey();
   const setSelectedTranslationKey = useSelectTranslationKey();
 
   return (
@@ -32,6 +34,7 @@ function TranslationList({ height, translations, keyword }: TranslationListProps
     >
       {({ index, style }) => {
         const { key, value: translationValue } = translations[index];
+        const selected = key === selectedTranslationKey;
         const languageValues = Object.entries(translationValue);
 
         const keywordMatchedLanguageValues = languageValues.filter(([_, value]) => value.toLowerCase().includes(keyword.toLowerCase()));
@@ -54,6 +57,7 @@ function TranslationList({ height, translations, keyword }: TranslationListProps
               padding: '16px',
             }}
             onClick={handleClick}
+            selected={selected}
           >
             <Stack sx={{ width: '100%' }}>
               <HighlightedTranslationText text={key} keyword={keyword} variant="body1" sx={{ color: palette.text.primary }} />

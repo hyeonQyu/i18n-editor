@@ -14,6 +14,6 @@ export const useUpdateTranslation = () => {
 
   return async (request: TranslationUpdateRequest) => {
     await mutateAsync(request);
-    await invalidateGetAllTranslationsQuery(request);
+    await invalidateGetAllTranslationsQuery({ workspaceId: request.workspaceId, namespace: request.namespace });
   };
 };
