@@ -14,6 +14,6 @@ export const useDeleteTranslation = () => {
 
   return async (request: TranslationDeleteRequest) => {
     await mutateAsync(request);
-    await invalidateGetAllTranslationsQuery(request);
+    await invalidateGetAllTranslationsQuery({ workspaceId: request.workspaceId, namespace: request.namespace });
   };
 };

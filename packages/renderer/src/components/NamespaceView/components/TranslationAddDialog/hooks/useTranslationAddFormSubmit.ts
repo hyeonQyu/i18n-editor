@@ -1,7 +1,7 @@
 import { useTranslationAddDialogStore } from '@/components/NamespaceView/components/TranslationAddDialog/stores/translationAddDialog.store';
 import { useSelectTranslationKey } from '@/components/NamespaceView/hooks';
 import { useNamespace } from '@/hooks/domains/namespace';
-import { useCreateTranslation, useInvalidateGetAllTranslationsQuery } from '@/hooks/domains/translation';
+import { useCreateTranslation } from '@/hooks/domains/translation';
 import { useWorkspaceId } from '@/hooks/domains/workspace';
 import { getErrorMessage } from '@/utils/error.utils';
 import { FormEventHandler } from 'react';
@@ -15,7 +15,6 @@ export const useTranslationAddFormSubmit = () => {
   const setErrorMessage = useTranslationAddDialogStore((store) => store.setErrorMessage);
 
   const createTranslation = useCreateTranslation();
-  const invalidateGetAllTranslationsQuery = useInvalidateGetAllTranslationsQuery();
 
   const selectTranslationKey = useSelectTranslationKey();
 
@@ -31,11 +30,9 @@ export const useTranslationAddFormSubmit = () => {
           value: {},
         },
       });
-      await invalidateGetAllTranslationsQuery({ workspaceId, namespace });
 
       close();
       selectTranslationKey(translationKey);
-      ``;
     } catch (e) {
       setErrorMessage(getErrorMessage(e as Error));
     }

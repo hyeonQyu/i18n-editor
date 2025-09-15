@@ -1,3 +1,4 @@
+import { TranslationDeleteButton } from '@/components/NamespaceView/components/TranslationDeleteButton';
 import { NAMESPACE_TRANSLATION_LIST_WIDTH } from '@/components/NamespaceView/constants';
 import { useNamespaceViewTranslationStore } from '@/components/NamespaceView/stores';
 import { useNamespace } from '@/hooks/domains/namespace';
@@ -48,10 +49,15 @@ function TranslationEditor({ translations }: TranslationEditorProps) {
     <Stack
       sx={{
         width: `calc(100% - ${NAMESPACE_TRANSLATION_LIST_WIDTH}px)`,
-        padding: '48px 0',
+        padding: '64px 0 48px 0',
         gap: '48px',
+        position: 'relative',
       }}
     >
+      {selectedTranslationKey && (
+        <TranslationDeleteButton translationKey={selectedTranslationKey} sx={{ position: 'absolute', top: '14px', right: '14px' }} />
+      )}
+
       <Typography
         variant="h5"
         color="textSecondary"
