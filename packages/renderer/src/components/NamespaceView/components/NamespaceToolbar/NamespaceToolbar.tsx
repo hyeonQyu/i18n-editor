@@ -1,5 +1,6 @@
 import TranslationSearchBar from '@/components/NamespaceView/components/NamespaceToolbar/components/TranslationSearchBar';
-import { useWorkspaceNamespaceToolbarButtonProps } from '@/components/NamespaceView/components/NamespaceToolbar/hooks/useWorkspaceNamespaceToolbarButtonProps';
+import { useAddTranslationToolbarButtonProps } from '@/components/NamespaceView/components/NamespaceToolbar/hooks/useAddTranslationToolbarButtonProps';
+import { useToWorkspaceToolbarButtonProps } from '@/components/NamespaceView/components/NamespaceToolbar/hooks/useToWorkspaceToolbarButtonProps';
 import { NAMESPACE_TOOLBAR_HEIGHT } from '@/components/NamespaceView/constants';
 import { Toolbar } from '@/components/Toolbar';
 import { Box, useTheme } from '@mui/material';
@@ -9,7 +10,13 @@ function NamespaceToolbar() {
     palette: { primary },
   } = useTheme();
 
-  const toolbarButtons = [useWorkspaceNamespaceToolbarButtonProps()];
+  const prefixButtons = [useToWorkspaceToolbarButtonProps()];
+  const suffixButtons = [useAddTranslationToolbarButtonProps()];
+
+  const toolbarSx = {
+    height: `${NAMESPACE_TOOLBAR_HEIGHT}px`,
+    width: 'fit-content',
+  };
 
   return (
     <Box
@@ -22,14 +29,9 @@ function NamespaceToolbar() {
         paddingRight: 2,
       }}
     >
-      <Toolbar
-        sx={{
-          height: `${NAMESPACE_TOOLBAR_HEIGHT}px`,
-          width: 'fit-content',
-        }}
-        buttons={toolbarButtons}
-      />
+      <Toolbar sx={toolbarSx} buttons={prefixButtons} />
       <TranslationSearchBar />
+      <Toolbar sx={toolbarSx} buttons={suffixButtons} />
     </Box>
   );
 }
