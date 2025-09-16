@@ -60,8 +60,8 @@ const registerGlobalShortcuts = () => {
 };
 
 app.whenReady().then(async () => {
-  createWindow();
   await configCache.init();
+  createWindow();
   setupIpcHandlers();
   registerGlobalShortcuts();
 });
