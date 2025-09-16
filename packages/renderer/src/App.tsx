@@ -1,10 +1,11 @@
-import AppRouter from '@/components/AppRouter/AppRouter.tsx';
-import ConfirmDialog from '@/components/ConfirmDialog/ConfirmDialog.tsx';
-import FileManagerDialog from '@/components/FileManagerDialog/FileManagerDialog.tsx';
-import LanguageCodesDialog from '@/components/LanguageCodesDialog/LanguageCodesDialog.tsx';
-import Layout from '@/components/Layout/Layout.tsx';
-import NamespaceAddDialog from '@/components/NamespaceAddDialog/NamespaceAddDialog.tsx';
-import ReactQueryClientProvider from '@/providers/ReactQueryClientProvider/ReactQueryClientProvider.tsx';
+import { AppRouter } from '@/components/AppRouter';
+import ConfirmDialog from '@/components/ConfirmDialog';
+import FileManagerDialog from '@/components/FileManagerDialog';
+import { LanguageCodesDialog } from '@/components/LanguageCodesDialog';
+import Layout from '@/components/Layout';
+import { NamespaceAddDialog } from '@/components/NamespaceAddDialog';
+import { WindowSizeSaver } from '@/components/WindowSizeSaver';
+import ReactQueryClientProvider from '@/providers/ReactQueryClientProvider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
@@ -19,6 +20,7 @@ function App(): React.JSX.Element {
     <ThemeProvider>
       <GlobalScrollbarStyle />
       <ReactQueryClientProvider>
+        <WindowSizeSaver />
         <SnackbarProvider>
           <Layout>
             <ConfirmDialog />
@@ -27,31 +29,6 @@ function App(): React.JSX.Element {
             <LanguageCodesDialog />
 
             <AppRouter />
-
-            {/* <div className="App">
-              <header className="App-header">
-                <h1>🌍 i18n Editor</h1>
-                <p>Electron + React + TypeScript 환경이 성공적으로 구성되었습니다!</p>
-                <div className="info-box">
-                  <h3>현재 환경:</h3>
-                  <ul>
-                    <li>⚛️ React {React.version}</li>
-                    <li>🔷 TypeScript</li>
-                    <li>⚡ Vite (개발 서버)</li>
-                    <li>🖥️ Electron (데스크톱 앱)</li>
-                  </ul>
-                </div>
-                {window.electronAPI && (
-                  <div className="electron-info">
-                    <p>✅ Electron API가 정상적으로 로드되었습니다!</p>
-                  </div>
-                )}
-              </header>
-
-              <main className="App-main">
-                <IPCTestComponent />
-              </main>
-            </div> */}
           </Layout>
         </SnackbarProvider>
         <ReactQueryDevtools />
