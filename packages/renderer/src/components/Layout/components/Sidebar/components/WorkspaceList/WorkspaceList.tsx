@@ -8,7 +8,7 @@ import SidebarMenu, {
 } from '@/components/Layout/components/Sidebar/components/SidebarMenu';
 import WorkspaceNameUpdateDialog from '@/components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog';
 import { useOpenWorkspaceNameUpdateDialog } from '@/components/Layout/components/Sidebar/components/WorkspaceList/hooks';
-import { useSelectNewWorkspaceDirectory, useSetWorkspace, useWorkspace, useWorkspaces } from '@/hooks/domains/workspace';
+import { useSelectNewWorkspaceDirectory, useSetWorkspace, useWorkspaceId, useWorkspaces } from '@/hooks/domains/workspace';
 import { useConfirmDeleteWorkspace } from '@/hooks/domains/workspace/useConfirmDeleteWorkspace';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
@@ -17,7 +17,7 @@ import { useTheme } from '@mui/material';
 
 function WorkspaceList() {
   const workspaces = useWorkspaces();
-  const currentWorkspace = useWorkspace();
+  const currentWorkspaceId = useWorkspaceId();
 
   const {
     palette: { error },
@@ -40,7 +40,7 @@ function WorkspaceList() {
             const { id, name } = workspace;
 
             const handleClick = () => selectWorkspace(id);
-            const selected = currentWorkspace?.id === id;
+            const selected = currentWorkspaceId === id;
 
             return (
               <SidebarMenuListItem

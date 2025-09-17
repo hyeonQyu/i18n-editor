@@ -1,5 +1,9 @@
-import { useGlobalStore } from '@/stores/global.store';
+import { useNavigate } from 'react-router-dom';
 
 export const useSetWorkspace = () => {
-  return useGlobalStore((state) => state.setWorkspaceId);
+  const navigate = useNavigate();
+
+  return (workspaceId: string) => {
+    navigate(`/${workspaceId}`);
+  };
 };

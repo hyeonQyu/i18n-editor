@@ -1,28 +1,38 @@
 import { HomeView } from '@/components/HomeView';
+import Layout from '@/components/Layout';
 import NamespaceView from '@/components/NamespaceView';
 import { WorkspaceView } from '@/components/WorkspaceView';
-import { useNamespace } from '@/hooks/domains/namespace';
-import { useSetWorkspace, useWorkspace, useWorkspaceId } from '@/hooks/domains/workspace';
-import { useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 function AppRouter() {
-  const workspaceId = useWorkspaceId();
-  const workspace = useWorkspace();
-  const namespace = useNamespace();
-  const setWorkspace = useSetWorkspace();
-
-  useEffect(() => {
-    if (!workspaceId && workspace) {
-      setWorkspace(workspace.id);
-    }
-  }, [workspace, workspaceId]);
-
-  if (workspaceId) {
-    if (namespace) return <NamespaceView />;
-    return <WorkspaceView />;
-  }
-
-  return <HomeView />;
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Layout>
+            <HomeView />
+          </Layout>
+        }
+      />
+      <Route
+        path="/:workspaceId"
+        element={
+          <Layout>
+            <WorkspaceView />
+          </Layout>
+        }
+      />
+      <Route
+        path="/:workspaceId/:namespace"
+        element={
+          <Layout>
+            <NamespaceView />
+          </Layout>
+        }
+      />
+    </Routes>
+  );
 }
 
 export default AppRouter;

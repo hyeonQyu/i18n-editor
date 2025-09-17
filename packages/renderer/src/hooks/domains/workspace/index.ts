@@ -2,6 +2,7 @@ export { useCreateWorkspace } from './useCreateWorkspace';
 export { useDeleteWorkspace } from './useDeleteWorkspace';
 export { useInvalidateGetAllWorkspacesQuery } from './useInvalidateGetAllWorkspacesQuery';
 export { useLoadingWorkspaces } from './useLoadingWorkspaces';
+export { useNavigateToHome } from './useNavigateToHome';
 export { useSelectNewWorkspaceDirectory } from './useSelectNewWorkspaceDirectory';
 export { useSetWorkspace } from './useSetWorkspace';
 export { useUpdateWorkspace } from './useUpdateWorkspace';
