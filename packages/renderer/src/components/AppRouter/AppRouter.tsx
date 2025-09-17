@@ -1,3 +1,4 @@
+import { ConfigView } from '@/components/ConfigView';
 import { HomeView } from '@/components/HomeView';
 import Layout from '@/components/Layout';
 import NamespaceView from '@/components/NamespaceView';
@@ -28,6 +29,14 @@ function AppRouter() {
         element={
           <Layout>
             <NamespaceView />
+          </Layout>
+        }
+      />
+      <Route
+        path="/config"
+        element={
+          <Layout>
+            <ConfigView />
           </Layout>
         }
       />

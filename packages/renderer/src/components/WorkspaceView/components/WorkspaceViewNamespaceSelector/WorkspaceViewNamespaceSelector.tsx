@@ -3,8 +3,9 @@ import { PaperSection } from '@/components/PaperSection';
 import { AddablePaperSectionTitle } from '@/components/WorkspaceView/components/AddablePaperSectionTitle';
 import { useFilteredNamespaces } from '@/components/WorkspaceView/components/WorkspaceViewNamespaceSelector/hooks/useFilteredNamespaces';
 import { NamespaceDeleteButton } from '@/components/WorkspaceView/components/WorkspaceViewNamespaceSelector/NamespaceDeleteButton';
-import { useNamespaces, useSetNamespace } from '@/hooks/domains/namespace';
+import { useNamespaces } from '@/hooks/domains/namespace';
 import { useWorkspaceId } from '@/hooks/domains/workspace';
+import { useNavigateToNamespace } from '@/hooks/routes';
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, IconButton, ListItemText, MenuItem, MenuList, TextField, useTheme } from '@mui/material';
@@ -31,7 +32,7 @@ function WorkspaceViewNamespaceSelector() {
   const workspaceId = useWorkspaceId();
   const namespaces = useNamespaces(workspaceId);
 
-  const toNamespace = useSetNamespace();
+  const toNamespace = useNavigateToNamespace();
   const openNamespaceAddDialog = useOpenNamespaceAddDialog();
 
   const filteredNamespaces = useFilteredNamespaces(namespaces, keyword);

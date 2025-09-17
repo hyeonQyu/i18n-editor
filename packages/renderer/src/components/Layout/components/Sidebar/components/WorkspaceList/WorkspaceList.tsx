@@ -8,8 +8,9 @@ import SidebarMenu, {
 } from '@/components/Layout/components/Sidebar/components/SidebarMenu';
 import WorkspaceNameUpdateDialog from '@/components/Layout/components/Sidebar/components/WorkspaceList/components/WorkspaceNameUpdateDialog';
 import { useOpenWorkspaceNameUpdateDialog } from '@/components/Layout/components/Sidebar/components/WorkspaceList/hooks';
-import { useSelectNewWorkspaceDirectory, useSetWorkspace, useWorkspaceId, useWorkspaces } from '@/hooks/domains/workspace';
+import { useSelectNewWorkspaceDirectory, useWorkspaceId, useWorkspaces } from '@/hooks/domains/workspace';
 import { useConfirmDeleteWorkspace } from '@/hooks/domains/workspace/useConfirmDeleteWorkspace';
+import { useNavigateToWorkspace } from '@/hooks/routes';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
@@ -27,7 +28,7 @@ function WorkspaceList() {
 
   const openNameUpdateDialog = useOpenWorkspaceNameUpdateDialog();
   const openLanguageCodesDialog = useOpenLanguageCodesDialog();
-  const selectWorkspace = useSetWorkspace();
+  const selectWorkspace = useNavigateToWorkspace();
   const confirmDeleteWorkspace = useConfirmDeleteWorkspace();
 
   return (

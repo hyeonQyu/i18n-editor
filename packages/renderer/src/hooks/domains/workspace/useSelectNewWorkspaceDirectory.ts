@@ -1,8 +1,8 @@
 import { useOpenFileManagerDialog } from '@/components/FileManagerDialog';
 import { useInitialPath } from '@/hooks/domains/file-system';
 import { useCreateWorkspace } from '@/hooks/domains/workspace/useCreateWorkspace';
-import { useSetWorkspace } from '@/hooks/domains/workspace/useSetWorkspace';
 import { useWorkspace } from '@/hooks/domains/workspace/useWorkspace';
+import { useNavigateToWorkspace } from '@/hooks/routes/useNavigateToWorkspace';
 
 export const useSelectNewWorkspaceDirectory = () => {
   const openFileManagerDialog = useOpenFileManagerDialog();
@@ -13,7 +13,7 @@ export const useSelectNewWorkspaceDirectory = () => {
 
   const initialPath = useInitialPath(Boolean(workspace));
 
-  const toWorkspacePage = useSetWorkspace();
+  const toWorkspacePage = useNavigateToWorkspace();
 
   return () => {
     if (!initialPath) return;

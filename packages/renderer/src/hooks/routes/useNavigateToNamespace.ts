@@ -1,7 +1,7 @@
 import { useWorkspaceId } from '@/hooks/domains/workspace';
 import { useNavigate } from 'react-router-dom';
 
-export const useSetNamespace = () => {
+export const useNavigateToNamespace = () => {
   const navigate = useNavigate();
   const workspaceId = useWorkspaceId();
 

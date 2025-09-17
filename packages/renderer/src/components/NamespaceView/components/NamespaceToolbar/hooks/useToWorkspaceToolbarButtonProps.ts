@@ -1,10 +1,11 @@
 import { ToolbarButtonProps } from '@/components/Toolbar/components/ToolbarButton';
-import { useSetWorkspace, useWorkspaceId } from '@/hooks/domains/workspace';
+import { useWorkspaceId } from '@/hooks/domains/workspace';
+import { useNavigateToWorkspace } from '@/hooks/routes';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 export const useToWorkspaceToolbarButtonProps = (): ToolbarButtonProps => {
   const workspaceId = useWorkspaceId();
-  const toWorkspace = useSetWorkspace();
+  const toWorkspace = useNavigateToWorkspace();
 
   return {
     IconComponent: ArrowBackOutlinedIcon,
