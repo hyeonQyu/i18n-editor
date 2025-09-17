@@ -1,7 +1,7 @@
 import EllipsisText from '@/components/EllipsisText';
 import HighlightedTranslationText from '@/components/NamespaceView/components/NamespaceTranslation/components/HighlightedTranslationText';
 import { NAMESPACE_TRANSLATION_LIST_WIDTH } from '@/components/NamespaceView/constants';
-import { useSelectTranslationKey } from '@/components/NamespaceView/hooks';
+import { useRefreshTranslations, useSelectTranslationKey } from '@/components/NamespaceView/hooks';
 import { useSelectedTranslationKey } from '@/components/NamespaceView/hooks/useSelectedTranslationKey';
 import { Translation } from '@i18n-editor/shared/defines/translation.definitions.js';
 import { Box, ListItemButton, Stack, Typography, useTheme } from '@mui/material';
@@ -21,6 +21,8 @@ function TranslationList({ height, translations, keyword }: TranslationListProps
 
   const selectedTranslationKey = useSelectedTranslationKey();
   const setSelectedTranslationKey = useSelectTranslationKey();
+
+  useRefreshTranslations();
 
   return (
     <FixedSizeList

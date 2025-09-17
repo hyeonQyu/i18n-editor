@@ -1,6 +1,6 @@
 import { TranslationDeleteButton } from '@/components/NamespaceView/components/TranslationDeleteButton';
 import { NAMESPACE_TRANSLATION_LIST_WIDTH } from '@/components/NamespaceView/constants';
-import { useSelectedTranslationKey } from '@/components/NamespaceView/hooks/useSelectedTranslationKey';
+import { useRenderKey, useSelectedTranslationKey } from '@/components/NamespaceView/hooks';
 import { useNamespace } from '@/hooks/domains/namespace';
 import { useUpdateTranslation } from '@/hooks/domains/translation';
 import { useWorkspaceId } from '@/hooks/domains/workspace';
@@ -18,9 +18,11 @@ function TranslationEditor({ translations }: TranslationEditorProps) {
 
   const selectedTranslationKey = useSelectedTranslationKey();
 
+  const renderKey = useRenderKey();
+
   const translationValueByLanguageCode = useMemo(() => {
     return translations.find((translation) => translation.key === selectedTranslationKey);
-  }, [translations, selectedTranslationKey])?.value;
+  }, [translations, selectedTranslationKey, renderKey])?.value;
 
   const updateTranslation = useUpdateTranslation();
 
@@ -83,7 +85,7 @@ function TranslationEditor({ translations }: TranslationEditorProps) {
       >
         {Object.entries(translationValueByLanguageCode).map(([languageCode, translationValue]) => (
           <TextField
-            key={languageCode}
+            key={languageCode + translationValue}
             label={languageCode}
             defaultValue={translationValue}
             multiline

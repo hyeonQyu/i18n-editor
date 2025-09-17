@@ -8,3 +8,4 @@ export { useKeyboardEventListener } from './useKeyboardEventListener';
 export { useMetaKeyLabel } from './useMetaKeyLabel';
 export { useOS } from './useOS';
 export { usePopover } from './usePopover';
+export { useWindowFocus } from './useWindowFocus';
