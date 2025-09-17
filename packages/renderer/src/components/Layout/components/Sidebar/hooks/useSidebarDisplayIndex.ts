@@ -3,10 +3,10 @@ import { useWorkspaceId } from '@/hooks/domains/workspace';
 import { useLocation } from 'react-router-dom';
 
 export const useSidebarDisplayIndex = () => {
-  const location = useLocation();
-  console.log('location', location);
   const workspaceId = useWorkspaceId();
   const namespace = useNamespace();
+
+  const location = useLocation();
 
   if (workspaceId) {
     if (namespace) return 1;

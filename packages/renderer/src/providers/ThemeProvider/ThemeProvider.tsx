@@ -1,15 +1,35 @@
 import { createTheme, ThemeProvider as MUIThemeProvider, useMediaQuery } from '@mui/material';
 import { blue, green, indigo, orange, purple, red } from '@mui/material/colors';
-import { ReactNode, useMemo } from 'react';
+import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
+
+interface ThemeContextType {
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const useThemeMode = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useThemeMode must be used within a ThemeProvider');
+  }
+  return context;
+};
 
 function ThemeProvider({ children }: { children: ReactNode }) {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const systemPrefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const [isDarkMode, setIsDarkMode] = useState(systemPrefersDarkMode);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => !prev);
+  };
 
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
+          mode: isDarkMode ? 'dark' : 'light',
           primary: indigo,
           secondary: purple,
           success: green,
@@ -17,13 +37,13 @@ function ThemeProvider({ children }: { children: ReactNode }) {
           error: red,
           info: blue,
           background: {
-            default: prefersDarkMode ? '#121212' : '#f5f5f5',
-            paper: prefersDarkMode ? '#1e1e1e' : '#ffffff',
+            default: isDarkMode ? '#121212' : '#ffffff',
+            paper: isDarkMode ? '#1e1e1e' : '#fafafa',
           },
           text: {
-            primary: prefersDarkMode ? '#ffffff' : '#000000',
-            secondary: prefersDarkMode ? '#bbbbbb' : '#666666',
-            disabled: prefersDarkMode ? '#888888' : '#999999',
+            primary: isDarkMode ? '#ffffff' : '#000000',
+            secondary: isDarkMode ? '#bbbbbb' : '#666666',
+            disabled: isDarkMode ? '#888888' : '#999999',
           },
         },
         typography: {
@@ -74,7 +94,7 @@ function ThemeProvider({ children }: { children: ReactNode }) {
           MuiAppBar: {
             styleOverrides: {
               root: {
-                backgroundColor: prefersDarkMode ? indigo[800] : indigo[700],
+                backgroundColor: isDarkMode ? indigo[800] : indigo[700],
               },
             },
           },
@@ -87,10 +107,14 @@ function ThemeProvider({ children }: { children: ReactNode }) {
           },
         },
       }),
-    [prefersDarkMode],
+    [isDarkMode],
   );
 
-  return <MUIThemeProvider theme={theme}>{children}</MUIThemeProvider>;
+  return (
+    <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+      <MUIThemeProvider theme={theme}>{children}</MUIThemeProvider>
+    </ThemeContext.Provider>
+  );
 }
 
 export default ThemeProvider;
