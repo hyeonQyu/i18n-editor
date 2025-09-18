@@ -38,7 +38,12 @@ export const configCache = {
     const [workspace, ui] = await Promise.all(FILES.map((fileName) => readFile(getConfigFilePath(fileName))));
 
     config.workspace = workspace;
-    config.ui = ui;
+    config.ui = {
+      ...DEFAULT_CONFIG.ui,
+      ...ui,
+    };
+
+    await writeConfigFile('ui', config.ui);
   },
 
   getConfig: () => config,

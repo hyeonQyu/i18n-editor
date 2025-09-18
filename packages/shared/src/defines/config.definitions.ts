@@ -8,6 +8,7 @@ export interface Config {
       width: number;
       height: number;
     };
+    themeMode: 'light' | 'dark' | undefined;
   };
 }
 
@@ -19,5 +20,6 @@ export const DEFAULT_CONFIG: Config = {
       width: 1200,
       height: 800,
     },
+    themeMode: undefined,
   },
 };
