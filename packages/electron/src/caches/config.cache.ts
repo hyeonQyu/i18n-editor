@@ -15,7 +15,9 @@ type ConfigFileName = (typeof FILES)[number];
 
 const configDirectoryPath = (() => {
   const CONFIG_PATH_BY_ENV: Record<Environment, string> = {
+    // production: path.join(app.getPath('userData'), CONFIG_DIRECTORY_NAME),
     production: `${projectRoot}/node_modules/i18n-editor/${CONFIG_DIRECTORY_NAME}`,
+
     development: `${projectRoot}/../../${CONFIG_DIRECTORY_NAME}`,
   };
 

@@ -39,7 +39,9 @@ export const createWindow = () => {
   const isDev = getEnvironment() === 'development';
 
   if (isDev) {
-    mainWindow.loadURL('http://localhost:3000');
+    mainWindow.loadURL('http://localhost:4848').catch(() => {
+      mainWindow?.loadFile(join(__dirname, '../renderer/index.html'));
+    });
     mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
