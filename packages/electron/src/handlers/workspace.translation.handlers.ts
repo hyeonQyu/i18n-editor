@@ -55,7 +55,7 @@ export const handleCreateTranslation: IPCHandler<TranslationCreateResponse, Tran
   const translations = await getAllTranslations(workspace.path, namespace, languageCodes);
 
   if (checkTranslationDuplicated(translations, translation)) {
-    throw new DuplicatedTranslationError('Translation already exists');
+    throw new DuplicatedTranslationError('이미 동일한 번역키가 존재합니다.');
   }
 
   const index = position
