@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import { configCache } from '../caches/config.cache';
 import { getEnvironment } from './env.utils';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,9 +23,11 @@ if (!gotTheLock) {
 }
 
 export const createWindow = () => {
+  const { width, height } = configCache.getConfig().ui.windowSize;
+
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width,
+    height,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

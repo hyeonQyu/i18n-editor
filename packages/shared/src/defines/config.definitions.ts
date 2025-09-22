@@ -4,6 +4,10 @@ export interface Config {
   workspace: Record<string, Workspace>;
   ui: {
     sidebarOpened: boolean;
+    windowSize: {
+      width: number;
+      height: number;
+    };
   };
 }
 
@@ -11,5 +15,9 @@ export const DEFAULT_CONFIG: Config = {
   workspace: {},
   ui: {
     sidebarOpened: true,
+    windowSize: {
+      width: 1200,
+      height: 800,
+    },
   },
 };
