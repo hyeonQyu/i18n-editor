@@ -1,4 +1,6 @@
 import { Config, DEFAULT_CONFIG } from '@i18n-editor/shared';
+import { app } from 'electron';
+import path from 'path';
 import { Environment } from '../defines/env.definitions';
 import { getEnvironment } from '../utils/env.utils';
 import { createFileWhenNotExist, readFile, writeFile } from '../utils/file.utils';
@@ -15,9 +17,7 @@ type ConfigFileName = (typeof FILES)[number];
 
 const configDirectoryPath = (() => {
   const CONFIG_PATH_BY_ENV: Record<Environment, string> = {
-    // production: path.join(app.getPath('userData'), CONFIG_DIRECTORY_NAME),
-    production: `${projectRoot}/node_modules/i18n-editor/${CONFIG_DIRECTORY_NAME}`,
-
+    production: path.join(app.getPath('userData'), CONFIG_DIRECTORY_NAME),
     development: `${projectRoot}/../../${CONFIG_DIRECTORY_NAME}`,
   };
 

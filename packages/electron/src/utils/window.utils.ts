@@ -32,7 +32,7 @@ export const createWindow = () => {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: false,
-      preload: join(__dirname, 'preload.js'),
+      preload: join(app.getAppPath(), 'dist/electron/preload.js'),
     },
   });
 
@@ -40,11 +40,11 @@ export const createWindow = () => {
 
   if (isDev) {
     mainWindow.loadURL('http://localhost:4848').catch(() => {
-      mainWindow?.loadFile(join(__dirname, '../renderer/index.html'));
+      mainWindow?.loadFile(join(app.getAppPath(), 'dist/renderer/index.html'));
     });
     mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
+    mainWindow.loadFile(join(app.getAppPath(), 'dist/renderer/index.html'));
   }
 
   mainWindow.on('closed', () => {

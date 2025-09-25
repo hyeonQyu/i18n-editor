@@ -55,14 +55,11 @@
     "package": "yarn build && electron-builder",
     "package:dev": "yarn build && electron-builder --dir"
   },
-  "dependencies": {
-    "@types/lodash-es": "^4.17.12",
-    "lodash-es": "^4.17.21"
-  },
   "devDependencies": {
     "concurrently": "^9.1.2",
     "electron": "^36.5.0",
     "electron-builder": "^26.0.12",
+    "esbuild": "^0.24.2",
     "glob": "^11.0.3",
     "nodemon": "^3.1.10",
     "prettier": "^3.5.3",
@@ -80,6 +77,8 @@
       "dist/**/*",
       "package.json"
     ],
+    "nodeGypRebuild": false,
+    "buildDependenciesFromSource": false,
     "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "mac": {
       "category": "public.app-category.developer-tools",
