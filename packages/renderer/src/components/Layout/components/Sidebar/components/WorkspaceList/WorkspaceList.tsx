@@ -1,4 +1,5 @@
 import EllipsisText from '@/components/EllipsisText';
+import { useOpenLanguageCodesDialog } from '@/components/LanguageCodesDialog';
 import SidebarMenu, {
   SidebarMenuAddButton,
   SidebarMenuList,
@@ -25,8 +26,7 @@ function WorkspaceList() {
   const selectNewWorkspaceDirectory = useSelectNewWorkspaceDirectory();
 
   const openNameUpdateDialog = useOpenWorkspaceNameUpdateDialog();
-  // const openLanguageCodesDialog = useOpenLanguageCodesDialog();
-  const openLanguageCodesDialog = (workspaceId: string) => {};
+  const openLanguageCodesDialog = useOpenLanguageCodesDialog();
   const selectWorkspace = useSetWorkspace();
   const confirmDeleteWorkspace = useConfirmDeleteWorkspace();
 
