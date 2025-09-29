@@ -6,8 +6,9 @@ import SidebarMenu, {
   SidebarMenuTitle,
 } from '@/components/Layout/components/Sidebar/components/SidebarMenu';
 import { useOpenNamespaceAddDialog } from '@/components/NamespaceAddDialog';
-import { useNamespace, useNamespaces, useSetNamespace } from '@/hooks/domains/namespace';
+import { useNamespace, useNamespaces } from '@/hooks/domains/namespace';
 import { useWorkspace } from '@/hooks/domains/workspace';
+import { useNavigateToNamespace } from '@/hooks/routes';
 
 function NamespaceList() {
   const workspace = useWorkspace();
@@ -15,7 +16,7 @@ function NamespaceList() {
 
   const currentNamespace = useNamespace();
 
-  const setNamespace = useSetNamespace();
+  const setNamespace = useNavigateToNamespace();
 
   const openNamespaceAddDialog = useOpenNamespaceAddDialog();
 

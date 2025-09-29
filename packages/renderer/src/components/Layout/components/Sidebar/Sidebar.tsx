@@ -8,6 +8,7 @@ function Sidebar() {
     <SidebarContainer displayIndex={displayIndex}>
       <WorkspaceList />
       <NamespaceList />
+      <></>
     </SidebarContainer>
   );
 }

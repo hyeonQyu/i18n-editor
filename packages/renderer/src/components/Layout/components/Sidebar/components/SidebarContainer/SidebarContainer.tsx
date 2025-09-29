@@ -28,14 +28,16 @@ function SidebarContainer(props: SidebarContainerProps) {
       sx={{
         flexShrink: 0,
       }}
-      PaperProps={{
-        sx: {
-          width: SIDEBAR_WIDTH,
-          top: `${HEADER_HEIGHT}px`,
-          height: `calc(100% - ${HEADER_HEIGHT}px)`,
-          boxSizing: 'borderBox',
-          gap: '24px',
-          padding: '16px 0',
+      slotProps={{
+        paper: {
+          sx: {
+            width: SIDEBAR_WIDTH,
+            top: `${HEADER_HEIGHT}px`,
+            height: `calc(100% - ${HEADER_HEIGHT}px)`,
+            boxSizing: 'borderBox',
+            gap: '24px',
+            padding: '16px 0',
+          },
         },
       }}
     >

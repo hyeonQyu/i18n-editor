@@ -1,5 +1,6 @@
-import { useGlobalStore } from '@/stores/global.store';
+import { useParams } from 'react-router-dom';
 
 export const useNamespace = () => {
-  return useGlobalStore((state) => state.namespace);
+  const { namespace } = useParams<{ namespace: string }>();
+  return namespace as string;
 };

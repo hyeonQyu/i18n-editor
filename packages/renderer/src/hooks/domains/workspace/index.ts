@@ -3,7 +3,6 @@ export { useDeleteWorkspace } from './useDeleteWorkspace';
 export { useInvalidateGetAllWorkspacesQuery } from './useInvalidateGetAllWorkspacesQuery';
 export { useLoadingWorkspaces } from './useLoadingWorkspaces';
 export { useSelectNewWorkspaceDirectory } from './useSelectNewWorkspaceDirectory';
-export { useSetWorkspace } from './useSetWorkspace';
 export { useUpdateWorkspace } from './useUpdateWorkspace';
 export { useWorkspace } from './useWorkspace';
 export { useWorkspaceId } from './useWorkspaceId';

@@ -1,5 +1,6 @@
-import { useGlobalStore } from '@/stores/global.store';
+import { useParams } from 'react-router-dom';
 
 export const useWorkspaceId = () => {
-  return useGlobalStore((state) => state.workspaceId);
+  const { workspaceId } = useParams<{ workspaceId: string }>();
+  return workspaceId as string;
 };
