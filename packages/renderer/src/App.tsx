@@ -18,9 +18,9 @@ import './types/electron.d.ts';
 function App(): React.JSX.Element {
   return (
     <HashRouter>
-      <ThemeProvider>
-        <GlobalScrollbarStyle />
-        <ReactQueryClientProvider>
+      <GlobalScrollbarStyle />
+      <ReactQueryClientProvider>
+        <ThemeProvider>
           <WindowSizeSaver />
           <SnackbarProvider>
             <ConfirmDialog />
@@ -31,8 +31,8 @@ function App(): React.JSX.Element {
             <AppRouter />
           </SnackbarProvider>
           <ReactQueryDevtools />
-        </ReactQueryClientProvider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </ReactQueryClientProvider>
     </HashRouter>
   );
 }

@@ -11,12 +11,16 @@ interface PaperSectionProps {
   variant?: PaperProps['variant'];
 }
 
-function PaperSection(props: PaperSectionProps) {
-  const { titleProps, children, sx, variant = 'outlined' } = props;
-
+function PaperSection({ titleProps, children, sx, variant = 'outlined' }: PaperSectionProps) {
   return (
     <Paper sx={sx} variant={variant}>
-      <Typography variant="h6" sx={titleProps.sx}>
+      <Typography
+        variant="h5"
+        sx={{
+          fontSize: '1.25rem',
+          ...titleProps.sx,
+        }}
+      >
         {titleProps.children}
       </Typography>
 

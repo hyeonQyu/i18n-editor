@@ -1,6 +1,4 @@
-import { SidebarController } from '@/components/Layout/components/Header/components';
-import { BackwardButton } from '@/components/Layout/components/Header/components/BackwardButton';
-import { ConfigButton } from '@/components/Layout/components/Header/components/ConfigButton';
+import { BackwardButton, ConfigButton, SidebarController } from '@/components/Layout/components/Header/components';
 import { AppBar, Toolbar, Typography, useTheme } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
