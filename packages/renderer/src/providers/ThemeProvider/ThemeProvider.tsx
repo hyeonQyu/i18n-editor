@@ -1,6 +1,7 @@
+import { useUIConfig, useUpdateUIConfig } from '@/hooks/domains/ui';
 import { createTheme, ThemeProvider as MUIThemeProvider, useMediaQuery } from '@mui/material';
 import { blue, green, indigo, orange, purple, red } from '@mui/material/colors';
-import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
+import { createContext, ReactNode, useContext, useMemo } from 'react';
 
 interface ThemeContextType {
   isDarkMode: boolean;
@@ -18,11 +19,14 @@ export const useThemeMode = () => {
 };
 
 function ThemeProvider({ children }: { children: ReactNode }) {
+  const { themeMode } = useUIConfig();
+  const updateUIConfig = useUpdateUIConfig();
+
   const systemPrefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [isDarkMode, setIsDarkMode] = useState(systemPrefersDarkMode);
+  const isDarkMode = themeMode ? themeMode === 'dark' : systemPrefersDarkMode;
 
   const toggleDarkMode = () => {
-    setIsDarkMode((prev) => !prev);
+    updateUIConfig({ themeMode: isDarkMode ? 'light' : 'dark' });
   };
 
   const theme = useMemo(

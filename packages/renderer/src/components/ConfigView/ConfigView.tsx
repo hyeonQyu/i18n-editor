@@ -1,5 +1,5 @@
 import { ConfigBox, ConfigOptionDescription } from '@/components/ConfigView/components';
-import { ThemeSwitch } from '@/components/ThemeSwitch';
+import { ThemeModeSwitch } from '@/components/ThemeModeSwitch';
 import { Box } from '@mui/material';
 
 function ConfigView() {
@@ -17,7 +17,7 @@ function ConfigView() {
             children: (
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <ConfigOptionDescription>기본값으로 시스템 설정을 사용합니다.</ConfigOptionDescription>
-                <ThemeSwitch />
+                <ThemeModeSwitch />
               </Box>
             ),
           },
