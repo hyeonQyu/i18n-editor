@@ -13,7 +13,10 @@
     "type": "git",
     "url": "https://github.com/hyeonQyu/i18n-editor"
   },
-  "author": "hyeonQyu",
+  "author": {
+    "name": "hyeonQyu",
+    "email": "dhk0561@naver.com"
+  },
   "licenses": [
     {
       "type": "MIT",
@@ -52,8 +55,13 @@
     "package:mac": "yarn build && electron-builder --mac",
     "package:win": "yarn build && electron-builder --win",
     "package:linux": "yarn build && electron-builder --linux",
-    "package": "yarn build && electron-builder",
-    "package:dev": "yarn build && electron-builder --dir"
+    "package": "yarn build && electron-builder --mac --win --linux",
+    "package:current": "yarn build && electron-builder",
+    "package:dev": "yarn build && electron-builder --dir",
+    "release": "node scripts/create-github-release.cjs",
+    "release:draft": "node scripts/create-github-release.cjs --draft",
+    "release:prerelease": "node scripts/create-github-release.cjs --prerelease",
+    "release:skip-build": "node scripts/create-github-release.cjs --skip-build"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
@@ -110,6 +118,7 @@
     "linux": {
       "category": "Development",
       "icon": "build/icon.png",
+      "maintainer": "hyeonQyu <dhk0561@naver.com>",
       "target": [
         {
           "target": "AppImage",

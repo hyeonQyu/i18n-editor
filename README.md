@@ -20,6 +20,9 @@ i18n-editor는 다국어 JSON 번역 파일을 효율적으로 관리할 수 있
 - [사용 방법](#사용-방법)
   - [워크스페이스 관리](#워크스페이스-관리)
   - [네임스페이스 관리](#네임스페이스-관리)
+- [개발자 가이드](#개발자-가이드)
+  - [빌드 및 패키징](#빌드-및-패키징)
+  - [GitHub Release 생성](#github-release-생성)
 
 # 주요 개념
 
@@ -148,3 +151,120 @@ i18n-editor --port 9000
      - 네임스페이스 최하단에 번역 키값을 입력하여 번역 추가
    - 번역 수정: 셀을 클릭하여 직접 편집
    - 번역 삭제: 행 옵션 메뉴에서 "삭제" 선택
+
+# 개발자 가이드
+
+## 빌드 및 패키징
+
+### 개발 환경 설정
+
+```bash
+# 의존성 설치
+yarn install
+
+# 개발 서버 실행
+yarn dev
+```
+
+### 빌드
+
+```bash
+# 전체 빌드
+yarn build
+
+# 플랫폼별 패키징
+yarn package:mac    # macOS용 빌드
+yarn package:win    # Windows용 빌드
+yarn package:linux  # Linux용 빌드
+yarn package        # 모든 플랫폼용 빌드
+```
+
+빌드가 완료되면 `release/` 디렉토리에 다음과 같은 구조로 파일들이 생성됩니다:
+
+```
+release/
+├── packed/           # 배포용 설치 파일들
+│   ├── mac/         # macOS .dmg 파일들
+│   ├── windows/     # Windows .exe 파일들
+│   └── linux/       # Linux .AppImage, .deb 파일들
+└── unpacked/        # 압축 해제된 앱 파일들
+```
+
+## GitHub Release 생성
+
+GitHub Release를 자동으로 생성하고 빌드된 파일들을 업로드하는 스크립트를 제공합니다.
+
+### 사전 준비
+
+1. **GitHub CLI 설치** (이미 설치되어 있다면 건너뛰기):
+
+   ```bash
+   # macOS
+   brew install gh
+
+   # Windows (Chocolatey)
+   choco install gh
+
+   # Linux
+   # https://github.com/cli/cli/blob/trunk/docs/install_linux.md 참조
+   ```
+
+2. **GitHub 인증**:
+   ```bash
+   gh auth login
+   ```
+
+### Release 생성 명령어
+
+```bash
+# 기본 릴리스 생성 (빌드 + 릴리스 생성)
+yarn release
+
+# 드래프트 릴리스 생성
+yarn release:draft
+
+# 프리릴리스 생성
+yarn release:prerelease
+
+# 빌드 없이 릴리스 생성 (이미 빌드된 파일 사용)
+yarn release:skip-build
+```
+
+### 릴리스 노트 커스터마이징
+
+릴리스 노트를 커스터마이징하려면 프로젝트 루트에 `RELEASE_NOTES.md` 파일을 생성하세요:
+
+```bash
+# 템플릿 복사
+cp RELEASE_NOTES.template.md RELEASE_NOTES.md
+
+# 릴리스 노트 편집
+# RELEASE_NOTES.md 파일을 수정하여 이번 릴리스의 변경사항을 작성
+```
+
+### 릴리스 프로세스
+
+1. **버전 업데이트**: `package.json`의 `version` 필드를 업데이트
+2. **변경사항 작성**: `RELEASE_NOTES.md` 파일에 이번 릴리스의 변경사항 작성
+3. **릴리스 생성**: `yarn release` 명령어 실행
+4. **확인**: GitHub에서 생성된 릴리스 확인
+
+### 릴리스 스크립트 옵션
+
+- `--draft`: 드래프트 릴리스로 생성 (공개되지 않음)
+- `--prerelease`: 프리릴리스로 표시 (베타, 알파 버전 등)
+- `--skip-build`: 빌드 과정을 건너뛰고 기존 빌드 파일 사용
+
+### 예시
+
+```bash
+# v1.2.0 정식 릴리스
+yarn release
+
+# v1.3.0-beta.1 베타 릴리스
+yarn release:prerelease
+
+# 드래프트로 먼저 확인 후 공개
+yarn release:draft
+# GitHub에서 드래프트 확인 후 수동으로 공개
+```
