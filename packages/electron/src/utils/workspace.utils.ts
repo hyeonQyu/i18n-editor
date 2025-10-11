@@ -1,5 +1,5 @@
 import { Workspace, WorkspaceNotFoundError } from '@i18n-editor/shared';
-import { clone } from 'lodash-es';
+import { clone } from 'lodash';
 import { configCache } from '../caches/config.cache';
 
 export const getAllWorkspaces = () => {

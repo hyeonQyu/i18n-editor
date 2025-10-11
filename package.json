@@ -13,7 +13,10 @@
     "type": "git",
     "url": "https://github.com/hyeonQyu/i18n-editor"
   },
-  "author": "hyeonQyu",
+  "author": {
+    "name": "hyeonQyu",
+    "email": "dhk0561@naver.com"
+  },
   "licenses": [
     {
       "type": "MIT",
@@ -38,11 +41,11 @@
     "dev:shared": "yarn workspace @i18n-editor/shared dev",
     "dev:renderer": "yarn workspace @i18n-editor/renderer dev",
     "dev:electron": "yarn workspace @i18n-editor/electron dev",
-    "dev": "concurrently \"yarn dev:shared\" \"yarn dev:renderer\" \"wait-on http://localhost:3000 && yarn dev:electron\"",
+    "dev": "concurrently \"yarn dev:shared\" \"yarn dev:renderer\" \"wait-on http://localhost:4848 && yarn dev:electron\"",
     "build:shared": "yarn workspace @i18n-editor/shared build",
     "build:renderer": "yarn workspace @i18n-editor/renderer build",
     "build:electron": "yarn workspace @i18n-editor/electron build",
-    "build": "yarn build:shared && yarn build:renderer && yarn build:electron && yarn copy-build",
+    "build": "yarn build:shared && yarn build:renderer && yarn build:electron",
     "type:shared": "yarn workspace @i18n-editor/shared type-check",
     "type:renderer": "yarn workspace @i18n-editor/renderer type-check",
     "type:electron": "yarn workspace @i18n-editor/electron type-check",
@@ -52,17 +55,19 @@
     "package:mac": "yarn build && electron-builder --mac",
     "package:win": "yarn build && electron-builder --win",
     "package:linux": "yarn build && electron-builder --linux",
-    "package": "yarn build && electron-builder",
-    "package:dev": "yarn build && electron-builder --dir"
-  },
-  "dependencies": {
-    "@types/lodash-es": "^4.17.12",
-    "lodash-es": "^4.17.21"
+    "package": "yarn build && electron-builder --mac --win --linux",
+    "package:current": "yarn build && electron-builder",
+    "package:dev": "yarn build && electron-builder --dir",
+    "release": "node scripts/create-github-release.cjs",
+    "release:draft": "node scripts/create-github-release.cjs --draft",
+    "release:prerelease": "node scripts/create-github-release.cjs --prerelease",
+    "release:skip-build": "node scripts/create-github-release.cjs --skip-build"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
     "electron": "^36.5.0",
     "electron-builder": "^26.0.12",
+    "esbuild": "^0.24.2",
     "glob": "^11.0.3",
     "nodemon": "^3.1.10",
     "prettier": "^3.5.3",
@@ -74,15 +79,20 @@
     "productName": "i18n Editor",
     "appId": "io.github.hyeonQyu.i18n-editor",
     "directories": {
-      "output": "release"
+      "output": "release",
+      "buildResources": "build"
     },
     "files": [
       "dist/**/*",
       "package.json"
     ],
+    "icon": "build/icon",
+    "nodeGypRebuild": false,
+    "buildDependenciesFromSource": false,
     "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "mac": {
       "category": "public.app-category.developer-tools",
+      "icon": "build/icon.icns",
       "target": [
         {
           "target": "dmg",
@@ -94,6 +104,7 @@
       ]
     },
     "win": {
+      "icon": "build/icon.ico",
       "target": [
         {
           "target": "nsis",
@@ -106,6 +117,8 @@
     },
     "linux": {
       "category": "Development",
+      "icon": "build/icon.png",
+      "maintainer": "hyeonQyu <dhk0561@naver.com>",
       "target": [
         {
           "target": "AppImage",

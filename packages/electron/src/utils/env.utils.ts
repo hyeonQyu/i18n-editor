@@ -5,6 +5,9 @@ import { Environment } from '../defines/env.definitions';
 export const getOS = () => os.platform().toLowerCase().replace(/[0-9]/g, '').replace('darwin', 'macos') as OS;
 
 export const getEnvironment = (): Environment => {
-  const env = process.env.NODE_ENV;
-  return env === 'production' ? 'production' : 'development';
+  if (process.resourcesPath) {
+    return 'production';
+  }
+
+  return 'development';
 };

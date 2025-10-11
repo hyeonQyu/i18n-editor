@@ -6,10 +6,11 @@ export default defineConfig({
   plugins: [react()],
   base: './',
   server: {
-    port: 3000,
+    port: 4848,
   },
   build: {
     outDir: '../../dist/renderer',
+    emptyOutDir: true,
   },
   resolve: {
     alias: {
