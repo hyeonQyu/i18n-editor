@@ -1,0 +1,9 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/shared" },
+    { "path": "./packages/renderer" },
+    { "path": "./packages/electron/tsconfig.main.json" },
+    { "path": "./packages/electron/tsconfig.preload.json" }
+  ]
+}

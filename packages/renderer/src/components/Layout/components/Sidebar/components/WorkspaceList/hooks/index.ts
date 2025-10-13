@@ -1,0 +1,1 @@
+export { useOpenWorkspaceNameUpdateDialog } from './useOpenWorkspaceNameUpdateDialog';

@@ -1,8 +1,25 @@
-node_modules
-dist
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+release/
+
+# Environment files
+.env
+.env.local
+
+# Symlinks (platform-specific)
+electron/shared
+
 .idea
 .vscode
 .i18ne
 i18n-editor-config.json
 .yarn/install-state.gz
 .DS_Store
+
+# Platform-specific native binaries
+.yarn/cache/@esbuild-*
+.yarn/cache/@rollup-rollup-*
+.yarn/cache/@swc-*

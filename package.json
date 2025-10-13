@@ -1,41 +1,22 @@
 {
   "name": "i18n-editor",
-  "version": "2.1.1",
+  "version": "3.0.0",
+  "main": "dist/electron/main.js",
+  "type": "module",
   "private": true,
   "workspaces": {
     "packages": [
-      "apps/*",
       "packages/*"
     ]
-  },
-  "scripts": {
-    "client": "yarn workspace i18n-editor-client",
-    "server": "yarn workspace i18n-editor-server",
-    "common": "yarn workspace i18n-editor-common",
-    "build": "yarn common build && yarn client build && yarn server build && node setupPackage.js",
-    "publish:dist": "yarn --cwd dist npm publish",
-    "build-publish": "yarn build && yarn publish:dist"
-  },
-  "dependencies": {
-    "axios": "^1.7.7",
-    "http-status-codes": "^2.3.0",
-    "i18n-editor-common": "0.1.0",
-    "lodash": "^4.17.21"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.17.13",
-    "@types/node": "^18.11.17",
-    "cross-env": "^7.0.3",
-    "path": "^0.12.7",
-    "prettier": "^2.8.1",
-    "prettier-plugin-organize-imports": "^3.2.4",
-    "typescript": "^4.9.4"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/hyeonQyu/i18n-editor"
   },
-  "author": "hyeonQyu",
+  "author": {
+    "name": "hyeonQyu",
+    "email": "dhk0561@naver.com"
+  },
   "licenses": [
     {
       "type": "MIT",
@@ -53,5 +34,110 @@
     "url": "https://github.com/hyeonQyu/i18n-editor/issues"
   },
   "homepage": "https://github.com/hyeonQyu/i18n-editor",
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@4.9.2",
+  "scripts": {
+    "list": "echo '{}' || yarn info --all --json",
+    "copy-build": "node scripts/copy-dist-for-package.js",
+    "dev:shared": "yarn workspace @i18n-editor/shared dev",
+    "dev:renderer": "yarn workspace @i18n-editor/renderer dev",
+    "dev:electron": "yarn workspace @i18n-editor/electron dev",
+    "dev": "concurrently \"yarn dev:shared\" \"yarn dev:renderer\" \"wait-on http://localhost:4848 && yarn dev:electron\"",
+    "build:shared": "yarn workspace @i18n-editor/shared build",
+    "build:renderer": "yarn workspace @i18n-editor/renderer build",
+    "build:electron": "yarn workspace @i18n-editor/electron build",
+    "build": "yarn build:shared && yarn build:renderer && yarn build:electron",
+    "type:shared": "yarn workspace @i18n-editor/shared type-check",
+    "type:renderer": "yarn workspace @i18n-editor/renderer type-check",
+    "type:electron": "yarn workspace @i18n-editor/electron type-check",
+    "type": "yarn type:shared && yarn type:renderer && yarn type:electron",
+    "start": "electron dist/electron/main.js",
+    "preview": "yarn workspace @i18n-editor/renderer preview",
+    "package:mac": "yarn build && electron-builder --mac",
+    "package:win": "yarn build && electron-builder --win",
+    "package:linux": "yarn build && electron-builder --linux",
+    "package": "yarn build && electron-builder --mac --win --linux",
+    "package:current": "yarn build && electron-builder",
+    "package:dev": "yarn build && electron-builder --dir",
+    "release": "node scripts/create-github-release.cjs",
+    "release:draft": "node scripts/create-github-release.cjs --draft",
+    "release:prerelease": "node scripts/create-github-release.cjs --prerelease",
+    "release:skip-build": "node scripts/create-github-release.cjs --skip-build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "electron": "^36.5.0",
+    "electron-builder": "^26.0.12",
+    "esbuild": "^0.24.2",
+    "glob": "^11.0.3",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.5.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "typescript": "^5.8.3",
+    "wait-on": "^8.0.3"
+  },
+  "build": {
+    "productName": "i18n Editor",
+    "appId": "io.github.hyeonQyu.i18n-editor",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "icon": "build/icon",
+    "nodeGypRebuild": false,
+    "buildDependenciesFromSource": false,
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "build/icon.icns",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "linux": {
+      "category": "Development",
+      "icon": "build/icon.png",
+      "maintainer": "hyeonQyu <dhk0561@naver.com>",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "afterAllArtifactBuild": "scripts/organize-build.cjs"
+  }
 }

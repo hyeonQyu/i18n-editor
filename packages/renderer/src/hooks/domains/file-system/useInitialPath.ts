@@ -1,0 +1,16 @@
+import { QUERY_KEY } from '@/constants';
+import { useElectronAPI } from '@/hooks/common';
+import { useQuery } from '@tanstack/react-query';
+
+export const useInitialPath = (hasWorkspace: boolean) => {
+  const electronAPI = useElectronAPI();
+
+  const { data: { path } = {} } = useQuery({
+    queryKey: QUERY_KEY.fileSystem.initialPath.read(),
+    queryFn: () => electronAPI.fileSystem.initialPath.read(),
+    refetchOnWindowFocus: false,
+    enabled: !hasWorkspace,
+  });
+
+  return path;
+};

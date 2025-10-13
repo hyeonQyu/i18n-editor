@@ -1,3 +1,0 @@
-export const HISTORY_BUTTON_WIDTH = 80;
-export const FILE_MANAGER_HEADER_GAP = 8;
-export const FILE_MANAGER_SEARCH_ICON_WIDTH = 34;

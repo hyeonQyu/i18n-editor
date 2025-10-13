@@ -1,0 +1,1 @@
+export { useSidebarDisplayIndex } from './useSidebarDisplayIndex';
