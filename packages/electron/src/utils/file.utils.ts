@@ -1,7 +1,9 @@
 import { getExtensionName, getLeadingSlash } from '@i18n-editor/shared';
+import { LineEnding } from '@i18n-editor/shared/defines/editor.types.js';
 import { spawn } from 'child_process';
 import fs from 'fs';
 import { dirname, normalize } from 'path';
+import { configCache } from '../caches/config.cache';
 import { CMD_BY_OS } from '../defines/env.definitions';
 import { getOS } from './env.utils';
 
@@ -25,11 +27,20 @@ export const readFile = async (filePath: string) => {
   return JSON.parse(await fs.promises.readFile(getNormalizedPath(filePath), 'utf-8'));
 };
 
+const formatJsonWithLineEnding = (content: object, lineEnding: LineEnding): string => {
+  const jsonString = JSON.stringify(content, null, 2);
+  if (lineEnding === 'lf') return jsonString;
+  return jsonString.replace(/\n/g, '\r\n');
+};
+
 export const writeFile = async (filePath: string, content: object) => {
   const path = getNormalizedPath(filePath);
 
   await fs.promises.mkdir(dirname(path), { recursive: true });
-  await fs.promises.writeFile(path, JSON.stringify(content, null, 2));
+
+  const { lineEnding } = configCache.getConfig().editor.jsonFormat;
+  const jsonString = formatJsonWithLineEnding(content, lineEnding);
+  await fs.promises.writeFile(path, jsonString);
 };
 
 export const readDirectory: typeof fs.promises.readdir = async (path, options) => {

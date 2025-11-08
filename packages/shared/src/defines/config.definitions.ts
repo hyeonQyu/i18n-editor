@@ -1,4 +1,10 @@
+import { LineEnding } from './editor.types';
+import { OS } from './utils.types';
 import { Workspace } from './workspace.definitions';
+
+const getDefaultLineEnding = (os: OS): LineEnding => {
+  return os === 'win' ? 'crlf' : 'lf';
+};
 
 export interface Config {
   workspace: Record<string, Workspace>;
@@ -10,9 +16,14 @@ export interface Config {
     };
     themeMode: 'light' | 'dark' | undefined;
   };
+  editor: {
+    jsonFormat: {
+      lineEnding: LineEnding;
+    };
+  };
 }
 
-export const DEFAULT_CONFIG: Config = {
+export const getDefaultConfig = (os: OS): Config => ({
   workspace: {},
   ui: {
     sidebarOpened: true,
@@ -22,4 +33,9 @@ export const DEFAULT_CONFIG: Config = {
     },
     themeMode: undefined,
   },
-};
+  editor: {
+    jsonFormat: {
+      lineEnding: getDefaultLineEnding(os),
+    },
+  },
+});
