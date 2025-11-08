@@ -9,7 +9,7 @@ import {
   WorkspaceUpdateRequest,
   WorkspaceUpdateResponse,
 } from '@i18n-editor/shared';
-import { clone } from 'lodash';
+import { clone } from 'lodash-es';
 import { configCache } from '../caches/config.cache';
 import { IPCHandler } from '../defines/handler.definitions';
 import {
