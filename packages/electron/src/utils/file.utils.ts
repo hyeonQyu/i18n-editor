@@ -1,5 +1,4 @@
-import { getExtensionName, getLeadingSlash } from '@i18n-editor/shared';
-import { LineEnding } from '@i18n-editor/shared/defines/editor.types.js';
+import { getExtensionName, getLeadingSlash, LineEnding } from '@i18n-editor/shared';
 import { spawn } from 'child_process';
 import fs from 'fs';
 import { dirname, normalize } from 'path';
