@@ -2,6 +2,9 @@ import {
   APICall,
   DirectoryReadRequest,
   DirectoryReadResponse,
+  EditorReadResponse,
+  EditorUpdateRequest,
+  EditorUpdateResponse,
   ElectronAPI,
   ElectronAPIPath,
   FileManagerOpenRequest,
@@ -50,8 +53,11 @@ const electronAPI: ElectronAPI = {
       read: getAPIWithPath<UIReadResponse>('config:ui:read'),
       update: getAPIWithPath<UIUpdateResponse, UIUpdateRequest>('config:ui:update'),
     },
+    editor: {
+      read: getAPIWithPath<EditorReadResponse>('config:editor:read'),
+      update: getAPIWithPath<EditorUpdateResponse, EditorUpdateRequest>('config:editor:update'),
+    },
   },
-
   fileSystem: {
     initialPath: {
       read: getAPIWithPath<InitialPathReadResponse>('fileSystem:initialPath:read'),

@@ -1,5 +1,6 @@
 import { app, BrowserWindow, globalShortcut } from 'electron';
 import { configCache } from './caches/config.cache';
+import { handleReadConfigEditor, handleUpdateConfigEditor } from './handlers/config.editor.handlers';
 import { handleReadConfigUI, handleUpdateConfigUI } from './handlers/config.ui.handlers';
 import { readFileSystemDirectory } from './handlers/fileSystem.directory.handlers';
 import { handleOpenFileSystemFileManager } from './handlers/fileSystem.fileManager.handlers';
@@ -23,6 +24,9 @@ const env = getEnvironment();
 const setupIpcHandlers = () => {
   addIPCRequestHandler('config:ui:read', handleReadConfigUI);
   addIPCRequestHandler('config:ui:update', handleUpdateConfigUI);
+
+  addIPCRequestHandler('config:editor:read', handleReadConfigEditor);
+  addIPCRequestHandler('config:editor:update', handleUpdateConfigEditor);
 
   addIPCRequestHandler('fileSystem:initialPath:read', handleReadFileSystemInitialPath);
   addIPCRequestHandler('fileSystem:directory:read', readFileSystemDirectory);

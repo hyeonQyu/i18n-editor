@@ -28,12 +28,23 @@ const getConfigFilePath = (fileName: ConfigFileName) => {
   return `${configDirectoryPath}/${fileName}.json`;
 };
 
-const writeConfigFile = async (fileName: ConfigFileName, newConfig: Config[ConfigFileName]) => {
-  await writeFile(getConfigFilePath(fileName), newConfig);
+const writeConfigFile = async (fileName: ConfigFileName) => {
+  await writeFile(getConfigFilePath(fileName), config[fileName]);
 };
 
 const DEFAULT_CONFIG = getDefaultConfig(getOS());
 const config: Config = { ...DEFAULT_CONFIG };
+
+const getPartialConfigUpdater =
+  <T extends ConfigFileName>(fileName: T) =>
+  async (partialConfig: Partial<Config[T]>) => {
+    config[fileName] = {
+      ...config[fileName],
+      ...partialConfig,
+    };
+
+    await writeConfigFile(fileName);
+  };
 
 export const configCache = {
   init: async () => {
@@ -50,24 +61,18 @@ export const configCache = {
       ...editor,
     };
 
-    await writeConfigFile('ui', config.ui);
-    await writeConfigFile('editor', config.editor);
+    await writeConfigFile('ui');
+    await writeConfigFile('editor');
   },
 
   getConfig: () => config,
 
-  updatePartialUI: async (ui: Partial<Config['ui']>) => {
-    config.ui = {
-      ...config.ui,
-      ...ui,
-    };
+  updatePartialUI: getPartialConfigUpdater('ui'),
 
-    await writeConfigFile('ui', config.ui);
-  },
+  updatePartialEditor: getPartialConfigUpdater('editor'),
 
   updateWorkspace: async (workspace: Config['workspace']) => {
     config.workspace = workspace;
-
-    await writeConfigFile('workspace', config.workspace);
+    await writeConfigFile('workspace');
   },
 };

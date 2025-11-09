@@ -1,3 +1,4 @@
+export * from './config.editor.models';
 export * from './config.ui.models';
 export * from './fileSystem.directory.models';
 export * from './fileSystem.fileManager.models';

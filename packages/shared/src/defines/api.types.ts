@@ -1,6 +1,9 @@
 import {
   DirectoryReadRequest,
   DirectoryReadResponse,
+  EditorReadResponse,
+  EditorUpdateRequest,
+  EditorUpdateResponse,
   FileManagerOpenRequest,
   FileManagerOpenResponse,
   InitialPathReadResponse,
@@ -46,6 +49,10 @@ export interface ElectronAPI {
     ui: {
       read: APICall<UIReadResponse>;
       update: APICall<UIUpdateResponse, UIUpdateRequest>;
+    };
+    editor: {
+      read: APICall<EditorReadResponse>;
+      update: APICall<EditorUpdateResponse, EditorUpdateRequest>;
     };
   };
 
