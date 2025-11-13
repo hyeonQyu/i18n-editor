@@ -1,28 +1,17 @@
-import { useCopyClipboard } from '@/hooks/common';
+import { CopyableButton } from '@/components/CopyableButton';
 import { useWorkspace } from '@/hooks/domains/workspace';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import { Button, Tooltip, Typography } from '@mui/material';
+import { Tooltip, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
 function CopyableWorkspacePath() {
   const workspace = useWorkspace();
-  const copyClipboard = useCopyClipboard();
-
-  const handleClick = () => {
-    if (!workspace) return;
-    copyClipboard(workspace.path);
-  };
+  const workspacePath = workspace?.path ?? '';
 
   return (
     <Tooltip title={'경로 복사'}>
-      <Button
-        variant={'text'}
-        sx={{ marginTop: '12px', color: grey[600], display: 'flex', alignItems: 'center', gap: '4px' }}
-        onClick={handleClick}
-      >
+      <CopyableButton copyText={workspacePath} sx={{ marginTop: '12px', color: grey[600], alignItems: 'center' }}>
         <Typography variant={'subtitle1'}>{workspace?.path}</Typography>
-        <ContentCopy fontSize={'small'} color={'inherit'} />
-      </Button>
+      </CopyableButton>
     </Tooltip>
   );
 }
