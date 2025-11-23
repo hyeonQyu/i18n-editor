@@ -9,7 +9,7 @@ import {
   TranslationValueByLanguageCode,
   Workspace,
 } from '@i18n-editor/shared';
-import { difference } from 'lodash';
+import { difference } from 'lodash-es';
 import { createFileWhenNotExist, deleteFile, readFile, writeFile } from './file.utils';
 import { getAllLanguageCodes } from './langauge.utils';
 

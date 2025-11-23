@@ -901,10 +901,10 @@ __metadata:
   dependencies:
     "@i18n-editor/shared": "workspace:*"
     "@types/electron": "npm:^1.6.12"
-    "@types/lodash": "npm:^4.17.12"
+    "@types/lodash-es": "npm:^4.17.12"
     "@types/node": "npm:^22.10.9"
     electron: "npm:^36.5.0"
-    lodash: "npm:^4.17.21"
+    lodash-es: "npm:^4.17.21"
   languageName: unknown
   linkType: soft
 
@@ -941,6 +941,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@i18n-editor/shared@workspace:packages/shared"
   dependencies:
+    esbuild: "npm:^0.24.2"
     nodemon: "npm:^3.1.10"
   languageName: unknown
   linkType: soft
@@ -1617,13 +1618,6 @@ __metadata:
   version: 4.17.19
   resolution: "@types/lodash@npm:4.17.19"
   checksum: 10/555e53da60dd9904ef4b6f4e663abb965cf45582079f2ea231a18b0b48df4808b60f36c978548fcf5e307bf12ccd563bd4551963039028ea120b1695c7146f7c
-  languageName: node
-  linkType: hard
-
-"@types/lodash@npm:^4.17.12":
-  version: 4.17.20
-  resolution: "@types/lodash@npm:4.17.20"
-  checksum: 10/8cd8ad3bd78d2e06a93ae8d6c9907981d5673655fec7cb274a4d9a59549aab5bb5b3017361280773b8990ddfccf363e14d1b37c97af8a9fe363de677f9a61524
   languageName: node
   linkType: hard
 

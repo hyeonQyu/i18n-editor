@@ -1,11 +1,9 @@
 import { app, BrowserWindow } from 'electron';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
 import { configCache } from '../caches/config.cache';
 import { getEnvironment } from './env.utils';
+import { getResourcePath } from './resource.utils';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(dirname(__filename));
+const isDev = getEnvironment() === 'development';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -32,19 +30,17 @@ export const createWindow = () => {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: false,
-      preload: join(app.getAppPath(), 'dist/electron/preload.js'),
+      preload: getResourcePath('electron', 'preload.js'),
     },
   });
 
-  const isDev = getEnvironment() === 'development';
-
   if (isDev) {
     mainWindow.loadURL('http://localhost:4848').catch(() => {
-      mainWindow?.loadFile(join(app.getAppPath(), 'dist/renderer/index.html'));
+      mainWindow?.loadFile(getResourcePath('renderer', 'index.html'));
     });
     mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.loadFile(join(app.getAppPath(), 'dist/renderer/index.html'));
+    mainWindow.loadFile(getResourcePath('renderer', 'index.html'));
   }
 
   mainWindow.on('closed', () => {
