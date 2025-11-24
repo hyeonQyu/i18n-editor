@@ -1,12 +1,16 @@
 import { QUERY_KEY } from '@/constants';
-import { useElectronAPI } from '@/hooks/common';
-import { DEFAULT_CONFIG } from '@i18n-editor/shared';
+import { useElectronAPI, useOS } from '@/hooks/common';
+import { getDefaultConfig } from '@i18n-editor/shared';
 import { useQuery } from '@tanstack/react-query';
 
 export const useUIConfig = () => {
   const electronAPI = useElectronAPI();
 
-  const { data: ui = DEFAULT_CONFIG.ui } = useQuery({
+  const os = useOS();
+
+  const defaultConfig = getDefaultConfig(os ?? 'linux');
+
+  const { data: ui = defaultConfig.ui } = useQuery({
     queryKey: QUERY_KEY.config.ui.read(),
     queryFn: () => electronAPI.config.ui.read(),
     staleTime: Infinity,

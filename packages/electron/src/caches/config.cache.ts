@@ -1,8 +1,8 @@
-import { Config, DEFAULT_CONFIG } from '@i18n-editor/shared';
+import { Config, getDefaultConfig } from '@i18n-editor/shared';
 import { app } from 'electron';
 import path from 'path';
 import { Environment } from '../defines/env.definitions';
-import { getEnvironment } from '../utils/env.utils';
+import { getEnvironment, getOS } from '../utils/env.utils';
 import { createFileWhenNotExist, readFile, writeFile } from '../utils/file.utils';
 
 const projectRoot = process.cwd();
@@ -11,7 +11,7 @@ const env = getEnvironment();
 
 const CONFIG_DIRECTORY_NAME = '.i18ne';
 
-const FILES = ['workspace', 'ui'] as const;
+const FILES = ['workspace', 'ui', 'editor'] as const;
 
 type ConfigFileName = (typeof FILES)[number];
 
@@ -32,20 +32,26 @@ const writeConfigFile = async (fileName: ConfigFileName, newConfig: Config[Confi
   await writeFile(getConfigFilePath(fileName), newConfig);
 };
 
-const config: Config = DEFAULT_CONFIG;
+const DEFAULT_CONFIG = getDefaultConfig(getOS());
+const config: Config = { ...DEFAULT_CONFIG };
 
 export const configCache = {
   init: async () => {
     await Promise.all(FILES.map((fileName) => createFileWhenNotExist(getConfigFilePath(fileName), DEFAULT_CONFIG[fileName])));
-    const [workspace, ui] = await Promise.all(FILES.map((fileName) => readFile(getConfigFilePath(fileName))));
+    const [workspace, ui, editor] = await Promise.all(FILES.map((fileName) => readFile(getConfigFilePath(fileName))));
 
     config.workspace = workspace;
     config.ui = {
       ...DEFAULT_CONFIG.ui,
       ...ui,
     };
+    config.editor = {
+      ...DEFAULT_CONFIG.editor,
+      ...editor,
+    };
 
     await writeConfigFile('ui', config.ui);
+    await writeConfigFile('editor', config.editor);
   },
 
   getConfig: () => config,
