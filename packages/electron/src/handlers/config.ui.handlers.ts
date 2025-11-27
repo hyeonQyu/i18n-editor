@@ -1,4 +1,4 @@
-import { UIReadResponse, UIUpdateRequest, UIUpdateResponse } from '@i18n-editor/shared/models/config.ui.models.js';
+import { UIReadResponse, UIUpdateRequest, UIUpdateResponse } from '@i18n-editor/shared';
 import { configCache } from '../caches/config.cache';
 import { IPCHandler } from '../defines/handler.definitions';
 
