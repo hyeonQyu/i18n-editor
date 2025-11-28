@@ -57,10 +57,10 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-function ThemeSwitch() {
+function ThemeModeSwitch() {
   const { isDarkMode, toggleDarkMode } = useThemeMode();
 
   return <MaterialUISwitch checked={isDarkMode} onChange={toggleDarkMode} />;
 }
 
-export default ThemeSwitch;
+export default ThemeModeSwitch;

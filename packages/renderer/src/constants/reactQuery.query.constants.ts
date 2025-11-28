@@ -7,6 +7,10 @@ export const QUERY_KEY = {
       base: () => [...QUERY_KEY.config.base(), 'ui'] as const,
       read: () => [...QUERY_KEY.config.ui.base(), 'read'] as const,
     },
+    editor: {
+      base: () => [...QUERY_KEY.config.base(), 'editor'] as const,
+      read: () => [...QUERY_KEY.config.editor.base(), 'read'] as const,
+    },
   },
 
   fileSystem: {
