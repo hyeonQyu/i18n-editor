@@ -8,7 +8,11 @@ interface SidebarMenuListProps {
 function SidebarMenuList(props: SidebarMenuListProps) {
   const { children } = props;
 
-  return <List dense>{children}</List>;
+  return (
+    <List dense sx={{ overflowY: 'auto' }}>
+      {children}
+    </List>
+  );
 }
 
 export default SidebarMenuList;
