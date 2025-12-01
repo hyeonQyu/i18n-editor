@@ -1,3 +1,4 @@
+import { CopyableButton } from '@/components/CopyableButton';
 import { TranslationDeleteButton } from '@/components/NamespaceView/components/TranslationDeleteButton';
 import { NAMESPACE_TRANSLATION_LIST_WIDTH } from '@/components/NamespaceView/constants';
 import { useRenderKey, useSelectedTranslationKey } from '@/components/NamespaceView/hooks';
@@ -5,7 +6,7 @@ import { useNamespace } from '@/hooks/domains/namespace';
 import { useUpdateTranslation } from '@/hooks/domains/translation';
 import { useWorkspaceId } from '@/hooks/domains/workspace';
 import { LanguageCode, Translation } from '@i18n-editor/shared';
-import { Box, Stack, TextField, Typography } from '@mui/material';
+import { Box, Stack, TextField, Tooltip, Typography, useTheme } from '@mui/material';
 import { FocusEventHandler, useMemo } from 'react';
 
 interface TranslationEditorProps {
@@ -13,6 +14,8 @@ interface TranslationEditorProps {
 }
 
 function TranslationEditor({ translations }: TranslationEditorProps) {
+  const { palette } = useTheme();
+
   const workspaceId = useWorkspaceId();
   const namespace = useNamespace();
 
@@ -64,16 +67,21 @@ function TranslationEditor({ translations }: TranslationEditorProps) {
         <TranslationDeleteButton translationKey={selectedTranslationKey} sx={{ position: 'absolute', top: '14px', right: '14px' }} />
       )}
 
-      <Typography
-        variant="h5"
-        color="textSecondary"
-        sx={{
-          wordBreak: 'break-word',
-          padding: '0 32px',
-        }}
-      >
-        {selectedTranslationKey}
-      </Typography>
+      <Tooltip title={'복사'}>
+        <CopyableButton
+          copyText={selectedTranslationKey ?? ''}
+          sx={{ color: palette.text.secondary, width: 'fit-content', margin: '0 32px' }}
+        >
+          <Typography
+            variant="h5"
+            sx={{
+              wordBreak: 'break-word',
+            }}
+          >
+            {selectedTranslationKey}
+          </Typography>
+        </CopyableButton>
+      </Tooltip>
       <Stack
         key={selectedTranslationKey}
         sx={{
