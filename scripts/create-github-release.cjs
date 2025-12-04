@@ -5,13 +5,13 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * GitHub Release 생성 스크립트
+ * GitHub Release Creation Script
  *
- * 이 스크립트는 다음 작업을 수행합니다:
- * 1. package.json에서 버전 정보를 읽어옵니다
- * 2. 빌드된 파일들을 찾습니다
- * 3. GitHub CLI를 사용하여 release를 생성합니다
- * 4. 빌드된 파일들을 release에 업로드합니다
+ * This script performs the following tasks:
+ * 1. Reads version information from package.json
+ * 2. Finds built files
+ * 3. Creates a release using GitHub CLI
+ * 4. Uploads built files to the release
  */
 
 class GitHubReleaseCreator {
@@ -27,7 +27,7 @@ class GitHubReleaseCreator {
       const packageJson = JSON.parse(fs.readFileSync(this.packageJsonPath, 'utf8'));
       return packageJson.version;
     } catch (error) {
-      console.error('❌ package.json을 읽는 중 오류가 발생했습니다:', error.message);
+      console.error('❌ Error reading package.json:', error.message);
       process.exit(1);
     }
   }
@@ -35,9 +35,9 @@ class GitHubReleaseCreator {
   checkGitHubCLI() {
     try {
       execSync('gh --version', { stdio: 'pipe' });
-      console.log('✅ GitHub CLI가 설치되어 있습니다.');
+      console.log('✅ GitHub CLI is installed.');
     } catch (error) {
-      console.error('❌ GitHub CLI가 설치되어 있지 않습니다. 다음 명령어로 설치해주세요:');
+      console.error('❌ GitHub CLI is not installed. Please install it with:');
       console.error('   brew install gh');
       process.exit(1);
     }
@@ -46,17 +46,17 @@ class GitHubReleaseCreator {
   checkGitHubAuth() {
     try {
       execSync('gh auth status', { stdio: 'pipe' });
-      console.log('✅ GitHub에 인증되어 있습니다.');
+      console.log('✅ GitHub authentication is valid.');
 
       try {
         const token = execSync('gh auth token', { encoding: 'utf8' }).trim();
         process.env.GH_TOKEN = token;
-        console.log('✅ GitHub token이 환경 변수로 설정되었습니다.');
+        console.log('✅ GitHub token has been set as environment variable.');
       } catch (tokenError) {
-        console.warn('⚠️ GitHub token을 가져오는 중 오류가 발생했습니다:', tokenError.message);
+        console.warn('⚠️ Error retrieving GitHub token:', tokenError.message);
       }
     } catch (error) {
-      console.error('❌ GitHub에 인증되어 있지 않습니다. 다음 명령어로 인증해주세요:');
+      console.error('❌ GitHub authentication is required. Please authenticate with:');
       console.error('   gh auth login');
       process.exit(1);
     }
@@ -66,7 +66,7 @@ class GitHubReleaseCreator {
     const assets = [];
 
     if (!fs.existsSync(this.releaseDir)) {
-      console.error('❌ release/packed 디렉토리가 존재하지 않습니다. 먼저 빌드를 실행해주세요:');
+      console.error('❌ release/packed directory does not exist. Please run the build first:');
       console.error('   yarn package');
       process.exit(1);
     }
@@ -98,11 +98,11 @@ class GitHubReleaseCreator {
     }
 
     if (assets.length === 0) {
-      console.error('❌ 업로드할 빌드 파일을 찾을 수 없습니다.');
+      console.error('❌ No build files found to upload.');
       process.exit(1);
     }
 
-    console.log(`✅ ${assets.length}개의 빌드 파일을 찾았습니다:`);
+    console.log(`✅ Found ${assets.length} build file(s):`);
     assets.forEach((asset) => {
       console.log(`   - ${path.basename(asset)}`);
     });
@@ -111,7 +111,7 @@ class GitHubReleaseCreator {
   }
 
   /**
-   * Release 노트를 읽어옵니다
+   * Reads release notes
    */
   getReleaseNotes(version) {
     let releaseNotes = `# i18n Editor v${version}
@@ -148,9 +148,9 @@ class GitHubReleaseCreator {
     if (fs.existsSync(this.releaseNotesPath)) {
       try {
         releaseNotes = fs.readFileSync(this.releaseNotesPath, 'utf8');
-        console.log('✅ 사용자 정의 릴리스 노트를 사용합니다.');
+        console.log('✅ Using custom release notes.');
       } catch (error) {
-        console.warn('⚠️ 릴리스 노트 파일을 읽는 중 오류가 발생했습니다. 기본 템플릿을 사용합니다.');
+        console.warn('⚠️ Error reading release notes file. Using default template.');
       }
     }
 
@@ -161,7 +161,7 @@ class GitHubReleaseCreator {
     const tagName = `v${version}`;
     const releaseName = `i18n Editor v${version}`;
 
-    console.log(`🚀 GitHub Release를 생성합니다: ${releaseName}`);
+    console.log(`🚀 Creating GitHub Release: ${releaseName}`);
 
     try {
       const tempNotesFile = path.join(this.rootDir, '.temp-release-notes.md');
@@ -181,24 +181,24 @@ class GitHubReleaseCreator {
         createCommand += ` "${asset}"`;
       });
 
-      console.log('📦 릴리스를 생성하고 파일을 업로드합니다...');
+      console.log('📦 Creating release and uploading files...');
       execSync(createCommand, { stdio: 'inherit', cwd: this.rootDir });
 
       fs.unlinkSync(tempNotesFile);
 
-      console.log('✅ GitHub Release가 성공적으로 생성되었습니다!');
-      console.log(`🔗 릴리스 URL: https://github.com/hyeonQyu/i18n-editor/releases/tag/${tagName}`);
+      console.log('✅ GitHub Release created successfully!');
+      console.log(`🔗 Release URL: https://github.com/hyeonQyu/i18n-editor/releases/tag/${tagName}`);
     } catch (error) {
-      console.error('❌ GitHub Release 생성 중 오류가 발생했습니다:', error.message);
+      console.error('❌ Error creating GitHub Release:', error.message);
       process.exit(1);
     }
   }
 
   /**
-   * 메인 실행 함수
+   * Main execution function
    */
   run() {
-    console.log('🎯 GitHub Release 생성을 시작합니다...\n');
+    console.log('🎯 Starting GitHub Release creation...\n');
 
     const args = process.argv.slice(2);
     const isDraft = args.includes('--draft');
@@ -209,7 +209,7 @@ class GitHubReleaseCreator {
     this.checkGitHubAuth();
 
     if (!skipBuild) {
-      console.log('🔨 프로젝트를 빌드합니다... (모든 플랫폼)');
+      console.log('🔨 Building project... (all platforms)');
       try {
         const buildEnv = { ...process.env, GH_TOKEN: process.env.GH_TOKEN };
         execSync('yarn package', {
@@ -217,15 +217,15 @@ class GitHubReleaseCreator {
           cwd: this.rootDir,
           env: buildEnv,
         });
-        console.log('✅ 빌드가 완료되었습니다.\n');
+        console.log('✅ Build completed.\n');
       } catch (error) {
-        console.error('❌ 빌드 중 오류가 발생했습니다:', error.message);
+        console.error('❌ Error during build:', error.message);
         process.exit(1);
       }
     }
 
     const version = this.getVersion();
-    console.log(`📋 버전: ${version}`);
+    console.log(`📋 Version: ${version}`);
 
     const assets = this.findReleaseAssets();
     const releaseNotes = this.getReleaseNotes(version);
