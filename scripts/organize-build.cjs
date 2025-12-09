@@ -39,6 +39,15 @@ const organizeBuild = async () => {
   const unpackedDir = path.join(releaseDir, 'unpacked');
   const packedDir = path.join(releaseDir, 'packed');
 
+  // Remove previous version files
+  if (fs.existsSync(packedDir)) {
+    console.log('🧹 Removing previous version files...');
+    fs.rmSync(packedDir, { recursive: true, force: true });
+  }
+  if (fs.existsSync(unpackedDir)) {
+    fs.rmSync(unpackedDir, { recursive: true, force: true });
+  }
+
   if (!fs.existsSync(unpackedDir)) {
     fs.mkdirSync(unpackedDir, { recursive: true });
   }
